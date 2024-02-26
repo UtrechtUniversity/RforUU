@@ -187,5 +187,33 @@
     "title": "Tutorial 3: Quantifying taxonomic diversity",
     "section": "",
     "text": "Welcome to this tutorial on quantifying taxonomic diversity in R!\nThroughout this tutorial, our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R. Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Welcome to the tutorials of our Ecological field research course!",
+    "section": "",
+    "text": "GEO2-2439"
+  },
+  {
+    "objectID": "about.html#course-code",
+    "href": "about.html#course-code",
+    "title": "Welcome to the tutorials of our Ecological field research course!",
+    "section": "",
+    "text": "GEO2-2439"
+  },
+  {
+    "objectID": "about.html#prologue",
+    "href": "about.html#prologue",
+    "title": "Welcome to the tutorials of our Ecological field research course!",
+    "section": "Prologue",
+    "text": "Prologue\nThis Quarto website has been created to provide you with a single, searchable platform containing all the tutorials and R code used during our ecological field research course. We hope you will find it useful for learning data science in R and working on your course assignments.\nThe effectiveness of these tutorials lies in their practical approach. Instead of quickly scrolling down our tutorials and simply reading R code, we encourage you to actively use it and to take the time to understand what each function does. Even if you find learning R difficult at first, don’t give up and just keep learning at the pace that suits you. Learning R is exactly like learning a new language. At first, you can only write and speak short, simple sentences, but with regular practice, you will soon be able to write and understand the language fluently. The best way to learn R is by practicing it and reusing the same commands over and over again.\nNow get ready to improve your data science skills. Let’s get started!"
+  },
+  {
+    "objectID": "about.html#r-for-data-science",
+    "href": "about.html#r-for-data-science",
+    "title": "Welcome to the tutorials of our Ecological field research course!",
+    "section": "R for Data Science",
+    "text": "R for Data Science\nOur tutorials rely on the R for Data Science book (second edition) written by Hadley Wickham, Mine Cetinkaya-Rundel, Garrett Grolemund, and many other contributors. To freely access the content of this book, just click on its cover. Thank you to the authors of this book for creating such a gold mine of infoRmation. Due to the time constraints of our course, it is unfortunately not possible to go through all of the techniques and R code described in this data science book, but we strongly encourage you to explore its content and continue to learn new skills. In the tutorials, we will often refer to specific sections of the book if you wish to dive deeper into certain topics."
   }
 ]
