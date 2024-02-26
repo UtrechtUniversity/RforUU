@@ -1,13 +1,20 @@
 project:
   type: website
   output-dir: docs
-
+  
 website:
   title: "Ecological field research (GEO2-2439)"
   page-navigation: true
   page-footer:
     right: "This website is built and maintained with ☕ and [Quarto](https://quarto.org/)."
   sidebar:
+    tools:
+      - icon: github
+        menu:
+          - text: Source Code
+            url:  https://github.com/UtrechtUniversity/RforUU
+          - text: Report a Bug
+            url:  https://github.com/UtrechtUniversity/RforUU/issues
     search: true
     pinned: true
     alignment: center
@@ -47,9 +54,6 @@ website:
           - href: contact.qmd
             text: Contact
             icon: envelope-at-fill
-    tools: 
-      - icon: github
-        href: https://github.com/UtrechtUniversity/RforUU
 
 format:
   html:
