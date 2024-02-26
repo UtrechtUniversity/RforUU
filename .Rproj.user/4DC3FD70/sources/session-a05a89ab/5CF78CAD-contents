@@ -5,15 +5,18 @@ project:
 website:
   title: "Ecological field research (GEO2-2439)"
   page-navigation: true
+  repo-url: https://github.com/UtrechtUniversity/RforUU
+  issue-url: https://github.com/UtrechtUniversity/RforUU/issues
+  repo-actions: [edit, issue]
   page-footer:
     right: "This website is built and maintained with ☕ and [Quarto](https://quarto.org/)."
   sidebar:
     tools:
       - icon: github
         menu:
-          - text: Source Code
+          - text: Source code
             url:  https://github.com/UtrechtUniversity/RforUU
-          - text: Report a Bug
+          - text: Report an issue
             url:  https://github.com/UtrechtUniversity/RforUU/issues
     search: true
     pinned: true
