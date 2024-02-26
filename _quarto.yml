@@ -15,9 +15,6 @@ website:
     collapse-level: 2
     logo: uu-logo-en-geenwitruimte.png
     logo-alt: "Logo of Utrecht University"
-    tools: 
-      - icon: github
-        href: https://github.com/UtrechtUniversity/RforUU
     contents:
       - section: "Course information"
         contents: 
@@ -50,6 +47,9 @@ website:
           - href: contact.qmd
             text: Contact
             icon: envelope-at-fill
+    tools: 
+      - icon: github
+        href: https://github.com/UtrechtUniversity/RforUU
 
 format:
   html:
