@@ -1,12 +1,12 @@
 {
-    "id": "85CB84E1",
+    "id": "54AA08A3",
     "path": "~/GitHub/RforUU/about.qmd",
     "project_path": "about.qmd",
     "type": "quarto_markdown",
-    "hash": "4173531880",
+    "hash": "0",
     "contents": "",
     "dirty": false,
-    "created": 1708941696942.0,
+    "created": 1708968967065.0,
     "source_on_save": false,
     "relative_order": 2,
     "properties": {
@@ -16,7 +16,7 @@
         "Source": "Source",
         "docOutlineVisible": "1",
         "rmdVisualCollapsedChunks": "",
-        "rmdVisualModeLocation": "2:0"
+        "rmdVisualModeLocation": "84:0"
     },
     "folds": "",
     "lastKnownWriteTime": 1708932579,
