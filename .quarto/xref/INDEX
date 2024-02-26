@@ -1,0 +1,32 @@
+{
+  "index.qmd": {
+    "index.html": "b9030752"
+  },
+  "about.qmd": {
+    "about.html": "3569c765"
+  },
+  "data_wrangling.qmd": {
+    "data_wrangling.html": "17ed335e"
+  },
+  "data_analysis.qmd": {
+    "data_analysis.html": "ab2945e0"
+  },
+  "data_exploration.qmd": {
+    "data_exploration.html": "9d2eb9b1"
+  },
+  "data_visualisation.qmd": {
+    "data_visualisation.html": "69b9ed26"
+  },
+  "quantifying_biodiversity.qmd": {
+    "quantifying_biodiversity.html": "aeb20fb4"
+  },
+  "contact.qmd": {
+    "contact.html": "0b6f0f11"
+  },
+  "prerequisites.qmd": {
+    "prerequisites.html": "d56b1b41"
+  },
+  "R_basics.qmd": {
+    "R_basics.html": "13b00b75"
+  }
+}

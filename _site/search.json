@@ -1,0 +1,219 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome to the tutorials of our Ecological field research course!",
+    "section": "",
+    "text": "GEO2-2439"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "data_wrangling.html",
+    "href": "data_wrangling.html",
+    "title": "Tutorial 1: Data wrangling in R",
+    "section": "",
+    "text": "Welcome to this tutorial on data wrangling in R!\nIn this tutorial, our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R. Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!\nLet’s start by getting to know the data we are going to work with a little better…"
+  },
+  {
+    "objectID": "data_wrangling.html#about-this-tutorial",
+    "href": "data_wrangling.html#about-this-tutorial",
+    "title": "Tutorial 1: Data wrangling in R",
+    "section": "",
+    "text": "Welcome to this tutorial on data wrangling in R!\nIn this tutorial, our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R. Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!\nLet’s start by getting to know the data we are going to work with a little better…"
+  },
+  {
+    "objectID": "data_wrangling.html#loading-r-packages",
+    "href": "data_wrangling.html#loading-r-packages",
+    "title": "Tutorial 1: Data wrangling in R",
+    "section": "Loading R packages",
+    "text": "Loading R packages\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n\nCode\n1 + 1\n\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed).\n\nQuestion 1R code"
+  },
+  {
+    "objectID": "quantifying_biodiversity.html",
+    "href": "quantifying_biodiversity.html",
+    "title": "Tutorial 3: Quantifying taxonomic diversity",
+    "section": "",
+    "text": "Welcome to this tutorial on quantifying taxonomic diversity in R!\nThroughout this tutorial, our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R. Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!"
+  },
+  {
+    "objectID": "quantifying_biodiversity.html#about-this-tutorial",
+    "href": "quantifying_biodiversity.html#about-this-tutorial",
+    "title": "Tutorial 3: Quantifying taxonomic diversity",
+    "section": "",
+    "text": "Welcome to this tutorial on quantifying taxonomic diversity in R!\nThroughout this tutorial, our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R. Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!"
+  },
+  {
+    "objectID": "data_visualisation.html",
+    "href": "data_visualisation.html",
+    "title": "Tutorial 2: Data visualisation in R",
+    "section": "",
+    "text": "Welcome to this tutorial on data visualisation in R!\nThroughout this tutorial, our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R. Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!"
+  },
+  {
+    "objectID": "data_visualisation.html#about-this-tutorial",
+    "href": "data_visualisation.html#about-this-tutorial",
+    "title": "Tutorial 2: Data visualisation in R",
+    "section": "",
+    "text": "Welcome to this tutorial on data visualisation in R!\nThroughout this tutorial, our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R. Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!"
+  },
+  {
+    "objectID": "data_analysis.html",
+    "href": "data_analysis.html",
+    "title": "Tutorial 5: Data analysis in R",
+    "section": "",
+    "text": "Welcome to this tutorial on data analysis in R!\nThroughout this tutorial, our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R. Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!"
+  },
+  {
+    "objectID": "data_analysis.html#about-this-tutorial",
+    "href": "data_analysis.html#about-this-tutorial",
+    "title": "Tutorial 5: Data analysis in R",
+    "section": "",
+    "text": "Welcome to this tutorial on data analysis in R!\nThroughout this tutorial, our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R. Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!"
+  },
+  {
+    "objectID": "data_exploration.html",
+    "href": "data_exploration.html",
+    "title": "Tutorial 4: Data exploration in R",
+    "section": "",
+    "text": "Welcome to this tutorial on data exploration in R!\nThroughout this tutorial, our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R. Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!"
+  },
+  {
+    "objectID": "data_exploration.html#about-this-tutorial",
+    "href": "data_exploration.html#about-this-tutorial",
+    "title": "Tutorial 4: Data exploration in R",
+    "section": "",
+    "text": "Welcome to this tutorial on data exploration in R!\nThroughout this tutorial, our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R. Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!"
+  },
+  {
+    "objectID": "index.html#r-for-data-science",
+    "href": "index.html#r-for-data-science",
+    "title": "Welcome to the tutorials of our Ecological field research course!",
+    "section": "R for Data Science",
+    "text": "R for Data Science\nOur tutorials rely on the R for Data Science book (second edition) written by Hadley Wickham, Mine Cetinkaya-Rundel, Garrett Grolemund, and many other contributors. To freely access the content of this book, just click on its cover. Thank you to the authors of this book for creating such a gold mine of infoRmation. Due to the time constraints of our course, it is unfortunately not possible to go through all of the techniques and R code described in this data science book, but we strongly encourage you to explore its content and continue to learn new skills. In the tutorials, we will often refer to specific sections of the book if you wish to dive deeper into certain topics."
+  },
+  {
+    "objectID": "index.html#prologue",
+    "href": "index.html#prologue",
+    "title": "Welcome to the tutorials of our Ecological field research course!",
+    "section": "Prologue",
+    "text": "Prologue\nThis Quarto website has been created to provide you with a single, searchable platform containing all the tutorials and R code used during our ecological field research course. We hope you will find it useful for learning data science in R and working on your course assignments.\nThe effectiveness of these tutorials lies in their practical approach. Instead of quickly scrolling down our tutorials and simply reading R code, we encourage you to actively use it and to take the time to understand what each function does. Even if you find learning R difficult at first, don’t give up and just keep learning at the pace that suits you. Learning R is exactly like learning a new language. At first, you can only write and speak short, simple sentences, but with regular practice, you will soon be able to write and understand the language fluently. The best way to learn R is by practicing it and reusing the same commands over and over again.\nNow get ready to improve your data science skills. Let’s get started!"
+  },
+  {
+    "objectID": "contact.html",
+    "href": "contact.html",
+    "title": "Contact information",
+    "section": "",
+    "text": "Did you find a mistake in our tutorials? Or do you have suggestions to improve them?\nFeel free to contact Dr Benjamin Delory (b.m.m.delory@uu.nl)"
+  },
+  {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "Welcome to the tutorials of our Ecological field research course!",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nTo make the best out of these tutorials, you will need to install three things on your computer: R, RStudio, and a collection of R packages called tidyverse. If other R packages are needed, we will always mention them at the beginning of each tutorial.\n\nStep 1: Installing R\nYou can download R for Linux, macOS, or Windows on the CRAN website. CRAN is an abbreviation for the Comprehensive R Archive Network.\n\n\nStep 2: Installing RStudio\nRStudio is an integrated development environment (IDE) for R (and other languages such as Python) developed by Posit, an open-source data science company. We highly recommend using RStudio, which will make your experience of working with R much more enjoyable. With RStudio, you can easily write your own scripts, run R code, manage your workspace, install and load R packages, view graphical output, and much more! You can download RStudio on the Posit website.\n\n\nStep 3: Installing tidyverse\ntidyverse is a collection of R packages for data science. When installing tidyverse, you will install a suite of R packages that are very commonly used when processing and visualising data, such as readr, dyplr, tibble, ggplot2, and more! After opening RStudio, you can install tidyverse by executing the following code in your R console:\n\ninstall.packages(\"tidyverse\")"
+  },
+  {
+    "objectID": "quantifying_biodiversity.html#test-shiny-app",
+    "href": "quantifying_biodiversity.html#test-shiny-app",
+    "title": "quantifying_biodiversity",
+    "section": "Test Shiny app",
+    "text": "Test Shiny app\n#| standalone: true\n\nlibrary(shiny)\n\n# Define UI for application that draws a diversity plot\nui &lt;- fluidPage(\n\n    # Application title\n    titlePanel(\"Hill diversity\"),\n\n    # Sidebar with a slider input for number of bins \n    sidebarLayout(\n        sidebarPanel(\n            sliderInput(\"bins\",\n                        \"Number of bins:\",\n                        min = 1,\n                        max = 50,\n                        value = 30)\n        ),\n\n        # Show a plot of the generated distribution\n        mainPanel(\n           plotOutput(\"distPlot\")\n        )\n    )\n)\n\n# Define server logic required to draw a histogram\nserver &lt;- function(input, output) {\n\n    output$distPlot &lt;- renderPlot({\n        # generate bins based on input$bins from ui.R\n        x    &lt;- faithful[, 2]\n        bins &lt;- seq(min(x), max(x), length.out = input$bins + 1)\n\n        # draw the histogram with the specified number of bins\n        hist(x, breaks = bins, col = 'darkgray', border = 'white',\n             xlab = 'Waiting time to next eruption (in mins)',\n             main = 'Histogram of waiting times')\n    })\n}\n\n# Run the application \nshinyApp(ui = ui, server = server)"
+  },
+  {
+    "objectID": "prerequisites.html",
+    "href": "prerequisites.html",
+    "title": "Prerequisites",
+    "section": "",
+    "text": "To make the best out of these tutorials, you will need to install three things on your computer: R, RStudio, and a collection of R packages called tidyverse. If other R packages are needed, we will always mention them at the beginning of each tutorial."
+  },
+  {
+    "objectID": "prerequisites.html#step-1-installing-r",
+    "href": "prerequisites.html#step-1-installing-r",
+    "title": "Prerequisites",
+    "section": "Step 1: Installing R",
+    "text": "Step 1: Installing R\nYou can download R for Linux, macOS, or Windows on the CRAN website. CRAN is an abbreviation for the Comprehensive R Archive Network."
+  },
+  {
+    "objectID": "prerequisites.html#step-2-installing-rstudio",
+    "href": "prerequisites.html#step-2-installing-rstudio",
+    "title": "Prerequisites",
+    "section": "Step 2: Installing RStudio",
+    "text": "Step 2: Installing RStudio\nRStudio is an integrated development environment (IDE) for R (and other languages such as Python) developed by Posit, an open-source data science company. We highly recommend using RStudio, which will make your experience of working with R much more enjoyable. With RStudio, you can easily write your own scripts, run R code, manage your workspace, install and load R packages, view graphical output, and much more! You can download RStudio on the Posit website."
+  },
+  {
+    "objectID": "prerequisites.html#step-3-installing-tidyverse",
+    "href": "prerequisites.html#step-3-installing-tidyverse",
+    "title": "Prerequisites",
+    "section": "Step 3: Installing tidyverse",
+    "text": "Step 3: Installing tidyverse\ntidyverse is a collection of R packages for data science. When installing tidyverse, you will install a suite of R packages that are very commonly used when processing and visualising data, such as readr, dyplr, tibble, ggplot2, and more! After opening RStudio, you can install tidyverse by executing the following code in your R console:\n\ninstall.packages(\"tidyverse\")"
+  },
+  {
+    "objectID": "index.html#course-code",
+    "href": "index.html#course-code",
+    "title": "Welcome to the tutorials of our Ecological field research course!",
+    "section": "",
+    "text": "GEO2-2439"
+  },
+  {
+    "objectID": "data_wrangling.html#ecological-field-data-used-in-this-tutorial",
+    "href": "data_wrangling.html#ecological-field-data-used-in-this-tutorial",
+    "title": "Tutorial 1: Data wrangling in R",
+    "section": "Ecological field data used in this tutorial",
+    "text": "Ecological field data used in this tutorial\nIn this tutorial, we will import, tidy and transform data collected between 2020 and 2023 as part of a grassland field experiment located in Germany. This section will provide you with more information about the aims and design of this experiment, as well as what has been measured in the field by the researchers who have been actively working on this experiment since 2020. A detailed description of the raw data will come a little bit later.\nA detailed description of this experiment is also provided in Alonso-Crespo IM, Temperton VM, Fichtner A, Niemeyer T, Schloter M, Delory BM. 2023. Exploring priority and year effects on plant diversity, productivity and vertical root distribution: first insights from a grassland field experiment. bioRxiv: 2023.11.14.566982.\n\nObjectives of the POEM experiment\nThe POEM experiment (PriOrity Effect Mechanisms) was set up to study how the year of initiation of an experiment and the order of arrival of species during community assembly affect the structure and functioning of dry grassland plant communities. This knowledge is important because it can help us to better predict the results of restoration efforts (year effects), but also to better understand how manipulating the order of arrival of species can help us to steer the trajectory of plant communities towards desired states (priority effects).\n\n\nDesign of the POEM experiment\nThe researchers set up the same experiment manipulating the order of arrival of species at the same experimental site, but in two consecutive years. This means that one experiment was set up in 2020, while the other was set up in 2021. Both experiments test the same order of arrival scenarios. Therefore, the POEM experiment has two main fixed factors:\nFactor 1: The order of arrival of plant species. This factor has 5 different levels:\n\nSynchronous (S): all plant species are sown simultaneously\nForbs sown first (F): forb species are sown 6 weeks before grasses and legumes\nGrasses sown first (G): grass species are sown 6 weeks before forbs and legumes\nLegumes sown first (L): legume species are sown 6 weeks before forbs and grasses\nFree succession (B): no species are sown in these plots\n\nFactor 2: The year of initiation of an experiment. This factor has 2 levels:\n\n2020 if the experiment was set up in 2020\n2021 if the experiment was set up in 2021\n\nThe experiment consists of 50 experimental plots, with 5 replicates per factor combination.\n\n\n\nPOEM experiment in June 2021 (Niederhaverbeck, Germany). Photo credit: B. Delory."
+  },
+  {
+    "objectID": "data_wrangling.html#importing-data",
+    "href": "data_wrangling.html#importing-data",
+    "title": "Tutorial 1: Data wrangling in R",
+    "section": "Importing data",
+    "text": "Importing data\nThe first thing to do after opening RStudio is to import some data to work with. There are a number of ways to do this depending on the input file format. We will focus on just a few of them here.\n\nDownload the POEM data from Zenodo\nThe POEM data that will be used in this tutorial are available on a Zenodo repository.\n\n\nLoad tidyverse\nAll the functions we need for this tutorial are available in R packages from the tidyverse collection. You can load tidyverse using library().\n\n\nCode\nlibrary(tidyverse)\n\n\n\n\nImport data in R"
+  },
+  {
+    "objectID": "data_wrangling.html#tidying-data",
+    "href": "data_wrangling.html#tidying-data",
+    "title": "Tutorial 1: Data wrangling in R",
+    "section": "Tidying data",
+    "text": "Tidying data"
+  },
+  {
+    "objectID": "data_wrangling.html#transforming-data",
+    "href": "data_wrangling.html#transforming-data",
+    "title": "Tutorial 1: Data wrangling in R",
+    "section": "Transforming data",
+    "text": "Transforming data"
+  },
+  {
+    "objectID": "R_basics.html",
+    "href": "R_basics.html",
+    "title": "R basics",
+    "section": "",
+    "text": "You can add comments to your R script using the hash tag symbol: #\nEvery line that starts with # will be ignored by R and will not be executed.\n\n#This line of code is a comment and will be ignored by R when running the code\n\n\n\n\n\n\n\nAlways comment your R script!\n\n\n\nWe strongly advise you to add comments to your R code. At the very least, these comments should indicate why you have written each section of your code. It can also be useful to add information about the what and how. These comments can save a lot of time if you need to go back over your code after a while or, even more difficult, if someone else needs to go through your code and understand what you’ve done."
+  },
+  {
+    "objectID": "R_basics.html#creating-r-objects",
+    "href": "R_basics.html#creating-r-objects",
+    "title": "R basics",
+    "section": "Creating R objects",
+    "text": "Creating R objects\n\n\n\n\n\n\nThe assignment operator\n\n\n\nNew R objects are created using the assigment operator: &lt;-\nYou can think of this assignment operator as an arrow that puts what’s on its right side into an R object located on its left side.\nFor instance, let’s create an object called x that contains the value 2.\n\n#Create object\nx &lt;- 2\n\n#Show content of R object\nx\n\n[1] 2\n\n\n\n\n\n\n\n\nRStudio shortcut\n\n\n\nPress Alt and the minus sign on your keyboard (Alt+-) to quickly write the assignment operator.\n\n\n\n\n\nScalars\nA scalar is a quantity that can only hold one value at a time. Here are the most common types of scalars in R:\n\nNumeric: numbers with a decimal value (e.g., 17.8)\nInteger: numbers without a decimal value (e.g., 18)\nCharacter: a letter or a combination of letters. Character strings must be enclosed by quotes in your R code.\nFactor: data type used in statistical modelling to specify what are the factors in the model\nLogical: a logical variable can be either TRUE or FALSE\n\nYou can check the data type of an R object using the class() function.\n\nx &lt;- 2\nclass(x)\n\n[1] \"numeric\"\n\n\n\n\nVectors\nA vector is a sequence of data elements of the same type. Vectors can be created using the c() function.\n\n#Numeric vector\nx1 &lt;- c(1,2,3,4,5)\nx1 &lt;- c(1:5)\n\n#Character vector\nx &lt;- c(\"control\", \"treatment\")\n\n#Logical vector\nx &lt;- c(TRUE, TRUE, FALSE)\n\nYou can check how many elements there are in a vector using the length() function.\n\nlength(x1)\n\n[1] 5\n\n\n\n\nMatrices\nA matrix is an ensemble of data elements of the same type arranged in a 2D layout (i.e., like a table). Matrices can be created using the matrix() function.\n\n#Generate 25 random numbers between 0 and 1 from a uniform distribution\nx2 &lt;- runif(25)\n\n#Arrange these random numbers into a matrix with 5 rows and 5 columns\nx2 &lt;- matrix(x2,\n            ncol = 5,\n            nrow = 5)\n\n#View matrix\nx2\n\n           [,1]      [,2]      [,3]      [,4]       [,5]\n[1,] 0.93803957 0.9063436 0.1645821 0.4645644 0.60266220\n[2,] 0.14991356 0.3928948 0.3335052 0.2424715 0.85575474\n[3,] 0.02279855 0.3429427 0.4012385 0.1656312 0.04600863\n[4,] 0.07537963 0.9466130 0.8067489 0.9045261 0.60105996\n[5,] 0.04574853 0.3463724 0.6170378 0.4045059 0.26605126\n\n\nYou can check the size of a matrix using the dim() function. The first element of the output is the number of rows. The second element of the output is the number of columns.\n\ndim(x2)\n\n[1] 5 5\n\n\nYou can also extract the number of rows and columns using nrow() and ncol(), respectively.\n\nnrow(x2)\n\n[1] 5\n\nncol(x2)\n\n[1] 5\n\n\n\n\nData frames\nA data frame is an ensemble of data elements arranged in a 2D layout (i.e., like a table). Different columns of a data frame can contain different types of data (character, logical, numeric, etc.). It is probably the most common data structure used when analysing ecological data. Data frames can be created using the data.frame() function.\n\n#Create data frame\nx3 &lt;- data.frame(Var1=c(1:6),\n                 Var2=c(\"R\", \"i\", \"s\", \"f\", \"u\", \"n\"),\n                 Var3=c(TRUE, TRUE, FALSE, FALSE, TRUE, FALSE))\n\n#View data frame\nx3\n\n  Var1 Var2  Var3\n1    1    R  TRUE\n2    2    i  TRUE\n3    3    s FALSE\n4    4    f FALSE\n5    5    u  TRUE\n6    6    n FALSE\n\n\nThe functions dim(), ncol(), and nrow() can also be used on data frames.\n\n\nLists\nA list is a vector containing other objects (vectors, matrices, data frames, other lists, etc.). It can contain elements of various data types. Lists can be created using the list() function.\n\n#Create a list\nx4 &lt;- list(x1, x2, x3)\n\n#View list\nx4\n\n[[1]]\n[1] 1 2 3 4 5\n\n[[2]]\n           [,1]      [,2]      [,3]      [,4]       [,5]\n[1,] 0.93803957 0.9063436 0.1645821 0.4645644 0.60266220\n[2,] 0.14991356 0.3928948 0.3335052 0.2424715 0.85575474\n[3,] 0.02279855 0.3429427 0.4012385 0.1656312 0.04600863\n[4,] 0.07537963 0.9466130 0.8067489 0.9045261 0.60105996\n[5,] 0.04574853 0.3463724 0.6170378 0.4045059 0.26605126\n\n[[3]]\n  Var1 Var2  Var3\n1    1    R  TRUE\n2    2    i  TRUE\n3    3    s FALSE\n4    4    f FALSE\n5    5    u  TRUE\n6    6    n FALSE\n\n\nThe length() function can be used to check how many data elements there are in a list.\n\nlength(x4)\n\n[1] 3"
+  },
+  {
+    "objectID": "R_basics.html#commenting",
+    "href": "R_basics.html#commenting",
+    "title": "R basics",
+    "section": "",
+    "text": "You can add comments to your R script using the hash tag symbol: #\nEvery line that starts with # will be ignored by R and will not be executed.\n\n#This line of code is a comment and will be ignored by R when running the code\n\n\n\n\n\n\n\nAlways comment your R script!\n\n\n\nWe strongly advise you to add comments to your R code. At the very least, these comments should indicate why you have written each section of your code. It can also be useful to add information about the what and how. These comments can save a lot of time if you need to go back over your code after a while or, even more difficult, if someone else needs to go through your code and understand what you’ve done."
+  },
+  {
+    "objectID": "R_basics.html#indexing",
+    "href": "R_basics.html#indexing",
+    "title": "R basics",
+    "section": "Indexing",
+    "text": "Indexing\nOne of the main advantages of R is that it is very easy to extract any given value from a data set. This is called indexing. Let’s have a look at a few examples.\n\nVectors\nTo extract the ith value of a vector object called x, you should write x[i].\n\n#Extract the third value of the x1 object \n#x1 is a vector\n\nx1[3]\n\n[1] 3\n\n\n\n\nMatrices and data frames\nTo extract the value located at the intersection between the ith row and jth column of a matrix or a data frame object called x, you should write x[i,j].\n\n#Extract the value at the intersection of row 2 and column 3 in the x2 object\n#x2 is a matrix\n\nx2[2,3]\n\n[1] 0.3335052\n\n\nWith a data frame, there are a couple of other options to extract data from specific columns. One option is to use the dollar symbol ($) followed by the column name.\n\n#Extract all the values stored in the second column of the x3 object\n#x3 is a data frame\n\nx3$Var2\n\n[1] \"R\" \"i\" \"s\" \"f\" \"u\" \"n\"\n\n\nNote that the following code would also work and would produce the same result. To extract all the values from a specific column, simply leave the square brackets empty before the comma. It is important to specify the name of the column (in quotes), otherwise you will simply extract all the values from your data frame.\n\n#Extract all the values stored in the second column of the x3 object\n#x3 is a data frame\n\nx3[,\"Var2\"]\n\n[1] \"R\" \"i\" \"s\" \"f\" \"u\" \"n\"\n\n\nIf you want to subset a matrix or a data frame called x (i.e., selecting only specifics rows and columns), you should write:\nx[rows to select, columns to select]\n\n#Extract only the values located between rows 2 and 4 \n#in the second column of the x3 object\n#x3 is a data frame\n\nx3[2:4, 2]\n\n[1] \"i\" \"s\" \"f\"\n\n\nNote that writing 2:4 means “from index 2 to index 4”. It is exactly the same as writing c(2,3,4).\n\n\nLists\nTo extract the ith element of a list object called x, you should write x[[i]].\n\n#Extract the second element of the x4 object\n#x4 is a list\n\nx4[[2]]\n\n           [,1]      [,2]      [,3]      [,4]       [,5]\n[1,] 0.93803957 0.9063436 0.1645821 0.4645644 0.60266220\n[2,] 0.14991356 0.3928948 0.3335052 0.2424715 0.85575474\n[3,] 0.02279855 0.3429427 0.4012385 0.1656312 0.04600863\n[4,] 0.07537963 0.9466130 0.8067489 0.9045261 0.60105996\n[5,] 0.04574853 0.3463724 0.6170378 0.4045059 0.26605126"
+  }
+]

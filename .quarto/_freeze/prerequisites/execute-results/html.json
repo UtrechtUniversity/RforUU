@@ -1,0 +1,14 @@
+{
+  "hash": "d1aa2b4625240a28d9426db76a21e3d0",
+  "result": {
+    "markdown": "---\ntitle: \"Prerequisites\"\n---\n\n\nTo make the best out of these tutorials, you will need to install three things on your computer: R, RStudio, and a collection of R packages called *tidyverse*. If other R packages are needed, we will always mention them at the beginning of each tutorial.\n\n## Step 1: Installing R\n\nYou can download R for Linux, macOS, or Windows on the [CRAN website](https://cran.r-project.org/). CRAN is an abbreviation for the Comprehensive R Archive Network.\n\n## Step 2: Installing RStudio\n\nRStudio is an integrated development environment (IDE) for R (and other languages such as Python) developed by [Posit](https://posit.co/), an open-source data science company. We highly recommend using RStudio, which will make your experience of working with R much more enjoyable. With RStudio, you can easily write your own scripts, run R code, manage your workspace, install and load R packages, view graphical output, and much more! You can download RStudio on the [Posit website](https://posit.co/products/open-source/rstudio/).\n\n## Step 3: Installing *tidyverse*\n\n[*tidyverse*](https://www.tidyverse.org/) is a collection of R packages for data science. When installing *tidyverse*, you will install a suite of R packages that are very commonly used when processing and visualising data, such as *readr*, *dyplr*, *tibble*, *ggplot2*, and more! After opening RStudio, you can install *tidyverse* by executing the following code in your R console:\n\n\n::: {.cell}\n\n```{.r .cell-code  code-fold=\"false\"}\ninstall.packages(\"tidyverse\")\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

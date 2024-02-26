@@ -1,0 +1,19 @@
+---
+title: "Tutorial 4: Data exploration in R"
+author:
+  - name: Benjamin Delory
+    orcid: 0000-0002-1190-8060
+    email: b.m.m.delory@uu.nl
+    affiliations:
+      - name: Environmental sciences group, Copernicus institute of sustainable development, Utrecht University
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+## About this tutorial
+
+Welcome to this tutorial on data exploration in R!
+
+Throughout this tutorial, **our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R.** Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!

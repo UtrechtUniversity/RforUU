@@ -1,0 +1,67 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Ecological field research (GEO2-2439)"
+  page-navigation: true
+  page-footer:
+    right: "This website is built and maintained with ☕ and [Quarto](https://quarto.org/)."
+  sidebar:
+    search: true
+    pinned: true
+    alignment: center
+    style: docked
+    collapse-level: 2
+    logo: uu-logo-en-geenwitruimte.png
+    logo-alt: "Logo of Utrecht University"
+    contents:
+      - section: "Course information"
+        contents: 
+          - href: index.qmd
+            text: About the course
+          - href: prerequisites.qmd
+            text: Prerequisites
+      - section: "Tutorials"
+        contents: 
+          - href: R_basics.qmd
+            text: R basics
+            icon: play-fill
+          - href: data_wrangling.qmd
+            text: Data wrangling
+            icon: table
+          - href: data_visualisation.qmd
+            text: Data visualisation
+            icon: bar-chart-line-fill
+          - href: quantifying_biodiversity.qmd
+            text: Quantifying biodiversity
+            icon: globe
+          - href: data_exploration.qmd
+            text: Data exploration
+            icon: binoculars-fill
+          - href: data_analysis.qmd
+            text: Data analysis
+            icon: laptop
+      - section: "Contact"
+        contents:
+          - href: contact.qmd
+            text: Contact
+            icon: envelope-at-fill
+
+format:
+  html:
+    theme: 
+      light: [cosmo, theme-light.scss]
+      dark: [cosmo, theme-dark.scss]
+    css: styles.css
+    toc: true
+    toc-depth: 5
+    code-fold: true
+    code-copy: true
+    code-summary: "Show me the R code"
+    code-tools: true
+    code-overflow: wrap
+    fig-cap-location: bottom
+
+editor: visual
+
