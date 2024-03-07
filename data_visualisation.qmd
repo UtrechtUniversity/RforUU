@@ -33,6 +33,8 @@ install.packages('ggplot2')
 library(ggplot2)
 ```
 
+If you are stuck or want help, also check Help-\> Cheat Sheet -\> Data visualization with ggplot 2, where there is lots of help on ggplot.
+
 **Figure 1 - Boxplots**
 
 Now we need to read the dataset (Wassen_fig2) in R from the Data folder (see data wrangling how this was done). Lets store the dataset in a dataframe called NP_sp. Afterwards check the dataframe. What are the columns that we need for our figure?
@@ -55,37 +57,72 @@ So lets do this first for our example.
 
 ```{r}
 #create ggplot
-ggplot(data = NP_sp, mapping = aes(N, y))
+ggplot(data = NP_sp, mapping = aes(threatened, NP_median))
 
 ```
 
-No boxplot add boxplot with geom_boxplot.
+As you can see there is no Boxplot, but the framework is there. That is because we have only created a frame, with x and y axis, but object are still missing. As we are aiming to add a boxplot we are using the geom_boxplot function. Within the geom_boxplot we can add certain aestathic preference such a width=1.
 
 ```{r}
+#create ggplot
+ggplot(data = NP_sp, mapping = aes(threatened, NP_median))+geom_boxplot(width=0.5)
 
 ```
 
-No colour them red and blue
+It works, but we want to restyle the graph by use a white background. This is easily achieved by the function theme_minimal() (with lines or theme_classic without lines). Next we would like to fill the boxplots using a red (threatened) and blue (non-threatened) species. For this we use fill = threatened in the aesthetics of the ggplot and define a scale_color_manual(values=c('colour', etc)). See https://www.uvm.edu/\~ngotelli/Rscripts/ColorChart.pdf for nice colour names or #hex.
 
 ```{r}
-
+#create ggplot
+ggplot(data = NP_sp, mapping = aes(threatened, NP_median, fill=threatened))+geom_boxplot(width=0.5)+theme_minimal()+scale_fill_manual(values=c("steelblue2","firebrick2" ))
 ```
 
-Now also add point!
+No we we will add points, as we would like to now the underlying data of the boxplot. You could use geom_point but this runs in to troubles.
 
 ```{r}
-Geom_point
+#create ggplot
+ggplot(data = NP_sp, mapping = aes(threatened, NP_median, fill=threatened))+geom_boxplot(width=0.5)+theme_minimal()+scale_fill_manual(values=c("steelblue2","firebrick2" )) +geom_point()
 ```
 
-Now geom \_jitter is better, alpha is used tot let them fall acros each othere
+The points all fall on one line and it is unclear how the data is distributed. To solve this we could use the funtion geom_jitter() and remove the point produced by the boxplots using outlier.shape = NA in geom_boxplot(). In geom_jitter we use the function alpha to make them a bit transparent, and width to determine how much the points are spread.
 
 ```{r}
-geom_jitter
+#create ggplot
+ggplot(data = NP_sp, mapping = aes(threatened, NP_median, fill=threatened))+geom_boxplot(width=0.5,outlier.shape = NA)+theme_minimal()+scale_fill_manual(values=c("steelblue2","firebrick2" )) +geom_jitter(alpha=0.2, width=0.1)
+```
+
+Finally I would like to remove the lines of the axis using the theme() function. this can be done by setting the axis.line = element_blank(). Furhermore, there is still a legend, but we dont need it; for this we add within theme the legend.position = "none". Lastly we should rename the labels of NP_median in N/P by using the function labs(y="name)".
+
+```{r}
+#create ggplot
+ggplot(data = NP_sp, mapping = aes(threatened, NP_median, fill=threatened))+geom_boxplot(width=0.5,outlier.shape = NA)+theme_minimal()+scale_fill_manual(values=c("steelblue2","firebrick2" )) +geom_jitter(alpha=0.2, width=0.1)+ theme(axis.line = element_blank(),  legend.position = "none")+labs(y= "N/P")
+```
+
+If we would like to do make a similar comparison we could like to use the same code but then swap y in aes() for P_median and change the labs(). We can also save ggplots as an object lets save the N/P plots as np_box and the P boxplot as p_box.
+
+```{r}
+#create ggplot
+np_box<-ggplot(data = NP_sp, mapping = aes(threatened, NP_median, fill=threatened))+geom_boxplot(width=0.5,outlier.shape = NA)+theme_minimal()+scale_fill_manual(values=c("steelblue2","firebrick2" )) +geom_jitter(alpha=0.2, width=0.1)+ theme(axis.line = element_blank(),  legend.position = "none")+labs(y= "N/P")
+
+#create ggplot p_box
+p_box<-ggplot(data = NP_sp, mapping = aes(threatened, P_median, fill=threatened))+geom_boxplot(width=0.5,outlier.shape = NA)+theme_minimal()+scale_fill_manual(values=c("steelblue2","firebrick2" )) +geom_jitter(alpha=0.2, width=0.1)+ theme(axis.line = element_blank(),  legend.position = "none")+labs(y= "P")
+```
+
+Now we have saved both boxplots we can combine the together to get one new figure. For this we use the ggarrange() function within the package ggpubr. Install and load that package. Afterwards we can make both object into one figure by providing ggarrange() with the objects. We should also provide the function with the nrow or ncol and the labels c("a", "b").
+
+```{r}
+install.packages('ggpubr')
+library(ggpubr)
+
+
+#Arrange a new figure
+ggarrange(p_box, np_box, labels = c("a", "b"), ncol = 2, nrow = 1)
 ```
 
 **Figure 2 - Scatter plots**
 
-Scheifes et al. use cmtv.csv. Explain the concepts of community mean traits. If interested all R scripts are available to see how this is done. We will work with the output of the data wrangling stored in ctmvs. csv. We would like to again show that associations with fungi increase along a biomass, and decrease along a N to P gradient. Now make three graphs for the capabilities of species to associate with arbuscular mycorrhiza :P biomass and residuals
+Scheifes et al. use cmtv.csv. Explain the concepts of community mean traits. If interested all R scripts are available to see how this is done. We will work with the output of the data wrangling stored in ctmvs. csv.
+
+We would like to combine some of the results that show that community associations with fungi increase along a biomass, and decreases along a N to P gradient.
 
 ```{r}
 ##store data as dataframe 
