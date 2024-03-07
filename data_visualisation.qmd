@@ -1,7 +1,7 @@
 ---
 title: "Tutorial 2: Data visualisation in R"
 author:
-  - name: Benjamin Delory
+  - name: Benjamin Delory & Daniil Scheifes
     orcid: 0000-0002-1190-8060
     email: b.m.m.delory@uu.nl
     affiliations:
@@ -16,9 +16,106 @@ editor_options:
 
 Welcome to this tutorial on data visualisation in R!
 
-Throughout this tutorial, **our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R.** Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!
+Throughout this tutorial, **our goal is to provide you with basic tools for visualizing your datasets in R.** After organizing some variables, computing new ones, and filtering data for statistical analyses we are now left with plotting and visualizing our data. This tutorial is all about mastering this fundamental skill!Today we will be working with two datasets on plant communities across Eurasia: Wassen et al (2021) and *Sheifes et al., (2024)*.
+
+Lets start with the first! Wassen et al. (2021) showed in their publication that threatened species are most commonly found in soils with relatively low phosphorus (P) and phosphorus (P) to Nitrogen (N) content. In this study, they determined a N to P median niche value and compared species that were threatened to those that were not using two boxplots. Today we will recreate and improve this visualization.
+
+For this, we must install the most used data visualization package in the R programming language: ggplot2. With ggplot2, we can generate a wide variety of plots, including scatter plots, bar plots, histograms, box plots, and more, while having control over aesthetics such as colors, shapes, and
+labels by using a variety of functions.
+
+So lets install and load ggplot2!
 
 ```{r}
-#first install libraries
-install.packages()
+# Install ggplot2 package
+install.packages('ggplot2')
+
+# Load the ggplot2 package 
+library(ggplot2)
 ```
+
+**Figure 1 - Boxplots**
+
+Now we need to read the dataset (Wassen_fig2) in R from the Data folder (see data wrangling how this was done). Lets store the dataset in a dataframe called NP_sp. Afterwards check the dataframe. What are the columns that we need for our figure?
+
+```{r}
+#store data as dataframe 
+#check with benjamin so the functions are similar.
+NP_sp <- read.csv("Data/NPsp_Wassen.csv")
+head(NP_sp)
+
+```
+
+The grammar used in ggplot is as following:
+
+`ggplot(data = df, mapping = aes(x, y, other aesthetics))`
+
+where df is the dataframe, and x and y the names of the columns you would like to call.
+
+So lets do this first for our example.
+
+```{r}
+#create ggplot
+ggplot(data = NP_sp, mapping = aes(N, y))
+
+```
+
+No boxplot add boxplot with geom_boxplot.
+
+```{r}
+
+```
+
+No colour them red and blue
+
+```{r}
+
+```
+
+Now also add point!
+
+```{r}
+Geom_point
+```
+
+Now geom \_jitter is better, alpha is used tot let them fall acros each othere
+
+```{r}
+geom_jitter
+```
+
+**Figure 2 - Scatter plots**
+
+Scheifes et al. use cmtv.csv. Explain the concepts of community mean traits. If interested all R scripts are available to see how this is done. We will work with the output of the data wrangling stored in ctmvs. csv. We would like to again show that associations with fungi increase along a biomass, and decrease along a N to P gradient. Now make three graphs for the capabilities of species to associate with arbuscular mycorrhiza :P biomass and residuals
+
+```{r}
+##store data as dataframe 
+#check with benjamin so the functions are similar.
+NP_tr <- read.csv("CMTV_Scheifes.csv")
+head(NP_tr)
+```
+
+No we will make two ggplots. one by biomass, other one by NP and add point using geom_point. We will first start with makin the graph for biomass. colour should be grreen, correct alpha.
+
+```{r}
+#create ggplot
+ggplot(data = NP_tr, mapping = aes(biomass_vascular_plants_g/m2, aveAM))
+
+```
+
+AS you can see, we have the data but there is no linear model in the grpah. As the paper uses a more complex. You can use the geom_smooth function to fit a linear model.
+
+```{r}
+Geom_smooth()
+```
+
+As you can see the model is only a visualization but does not give you information on p r squared etc. to add this information you can use annotate. Run an lm and store the data of the R-squared, p - value and equation, so you can show p-valueit in the graphs
+
+```{r}
+annotate("text", x = 0.9, y = 3.3, 
+           label = paste("R-squared =", round(r_squared, 3), "\n", "p-value =", format(p_value, scientific = TRUE),
+                         "\n", "Equation:", equation),
+           hjust = 0, vjust = 1, size = 3)
+
+```
+
+Ask for Feedback following this link.
