@@ -16,12 +16,11 @@ editor_options:
 
 Welcome to this tutorial on data visualisation in R!
 
-Throughout this tutorial, **our goal is to provide you with basic tools for visualizing your datasets in R.** After organizing some variables, computing new ones, and filtering data for statistical analyses we are now left with plotting and visualizing our data. This tutorial is all about mastering this fundamental skill!Today we will be working with two datasets on plant communities across Eurasia: Wassen et al (2021) and *Sheifes et al., (2024)*.
+Throughout this tutorial, **our goal is to provide you with basic tools for visualizing your datasets in R.** After organizing some variables, computing new ones, and filtering data for statistical analyses we are now left with plotting and visualizing our data. This tutorial is all about mastering this fundamental skill! Today we will be working with two datasets on plant communities across Eurasia: Wassen et al (2021) and *Sheifes et al., (2024)*. Aftwerwards, we will spatially visualize the locations used in the this course
 
 Lets start with the first! Wassen et al. (2021) showed in their publication that threatened species are most commonly found in soils with relatively low phosphorus (P) and phosphorus (P) to Nitrogen (N) content. In this study, they determined a N to P median niche value and compared species that were threatened to those that were not using two boxplots. Today we will recreate and improve this visualization.
 
-For this, we must install the most used data visualization package in the R programming language: ggplot2. With ggplot2, we can generate a wide variety of plots, including scatter plots, bar plots, histograms, box plots, and more, while having control over aesthetics such as colors, shapes, and
-labels by using a variety of functions.
+For this, we must install the most used data visualization package in the R programming language: ggplot2. With ggplot2, we can generate a wide variety of plots, including scatter plots, bar plots, histograms, box plots, and more, while having control over aesthetics such as colors, shapes, and labels by using a variety of functions.
 
 So lets install and load ggplot2!
 
@@ -37,7 +36,7 @@ If you are stuck or want help, also check Help-\> Cheat Sheet -\> Data visualiza
 
 **Figure 1 - Boxplots**
 
-Now we need to read the dataset (Wassen_fig2) in R from the Data folder (see data wrangling how this was done). Lets store the dataset in a dataframe called NP_sp. Afterwards check the dataframe. What are the columns that we need for our figure?
+Now, we need to read the dataset (Wassen_fig2) in R from the Data folder (see data wrangling how this was done). Lets store the dataset in a dataframe called NP_sp. Afterwards check the dataframe. What are the columns that we need for our figure?
 
 ```{r}
 #store data as dataframe 
@@ -127,15 +126,18 @@ We would like to combine some of the results that show that community associatio
 ```{r}
 ##store data as dataframe 
 #check with benjamin so the functions are similar.
-NP_tr <- read.csv("CMTV_Scheifes.csv")
+NP_tr <- read.csv("Data/CMTV_Scheifes.csv")
 head(NP_tr)
 ```
 
-No we will make two ggplots. one by biomass, other one by NP and add point using geom_point. We will first start with makin the graph for biomass. colour should be grreen, correct alpha.
+No we will make two ggplots: one by biomass, other one by N:P. We first need to store the aveAM as numeric using the as.numeric() function. afterwards, we will add point using geom_point. We will first start with makin the graph for biomass. colour should be grreen.
 
 ```{r}
+
+NP_tr$aveAM<- as.numeric(NP_tr$aveAM)
+
 #create ggplot
-ggplot(data = NP_tr, mapping = aes(biomass_vascular_plants_g/m2, aveAM))
+ggplot(data = NP_tr, mapping = aes(log(biomass_vascular_plants_g.m2), aveAM))+geom_point()+theme_classic()
 
 ```
 
@@ -153,6 +155,81 @@ annotate("text", x = 0.9, y = 3.3,
                          "\n", "Equation:", equation),
            hjust = 0, vjust = 1, size = 3)
 
+```
+
+**Figure 2 - Mapping spatial data**
+
+Lets continue with visualizing the locations in our course on a mat. For this, we will load point data with the location of your fieldwork together with a map for pH values of the top 5 cm (model of Helfenstein et al., ([2022](10.4121/16451739.v1))), highest ground water table (GWT) plus seepage and infiltration (model of AZURE and HYDROMEDAH). Lastly we will add a soil map (from Basisregistratie Ondergrond) and a X. This data we will then visualize and create a map out of it.
+
+Lets first install and load the packages for handling spatial data
+
+```{r}
+install.packages("sf")
+library(sf)
+library(raster)
+library(rgdal)
+
+```
+
+Now we will load the locations of our field data (Locations_EFR.gpkg), which is a geopackage: an open, standards-based format for storing geospatial information. With the sf package we can read these geopackages, using st_read(). With ggplot we can show them using geom_sf() providing its location. Why do we not see a background map?
+
+ggplot()+geom_sf(data = locations_sf)+theme_minimal()
+
+```{r}
+locations_sf <- st_read(dsn = "Data/Locations_EFR2.gpkg")
+
+ggplot()+geom_sf(data = locations_sf)+theme_minimal()
+```
+
+Next, let's add the highest ground water table map to it We using the GWH_high.tif file for this. This is called a TIFF files, which is a Tagged Image File Format: it is a widely used file format for storing raster graphics images. We will use the function raster() to store this file. Thereafter, we will need to store it as a data_frame to use it in ggplot. Finaly we can use geom_raster to plot both rasters in ggplot. With scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 2, transform = "pseudo_log", na.value = "transparent") we are colouring the values; use fill = GWT_high as a fill in geom_raster.
+
+```{r}
+GWT<-raster("data/GWT_high.tif")
+
+
+GWT_df <- as.data.frame(GWT, xy = TRUE)
+KI2_df <- as.data.frame(KI2, xy = TRUE)
+
+ggplot()+
+geom_raster(data = GWT_df , aes(x = x, y = y, fill = GWT_high))+
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red",
+                       midpoint = 2,
+                         transform = "pseudo_log",
+                       na.value = "transparent") +
+geom_sf(data = locations_sf)+
+theme_minimal()
+```
+
+Now lets check the soil types (Soil_OBR.gpkg). This is again a geopackage, but we need to transform it to make a ggplot with appropiate fill (VEREENV) for the soil types. can you transform V = Peat, DV = Peat, S =Sand, M =Clay and use scale_fill_manual to appropriate fill it? Do the location UHH and UHB have the same soil?
+
+```{r}
+soil_sf <- st_read(dsn = "Data/Soil_BRO.gpkg")
+
+# Transform VEREENV variable
+soil_sf$VEREENV <- ifelse(soil_sf$VEREENV == "DV", "Peat",
+                          ifelse(soil_sf$VEREENV == "V", "Peat",
+                                 ifelse(soil_sf$VEREENV == "M", "Clay",
+                                        ifelse(soil_sf$VEREENV == "Z", "Sand",soil_sf$VEREENV))))
+
+
+ggplot() +
+geom_sf(data = soil_sf, aes(fill = VEREENV),alpha = 0.5) +
+  geom_sf(data = locations_sf) +
+  scale_fill_manual(name = "Soil Type",
+                    values = c("Peat" = "black", "Sand" = "yellow", "Clay" = "brown")
+                    ,na.value = "lightgrey") +
+  theme_minimal()
+```
+
+We are missing a basemap in all these maps, so by using hte package [mapview](https://r-spatial.github.io/mapview/) we can add this easily! install that package, load it and use the function mapview to creat a map. for the soil_sf we should use VEREENV as zcol. See the [website](https://r-spatial.github.io/mapview/reference/mapView.html) and some [examples](https://r-spatial.github.io/mapview/articles/mapview_02-advanced.html) for many mapview functions. can you also add our GWT raster to it?
+
+```{r}
+install.packages('mapview')
+library(mapview)
+
+mapview(locations_sf,map.types = c("OpenStreetMap"))+
+   mapview(soil_sf, zcol = "VEREENV",col.regions = c("brown", "lightgrey", "black", "yellow"), alpha.regions = 0.3,stroke = FALSE, map.types = c("OpenStreetMap"))
+ 
 ```
 
 Ask for Feedback following this link.
