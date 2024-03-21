@@ -1,0 +1,7 @@
+[2,"\n"]
+[1,"pandoc \n  to: html\n  output-file: data_analysis.html\n  standalone: true\n  title-prefix: Ecological field research (GEO2-2439)\n  section-divs: true\n  html-math-method: mathjax\n  wrap: none\n  default-image-extension: png\n  css:\n    - styles.css\n  toc: true\n  toc-depth: 5\n  \nmetadata\n  document-css: false\n  link-citations: true\n  date-format: long\n  lang: en\n  editor: visual\n  editor_options:\n    chunk_output_type: console\n  theme:\n    light:\n      - cosmo\n      - theme-light.scss\n    dark:\n      - cosmo\n      - theme-dark.scss\n  code-copy: true\n  code-summary: Show me the R code\n  fig-cap-location: bottom\n  title: 'Tutorial 5: Data analysis in R'\n  author:\n    - name: Benjamin Delory\n      orcid: 0000-0002-1190-8060\n      email: b.m.m.delory@uu.nl\n      affiliations:\n        - name: 'Environmental sciences group, Copernicus institute of sustainable development, Utrecht University'\n  \n"]
+[1,"Output created: docs\\data_analysis.html\n\n"]
+[1,"Preparing to preview\n"]
+[1,"\n"]
+[1,"Watching files for changes\nBrowse at http://localhost:4020/data_analysis.html\n"]
+[1,"GET: /data_analysis.html\n"]
