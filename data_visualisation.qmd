@@ -96,7 +96,7 @@ Finally I would like to remove the lines of the axis using the theme() function.
 ggplot(data = NP_sp, mapping = aes(threatened, NP_median, fill=threatened))+geom_boxplot(width=0.5,outlier.shape = NA)+theme_minimal()+scale_fill_manual(values=c("steelblue2","firebrick2" )) +geom_jitter(alpha=0.2, width=0.1)+ theme(axis.line = element_blank(),  legend.position = "none")+labs(y= "N/P")
 ```
 
-If we would like to do make a similar comparison we could like to use the same code but then swap y in aes() for P_median and change the labs(). We can also save ggplots as an object lets save the N/P plots as np_box and the P boxplot as p_box.
+If we would like to do make a similar comparison we could like to use the same code but then swap y in aes() for P_median and change the labs(). We can also save ggplots as an object. Lets save the N/P plots as np_box and the P boxplot as p_box.
 
 ```{r}
 #create ggplot
@@ -106,15 +106,19 @@ np_box<-ggplot(data = NP_sp, mapping = aes(threatened, NP_median, fill=threatene
 p_box<-ggplot(data = NP_sp, mapping = aes(threatened, P_median, fill=threatened))+geom_boxplot(width=0.5,outlier.shape = NA)+theme_minimal()+scale_fill_manual(values=c("steelblue2","firebrick2" )) +geom_jitter(alpha=0.2, width=0.1)+ theme(axis.line = element_blank(),  legend.position = "none")+labs(y= "P")
 ```
 
-Now we have saved both boxplots we can combine the together to get one new figure. For this we use the ggarrange() function within the package ggpubr. Install and load that package. Afterwards we can make both object into one figure by providing ggarrange() with the objects. We should also provide the function with the nrow or ncol and the labels c("a", "b").
+Now we have saved both boxplots we can combine the together to get one new figure. For this we use the ggarrange() function within the package ggpubr. Install and load that package. Afterwards we can make both object into one figure by providing ggarrange() with the objects. We should also provide the function with the nrow or ncol and the labels c("a", "b"). Last we can use the function ggsave to save a to an appropiate folder. lets make an output folder and save it there.
 
 ```{r}
 install.packages('ggpubr')
 library(ggpubr)
 
 
-#Arrange a new figure
-ggarrange(p_box, np_box, labels = c("a", "b"), ncol = 2, nrow = 1)
+#make arrange
+figure1<-ggarrange(p_box, np_box, labels = c("a", "b"), ncol = 2, nrow = 1)
+figure1
+
+#save the figure
+ggsave("output/figure1.png", plot = figure1, dpi=400, width = 5, height = 4)
 ```
 
 **Figure 2 - Scatter plots**
@@ -141,25 +145,77 @@ ggplot(data = NP_tr, mapping = aes(log(biomass_vascular_plants_g.m2), aveAM))+ge
 
 ```
 
-AS you can see, we have the data but there is no linear model in the grpah. As the paper uses a more complex. You can use the geom_smooth function to fit a linear model.
+As you can see, we have the data but there is no linear model in the graph. As the paper uses a more complex, but we will try to fit a linear model and present this in the figure. You can use the geom_smooth function witthout error margins to first show a linear model, where method = "lm" and se = FALSE
 
 ```{r}
-Geom_smooth()
+ggplot(data = NP_tr, mapping = aes(x = log(biomass_vascular_plants_g.m2), y = aveAM)) + geom_point() + geom_smooth(method = "lm", se= FALSE)+ theme_classic()
 ```
 
-As you can see the model is only a visualization but does not give you information on p r squared etc. to add this information you can use annotate. Run an lm and store the data of the R-squared, p - value and equation, so you can show p-valueit in the graphs
+As you can see the model is only a visualization but does not give you information on p r squared etc. to add this information you can use annotate. Run an lm and store the data of the R-squared and p - value in a new object. then we use annotate to provide the graph with the data by referring to the lm.
 
 ```{r}
-annotate("text", x = 0.9, y = 3.3, 
-           label = paste("R-squared =", round(r_squared, 3), "\n", "p-value =", format(p_value, scientific = TRUE),
-                         "\n", "Equation:", equation),
-           hjust = 0, vjust = 1, size = 3)
+
+#fit linear regression model
+lm_model <- lm(aveAM ~ log(biomass_vascular_plants_g.m2), data = NP_tr)
+
+#extract R-squared and p-value
+rsquared <- summary(lm_model)$r.squared
+p_value <- summary(lm_model)$coefficients[2,4]
+
+ggplot(data = NP_tr, aes(x = log(biomass_vascular_plants_g.m2), y = aveAM)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)+ 
+  annotate("text", x = 2, y = 0.5, label = paste("R^2 =", round(rsquared, 3), "\np =", format(p_value, digits = 2)), hjust = 1, vjust = 1, size = 4) +
+  theme_classic()
 
 ```
 
-**Figure 2 - Mapping spatial data**
+Last we want to improve the graph by changing the colour with to green, make them a bit transparant, and change the colour of the line to red. Furhtermore, we need to change the names of y-axis to AM and of the x-axis to ln biomass (use
 
-Lets continue with visualizing the locations in our course on a mat. For this, we will load point data with the location of your fieldwork together with a map for pH values of the top 5 cm (model of Helfenstein et al., ([2022](10.4121/16451739.v1))), highest ground water table (GWT) plus seepage and infiltration (model of AZURE and HYDROMEDAH). Lastly we will add a soil map (from Basisregistratie Ondergrond) and a X. This data we will then visualize and create a map out of it.
+```{r}
+
+AMbio<-ggplot(data = NP_tr, aes(x = log(biomass_vascular_plants_g.m2), y = aveAM)) +
+  geom_point(color = "green4", alpha = 0.3, size =2) +
+  geom_smooth(method = "lm", se = FALSE, colour = "red")+ 
+  annotate("text", x = 2.5, y = 1, label = paste("R^2 =", round(rsquared, 3), "\np =", format(p_value, digits = 2)), hjust = 1, vjust = 1, size = 4) +
+  labs(x = "ln biomass", y = "AM")+
+  theme_classic()
+
+AMbio
+```
+
+Can you now do similar for the data of nitrogen to phosphorus ratio, arrange them together and save them? You can also remove the axis.title.y and axis.text.y for the second figure as this is already provided in the first (see how we removed the axis line in figure1). To make sure the y-axis are aligned, use align ="h" for this. Also we need to make some extra left space in the second plot using plot.margin = margin() in theme.for As you maybe first will see is that the arrange does not fit in your frame. This will be corrected when you save it. If not, make the annotates a bit smaller.
+
+```{r}
+
+#fit linear regression model
+lm_modelNP <- lm(aveAM ~ log(NP_vascular_plants), data = NP_tr)
+
+#extract R-squared and p-value
+rsquaredNP <- summary(lm_modelNP)$r.squared
+p_valueNP <- summary(lm_modelNP)$coefficients[2,4]
+
+#create ggplot
+AMNP<-ggplot(data = NP_tr, aes(x = log(NP_vascular_plants), y = aveAM)) +
+  geom_point(color = "dodgerblue1", alpha = 0.3, size =2) +
+  geom_smooth(method = "lm", se = FALSE, colour = "red")+ 
+  annotate("text", x = 4, y = 1, label = paste("R^2 =", round(rsquaredNP, 3), "\np =", format(p_valueNP, digits = 2)), hjust = 1, vjust = 1, size = 4) +
+  labs(x = "ln NP", y = "AM")+
+    theme_classic()+
+  theme(axis.title.y = element_blank(), axis.text.y = element_blank(), plot.margin = margin(0, 0, 0, 20))
+AMNP
+
+
+figure2<-ggarrange(AMbio, AMNP, labels = c("a", "b"), ncol = 2, nrow = 1, align = 'h')
+figure2
+
+#save the figure
+ggsave("output/figure2.png", plot = figure2, dpi=400, width = 10, height = 5)
+```
+
+**Figure 3 - Mapping spatial data**
+
+Lets continue with visualizing the locations in our course on a mat. For this, we will load point data with the location of your fieldwork together with a map for pH values of the top 5 cm (model of Helfenstein et al., ([2022](10.4121/16451739.v1))), highest ground water table (GWT) plus seepage and infiltration (model of AZURE and HYDROMEDAH). Lastly we will add a soil map BRO (Basisregistratie Ondergrond) to it. This data we will then visualize and create a map out of it.
 
 Lets first install and load the packages for handling spatial data
 
@@ -221,15 +277,21 @@ geom_sf(data = soil_sf, aes(fill = VEREENV),alpha = 0.5) +
   theme_minimal()
 ```
 
-We are missing a basemap in all these maps, so by using hte package [mapview](https://r-spatial.github.io/mapview/) we can add this easily! install that package, load it and use the function mapview to creat a map. for the soil_sf we should use VEREENV as zcol. See the [website](https://r-spatial.github.io/mapview/reference/mapView.html) and some [examples](https://r-spatial.github.io/mapview/articles/mapview_02-advanced.html) for many mapview functions. can you also add our GWT raster to it?
+We are missing a basemap in all these maps, so by using hte package [mapview](https://r-spatial.github.io/mapview/) we can add this easily! install that package, load it and use the function mapview to creat a map. for the soil_sf we should use VEREENV as zcol. See the [website](https://r-spatial.github.io/mapview/reference/mapView.html) and some [examples](https://r-spatial.github.io/mapview/articles/mapview_02-advanced.html) for many mapview functions. can you also add our GWT raster to it? lastly we save the map in your output folder using mapshot() and toggle out mapviewOptions(fgb = FALSE).
 
 ```{r}
 install.packages('mapview')
 library(mapview)
+mapviewOptions(fgb = FALSE)
 
-mapview(locations_sf,map.types = c("OpenStreetMap"))+
+Map<-mapview(locations_sf,map.types = c("OpenStreetMap"))+
    mapview(soil_sf, zcol = "VEREENV",col.regions = c("brown", "lightgrey", "black", "yellow"), alpha.regions = 0.3,stroke = FALSE, map.types = c("OpenStreetMap"))
  
+Map
+
+mapshot(Map, file = "output/my_map.png", scalebar = TRUE)
 ```
 
 Ask for Feedback following this link.
+
+<link>
