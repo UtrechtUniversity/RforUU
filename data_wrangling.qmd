@@ -58,10 +58,11 @@ The POEM data that will be used in this tutorial are available on a [Zenodo repo
 First, install the *inborutils* R package using the following code:
 
 ```{r}
-#| eval: true
+#| eval: false
 #| echo: true
 #| warning: false
 #| message: false
+#| code-fold: false
 
 install.packages("inborutils", repos = c(inbo = "https://inbo.r-universe.dev", 
                                          CRAN = "https://cloud.r-project.org"))
@@ -314,7 +315,7 @@ Widening means increasing the number of columns and reducing the number of rows 
 
 **Why would we want to widen or lengthen our dataset?**
 
-Let's take our POEM data as an example. The Biomass column contains the shoot dry weight measured on all species in all plots.In some cases, however, we may wish to focus our analysis on specific species. In that case, it would be easier to fit statistical models if the biomass of each species is stored as a separate variable in our dataset. This requires widening our data to have as many columns storing biomass data as species in our dataset. The best way to do this is to use `pivot_wider()`. If your goal is to lengthen your data, `pivot_longer()` is the way to go. Let's see how these two functions work.
+Let's take our POEM data as an example. The Biomass column contains the shoot dry weight measured on all species in all plots. In some cases, however, we may wish to focus our analysis on specific species. In that case, it would be easier to fit statistical models if the biomass of each species is stored as a separate variable in our dataset. This requires widening our data to have as many columns storing biomass data as species in our dataset. The best way to do this is to use `pivot_wider()`. If your goal is to lengthen your data, `pivot_longer()` is the way to go. Let's see how these two functions work.
 
 ```{r}
 #| eval: true
