@@ -22,7 +22,7 @@ Welcome to this tutorial on data visualisation in R!
 
 Throughout this tutorial, **our aim is to provide you with the basic tools for visualising your data in R**. After organizing some variables, computing new ones, and filtering data for statistical analyses, we are now left with plotting and visualising our data. The aim of this tutorial is to help you master this fundamental skill!
 
-We will work with the following published dataset on plant communities across Eurasia: **Wassen MJ, Schrader J, van Dijk J, Eppinga MB**. **2021**. [Phosphorus fertilization is eradicating the niche of northern Eurasia\'s threatened plant species](https://www.nature.com/articles/s41559-020-01323-w). *Nature ecology & evolution* **5**: 67--73.
+We will work with the following published dataset on plant communities across Eurasia: **Wassen MJ, Schrader J, van Dijk J, Eppinga MB**. **2021**. [Phosphorus fertilization is eradicating the niche of northern Eurasia's threatened plant species](https://www.nature.com/articles/s41559-020-01323-w). *Nature ecology & evolution* **5**: 67--73.
 
 At the end of this tutorial, you will also learn how to map field site locations in R.
 
@@ -241,7 +241,7 @@ What would happen if you use `color=threatened` instead of `fill=threatened`? Wh
 
 By default, when assigning a specific color to each species group, *ggplot2* uses colors that are evenly spaced around a HCL (Hue Chroma Luminance) colour circle. However, this is not necessarily the best choice, especially for colour-blind people. The colour palettes provided by `viridis()` in the *viridis* R package have been specially designed to produce graphics that are pleasing to the eye, easier to read for colour-blind people and print well in greyscale. As shown in the figure below, eight colour palettes are available in *viridis*: **magma** (option A), **inferno** (option B), **plasma** (option C), **viridis** (option D, this is the default), **cividis** (option E), **rocket** (option F), **mako** (option G), and **turbo** (option H).
 
-[![Colour palettes available in the *viridis* R package](viridis.png){fig-align="center" width="600"}](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#usage)
+[![Colour palettes available in the viridis R package](viridis.png){fig-align="center" width="600"}](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#usage)
 
 Let's keep on personalising our plot by specifying that we want to use the viridis (option D) color palette to create the figure. This can be done with `scale_colour_viridis()` (`scale_color_viridis()` would work too) or `scale_fill_viridis()`. These functions have a couple of arguments to play with, including `alpha` (used to make colours more or less transparent), `direction` (to change the order of the colors in the scale), `discrete` (set to TRUE if you want to assign colours to a discrete scale such as groups), and `option` (to choose the colour palette you want to use). A list of colours available in R can also be found [here](https://www.uvm.edu/~ngotelli/Rscripts/ColorChart.pdf).
 
@@ -549,7 +549,7 @@ It is already a nice graph, but now we want to make it more informative by displ
 #| echo: true
 #| warning: false
 #| message: false
-#| fig-width: 4
+#| fig-width: 5
 #| fig-height: 4
 #| fig-align: center
 
