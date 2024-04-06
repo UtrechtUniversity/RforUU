@@ -8,6 +8,30 @@ author:
       - name: Environmental sciences group, Copernicus institute of sustainable development, Utrecht University
 ---
 
+## Installing R packages
+
+An R package is like a toolbox, except that instead of containing tools, it contains functions for performing specific tasks such as filtering data or fitting a statistical model. Most of the R packages you will need for these tutorials are freely available from [CRAN](https://cran.r-project.org/) (The Comprehensive R Archive Network) or [GitHub](https://github.com/). You can install CRAN R packages using `install.packages()`.
+
+```{r}
+#| eval: false 
+#| echo: true 
+#| code-fold: false  
+
+#Install an R package to import data from Excel files
+install.packages("readxl")
+```
+
+If you want to install an R package stored in a GitHub repository, use `install_github()` in the *devtools* R package.
+
+```{r}
+#| eval: false 
+#| echo: true 
+#| code-fold: false  
+
+#Install tbi R package to calculate Tea Bag Index paramaters
+devtools::install_github("BenjaminDelory/tbi/tbi")
+```
+
 ## Commenting
 
 You can add comments to your R script using the hash tag symbol: `#`

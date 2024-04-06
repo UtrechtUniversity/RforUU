@@ -67,7 +67,7 @@ format:
     code-copy: true
     code-summary: "Show me the R code"
     code-tools: true
-    code-overflow: wrap
+    code-overflow: scroll
     fig-cap-location: bottom
 
 editor: visual

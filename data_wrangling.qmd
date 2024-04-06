@@ -53,11 +53,49 @@ The first thing to do after opening RStudio is to import some data to work with.
 
 ### Download the POEM data from Zenodo
 
-The POEM data that will be used in this tutorial are available on a Zenodo repository.
+The POEM data that will be used in this tutorial are available on a [Zenodo repository](https://zenodo.org/records/10119982). You can download the data manually, but you can also do it using an R function called `download_zenodo()`. Let's give it a try.
 
-### Load tidyverse
+First, install the *inborutils* R package using the following code:
 
-All the functions we need for this tutorial are available in R packages from the *tidyverse* collection. You can load *tidyverse* using `library()`.
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+install.packages("inborutils", repos = c(inbo = "https://inbo.r-universe.dev", 
+                                         CRAN = "https://cloud.r-project.org"))
+```
+
+You can now download the data used in this tutorial using `download_zenodo()`.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+inborutils::download_zenodo(doi="10.5281/zenodo.10119982",
+                            quiet=TRUE)
+```
+
+By default, the data will be downloaded as a zip file and will be stored in your working directory. If you do not know what is your working directory, run `getwd()` in your R console. Let's extract (or unzip) the files we have just downloaded from Zenodo and let's store these files in a new folder called "Data_POEM":
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+unzip(zipfile = "Data_POEM_Paper1_Alonso-Crespo_et_al_2024-v1.0.zip",
+      exdir = "Data_POEM")
+```
+
+The notation `inborutils::download_zenodo()` means that we want to use the function `download_zenodo()` contained in the *inborutils* R package. This notation is very useful because it is not uncommon to have different R functions from different packages with the same name. It is an easy way to make sure that the right function is used for your analysis.
+
+### Load R packages
+
+Most of the functions we need for the rest of this tutorial are available in R packages from the *tidyverse* collection. We will also need the `read_excel()` function from the *readxl* package and the `kable()` function from the *knitr* package. You can load *tidyverse*, *readxl*, and *knitr* using `library()`.
 
 ```{r}
 #| eval: true
@@ -66,10 +104,413 @@ All the functions we need for this tutorial are available in R packages from the
 #| message: false
 
 library(tidyverse)
+library(readxl)
+library(knitr)
 ```
 
-### Import data in R
+### Import data into R
+
+There are quite a few functions available in R to import data. Your choice will mainly depend on the file format used to store data. For instance, if your data are stored in a csv file (i.e., comma separated values), then `read_csv()` would be a good choice. A more general option that would work well for most data stored in text files is `read_delim()`.
+
+In the POEM project, raw biomass data are stored in different folders for the experiment started in 2020 (POEM2020) and the experiment started in 2021 (POEM2021). For each experiment, there is one data file for each growing season. As the data is stored in Excel files (.xlsx), we can use `read_excel()` to import our data into R. For now, we will simply store each set of data in separate R objects.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+#Import data from the first experiment (POEM2020)
+
+poem2020_year1 <- read_excel("Data_POEM/POEMexperiment-Data_POEM_Paper1_Alonso-Crespo_et_al_2024-0c2abb7/Data/POEM2020/Data_Biomass_POEM2020_2020-07.xlsx")
+
+poem2020_year2 <- read_excel("Data_POEM/POEMexperiment-Data_POEM_Paper1_Alonso-Crespo_et_al_2024-0c2abb7/Data/POEM2020/Data_Biomass_POEM2020_2021-06.xlsx")
+
+poem2020_year3 <- read_excel("Data_POEM/POEMexperiment-Data_POEM_Paper1_Alonso-Crespo_et_al_2024-0c2abb7/Data/POEM2020/Data_Biomass_POEM2020_2022-06.xlsx")
+
+#Import data from the second experiment (POEM2021)
+
+poem2021_year1 <- read_excel("Data_POEM/POEMexperiment-Data_POEM_Paper1_Alonso-Crespo_et_al_2024-0c2abb7/Data/POEM2021/Data_Biomass_POEM2021_2021-07.xlsx")
+
+poem2021_year2 <- read_excel("Data_POEM/POEMexperiment-Data_POEM_Paper1_Alonso-Crespo_et_al_2024-0c2abb7/Data/POEM2021/Data_Biomass_POEM2021_2022-06.xlsx")
+
+poem2021_year3 <- read_excel("Data_POEM/POEMexperiment-Data_POEM_Paper1_Alonso-Crespo_et_al_2024-0c2abb7/Data/POEM2021/Data_Biomass_POEM2021_2023-06.xlsx")
+```
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| message: false
+
+unlink("Data_POEM", recursive = TRUE)
+file.remove("Data_POEM_Paper1_Alonso-Crespo_et_al_2024-v1.0.zip")
+```
+
+In RStudio, you can see how each data frame looks like using `View()`.
+
+```{r}
+#| eval: false
+#| echo: true
+#| warning: false
+#| message: false
+
+View(poem2021_year1)
+```
+
+You can see that each dataset consists of a number of observations (rows) of 6 variables (columns). These variables are:
+
+-   **Year**: the year of initiation of each experiment
+-   **Harvest**: the date at which biomass data were collected (YYYY-MM)
+-   **Plot**: the plot identification number (plot number - arrival order/replicate)
+-   **Quadrat**: the quadrat identification number (plant biomass was collected in 2 or 4 quadrats per plot)
+-   **Species**: the plant species name
+-   **SDW_g**: the shoot dry weight in grams
+
+To enable data exploration and analysis, we now need to combine these different datasets, so that all the data is stored in the same R object. You can do this using `rbind()`.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+poem_data <- rbind(poem2020_year1,
+                   poem2020_year2,
+                   poem2020_year3,
+                   poem2021_year1,
+                   poem2021_year2,
+                   poem2021_year3)
+```
 
 ## Tidying data
 
+::: callout-important
+## What's make a dataset tidy?
+
+A **tidy dataset** follows these [three rules]{.underline}:
+
+1.  Each variable is a column and each column is a variable
+2.  Each observation is a row and each row is an observation
+3.  Each value is a cell and each cell is a single value
+
+All packages in the *tidyverse* are designed to work with tidy data. This section is all about learning how to make your data tidy.
+:::
+
+### Extracting data from strings
+
+In our dataset, the Plot column contains three different pieces of information: the plot ID number, the order of arrival scenario (S, F, G, L, B), and the replicate number. How can we store each piece of information in a specific column? The short answer is by using `separate_wider_position()` and/or `separate_wider_delim()`. These functions are very useful when several important variables are pasted together in a single string, which is generally the case when you use barcodes to make sample processing faster and less prone to human error. Let's see how it works.
+
+First, we are going to separate the plot identification number (which is located on the left side of the hyphen) from the other elements (located on the right side of the hyphen). As the hyphen acts as a delimiter, we will use `separate_wider_delim()` to split the Plot column into two new columns (PlotID and Treatment), one of which stores the plot identification number (PlotID).
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+poem_data <- separate_wider_delim(data = poem_data,
+                                  cols = "Plot",
+                                  delim="-",
+                                  names=c("PlotID", "Treatment"),
+                                  cols_remove=TRUE) #Do not keep Plot column in the data
+
+#Specify that PlotID is a numeric variable
+
+poem_data$PlotID <- as.numeric(poem_data$PlotID)
+```
+
+We are halfway there. The Treatment column contains two pieces of information that we would like to store in separate columns. As there is no clear delimiter between the letter referring to the order of arrival scenario and the replicate number, we will use `separate_wider_position()` to do that.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+poem_data <- separate_wider_position(data = poem_data,
+                                     cols = "Treatment",
+                                     width=c(Arrival=1, Replicate=1), #Specify column names and column widths
+                                     cols_remove=TRUE) #Do not keep Plot column in the data
+
+#Specify that Replicate is a numeric variable
+
+poem_data$Replicate <- as.numeric(poem_data$Replicate)
+```
+
+And that's it! Now each column in our dataset contains one single piece of information, which is all we needed to start exploring and analysing the data.
+
+One important note before moving on to the next section. When you are writing R code, there isn't usually just one way of writing it. Consider what we have just done: it is possible to write your code in a more compact and efficient way, while still performing the same operations. This requires using **the pipe**.
+
+::: callout-tip
+## The pipe: \|\>
+
+In *tidyverse*, each action is associated to a specific verb. For instance, `filter()` is used to filter data, `select()` is used to select specific columns, `rename()` is used to rename variables, `mutate()` is used to transform variables, etc. When working with ecological data, it is very common to have to perform more than one action. In this case, you need to combine several verbs, which is best done using the pipe. The pipe works as follows: it passes the thing on its left to the function on its right. This means that writing f(x, y) is equivalent to x \|\> f(y).
+
+To add the pipe to your code, use the following keyboard shortcut: **Ctrl/Cmd + Shift + M**
+
+Before starting using the pipe, go to Tools --\> Global Options... --\> Code, and make sure that the "Use native pipe operator" is checked. This requires R.4.1.+.
+:::
+
+Let's give it a try and rewrite the code we wrote to separate strings using the pipe. This time, we are also going to use `mutate()` to convert PlotID and Replicate as numeric variables. We will also use `rename()` to rename "SDW_g" into "Biomass".
+
+First, we need to recreate the data we started working with.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+#Recreate starting dataset
+
+poem_data <- rbind(poem2020_year1,
+                   poem2020_year2,
+                   poem2020_year3,
+                   poem2021_year1,
+                   poem2021_year2,
+                   poem2021_year3)
+```
+
+Now we can rewrite our code using the pipe.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+#Extract information from the Plot column using the pipe
+
+poem_data <- poem_data |> 
+  separate_wider_delim(cols = Plot,
+                       delim="-",
+                       names=c("PlotID", "Treatment"),
+                       cols_remove=TRUE) |> 
+  separate_wider_position(cols = Treatment,
+                          width=c(Arrival=1, Replicate=1),
+                          cols_remove=TRUE) |> 
+  mutate(PlotID=as.numeric(PlotID),
+         Replicate=as.numeric(Replicate)) |> 
+  rename(Biomass=SDW_g)
+```
+
+Let's take a quick look at the first ten rows of our dataset using `head().` We can also use `kable()` in the *knitr* package to produce a nice looking table in your R console.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+kable(head(poem_data, n = 10))
+```
+
+### Widening and lengthening data
+
+**What is meant by widening and lengthening data?**
+
+Widening means increasing the number of columns and reducing the number of rows in your dataset. Lengthening is the opposite: increasing the number of rows and reducing the number of columns.
+
+**Why would we want to widen or lengthen our dataset?**
+
+Let's take our POEM data as an example. The Biomass column contains the shoot dry weight measured on all species in all plots.In some cases, however, we may wish to focus our analysis on specific species. In that case, it would be easier to fit statistical models if the biomass of each species is stored as a separate variable in our dataset. This requires widening our data to have as many columns storing biomass data as species in our dataset. The best way to do this is to use `pivot_wider()`. If your goal is to lengthen your data, `pivot_longer()` is the way to go. Let's see how these two functions work.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+#Use pivot_wider so that the biomass of each species is stored as a separate variable
+
+poem_data_wide <- poem_data |> 
+  pivot_wider(names_from = Species, #Species names will be used as column names
+              values_from = Biomass, #Biomass values are stored in the Biomass column
+              values_fill = 0, #If a species is absent in a plot, its biomass value is zero
+              values_fn = sum) #Sum biomass values measured on the same species and in the same quadrat
+```
+
+If we use `dim()` to check the dimensions of our dataset, we can see that it contains 350 rows and 56 columns.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+dim(poem_data_wide)
+```
+
+Now let's use `pivot_longer()` on our widened dataset to bring it back to how it was before.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+#Use pivot_wider so that the biomass of each species is stored as a separate variable
+
+poem_data_long <- poem_data_wide |> 
+  pivot_longer(cols = `Agrostis capillaris`:`Vicia hirsuta`, #From column X to column Y
+               names_to = "Species", #Store species names in Species column
+               values_to = "Biomass") #Store biomass data in Biomass column
+```
+
+Note that this new dataset has the same structure as our initial dataset `(poem_data`), but contains many more rows. You can check this using `dim()` or `nrow()`. This is due to the fact that `poem_data_long` now includes many null values for species that were not detected during biomass harvesting in the quadrats.
+
 ## Transforming data
+
+### R operators
+
+Before diving into this chapter, it is useful to remember the main relational and logical operators in R. This can be useful when you need to define conditions to select specific rows in your data, for example. This happens very frequently when programming in R.
+
+| Operators | Description              | Type       |
+|-----------|--------------------------|------------|
+| \<        | Less than                | Relational |
+| \>        | Greater than             | Relational |
+| \<=       | Less than or equal to    | Relational |
+| \>=       | Greater than or equal to | Relational |
+| ==        | Equal to                 | Relational |
+| !=        | Not equal to             | Relational |
+| !         | NOT                      | Logical    |
+| &         | AND                      | Logical    |
+| \|        | OR                       | Logical    |
+
+: Relational and logical operators in R
+
+### Filtering data
+
+Filtering allows you to select specific rows in your dataset based on column values. This is particularly useful if you only want to work on specific factor levels. For example, we might be interested in working only with plots where seeds have been added. This means that free succession plots (B) must be removed from the dataset. We can do this using `filter()`.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+poem_data_filtered <- poem_data_long |> 
+  filter(Arrival != "B") #Select rows where Arrival is not equal to "B"
+```
+
+Note that the same result can be obtained using different coding styles:
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+#Another option 1
+
+poem_data_filtered <- poem_data_long |> 
+  filter(Arrival == "S" | Arrival == "F" | Arrival == "G" | Arrival == "L")
+
+#Another option 2
+
+poem_data_filtered <- poem_data_long |> 
+  filter(Arrival %in% c("S", "F", "G", "L"))
+```
+
+### Arranging data
+
+Arranging means sorting the rows in your dataset based on the value of other columns. You can do this using `arrange()`. Let's modify our POEM data by sorting species alphabetically within each plot.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+poem_data_arranged <- poem_data_long |> 
+  arrange(Species, PlotID)
+```
+
+By default, numeric values are sorted from the smallest to the greatest values. If you want to do the opposite, you can use `desc()` within `arrange()`. For example, let's reuse the code we've just written, but this time let's sort the species in alphabetical order within each plot and in descending order of biomass values.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+poem_data_arranged <- poem_data_long |> 
+  arrange(Species, desc(Biomass))
+```
+
+Check what happened to the dataset using `View()`.
+
+### Selecting variables
+
+If you have a very large dataset, with hundreds or thousands of variables, you may want to subset your data and only keep the variables that interest you the most. This is done using `select()`.
+
+As an example, let's use the extended version of the dataset we created earlier and select all the variables related to our experimental design (Year, Harvest, PlotID, Arrival, Replicate, Quadrat), as well as the columns containing biomass data for the fourteen species that were sown in the plots at the start of the experiment (*Anthoxanthum odoratum*, *Agrostis capillaris*, *Bromus hordeaceus*, *Festuca ovina*, *Lathyrus pratensis*, *Trifolium arvense*, *Trifolium campestre*, *Lotus corniculatus*, *Jasione montana*, *Pimpinella saxifraga*, *Silene vulgaris*, *Pilosella officinarum*, *Dianthus deltoides*, and *Potentilla argentea*).
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+poem_data_subset <- poem_data_wide |> 
+  select(Year, Harvest, PlotID, Arrival, Replicate, Quadrat,
+         `Anthoxanthum odoratum`, 
+         `Agrostis capillaris`, 
+         `Bromus hordeaceus`, 
+         `Festuca ovina`, 
+         `Lathyrus pratensis`, 
+         `Trifolium arvense`, 
+         `Trifolium campestre`, 
+         `Lotus corniculatus`, 
+         `Jasione montana`, 
+         `Pimpinella saxifraga`, 
+         `Silene vulgaris`, 
+         `Pilosella officinarum`, 
+         `Dianthus deltoides`,
+         `Potentilla argentea`)
+```
+
+### Transforming variables
+
+Transforming variables is certainly one of the most common operations that data scientists do when preparing data for analysis. If you want to calculate new variables from the ones that are already present in your dataset, this is precisely what `mutate()` does.
+
+In our POEM data, the biomass of each species in a plot is expressed in grams. In published papers, however, plant yield is often standardised per unit surface area and is expressed in grams per square meter. Let's use `mutate()` to add a new column (Std_biomass) in our dataset (`poem_data_long`). Each quadrat used to collect plant biomass had an area of 0.1 m². In `mutate()`, the arguments `.before` and `.after` allow you to control where you want your new variables to be inserted in your dataset.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+poem_data_long <- poem_data_long |> 
+  mutate(Std_biomass=Biomass/0.1, #Convert to g/m²
+         .after = "Biomass") #Specify that we want this new column to be after the Biomass column
+```
+
+### Summarise variables
+
+Lastly, let's have a look at the `summarise()` function. As its name suggests, this function allows you to calculate summary statistics for groups present in your dataset. The output of `summarise()` is a data frame with as many rows as groups in your data, with desired summary statistics provided for each group.
+
+Before using `summarise()`, remember to use `group_by()` to divide your dataset into groups that are of interest for your analysis.
+
+Let's combine `group_by()` and `summarise()` to calculate the total productivity of each plot at the end of each growing season. To do this, we have to sum the biomass values (expressed in g/m²) of all species found in our plot. Remember that several quadrats have been harvested in each plot, which means that we first have to calculate the average productivity of each species in a plot. We are going to do all this using the `poem_data_long` object as a starting point.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+poem_data_summary <- poem_data_long |> 
+  group_by(Year, Harvest, PlotID, Arrival, Species) |> #Define grouping factors in your data
+  summarise(Std_biomass=mean(Std_biomass)) |> #Calculates the average productivity of each species in a plot
+  group_by(Year, Harvest, PlotID, Arrival) |> #Redefine groups (interested in summing biomass values across species)
+  summarise(Total_biomass=sum(Std_biomass)) #Calculate total biomass production in each plot
+```
+
+Check your summary table using `View()`.
+
+## Take-home message
+
+Data wrangling is a very important part of any data analysis pipeline. This tutorial aimed to give you a brief overview of the main functions available in R for importing, tidying and transforming data. Of course, this tutorial is far from exhaustive and many other tools are available. We encourage you to continue learning and discovering new functions available in the *tidyverse* by using the popular book [R for Data Science](https://r4ds.hadley.nz/).

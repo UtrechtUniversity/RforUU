@@ -1,7 +1,11 @@
 ---
 title: "Tutorial 2: Data visualisation in R"
 author:
-  - name: Benjamin Delory & Daniil Scheifes
+  - name: Daniil Scheifes
+    email: d.j.p.scheifes@uu.nl
+    affiliations:
+      - name: Environmental sciences group, Copernicus institute of sustainable development, Utrecht University
+  - name: Benjamin Delory
     orcid: 0000-0002-1190-8060
     email: b.m.m.delory@uu.nl
     affiliations:
@@ -16,282 +20,909 @@ editor_options:
 
 Welcome to this tutorial on data visualisation in R!
 
-Throughout this tutorial, **our goal is to provide you with basic tools for visualizing your datasets in R.** After organizing some variables, computing new ones, and filtering data for statistical analyses we are now left with plotting and visualizing our data. This tutorial is all about mastering this fundamental skill! Today we will be working with two datasets on plant communities across Eurasia: Wassen et al (2021) and *Sheifes et al., (2024)*. Aftwerwards, we will spatially visualize the locations used in the this course
+Throughout this tutorial, **our aim is to provide you with the basic tools for visualising your data in R**. After organizing some variables, computing new ones, and filtering data for statistical analyses, we are now left with plotting and visualising our data. The aim of this tutorial is to help you master this fundamental skill!
 
-Lets start with the first! Wassen et al. (2021) showed in their publication that threatened species are most commonly found in soils with relatively low phosphorus (P) and phosphorus (P) to Nitrogen (N) content. In this study, they determined a N to P median niche value and compared species that were threatened to those that were not using two boxplots. Today we will recreate and improve this visualization.
+We will work with the following published dataset on plant communities across Eurasia: **Wassen MJ, Schrader J, van Dijk J, Eppinga MB**. **2021**. [Phosphorus fertilization is eradicating the niche of northern Eurasia\'s threatened plant species](https://www.nature.com/articles/s41559-020-01323-w). *Nature ecology & evolution* **5**: 67--73.
 
-For this, we must install the most used data visualization package in the R programming language: ggplot2. With ggplot2, we can generate a wide variety of plots, including scatter plots, bar plots, histograms, box plots, and more, while having control over aesthetics such as colors, shapes, and labels by using a variety of functions.
+At the end of this tutorial, you will also learn how to map field site locations in R.
 
-So lets install and load ggplot2!
+Let's get started!
 
-```{r}
-# Install ggplot2 package
-install.packages('ggplot2')
+## Introduction to *ggplot2*
 
-# Load the ggplot2 package 
-library(ggplot2)
-```
+When visualising data in R, you can of course use base R functions (e.g., `plot`, `points`, `lines`, etc.), but this tutorial is only going to focus on functions of the *ggplot2* R package. This is because *ggplot2* can produce high-quality figures very quickly, even for complex ecological datasets. With *ggplot2*, you can generate a wide variety of graphs, including scatter plots, bar charts, histograms, box plots and much more, while having control over layouts, labels and aesthetics, such as colours, sizes and shapes. ggplot2 relies on a coherent system for building graphs: the **grammar of graphics**. Using *ggplot2* requires you to learn a new grammar, which may sound overwhelming at first, but is in fact easy to learn because it relies on a simple set of core principles.
 
-If you are stuck or want help, also check Help-\> Cheat Sheet -\> Data visualization with ggplot 2, where there is lots of help on ggplot.
+::: callout-tip
+## ggplot2: Elegant Graphics for Data Analysis
 
-**Figure 1 - Boxplots**
+This tutorial will only give you a very brief introduction to *ggplot2*. If you want to explore all the possibilities offered by *ggplot2* for data scientists, we recommend going through Hadley Wickham's reference book: **ggplot2: Elegant Graphics for Data Analysis**. To freely access the content of this book, just click on its cover.
 
-Now, we need to read the dataset (Wassen_fig2) in R from the Data folder (see data wrangling how this was done). Lets store the dataset in a dataframe called NP_sp. Afterwards check the dataframe. What are the columns that we need for our figure?
+[![](Cover_ggplot2.jpg){fig-align="center" width="200"}](https://ggplot2-book.org/)
+:::
 
-```{r}
-#store data as dataframe 
-#check with benjamin so the functions are similar.
-NP_sp <- read.csv("Data/NPsp_Wassen.csv")
-head(NP_sp)
+In this tutorial, we will use *ggplot2* to create the following graphs:
 
-```
+-   A box plot to explore the relationship between a continuous response variable and a categorical predictor
+-   A scatter plot to explore the relationship between two continuous variables
+-   A map to visualise field site locations
 
-The grammar used in ggplot is as following:
+::: callout-tip
+## Posit Cheat Sheets
 
-`ggplot(data = df, mapping = aes(x, y, other aesthetics))`
+Posit, the open source data science company behind RStudio, developed some very useful cheat sheets to help you remember how to use some of the core *tidyverse* packages, including *ggplot2*. You can download the ggplot2 cheat sheet using this [link](https://rstudio.github.io/cheatsheets/html/data-visualization.html?_gl=1*19kcxbo*_ga*NzQwNjg4NjIuMTcxMjA0NzkyNA..*_ga_2C0WZ1JHG0*MTcxMjMwNDYwNS4zLjEuMTcxMjMwNDcyMS4wLjAuMA..).
+:::
 
-where df is the dataframe, and x and y the names of the columns you would like to call.
+## Load R packages
 
-So lets do this first for our example.
+The first step is to load all the R packages needed for this tutorial. Since *ggplot2* is included in *tidyverse*, we just need to load the *tidyverse* library. We will also need a couple of other packages, including *knitr*, *viridis, Hmisc,* and *ggpubr*. Do not forget to install them if you do not have them in your library.
 
 ```{r}
-#create ggplot
-ggplot(data = NP_sp, mapping = aes(threatened, NP_median))
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
 
-```
-
-As you can see there is no Boxplot, but the framework is there. That is because we have only created a frame, with x and y axis, but object are still missing. As we are aiming to add a boxplot we are using the geom_boxplot function. Within the geom_boxplot we can add certain aestathic preference such a width=1.
-
-```{r}
-#create ggplot
-ggplot(data = NP_sp, mapping = aes(threatened, NP_median))+geom_boxplot(width=0.5)
-
-```
-
-It works, but we want to restyle the graph by use a white background. This is easily achieved by the function theme_minimal() (with lines or theme_classic without lines). Next we would like to fill the boxplots using a red (threatened) and blue (non-threatened) species. For this we use fill = threatened in the aesthetics of the ggplot and define a scale_color_manual(values=c('colour', etc)). See https://www.uvm.edu/\~ngotelli/Rscripts/ColorChart.pdf for nice colour names or #hex.
-
-```{r}
-#create ggplot
-ggplot(data = NP_sp, mapping = aes(threatened, NP_median, fill=threatened))+geom_boxplot(width=0.5)+theme_minimal()+scale_fill_manual(values=c("steelblue2","firebrick2" ))
-```
-
-No we we will add points, as we would like to now the underlying data of the boxplot. You could use geom_point but this runs in to troubles.
-
-```{r}
-#create ggplot
-ggplot(data = NP_sp, mapping = aes(threatened, NP_median, fill=threatened))+geom_boxplot(width=0.5)+theme_minimal()+scale_fill_manual(values=c("steelblue2","firebrick2" )) +geom_point()
-```
-
-The points all fall on one line and it is unclear how the data is distributed. To solve this we could use the funtion geom_jitter() and remove the point produced by the boxplots using outlier.shape = NA in geom_boxplot(). In geom_jitter we use the function alpha to make them a bit transparent, and width to determine how much the points are spread.
-
-```{r}
-#create ggplot
-ggplot(data = NP_sp, mapping = aes(threatened, NP_median, fill=threatened))+geom_boxplot(width=0.5,outlier.shape = NA)+theme_minimal()+scale_fill_manual(values=c("steelblue2","firebrick2" )) +geom_jitter(alpha=0.2, width=0.1)
-```
-
-Finally I would like to remove the lines of the axis using the theme() function. this can be done by setting the axis.line = element_blank(). Furhermore, there is still a legend, but we dont need it; for this we add within theme the legend.position = "none". Lastly we should rename the labels of NP_median in N/P by using the function labs(y="name)".
-
-```{r}
-#create ggplot
-ggplot(data = NP_sp, mapping = aes(threatened, NP_median, fill=threatened))+geom_boxplot(width=0.5,outlier.shape = NA)+theme_minimal()+scale_fill_manual(values=c("steelblue2","firebrick2" )) +geom_jitter(alpha=0.2, width=0.1)+ theme(axis.line = element_blank(),  legend.position = "none")+labs(y= "N/P")
-```
-
-If we would like to do make a similar comparison we could like to use the same code but then swap y in aes() for P_median and change the labs(). We can also save ggplots as an object. Lets save the N/P plots as np_box and the P boxplot as p_box.
-
-```{r}
-#create ggplot
-np_box<-ggplot(data = NP_sp, mapping = aes(threatened, NP_median, fill=threatened))+geom_boxplot(width=0.5,outlier.shape = NA)+theme_minimal()+scale_fill_manual(values=c("steelblue2","firebrick2" )) +geom_jitter(alpha=0.2, width=0.1)+ theme(axis.line = element_blank(),  legend.position = "none")+labs(y= "N/P")
-
-#create ggplot p_box
-p_box<-ggplot(data = NP_sp, mapping = aes(threatened, P_median, fill=threatened))+geom_boxplot(width=0.5,outlier.shape = NA)+theme_minimal()+scale_fill_manual(values=c("steelblue2","firebrick2" )) +geom_jitter(alpha=0.2, width=0.1)+ theme(axis.line = element_blank(),  legend.position = "none")+labs(y= "P")
-```
-
-Now we have saved both boxplots we can combine the together to get one new figure. For this we use the ggarrange() function within the package ggpubr. Install and load that package. Afterwards we can make both object into one figure by providing ggarrange() with the objects. We should also provide the function with the nrow or ncol and the labels c("a", "b"). Last we can use the function ggsave to save a to an appropiate folder. lets make an output folder and save it there.
-
-```{r}
-install.packages('ggpubr')
+library(tidyverse)
+library(knitr)
+library(viridis)
+library(Hmisc)
 library(ggpubr)
-
-
-#make arrange
-figure1<-ggarrange(p_box, np_box, labels = c("a", "b"), ncol = 2, nrow = 1)
-figure1
-
-#save the figure
-ggsave("output/figure1.png", plot = figure1, dpi=400, width = 5, height = 4)
 ```
 
-**Figure 2 - Scatter plots**
+## Exercise 1: Creating a box plot
 
-Scheifes et al. use cmtv.csv. Explain the concepts of community mean traits. If interested all R scripts are available to see how this is done. We will work with the output of the data wrangling stored in ctmvs. csv.
+### Import data into R
 
-We would like to combine some of the results that show that community associations with fungi increase along a biomass, and decreases along a N to P gradient.
+[Wassen et al (2021)](https://www.nature.com/articles/s41559-020-01323-w) showed that threatened species are most commonly found in soils with relatively low phosphorus (P) and low P to Nitrogen (N) ratio. They determined a N:P median niche value and compared species that were threatened to those that were not using a box plot (see Figure 2 in the original paper). In this first exercise, we are going to recreate and improve this visualisation.
+
+As the data is stored in a csv file (NPsp_Wassen.csv), we will use `read_csv()` to import the data into R. This csv file is stored in our working directory, in a folder called Data_ggplot2. Store data into an R object named `data_wassen`.
 
 ```{r}
-##store data as dataframe 
-#check with benjamin so the functions are similar.
-NP_tr <- read.csv("Data/CMTV_Scheifes.csv")
-head(NP_tr)
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+#Import data file (csv file)
+data_wassen <- read.csv("Data_ggplot2/NPsp_Wassen.csv")
 ```
 
-No we will make two ggplots: one by biomass, other one by N:P. We first need to store the aveAM as numeric using the as.numeric() function. afterwards, we will add point using geom_point. We will first start with makin the graph for biomass. colour should be grreen.
+Have a look at how the data frame looks like using `View()` or `head()`.
 
 ```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
 
-NP_tr$aveAM<- as.numeric(NP_tr$aveAM)
-
-#create ggplot
-ggplot(data = NP_tr, mapping = aes(log(biomass_vascular_plants_g.m2), aveAM))+geom_point()+theme_classic()
-
+kable(head(data_wassen, n=10))
 ```
 
-As you can see, we have the data but there is no linear model in the graph. As the paper uses a more complex, but we will try to fit a linear model and present this in the figure. You can use the geom_smooth function witthout error margins to first show a linear model, where method = "lm" and se = FALSE
+Having examined the figure in the original article (Figure 2), what variables do you think are needed to recreate this figure?
+
+### Create a ggplot
+
+You can start creating a plot using the function `ggplot()`. Later on, we will add new layers to this ggplot object. `ggplot()` has two main arguments: `data` and `mapping`. The `data` argument is used to specify the name of the dataset that should be used to create the graph. The `mapping` argument is used to specify how variables in your dataset are linked to visual properties (referred to **aesthetics**) of your plot. You should always use the `aes()` function for the `mapping` argument. The `x` and `y` arguments of `aes()` are used to choose the x (horizontal) and y (vertical) variables of your plot, respectively. The general syntax to create a ggplot object looks like this:
+
+`ggplot(data = your_data, mapping = aes(x, y, other aesthetics))`
+
+Let's create our first ggplot using **threatened** (i.e., whether a species is threatened or not) and **NP_median** (i.e., the N:P median niche value of each species in the dataset) as the x and y variables, respectively.
 
 ```{r}
-ggplot(data = NP_tr, mapping = aes(x = log(biomass_vascular_plants_g.m2), y = aveAM)) + geom_point() + geom_smooth(method = "lm", se= FALSE)+ theme_classic()
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+
+ggplot(data = data_wassen, 
+       mapping = aes(x = threatened, 
+                     y = NP_median))
 ```
 
-As you can see the model is only a visualization but does not give you information on p r squared etc. to add this information you can use annotate. Run an lm and store the data of the R-squared and p - value in a new object. then we use annotate to provide the graph with the data by referring to the lm.
+As you can see, the structure of the plot is there, but it does not display any data yet. This is because we have not specified in our code how our observations should be represented in our plot. You can do this by defining a **geom**. In *ggplot2*, there are a number of geom to choose from. Here are a few examples (but see [ggplot2 cheat sheet](https://rstudio.github.io/cheatsheets/data-visualization.pdf) for more examples):
+
+-   `geom_point()`: This geom is used to display individual data points and create a scatter plot.
+
+-   `geom_jitter()`: This geom is similar to `geom_point()` but jitters the data to improve readability.
+
+-   `geom_line()` and `geom_path()`: These geom are used to add lines connecting observations in your graph. While `geom_path()` connects observations in the order in which they appear in the data, `geom_line()` connects observations in the order of the variable plotted on the x axis of your graph.
+
+-   `geom_boxplot()`: This geom is used to create a box plot, which is particularly useful to display and compare the distribution of a response variable for different groups.
+
+-   `geom_bar()`: This geom is used to create bar charts.
+
+-   `geom_abline()`: This geom is used to add horizontal, vertical, and diagonal lines to your graph.
+
+As we want to create a box plot, let's use `geom_boxplot()`. In `geom_boxplot()`, use the `width` argument to make boxes more narrow (by default, `width=1`).
 
 ```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
 
-#fit linear regression model
-lm_model <- lm(aveAM ~ log(biomass_vascular_plants_g.m2), data = NP_tr)
-
-#extract R-squared and p-value
-rsquared <- summary(lm_model)$r.squared
-p_value <- summary(lm_model)$coefficients[2,4]
-
-ggplot(data = NP_tr, aes(x = log(biomass_vascular_plants_g.m2), y = aveAM)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE)+ 
-  annotate("text", x = 2, y = 0.5, label = paste("R^2 =", round(rsquared, 3), "\np =", format(p_value, digits = 2)), hjust = 1, vjust = 1, size = 4) +
-  theme_classic()
-
+ggplot(data = data_wassen, 
+       mapping = aes(x = threatened, 
+                     y = NP_median))+
+  geom_boxplot(width=0.5)
 ```
 
-Last we want to improve the graph by changing the colour with to green, make them a bit transparant, and change the colour of the line to red. Furhtermore, we need to change the names of y-axis to AM and of the x-axis to ln biomass (use
+It's starting to look like a graph! We can improve it even further by plotting the raw data on top of the box plot. You can do this using `geom_jitter().` In `geom_jitter()`, use the `width` argument to adjust the horizontal spread of the data points. Set also `height=0` to make sure that data points are only jittered horizontally. We will also use the `shape` argument to choose the symbol we want to use to represent each data point. There a number of options to choose from:
 
 ```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| message: false
 
-AMbio<-ggplot(data = NP_tr, aes(x = log(biomass_vascular_plants_g.m2), y = aveAM)) +
-  geom_point(color = "green4", alpha = 0.3, size =2) +
-  geom_smooth(method = "lm", se = FALSE, colour = "red")+ 
-  annotate("text", x = 2.5, y = 1, label = paste("R^2 =", round(rsquared, 3), "\np =", format(p_value, digits = 2)), hjust = 1, vjust = 1, size = 4) +
-  labs(x = "ln biomass", y = "AM")+
-  theme_classic()
-
-AMbio
+generateRPointShapes<-function(){
+  oldPar<-par()
+  par(font=2, mar=c(0.5,0,0,0))
+  y=rev(c(rep(1,6),rep(2,5), rep(3,5), rep(4,5), rep(5,5)))
+  x=c(rep(1:5,5),6)
+  plot(x, y, pch = 0:25, cex=1.5, ylim=c(1,5.5), xlim=c(1,6.5), 
+       axes=FALSE, xlab="", ylab="", bg="blue")
+  text(x, y, labels=0:25, pos=3)
+  par(mar=oldPar$mar,font=oldPar$font )
+}
+generateRPointShapes()
 ```
 
-Can you now do similar for the data of nitrogen to phosphorus ratio, arrange them together and save them? You can also remove the axis.title.y and axis.text.y for the second figure as this is already provided in the first (see how we removed the axis line in figure1). To make sure the y-axis are aligned, use align ="h" for this. Also we need to make some extra left space in the second plot using plot.margin = margin() in theme.for As you maybe first will see is that the arrange does not fit in your frame. This will be corrected when you save it. If not, make the annotates a bit smaller.
-
 ```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
 
-#fit linear regression model
-lm_modelNP <- lm(aveAM ~ log(NP_vascular_plants), data = NP_tr)
-
-#extract R-squared and p-value
-rsquaredNP <- summary(lm_modelNP)$r.squared
-p_valueNP <- summary(lm_modelNP)$coefficients[2,4]
-
-#create ggplot
-AMNP<-ggplot(data = NP_tr, aes(x = log(NP_vascular_plants), y = aveAM)) +
-  geom_point(color = "dodgerblue1", alpha = 0.3, size =2) +
-  geom_smooth(method = "lm", se = FALSE, colour = "red")+ 
-  annotate("text", x = 4, y = 1, label = paste("R^2 =", round(rsquaredNP, 3), "\np =", format(p_valueNP, digits = 2)), hjust = 1, vjust = 1, size = 4) +
-  labs(x = "ln NP", y = "AM")+
-    theme_classic()+
-  theme(axis.title.y = element_blank(), axis.text.y = element_blank(), plot.margin = margin(0, 0, 0, 20))
-AMNP
-
-
-figure2<-ggarrange(AMbio, AMNP, labels = c("a", "b"), ncol = 2, nrow = 1, align = 'h')
-figure2
-
-#save the figure
-ggsave("output/figure2.png", plot = figure2, dpi=400, width = 10, height = 5)
+ggplot(data = data_wassen, 
+       mapping = aes(x = threatened, 
+                     y = NP_median))+
+  geom_boxplot(width=0.5)+
+  geom_jitter(width=0.1, 
+              height=0, 
+              shape=1)
 ```
 
-**Figure 3 - Mapping spatial data**
-
-Lets continue with visualizing the locations in our course on a mat. For this, we will load point data with the location of your fieldwork together with a map for pH values of the top 5 cm (model of Helfenstein et al., ([2022](10.4121/16451739.v1))), highest ground water table (GWT) plus seepage and infiltration (model of AZURE and HYDROMEDAH). Lastly we will add a soil map BRO (Basisregistratie Ondergrond) to it. This data we will then visualize and create a map out of it.
-
-Lets first install and load the packages for handling spatial data
+Note that the order in which you specify the different geom matters! If `geom_jitter()` is used before `geom_boxplot()`, most of the individual data points will be hidden behind the box plots.
 
 ```{r}
-install.packages("sf")
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+
+ggplot(data = data_wassen, 
+       mapping = aes(x = threatened, 
+                     y = NP_median))+
+  geom_jitter(width=0.1, 
+              height=0, 
+              shape=1)+
+    geom_boxplot(width=0.5)
+```
+
+### Personalise your ggplot
+
+In this section, we are going to personalise our plot by adding new layers and aesthetics.
+
+The first thing we would like to do is to fill boxes with a specific colour for each group of species (threatened versus not threatened). To achieve this, we will have to provide additional information in `aes()`. We need to introduce two new arguments: `colour` (or `color`) and `fill`. As we want the two species categories to be displayed with a different color, we can use `fill=threatened` inside `aes()`.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+
+ggplot(data = data_wassen, 
+       mapping = aes(x = threatened, 
+                     y = NP_median,
+                     fill = threatened))+
+  geom_boxplot(width=0.5)+
+  geom_jitter(width=0.1, 
+              height=0, 
+              shape=1)
+```
+
+What would happen if you use `color=threatened` instead of `fill=threatened`? What do you notice? Change the code and give it a try!
+
+By default, when assigning a specific color to each species group, *ggplot2* uses colors that are evenly spaced around a HCL (Hue Chroma Luminance) colour circle. However, this is not necessarily the best choice, especially for colour-blind people. The colour palettes provided by `viridis()` in the *viridis* R package have been specially designed to produce graphics that are pleasing to the eye, easier to read for colour-blind people and print well in greyscale. As shown in the figure below, eight colour palettes are available in *viridis*: **magma** (option A), **inferno** (option B), **plasma** (option C), **viridis** (option D, this is the default), **cividis** (option E), **rocket** (option F), **mako** (option G), and **turbo** (option H).
+
+[![Colour palettes available in the *viridis* R package](viridis.png){fig-align="center" width="600"}](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#usage)
+
+Let's keep on personalising our plot by specifying that we want to use the viridis (option D) color palette to create the figure. This can be done with `scale_colour_viridis()` (`scale_color_viridis()` would work too) or `scale_fill_viridis()`. These functions have a couple of arguments to play with, including `alpha` (used to make colours more or less transparent), `direction` (to change the order of the colors in the scale), `discrete` (set to TRUE if you want to assign colours to a discrete scale such as groups), and `option` (to choose the colour palette you want to use). A list of colours available in R can also be found [here](https://www.uvm.edu/~ngotelli/Rscripts/ColorChart.pdf).
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+
+ggplot(data = data_wassen, 
+       mapping = aes(x = threatened, 
+                     y = NP_median,
+                     fill = threatened))+
+  geom_boxplot(width=0.5)+
+  geom_jitter(width=0.1, 
+              height=0, 
+              shape=1)+
+  scale_fill_viridis(discrete = TRUE,
+                     option = "D",
+                     alpha = 0.5)
+```
+
+Now that we are happy with the colors used in our plot, we can keep on personalising the layout by adding new layers to our ggplot. Let's do the following:
+
+-   Rename the axis titles so that it is clear to the reader which variables are represented. If your variables have units, do not forget to indicate them in the axis titles. We can personalise axis titles using `xlab()` and `ylab()`.
+-   ggplot2 comes with a number of built-in themes that can be used to personalise how your plot should look like. By default, `theme_grey()` is used (this is the reason why our plot has a grey background). Other popular themes are `theme_bw()` (black and white theme), `theme_minimal()` (minimalistic theme), and `theme_classic()` (a classic theme with axis lines but no gridlines). Many more themes are available in *ggplot2*. We will use `theme_bw()` to personalise our plot.
+-   Make the individual points a bit more transparent using the `alpha` argument in `geom_jitter()`.
+-   Remove the points labelled as outliers by `geom_boxplot()`. As individual data points are also displayed, this information is redundant. We can get rid of these points using `outliers = FALSE` in `geom_boxplot()`.
+-   Remove the legend on the right side of the plot because this information is already provided by the x axis. This can be done using `theme()` and setting `legend.position="none"`. `theme()` is a particularly important function as it allows you to personalise many aspects of your plot, such as the color, size and orientation of the text along plot axes.
+-   Along the vertical axis, we would like to have breaks at the following N:P values: 5, 10, 15, 20, 25, 30. You can do this using `scale_y_continuous()`.
+-   Change the colour of the text along the horizontal and vertical axes to black. You can do this using `theme()` and `element_text()`.
+-   Add more space between axis titles and axis labels. You can do this in `theme()`, using the `margin` argument in `element_text()`.
+-   Remove the grey grid lines in the background of the plot. This can be done in `theme()`, using `panel.grid = element_blank()`.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+
+ggplot(data = data_wassen, 
+       mapping = aes(x = threatened, 
+                     y = NP_median,
+                     fill = threatened))+
+  geom_boxplot(width=0.5,
+               outliers=FALSE)+
+  geom_jitter(width=0.1, 
+              height=0, 
+              shape=1,
+              alpha=0.6)+
+  scale_fill_viridis(discrete = TRUE,
+                     option = "D",
+                     alpha = 0.5)+
+  theme_bw()+
+  xlab("Are species threatened?")+
+  ylab("Median N:P ratio")+
+  scale_y_continuous(breaks=seq(from = 5,
+                                to = 30,
+                                by = 5))+
+  theme(legend.position = "none",
+        axis.text = element_text(colour="black"),
+        axis.title.x = element_text(margin = margin(t = 10)), #t means top
+        axis.title.y = element_text(margin = margin(r=10)),
+        panel.grid = element_blank()) #r means right
+```
+
+### Compute and display summary statistics
+
+When comparing groups to each other, we are often interested in comparing group means and their confidence limits (often represented as 95% confidence intervals). The function `stat_summary()` allows you to add this information to your ggplot. In `stat_summary()`, `fun.data = "mean_cl_boot"` can be used to calculate and display the average value and 95% confidence interval estimated by bootstrapping (which is a convenient way to estimate confidence intervals without assuming that the underlying data are normally distributed).
+
+To improve readability, we want to plot these summary statistics on the right side of each box plot, using the same colour palette (tip: add `aes()` in `stat_summary()`). In `stat_summary()`, the `position` argument allows you to fine tune the position of plotted elements. The function `position_nudge()` allows you to shift the position of items along the vertical and horizontal axes by a small amount. In our case, shifting the position of summary statistics by 0.35 units to the right seems like a good idea.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+
+ggplot(data = data_wassen, 
+       mapping = aes(x = threatened, 
+                     y = NP_median,
+                     fill = threatened))+
+  geom_boxplot(width=0.5,
+               outliers=FALSE)+
+  geom_jitter(width=0.1, 
+              height=0, 
+              shape=1,
+              alpha=0.6)+
+  stat_summary(fun.data="mean_cl_boot",
+               aes(colour = threatened),
+               position = position_nudge(x=0.35))+
+  scale_fill_viridis(discrete = TRUE,
+                     option = "D",
+                     alpha = 0.5)+
+  scale_colour_viridis(discrete = TRUE,
+                       option = "D")+
+  theme_bw()+
+  xlab("Are species threatened?")+
+  ylab("Median N:P ratio")+
+  scale_y_continuous(breaks=seq(from = 5,
+                                to = 30,
+                                by = 5))+
+  theme(legend.position = "none",
+        axis.text = element_text(colour="black"),
+        axis.title.x = element_text(margin = margin(t = 10)), #t means top
+        axis.title.y = element_text(margin = margin(r=10)),
+        panel.grid = element_blank()) #r means right
+```
+
+### Integrating the pipe
+
+Remember the pipe? We introduced it in the data wrangling tutorial. How can we rewrite the code used to produce our figure using the pipe? Give it a try!
+
+```{r}
+#| eval: false
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+
+data_wassen |> 
+  ggplot(mapping = aes(x = threatened, 
+                       y = NP_median,
+                       fill = threatened))+
+  geom_boxplot(width=0.5,
+               outliers=FALSE)+
+  geom_jitter(width=0.1, 
+              height=0, 
+              shape=1,
+              alpha=0.6)+
+  stat_summary(fun.data="mean_cl_boot",
+               aes(colour = threatened),
+               position = position_nudge(x=0.35))+
+  scale_fill_viridis(discrete = TRUE,
+                     option = "D",
+                     alpha = 0.5)+
+  scale_colour_viridis(discrete = TRUE,
+                       option = "D")+
+  theme_bw()+
+  xlab("Are species threatened?")+
+  ylab("Median N:P ratio")+
+  scale_y_continuous(breaks=seq(from = 5,
+                                to = 30,
+                                by = 5))+
+  theme(legend.position = "none",
+        axis.text = element_text(colour="black"),
+        axis.title.x = element_text(margin = margin(t = 10)), #t means top
+        axis.title.y = element_text(margin = margin(r=10)),
+        panel.grid = element_blank()) #r means right
+```
+
+### Arrange multiple ggplots
+
+Often, we produce multiple plots that we want to put together into one figure as separate panels. But how can we easily do this? The answer is: by using `ggarrange()` in the *ggpubr* R package. It is easier to use `ggarrange()` if each individual plot is stored in a different object. Let's do this and also create a second figure (very similar to the first) displaying median P values (in mg/g) instead of median N:P values. This time, use the `size` argument in `geom_jitter()` and `stat_summary()` to reduce the size of individual data points.
+
+Once your two plots are created and stored in separate R objects, use `ggarrange()` to create one figure with two panels (1 row, 2 columns).
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 5.9
+#| fig-height: 3.94
+#| fig-align: center
+
+#Create individual plots
+
+plot_NP <- data_wassen |> 
+              ggplot(mapping = aes(x = threatened, 
+                                   y = NP_median,
+                                   fill = threatened))+
+              geom_boxplot(width=0.5,
+                           outliers=FALSE)+
+              geom_jitter(width=0.1, 
+                          height=0, 
+                          shape=1,
+                          alpha=0.6,
+                          size=1)+
+              stat_summary(fun.data="mean_cl_boot", 
+                           aes(colour = threatened),
+                           position = position_nudge(x=0.35),
+                           size=0.4)+
+              scale_fill_viridis(discrete = TRUE,
+                                 option = "D",
+                                 alpha = 0.5)+
+              scale_colour_viridis(discrete = TRUE,
+                                   option = "D")+
+              theme_bw()+
+              xlab("Are species threatened?")+
+              ylab("Median N:P ratio")+
+              scale_y_continuous(breaks=seq(from = 5,
+                                            to = 30,
+                                            by = 5))+
+              theme(legend.position = "none",
+                    axis.text = element_text(colour="black"),
+                    axis.title.x = element_text(margin = margin(t = 10)), #t means top
+                    axis.title.y = element_text(margin = margin(r=10)),
+                    panel.grid = element_blank()) #r means right
+
+plot_P <- data_wassen |> 
+            ggplot(mapping = aes(x = threatened, 
+                                 y = P_median,
+                                 fill = threatened))+
+            geom_boxplot(width=0.5,
+                         outliers=FALSE)+
+            geom_jitter(width=0.1, 
+                        height=0, 
+                        shape=1,
+                        alpha=0.6,
+                        size=1)+
+            stat_summary(fun.data="mean_cl_boot",
+                         aes(colour = threatened),
+                         position = position_nudge(x=0.35),
+                         size=0.4)+
+            scale_fill_viridis(discrete = TRUE,
+                               option = "D",
+                               alpha = 0.5)+
+            scale_colour_viridis(discrete = TRUE,
+                                 option = "D")+
+            theme_bw()+
+            xlab("Are species threatened?")+
+            ylab("Median P concentration (mg/g)")+
+            scale_y_continuous(breaks=seq(from = 0,
+                                          to = 4,
+                                          by = 0.5))+
+            theme(legend.position = "none",
+                  axis.text = element_text(colour="black"),
+                  axis.title.x = element_text(margin = margin(t = 10)), #t means top
+                  axis.title.y = element_text(margin = margin(r=10)),
+                  panel.grid = element_blank()) #r means right
+
+#Combine plots with ggarrange()
+
+(plot_final <- ggarrange(plot_NP, #This is the first panel
+                         plot_P, #This is the second panel
+                         nrow = 1,
+                         ncol = 2,
+                         align = "hv")) #Panels need to be horizontally and vertically aligned
+```
+
+### Export high-resolution figure
+
+Once you are happy with your figure, you can export it as a high-resolution image file (png, tiff, jpg, etc.) for your paper or presentation using `ggsave()`. In `ggsave()`, important arguments are `filename` (the name of the image file, with file extension), `plot` (the name of your ggplot object), `dpi` (desired image resolution in dots per inch), `width` (image width), `height` (image height), and `units` (the units used for width and height). By default, the figure will be saved in your working directory (see `getwd()`).
+
+```{r}
+#| eval: false
+#| echo: true
+#| warning: false
+#| message: false
+
+ggsave(filename = "Boxplot_Wassen.png",
+       plot = plot_final,
+       dpi = 1000,
+       width = 15,
+       height=10,
+       units="cm")
+```
+
+## Exercise 2: Creating a scatter plot
+
+The second exercise of this tutorial is to use the [Wassen et al (2021)](https://www.nature.com/articles/s41559-020-01323-w) data to create a scatter plot displaying the relationship between median phosphorus (P) and potassium (K) concentrations. We also want our figure to show how this relationship differs between species groups (i.e., threatened or not threatened). Let's have a look at how to do this with *ggplot2*.
+
+### Create a ggplot
+
+First, create a ggplot object displaying individual data points and clear axis titles (keep on using the pipe). Let's not worry about the threat status of the species just yet.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+
+data_wassen |> 
+  ggplot(aes(x = K_median,
+             y = P_median))+
+  geom_point(shape = 1)+
+  theme_bw()+
+  xlab("Median K concentration (mg/g)")+
+  ylab("Median P concentration (mg/g)")+
+  theme(axis.title.x = element_text(margin = margin(t=10)), #t means top
+        axis.title.y = element_text(margin = margin(r=10))) #r means right
+```
+
+### Personalise your ggplot
+
+It is already a nice graph, but now we want to make it more informative by displaying the results separately for each group of species (threatened and non-threatened species). There are several ways of doing this. The first is to display the data points with a different shape (use `shape` in `aes()`) or a different colour (use `colour` or `color` in `aes()`). Let's do both! Feel free to play around with different shapes (`scale_shape_manual()`) and colour palettes. In the previous example, we used `scale_colour_viridis()` to choose our viridis colour palette. This time, we are going to define the colour options by combining `scale_color_manual()` and `viridis()`. Give it a try!
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+
+data_wassen |> 
+  ggplot(aes(x = K_median,
+             y = P_median,
+             colour = threatened,
+             shape = threatened))+
+  geom_point()+
+  theme_bw()+
+  xlab("Median K concentration (mg/g)")+
+  ylab("Median P concentration (mg/g)")+
+  theme(axis.title.x = element_text(margin = margin(t=10)), #t means top
+        axis.title.y = element_text(margin = margin(r=10)))+ #r means right
+  scale_shape_manual(values = c(16, 17))+
+  scale_colour_manual(values = viridis(n = 2, #Set number of colours
+                                       alpha = 0.5,
+                                       option = "D"))
+```
+
+### Faceting
+
+We now have a graph showing the results separately for each group of species. However, it looks a little cluttered, with individual points overlapping each other. To improve readability, it would be preferable to present the data for threatened and non-threatened species in separate panels. This can be done with `facet_wrap()`. This function will divide our existing graph into subplots, each of which will display a subset of the data based on a categorical variable (threat status). Note that if you want to create subplots based on two variables in your dataset (a 'row' variable and a 'column' variable), using `facet_grid()` is more appropriate.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 5.9
+#| fig-height: 3.94
+#| fig-align: center
+
+data_wassen |> 
+  ggplot(aes(x = K_median,
+             y = P_median,
+             colour = threatened,
+             shape = threatened))+
+  geom_point()+
+  theme_bw()+
+  xlab("Median K concentration (mg/g)")+
+  ylab("Median P concentration (mg/g)")+
+  theme(axis.title.x = element_text(margin = margin(t=10)), #t means top
+        axis.title.y = element_text(margin = margin(r=10)))+ #r means right
+  scale_shape_manual(values = c(16, 17))+
+  scale_colour_manual(values = viridis(n = 2, #Set number of colours
+                                       alpha = 0.5,
+                                       option = "D"))+
+  facet_wrap(~threatened,
+             nrow=1,
+             ncol=2)
+```
+
+### Simplify your plot
+
+We are getting closer to the final version of our graph, but there are still a few points to be ironed out:
+
+-   There is some redundancy in this figure because the threat status of plant species is represented by different colours, different dot shapes and in different panels. We should simplify things a little and avoid redundancy. Now that we have a specific panel for each category of species, it is no longer necessary to use a specific colour and shape for each category. This will also make it possible to do away with the legend on the right-hand side of the graph.
+-   In each panel, we would like to add a trend line ('smoother') to better visualise the shape of the relationship between our two continuous variables. This can be done using a new geom: `geom_smooth()`. In `geom_smooth()`, the `span` argument allows you to control the amount of smoothing (a large number will produce a smoother line).
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 5.9
+#| fig-height: 3.94
+#| fig-align: center
+
+data_wassen |> 
+  ggplot(aes(x = K_median,
+             y = P_median))+
+  geom_point(shape=1)+
+  theme_bw()+
+  xlab("Median K concentration (mg/g)")+
+  ylab("Median P concentration (mg/g)")+
+  theme(axis.title.x = element_text(margin = margin(t=10)), #t means top
+        axis.title.y = element_text(margin = margin(r=10)))+ #r means right
+  facet_wrap(~threatened,
+             nrow=1,
+             ncol=2)+
+  geom_smooth(span=1.5)
+```
+
+### Finalise your plot
+
+Before exporting our graph as a high-resolution image file, we would like to do two things:
+
+-   Colour the trend lines using the same colours as those used for our box plot (just to make it prettier and more consistent). Make sure to remove the legend using `legend.position="none"`.
+-   Rename the title of each subplot to make it more informative. Instead of "No" and "Yes", "Not threatened" and "Threatened" would be more informative. You can do this using `replace()` in `mutate()` (see tutorial on data wrangling).
+
+That's what we need to do!
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 5.9
+#| fig-height: 3.94
+#| fig-align: center
+
+data_wassen |> 
+  mutate(threatened = replace(threatened, threatened == "No", "Non-threatened")) |>
+  mutate(threatened = replace(threatened, threatened == "Yes", "Threatened")) |>
+  ggplot(aes(x = K_median,
+             y = P_median))+
+  geom_point(shape=1)+
+  theme_bw()+
+  xlab("Median K concentration (mg/g)")+
+  ylab("Median P concentration (mg/g)")+
+  theme(axis.title.x = element_text(margin = margin(t=10)), #t means top
+        axis.title.y = element_text(margin = margin(r=10)),
+        legend.position="none",
+        axis.text = element_text(colour = "black"))+ #r means right
+  facet_wrap(~threatened,
+             nrow=1,
+             ncol=2)+
+  geom_smooth(span=1.5,
+              aes(colour = threatened))+
+  scale_colour_viridis(option="D",
+                       discrete = TRUE)
+```
+
+### Export high-resolution figure
+
+Use `ggsave()` to export your plot as a high-resolution image.
+
+```{r}
+#| eval: false
+#| echo: true
+#| warning: false
+#| message: false
+
+plot_final <- data_wassen |> 
+  mutate(threatened = replace(threatened, threatened == "No", "Non-threatened")) |>
+  mutate(threatened = replace(threatened, threatened == "Yes", "Threatened")) |>
+  ggplot(aes(x = K_median,
+             y = P_median))+
+  geom_point(shape=1)+
+  theme_bw()+
+  xlab("Median K concentration (mg/g)")+
+  ylab("Median P concentration (mg/g)")+
+  theme(axis.title.x = element_text(margin = margin(t=10)), #t means top
+        axis.title.y = element_text(margin = margin(r=10)),
+        legend.position="none",
+        axis.text = element_text(colour = "black"))+ #r means right
+  facet_wrap(~threatened,
+             nrow=1,
+             ncol=2)+
+  geom_smooth(span=1.5,
+              aes(colour = threatened))+
+  scale_colour_viridis(option="D",
+                       discrete = TRUE)
+
+ggsave(filename = "Scatterplot_Wassen.png",
+       plot = plot_final,
+       dpi = 1000,
+       width = 15,
+       height=10,
+       units="cm")
+```
+
+## Exercise 3: Mapping spatial data
+
+Creating and extracting data from maps is very useful for ecological field research. This exercise will give you a brief introduction to mapping spatial data in R.
+
+For this exercise, we will use the following files:
+
+-   A geopackage database file (GPKG) containing the spatial coordinates of field sites around Utrecht University (Locations_EFR.gpkg)
+
+-   A map of the highest ground water table (GWT_high.tif). This map is stored as a TIFF file (Tag Image File Format), which is a widely used file format for storing raster graphics images.
+
+-   A geopackage database file containing soil type information (Basisregistratie Ondergrond)
+
+### Load R packages to handle spatial data
+
+Before starting this exercise, make sure that the *sf*, *raster*, and *mapview* packages are installed in your library.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
 library(sf)
 library(raster)
-library(rgdal)
-
+library(mapview)
 ```
 
-Now we will load the locations of our field data (Locations_EFR.gpkg), which is a geopackage: an open, standards-based format for storing geospatial information. With the sf package we can read these geopackages, using st_read(). With ggplot we can show them using geom_sf() providing its location. Why do we not see a background map?
+### Import geospatial data
 
-ggplot()+geom_sf(data = locations_sf)+theme_minimal()
-
-```{r}
-locations_sf <- st_read(dsn = "Data/Locations_EFR2.gpkg")
-
-ggplot()+geom_sf(data = locations_sf)+theme_minimal()
-```
-
-Next, let's add the highest ground water table map to it We using the GWH_high.tif file for this. This is called a TIFF files, which is a Tagged Image File Format: it is a widely used file format for storing raster graphics images. We will use the function raster() to store this file. Thereafter, we will need to store it as a data_frame to use it in ggplot. Finaly we can use geom_raster to plot both rasters in ggplot. With scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 2, transform = "pseudo_log", na.value = "transparent") we are colouring the values; use fill = GWT_high as a fill in geom_raster.
+GPKG files can be read using `st_read()` in th *sf* R package. Use this function to load the locations of our field sites into R. We can then plot these locations using `geom_sf()` in *ggplot2*.
 
 ```{r}
-GWT<-raster("data/GWT_high.tif")
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
 
+#Read field site locations
+locations_sf <- st_read(dsn = "Data_ggplot2/Locations_EFR.gpkg",
+                        quiet = TRUE)
 
-GWT_df <- as.data.frame(GWT, xy = TRUE)
-KI2_df <- as.data.frame(KI2, xy = TRUE)
-
-ggplot()+
-geom_raster(data = GWT_df , aes(x = x, y = y, fill = GWT_high))+
-  scale_fill_gradient2(low = "blue", mid = "white", high = "red",
-                       midpoint = 2,
-                         transform = "pseudo_log",
-                       na.value = "transparent") +
-geom_sf(data = locations_sf)+
-theme_minimal()
-```
-
-Now lets check the soil types (Soil_OBR.gpkg). This is again a geopackage, but we need to transform it to make a ggplot with appropiate fill (VEREENV) for the soil types. can you transform V = Peat, DV = Peat, S =Sand, M =Clay and use scale_fill_manual to appropriate fill it? Do the location UHH and UHB have the same soil?
-
-```{r}
-soil_sf <- st_read(dsn = "Data/Soil_BRO.gpkg")
-
-# Transform VEREENV variable
-soil_sf$VEREENV <- ifelse(soil_sf$VEREENV == "DV", "Peat",
-                          ifelse(soil_sf$VEREENV == "V", "Peat",
-                                 ifelse(soil_sf$VEREENV == "M", "Clay",
-                                        ifelse(soil_sf$VEREENV == "Z", "Sand",soil_sf$VEREENV))))
-
-
-ggplot() +
-geom_sf(data = soil_sf, aes(fill = VEREENV),alpha = 0.5) +
-  geom_sf(data = locations_sf) +
-  scale_fill_manual(name = "Soil Type",
-                    values = c("Peat" = "black", "Sand" = "yellow", "Clay" = "brown")
-                    ,na.value = "lightgrey") +
+#Create a ggplot
+ggplot(data = locations_sf)+
+  geom_sf()+
   theme_minimal()
 ```
 
-We are missing a basemap in all these maps, so by using hte package [mapview](https://r-spatial.github.io/mapview/) we can add this easily! install that package, load it and use the function mapview to creat a map. for the soil_sf we should use VEREENV as zcol. See the [website](https://r-spatial.github.io/mapview/reference/mapView.html) and some [examples](https://r-spatial.github.io/mapview/articles/mapview_02-advanced.html) for many mapview functions. can you also add our GWT raster to it? lastly we save the map in your output folder using mapshot() and toggle out mapviewOptions(fgb = FALSE).
+Question: Why do we not see a map in the background?
+
+### Add raster data (ground water)
+
+To add information about the highest ground water table in the background of our map, we first need to read our raster data (GWT_high.tif) using `raster()`. This will create a RasterLayer object which will need to be converted into a data frame using `as.data.frame()` so that the data can be used in *ggplot2*. In our ggplot, use `geom_raster()` to add a raster layer to your graph.
+
+In maps, the colour code used to display information is something to be considered carefully, so that your map is as informative and easy to understand as possible. In this ground water example, we would like areas with a high water table (i.e. low GWT_high values in our dataset) to appear in blue, while areas with a low water table (i.e. high GWT_high values in our dataset) would appear in red. Such a divergent colour gradient (low-medium-high) can be created using `scale_colour_gradient2()`. We will set the midpoint value to 2 (which means that values below 2 will appear blue, while values above 2 will appear red). We will also apply a pseudo-log transformation to improve the readability of our map. You can do this using the `transform` argument in `scale_fill_gradient2()`. As our raster data also contains missing values, we will use the `na.value` argument in `scale_fill_gradient2()` to make them transparent.
 
 ```{r}
-install.packages('mapview')
-library(mapview)
-mapviewOptions(fgb = FALSE)
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
 
-Map<-mapview(locations_sf,map.types = c("OpenStreetMap"))+
-   mapview(soil_sf, zcol = "VEREENV",col.regions = c("brown", "lightgrey", "black", "yellow"), alpha.regions = 0.3,stroke = FALSE, map.types = c("OpenStreetMap"))
- 
-Map
+#Create RasterLayer object
+GWT<-raster("Data_ggplot2/GWT_high.tif")
 
-mapshot(Map, file = "output/my_map.png", scalebar = TRUE)
+#Convert to data frame
+GWT_df <- as.data.frame(GWT, 
+                        xy = TRUE)
+
+#Plot raster and location data
+ggplot()+
+  geom_raster(data = GWT_df, 
+              aes(x = x, 
+                  y = y, 
+                  fill = GWT_high))+
+  geom_sf(data = locations_sf)+
+  theme_minimal()+
+  scale_fill_gradient2(name = "Ground\nwater\ntable",
+                       low = "blue", 
+                       mid = "white", 
+                       high = "red",
+                       midpoint = 2,
+                       transform = "pseudo_log",
+                       na.value = "transparent")
 ```
 
-Ask for Feedback following this link.
+Let's now look at how we can customise the legend for this ggplot. It would be interesting to edit the break values along the colour bar and provide an informative title for each axis. Give it a try!
 
-<link>
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+#Plot raster and location data
+ggplot()+
+  geom_raster(data = GWT_df, 
+              aes(x = x, 
+                  y = y, 
+                  fill = GWT_high))+
+  geom_sf(data = locations_sf)+
+  theme_minimal()+
+  scale_fill_gradient2("Ground\nwater\ntable",
+                       low = "blue", 
+                       mid = "white", 
+                       high = "red",
+                       midpoint = 2,
+                       transform = "pseudo_log",
+                       na.value = "transparent",
+                       breaks = c(0, 2, 10, 40))+
+  ylab("Latitude")+
+  xlab("Longitude")+
+  theme(axis.title.x = element_text(margin = margin(t=10)),
+        axis.title.y = element_text(margin = margin(r=10)))
+```
+
+### Add more geospatial information (soil type)
+
+Let's create a new map with soil type information! Soil type data is stored as a geopackage (Soil_BRO.gpkg). You can read it using `st_read()`.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+soil_sf <- st_read(dsn = "Data_ggplot2/Soil_BRO.gpkg",
+                   quiet = TRUE)
+```
+
+In `soil_sf`, the column 'VEREENV' contains soil type information. There are four soil type options in this column: DV (Peat), V (Peat), M (Clay), Z (Sand). Combine `mutate()` and `replace()` to rename elements in this column.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+soil_sf <- soil_sf |> 
+  mutate(VEREENV = replace(VEREENV, VEREENV %in% c("DV", "V"), "Peat")) |> 
+  mutate(VEREENV = replace(VEREENV, VEREENV == "M", "Clay")) |> 
+  mutate(VEREENV = replace(VEREENV, VEREENV == "Z", "Sand"))
+```
+
+Now let's create our map of soil types and plot our site locations on top of it (use `geom_sf()` in both cases). Use `scale_fill_manual()` to assign colours to each soil type.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+ggplot() +
+  geom_sf(data = soil_sf, 
+          aes(fill = VEREENV),
+          alpha = 0.5) +
+  geom_sf(data = locations_sf) +
+  scale_fill_manual(name = "Soil Type",
+                    values = c("Peat" = "black", 
+                               "Sand" = "yellow", 
+                               "Clay" = "brown"),
+                    na.value = "transparent") +
+  theme_minimal()+
+  ylab("Latitude")+
+  xlab("Longitude")+
+  theme(axis.title.x = element_text(margin = margin(t=10)),
+        axis.title.y = element_text(margin = margin(r=10)))
+```
+
+### Adding a base map
+
+Your maps look great, but they are all missing a base map. This can be done using `mapView()` in *mapview*. Have a look at the code below to see how to add a base map to our soil type map.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: false
+
+mapviewOptions(fgb = FALSE)
+
+my_map <- mapView(x = locations_sf,
+                  map.types = c("OpenStreetMap"))+
+          mapView(x = soil_sf, 
+                  zcol = "VEREENV",
+                  col.regions = c("brown", 
+                                  "transparent", 
+                                  "black", 
+                                  "yellow"), 
+                  alpha.regions = 0.4,
+                  stroke = FALSE, 
+                  map.types = c("OpenStreetMap"))
+
+my_map
+```
+
+You can then use `mapshot()` to export your map as an image file.
+
+```{r}
+#| eval: false
+#| echo: true
+#| warning: false
+#| message: false
+#| code-fold: false
+
+mapshot(my_map,
+        file = "my_map.png", 
+        scalebar = TRUE)
+```
+
+## Take-home message
+
+Good data visualisation is essential for data exploration and analysis, as well as for presenting and publishing the results of your research. The aim of this tutorial was to give you a brief overview of the main functions available in *ggplot2* for producing high-quality, clear and informative graphs. Of course, this tutorial is far from exhaustive and many other tools are available. We encourage you to continue learning and discovering new functions available in the *ggplot2* by using the popular books [R for Data Science](https://r4ds.hadley.nz/) and [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/).
