@@ -30,7 +30,7 @@ Let's get started!
 
 ## Introduction to *ggplot2*
 
-When visualising data in R, you can of course use base R functions (e.g., `plot`, `points`, `lines`, etc.), but this tutorial is only going to focus on functions of the *ggplot2* R package. This is because *ggplot2* can produce high-quality figures very quickly, even for complex ecological datasets. With *ggplot2*, you can generate a wide variety of graphs, including scatter plots, bar charts, histograms, box plots and much more, while having control over layouts, labels and aesthetics, such as colours, sizes and shapes. ggplot2 relies on a coherent system for building graphs: the **grammar of graphics**. Using *ggplot2* requires you to learn a new grammar, which may sound overwhelming at first, but is in fact easy to learn because it relies on a simple set of core principles.
+When visualising data in R, you can of course use base R functions (e.g., `plot`, `points`, `lines`, etc.), but this tutorial is only going to focus on functions of the *ggplot2* R package. This is because *ggplot2* can produce high-quality figures very quickly, even for complex ecological datasets. With *ggplot2*, you can generate a wide variety of graphs, including scatter plots, bar charts, histograms, box plots and much more, while having control over layouts, labels and aesthetics, such as colours, sizes and shapes. *ggplot2* relies on a coherent system for building graphs: the **grammar of graphics**. Using *ggplot2* requires you to learn a new grammar, which may sound overwhelming at first, but is in fact easy to learn because it relies on a simple set of core principles.
 
 ::: callout-tip
 ## ggplot2: Elegant Graphics for Data Analysis
