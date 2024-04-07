@@ -494,7 +494,8 @@ plot_P <- data_wassen |>
                          plot_P, #This is the second panel
                          nrow = 1,
                          ncol = 2,
-                         align = "hv")) #Panels need to be horizontally and vertically aligned
+                         align = "hv", #Panels need to be horizontally and vertically aligned
+                         labels = "auto")) #Auto-generate lower-case labels for each subplot
 ```
 
 ### Export high-resolution figure
