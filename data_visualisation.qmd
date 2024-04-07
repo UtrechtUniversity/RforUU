@@ -153,13 +153,16 @@ ggplot(data = data_wassen,
   geom_boxplot(width=0.5)
 ```
 
-It's starting to look like a graph! We can improve it even further by plotting the raw data on top of the box plot. You can do this using `geom_jitter().` In `geom_jitter()`, use the `width` argument to adjust the horizontal spread of the data points. Set also `height=0` to make sure that data points are only jittered horizontally. We will also use the `shape` argument to choose the symbol we want to use to represent each data point. There a number of options to choose from:
+It's starting to look like a graph! We can improve it even further by plotting the raw data on top of the box plot. You can do this using `geom_jitter()`. In `geom_jitter()`, use the `width` argument to adjust the horizontal spread of the data points. Set also `height=0` to make sure that data points are only jittered horizontally. We will also use the `shape` argument to choose the symbol we want to use to represent each data point. There a number of options to choose from:
 
 ```{r}
 #| eval: true
 #| echo: false
 #| warning: false
 #| message: false
+#| fig-width: 3
+#| fig-height: 3
+#| fig-align: center
 
 generateRPointShapes<-function(){
   oldPar<-par()
@@ -167,7 +170,7 @@ generateRPointShapes<-function(){
   y=rev(c(rep(1,6),rep(2,5), rep(3,5), rep(4,5), rep(5,5)))
   x=c(rep(1:5,5),6)
   plot(x, y, pch = 0:25, cex=1.5, ylim=c(1,5.5), xlim=c(1,6.5), 
-       axes=FALSE, xlab="", ylab="", bg="blue")
+       axes=FALSE, xlab="", ylab="", bg="#FFCD00")
   text(x, y, labels=0:25, pos=3)
   par(mar=oldPar$mar,font=oldPar$font )
 }
@@ -209,7 +212,7 @@ ggplot(data = data_wassen,
   geom_jitter(width=0.1, 
               height=0, 
               shape=1)+
-    geom_boxplot(width=0.5)
+  geom_boxplot(width=0.5)
 ```
 
 ### Personalise your ggplot
@@ -241,7 +244,7 @@ What would happen if you use `color=threatened` instead of `fill=threatened`? Wh
 
 By default, when assigning a specific color to each species group, *ggplot2* uses colors that are evenly spaced around a HCL (Hue Chroma Luminance) colour circle. However, this is not necessarily the best choice, especially for colour-blind people. The colour palettes provided by `viridis()` in the *viridis* R package have been specially designed to produce graphics that are pleasing to the eye, easier to read for colour-blind people and print well in greyscale. As shown in the figure below, eight colour palettes are available in *viridis*: **magma** (option A), **inferno** (option B), **plasma** (option C), **viridis** (option D, this is the default), **cividis** (option E), **rocket** (option F), **mako** (option G), and **turbo** (option H).
 
-[![Colour palettes available in the viridis R package](viridis.png){fig-align="center" width="600"}](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#usage)
+[![Colour palettes available in the viridis R package](viridis.png){fig-align="center" width="600"}](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)
 
 Let's keep on personalising our plot by specifying that we want to use the viridis (option D) color palette to create the figure. This can be done with `scale_colour_viridis()` (`scale_color_viridis()` would work too) or `scale_fill_viridis()`. These functions have a couple of arguments to play with, including `alpha` (used to make colours more or less transparent), `direction` (to change the order of the colors in the scale), `discrete` (set to TRUE if you want to assign colours to a discrete scale such as groups), and `option` (to choose the colour palette you want to use). A list of colours available in R can also be found [here](https://www.uvm.edu/~ngotelli/Rscripts/ColorChart.pdf).
 
@@ -925,4 +928,4 @@ mapshot(my_map,
 
 ## Take-home message
 
-Good data visualisation is essential for data exploration and analysis, as well as for presenting and publishing the results of your research. The aim of this tutorial was to give you a brief overview of the main functions available in *ggplot2* for producing high-quality, clear and informative graphs. Of course, this tutorial is far from exhaustive and many other tools are available. We encourage you to continue learning and discovering new functions available in the *ggplot2* by using the popular books [R for Data Science](https://r4ds.hadley.nz/) and [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/).
+Good data visualisation is essential for data exploration and analysis, as well as for presenting and publishing the results of your research. The aim of this tutorial was to give you a brief overview of the main functions available in *ggplot2* for producing high-quality, clear and informative graphs. Of course, this tutorial is far from exhaustive and many other tools are available. We encourage you to continue learning and discovering new functions available in *ggplot2* by using the popular books [R for Data Science](https://r4ds.hadley.nz/) and [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/).

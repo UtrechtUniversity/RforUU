@@ -14,12 +14,12 @@ The effectiveness of these tutorials lies in their practical approach. Instead o
 
 Now get ready to improve your data science skills. Let's get started!
 
-## R for Data Science
-
-Our tutorials rely on the **R for Data Science** book (second edition) written by Hadley Wickham, Mine Cetinkaya-Rundel, Garrett Grolemund, and many other contributors. To freely access the content of this book, just click on its cover. Thank you to the authors of this book for creating such a gold mine of infoRmation. Due to the time constraints of our course, it is unfortunately not possible to go through all of the techniques and R code described in this data science book, but we strongly encourage you to explore its content and continue to learn new skills. In the tutorials, we will often refer to specific sections of the book if you wish to dive deeper into certain topics.
-
-[![](Cover_R_for_Data_Science.jpg){fig-align="center" width="200"}](https://r4ds.hadley.nz/)
-
 ## How to use our tutorials to learn R
 
 Each tutorial is designed as a step-by-step guide to performing specific tasks that are very commonly used in data science. As well as providing the R code, we take care to explain what we want to do and what each function does. By default, the R code is hidden from you, so you can try writing the R code yourself (it is the best way to learn R). We always tell you which function you need to use to perform each task. Use the R help pages to find out more about these functions. If you get stuck and want to see how the R code should be written, just click on "Show me the R code". If you have never used R before and want to see the whole R code from the beginning, you can click on "Show All Code" in the Code menu at the top right of each tutorial page.
+
+## R for Data Science
+
+Our tutorials rely on the **R for Data Science** book (second edition) written by Hadley Wickham, Mine Cetinkaya-Rundel, Garrett Grolemund, and many other contributors. To freely access the content of this book, just click on its cover. Thank you to the authors of this book for creating such a gold mine of infoRmation. Due to the time constraints of our course, it is unfortunately not possible to go through all of the techniques and R code described in this data science book, but we strongly encourage you to explore its content and continue to learn new skills.
+
+[![](Cover_R_for_Data_Science.jpg){fig-align="center" width="200"}](https://r4ds.hadley.nz/)
