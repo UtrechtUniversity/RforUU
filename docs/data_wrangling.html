@@ -404,7 +404,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="import-data-into-r" class="level3">
 <h3 class="anchored" data-anchor-id="import-data-into-r">Import data into R</h3>
-<p>There are quite a few functions available in R to import data. Your choice will mainly depend on the file format used to store data. For instance, if your data are stored in a csv file (i.e., comma separated values), then <code>read_csv()</code> would be a good choice. A more general option that would work well for most data stored in text files is <code>read_delim()</code>.</p>
+<p>There are quite a few functions available in R to import data. Your choice will mainly depend on the file format used to store data. For instance, if your data is stored in a csv file (i.e., comma separated values), then <code>read_csv()</code> would be a good choice. A more general option that would work well for most data stored in text files is <code>read_delim()</code>.</p>
 <p>In the POEM project, raw biomass data are stored in different folders for the experiment started in 2020 (POEM2020) and the experiment started in 2021 (POEM2021). For each experiment, there is one data file for each growing season. As the data is stored in Excel files (.xlsx), we can use <code>read_excel()</code> to import our data into R. For now, we will simply store each set of data in separate R objects.</p>
 <div class="cell">
 <details>
@@ -1444,7 +1444,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb25-119"><a href="#cb25-119" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-120"><a href="#cb25-120" aria-hidden="true" tabindex="-1"></a><span class="fu">### Import data into R</span></span>
 <span id="cb25-121"><a href="#cb25-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-122"><a href="#cb25-122" aria-hidden="true" tabindex="-1"></a>There are quite a few functions available in R to import data. Your choice will mainly depend on the file format used to store data. For instance, if your data are stored in a csv file (i.e., comma separated values), then <span class="in">`read_csv()`</span> would be a good choice. A more general option that would work well for most data stored in text files is <span class="in">`read_delim()`</span>.</span>
+<span id="cb25-122"><a href="#cb25-122" aria-hidden="true" tabindex="-1"></a>There are quite a few functions available in R to import data. Your choice will mainly depend on the file format used to store data. For instance, if your data is stored in a csv file (i.e., comma separated values), then <span class="in">`read_csv()`</span> would be a good choice. A more general option that would work well for most data stored in text files is <span class="in">`read_delim()`</span>.</span>
 <span id="cb25-123"><a href="#cb25-123" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-124"><a href="#cb25-124" aria-hidden="true" tabindex="-1"></a>In the POEM project, raw biomass data are stored in different folders for the experiment started in 2020 (POEM2020) and the experiment started in 2021 (POEM2021). For each experiment, there is one data file for each growing season. As the data is stored in Excel files (.xlsx), we can use <span class="in">`read_excel()`</span> to import our data into R. For now, we will simply store each set of data in separate R objects.</span>
 <span id="cb25-125"><a href="#cb25-125" aria-hidden="true" tabindex="-1"></a></span>

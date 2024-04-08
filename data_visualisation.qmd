@@ -753,6 +753,7 @@ GPKG files can be read using `st_read()` in th *sf* R package. Use this function
 #| echo: true
 #| warning: false
 #| message: false
+#| fig-align: center
 
 #Read field site locations
 locations_sf <- st_read(dsn = "Data_ggplot2/Locations_EFR.gpkg",
@@ -777,6 +778,7 @@ In maps, the colour code used to display information is something to be consider
 #| echo: true
 #| warning: false
 #| message: false
+#| fig-align: center
 
 #Create RasterLayer object
 GWT<-raster("Data_ggplot2/GWT_high.tif")
@@ -809,6 +811,7 @@ Let's now look at how we can customise the legend for this ggplot. It would be i
 #| echo: true
 #| warning: false
 #| message: false
+#| fig-align: center
 
 #Plot raster and location data
 ggplot()+
@@ -867,6 +870,7 @@ Now let's create our map of soil types and plot our site locations on top of it 
 #| echo: true
 #| warning: false
 #| message: false
+#| fig-align: center
 
 ggplot() +
   geom_sf(data = soil_sf, 
@@ -895,6 +899,7 @@ Your maps look great, but they are all missing a base map. This can be done usin
 #| warning: false
 #| message: false
 #| code-fold: false
+#| fig-align: center
 
 mapviewOptions(fgb = FALSE)
 

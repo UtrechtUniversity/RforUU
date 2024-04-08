@@ -12,4 +12,10 @@ author:
 
 Welcome to this tutorial on quantifying taxonomic diversity in R!
 
-Throughout this tutorial, **our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R.** Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!
+Throughout this tutorial, **our aim is to show you different ways of quantifying the diversity of species in an ecosystem and to make you aware of the challenges involved in quantifying biodiversity**.
+
+Hill number equation
+
+$$
+^qD = (\sum_{i=1}^{n}p_i^q)^{\frac{1}{1-q}} 
+$$ {#eq-hill}

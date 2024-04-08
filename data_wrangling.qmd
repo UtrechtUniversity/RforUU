@@ -111,7 +111,7 @@ library(knitr)
 
 ### Import data into R
 
-There are quite a few functions available in R to import data. Your choice will mainly depend on the file format used to store data. For instance, if your data are stored in a csv file (i.e., comma separated values), then `read_csv()` would be a good choice. A more general option that would work well for most data stored in text files is `read_delim()`.
+There are quite a few functions available in R to import data. Your choice will mainly depend on the file format used to store data. For instance, if your data is stored in a csv file (i.e., comma separated values), then `read_csv()` would be a good choice. A more general option that would work well for most data stored in text files is `read_delim()`.
 
 In the POEM project, raw biomass data are stored in different folders for the experiment started in 2020 (POEM2020) and the experiment started in 2021 (POEM2021). For each experiment, there is one data file for each growing season. As the data is stored in Excel files (.xlsx), we can use `read_excel()` to import our data into R. For now, we will simply store each set of data in separate R objects.
 
