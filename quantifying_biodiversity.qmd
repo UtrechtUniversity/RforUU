@@ -12,10 +12,440 @@ author:
 
 Welcome to this tutorial on quantifying taxonomic diversity in R!
 
-Throughout this tutorial, **our aim is to show you different ways of quantifying the diversity of species in an ecosystem and to make you aware of the challenges involved in quantifying biodiversity**.
+Throughout this tutorial, you will **learn different ways to quantify species diversity in an ecosystem and become aware of some of the challenges associated with quantifying biodiversity**. This tutorial focuses on quantifying biodiversity across scales (alpha, beta, and gamma diversity). In addition, you will use the knowledge gained in tutorials 1 and 2 to calculate Hill numbers of order *q* (i.e. the effective number of species for a given diversity order *q* ) and plot diversity profiles to analyse and compare biodiversity between different sites in a hypothetical metacommunity. Particular attention will be paid to the importance of sampling effort when comparing biodiversity estimates between different sites.
 
-Hill number equation
+There are R packages that allow you to calculate all the diversity measures listed above, but we will not be using them in this tutorial. We would like you to write your own R code to calculate them. Once again, it's all about learning by doing.
 
-$$
-^qD = (\sum_{i=1}^{n}p_i^q)^{\frac{1}{1-q}} 
-$$ {#eq-hill}
+Let's get started!
+
+## A hypothetical metacommunity
+
+The first step is to create some data to work with. You will do this by sampling wooden meeples (which are small board game pieces) to generate a site by species abundance matrix. Our hypothetical metacommunity consists of six paper bags (which represent different sampling sites), each containing 30 meeples (which represent different individuals living at a site). Meeples of the same colour belong to the same species. We will not give you any information about species diversity and composition at each site. You will have to obtain this information yourself, by repeatedly sampling each site without looking inside the bags.
+
+Our species pool consists of 10 different species, each represented by a different colour. This is a small species pool, but it is enough to meet the objectives of this tutorial.
+
+## Sampling procedure
+
+The aim of this exercise is to simulate a survey carried out to characterise the taxonomic diversity of six sites making up our metacommunity. Each site will be sampled multiple times to simulate surveys in a number of quadrats/locations at each site.
+
+You can start generating biodiversity data using the following procedure:
+
+1.  Divide into 6 sub-groups. Each sub-group should consist of 4 to 5 students.
+
+2.  Each sub-group takes one bag (each bag is labelled with a number from 1 to 6). The bags have a different composition and contain a different number of species.
+
+3.  One member of each a sub-group carefully mixes the content of the bag and randomly samples 6 individuals from the bag (this represents 20% of the individuals in a bag). Try not to look inside the bag to avoid any sampling bias.
+
+4.  Write down your observations in an Excel sheet (site as rows, species as columns).
+
+5.  Once your observations have been recorded, put your sample back into the bag and give the bag to another person in your group. Then, repeat the previous steps until you have at least five replicates. In your data sheet, report your observations independently for each replicate (i.e., each row in your data is a replicate within a site).
+
+6.  Once you have all the replicates needed for your bag, switch bags with another group and repeat the previous steps. Do this until you have five replicates for each bag.
+
+7.  Make sure that your data are formatted properly.
+
+## Exercises
+
+### Load R packages
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(knitr)
+library(viridis)
+```
+
+### Exercise 1: Calculate alpha, beta and gamma diversity in our hypothetical metacommunity
+
+**Alpha diversity** is the average number of species across sites in our hypothetical metacommunity. **Gamma diversity** is the total number of species present in our hypothetical metacommunity. **Beta diversity** is gamma diversity divided by alpha diversity.
+
+Using the data collected earlier, calculate alpha, beta and gamma diversity in our hypothetical metacommunity using R. First, import your data into R. Then, use knowledge from tutorials 1 and 2 to write R code to calculate alpha, beta, and gamma diversity in our metacommunity.
+
+::: panel-tabset
+## Example dataset
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| message: false
+
+#Simulate some data
+Bag1 <- rep(3,10)
+Bag2 <- c(0,0,0,15,0,15,0,0,0,0)
+Bag3 <- c(2,5,1,4,4,3,0,6,2,3)
+Bag4 <- c(0,7,0,0,11,0,0,5,0,7)
+Bag5 <- c(2,1,18,1,2,1,0,2,2,1)
+Bag6 <- c(6,0,0,0,0,0,17,0,5,2)
+
+data <- data.frame(Bag = rep(1:6, each=5),
+                   Replicate = rep(1:5, 6),
+                   Red=rep(NA, 30),
+                   Orange=rep(NA, 30),
+                   Yellow=rep(NA, 30),
+                   Green=rep(NA, 30),
+                   Blue=rep(NA, 30),
+                   Purple=rep(NA, 30),
+                   Pink=rep(NA, 30),
+                   White=rep(NA, 30),
+                   Grey=rep(NA, 30),
+                   Black=rep(NA, 30))
+
+set.seed(123)
+
+for (i in 1:nrow(data)){
+  
+  if (i <= 5){bag <- Bag1}
+  if (i > 5 & i<=10){bag <- Bag2}
+  if (i > 10 & i<=15){bag <- Bag3}
+  if (i > 15 & i<=20){bag <- Bag4}
+  if (i > 20 & i<=25){bag <- Bag5}
+  if (i > 25 & i<=30){bag <- Bag6}
+  
+  s <- sample(c(rep("red", bag[1]),
+          rep("orange", bag[2]),
+          rep("yellow", bag[3]),
+          rep("green", bag[4]),
+          rep("blue", bag[5]),
+          rep("purple", bag[6]),
+          rep("pink", bag[7]),
+          rep("white", bag[8]),
+          rep("grey", bag[9]),
+          rep("black", bag[10])), 6, replace=FALSE)
+  
+  data$Red[i] <- sum(s=="red")
+  data$Orange[i] <- sum(s=="orange")
+  data$Yellow[i] <- sum(s=="yellow")
+  data$Green[i] <- sum(s=="green")
+  data$Blue[i] <- sum(s=="blue")
+  data$Purple[i] <- sum(s=="purple")
+  data$Pink[i] <- sum(s=="pink")
+  data$White[i] <- sum(s=="white")
+  data$Grey[i] <- sum(s=="grey")
+  data$Black[i] <- sum(s=="black")}
+```
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+kable(head(data, n=10))
+```
+
+## Solution (gamma)
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+gamma <- as.numeric(data |> 
+                      pivot_longer(Red:Black,
+                                   names_to = "Species",
+                                   values_to = "Abundance") |> 
+                      group_by(Species) |> 
+                      summarise(Abundance = sum(Abundance)) |> 
+                      summarise(Gamma = sum(Abundance > 0)))
+```
+
+Gamma diversity: `r gamma`
+
+## Solution (alpha)
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+alpha <- round(as.numeric(data |> 
+                            pivot_longer(Red:Black,
+                                         names_to = "Species",
+                                         values_to = "Abundance") |> 
+                            group_by(Bag, Species) |> 
+                            summarise(Abundance = sum(Abundance)) |> 
+                            group_by(Bag) |>
+                            summarise(Alpha = sum(Abundance > 0)) |> 
+                            summarise(Alpha = mean(Alpha))), 1)
+```
+
+Alpha diversity: `r alpha`
+
+## Solution (beta)
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+beta <- round(gamma/alpha, 1)
+```
+
+Beta diversity: `r beta`
+:::
+
+### Exercise 2: Calculate the average species richness at each site
+
+Use what you learned in previous tutorials to calculate the average number of species at each site.
+
+::: panel-tabset
+## Solution (code)
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+table <- data |> 
+          pivot_longer(Red:Black,
+                       names_to = "Species",
+                       values_to = "Abundance") |> 
+          group_by(Bag, Replicate) |> 
+          summarise(Richness = sum(Abundance>0)) |> 
+          group_by(Bag) |> 
+          summarise(Avg_richness = round(mean(Richness), 1))
+```
+
+## Solution (table)
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+kable(table)
+```
+:::
+
+### Exercise 3: Calculate the effective number of species (Hill numbers) of order 0, 1 and 2 at each site
+
+In a community consisting of *n* species, the Hill number (or effective number of species) of order *q* can be calculated using @eq-hill-1 ($q \geq 0$, $q\neq1$) and @eq-hill-2 ($q=1$), where *p~i~* is the relative abundance of species *i* in the community ($p_i \in [0,1]$).
+
+$$ ^qD = (\sum_{i=1}^{n}p_i^q)^{\frac{1}{1-q}}  $$ {#eq-hill-1}
+
+$$ ^1D=exp(-\sum_{i=1}^{n}p_i\log p_i) $$ {#eq-hill-2}
+
+Use the @eq-hill-1 and @eq-hill-2 to calculate the effective number of species of order 0, 1 and 2 at each site of our hypothetical metacommunity. Plot your results in a figure with 6 panels (one panel for each site). For each site, plot the effective number of species as a function of *q* (this is called a diversity profile plot). Plot separate lines for each replicate.
+
+What do you observe? What can you conclude about the taxonomic diversity at each site?
+
+::: panel-tabset
+## Solution (code)
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+plot <- data |> 
+          mutate(Total = Red+Orange+Yellow+Green+Blue+Purple+Pink+White+Grey+Black) |> 
+          mutate(Red=Red/Total,
+                 Orange=Orange/Total,
+                 Yellow=Yellow/Total,
+                 Green=Green/Total,
+                 Blue=Blue/Total,
+                 Purple=Purple/Total,
+                 Pink=Pink/Total,
+                 White=White/Total,
+                 Grey=Grey/Total,
+                 Black=Black/Total) |> 
+          pivot_longer(Red:Black,
+                       names_to = "Species",
+                       values_to = "Abundance") |> 
+          filter(Abundance!=0) |> 
+          group_by(Bag, Replicate) |> 
+          summarise(q0=sum(Abundance^0)^(1/(1-0)),
+                    q1=exp(-sum(Abundance*log(Abundance))),
+                    q2=sum(Abundance^2)^(1/(1-2))) |> 
+          pivot_longer(q0:q2,
+                       names_to = "q",
+                       names_prefix = "q",
+                       names_transform = as.numeric,
+                       values_to = "diversity") |>
+          mutate(Bag=paste("Bag ", Bag, sep=""),
+                 Replicate=as.factor(Replicate)) |> 
+          ggplot(aes(x = q,
+                     y = diversity,
+                     group = Replicate,
+                     colour=Replicate))+
+            geom_line()+
+            geom_point(shape=16)+
+            facet_wrap(~Bag)+
+            theme_bw()+
+            xlab("Diversity order (q)")+
+            ylab("Effective number of species")+
+            scale_colour_viridis(discrete=TRUE)+
+            theme(axis.title.x = element_text(margin = margin(t=10)),
+                  axis.title.y = element_text(margin = margin(r=10)),
+                  axis.text = element_text(colour="black"),
+                  panel.grid.minor = element_blank())+
+            scale_x_continuous(breaks=c(0,1,2),
+                               limits = c(0,2))+
+            scale_y_continuous(breaks=seq(from = 0,
+                                          to = 10,
+                                          by = 2),
+                               limits=c(0,10))
+```
+
+## Solution (plot)
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-align: center
+
+plot
+```
+:::
+
+### Exercise 4: The importance of sampling effort for estimating taxonomic diversity
+
+In the first part of this tutorial, we estimated taxonomic diversity by randomly sampling 20% of the individuals living at each site. But what would happen if we increased the sampling effort and sampled 50% of the individuals present at each site? Using the same sampling procedure as above, create a new data set by randomly selecting 15 individuals per site and make a new version of the figure you created for the third exercise.
+
+What do you notice? What can you conclude about the importance of sampling effort in accurately quantifying biodiversity? In what situations does increasing the sampling effort make it possible to obtain better biodiversity estimates?
+
+::: panel-tabset
+## Solution (code)
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| message: false
+
+#Simulate some data
+Bag1 <- rep(3,10)
+Bag2 <- c(0,0,0,15,0,15,0,0,0,0)
+Bag3 <- c(2,5,1,4,4,3,0,6,2,3)
+Bag4 <- c(0,7,0,0,11,0,0,5,0,7)
+Bag5 <- c(2,1,18,1,2,1,0,2,2,1)
+Bag6 <- c(6,0,0,0,0,0,17,0,5,2)
+
+data <- data.frame(Bag = rep(1:6, each=5),
+                   Replicate = rep(1:5, 6),
+                   Red=rep(NA, 30),
+                   Orange=rep(NA, 30),
+                   Yellow=rep(NA, 30),
+                   Green=rep(NA, 30),
+                   Blue=rep(NA, 30),
+                   Purple=rep(NA, 30),
+                   Pink=rep(NA, 30),
+                   White=rep(NA, 30),
+                   Grey=rep(NA, 30),
+                   Black=rep(NA, 30))
+
+set.seed(234)
+
+for (i in 1:nrow(data)){
+  
+  if (i <= 5){bag <- Bag1}
+  if (i > 5 & i<=10){bag <- Bag2}
+  if (i > 10 & i<=15){bag <- Bag3}
+  if (i > 15 & i<=20){bag <- Bag4}
+  if (i > 20 & i<=25){bag <- Bag5}
+  if (i > 25 & i<=30){bag <- Bag6}
+  
+  s <- sample(c(rep("red", bag[1]),
+          rep("orange", bag[2]),
+          rep("yellow", bag[3]),
+          rep("green", bag[4]),
+          rep("blue", bag[5]),
+          rep("purple", bag[6]),
+          rep("pink", bag[7]),
+          rep("white", bag[8]),
+          rep("grey", bag[9]),
+          rep("black", bag[10])), 15, replace=FALSE)
+  
+  data$Red[i] <- sum(s=="red")
+  data$Orange[i] <- sum(s=="orange")
+  data$Yellow[i] <- sum(s=="yellow")
+  data$Green[i] <- sum(s=="green")
+  data$Blue[i] <- sum(s=="blue")
+  data$Purple[i] <- sum(s=="purple")
+  data$Pink[i] <- sum(s=="pink")
+  data$White[i] <- sum(s=="white")
+  data$Grey[i] <- sum(s=="grey")
+  data$Black[i] <- sum(s=="black")}
+```
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+plot <- data |> 
+          mutate(Total = Red+Orange+Yellow+Green+Blue+Purple+Pink+White+Grey+Black) |> 
+          mutate(Red=Red/Total,
+                 Orange=Orange/Total,
+                 Yellow=Yellow/Total,
+                 Green=Green/Total,
+                 Blue=Blue/Total,
+                 Purple=Purple/Total,
+                 Pink=Pink/Total,
+                 White=White/Total,
+                 Grey=Grey/Total,
+                 Black=Black/Total) |> 
+          pivot_longer(Red:Black,
+                       names_to = "Species",
+                       values_to = "Abundance") |> 
+          filter(Abundance!=0) |> 
+          group_by(Bag, Replicate) |> 
+          summarise(q0=sum(Abundance^0)^(1/(1-0)),
+                    q1=exp(-sum(Abundance*log(Abundance))),
+                    q2=sum(Abundance^2)^(1/(1-2))) |> 
+          pivot_longer(q0:q2,
+                       names_to = "q",
+                       names_prefix = "q",
+                       names_transform = as.numeric,
+                       values_to = "diversity") |>
+          mutate(Bag=paste("Bag ", Bag, sep=""),
+                 Replicate=as.factor(Replicate)) |> 
+          ggplot(aes(x = q,
+                     y = diversity,
+                     group = Replicate,
+                     colour=Replicate))+
+            geom_line()+
+            geom_point(shape=16)+
+            facet_wrap(~Bag)+
+            theme_bw()+
+            xlab("Diversity order (q)")+
+            ylab("Effective number of species")+
+            scale_colour_viridis(discrete=TRUE)+
+            theme(axis.title.x = element_text(margin = margin(t=10)),
+                  axis.title.y = element_text(margin = margin(r=10)),
+                  axis.text = element_text(colour="black"),
+                  panel.grid.minor = element_blank())+
+            scale_x_continuous(breaks=c(0,1,2),
+                               limits = c(0,2))+
+            scale_y_continuous(breaks=seq(from = 0,
+                                          to = 10,
+                                          by = 2),
+                               limits=c(0,10))
+```
+
+## Solution (plot)
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-align: center
+
+plot
+```
+:::
