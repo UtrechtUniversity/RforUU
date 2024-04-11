@@ -237,7 +237,7 @@ $$ ^qD = (\sum_{i=1}^{n}p_i^q)^{\frac{1}{1-q}}  $$ {#eq-hill-1}
 
 $$ ^1D=exp(-\sum_{i=1}^{n}p_i\log p_i) $$ {#eq-hill-2}
 
-Use @eq-hill-1 and @eq-hill-2 to calculate the effective number of species of order 0, 1 and 2 at each site of our hypothetical metacommunity. Plot your results in a figure with 6 panels (one panel for each site). For each site, plot the effective number of species as a function of *q* (this is called a diversity profile plot). Plot separate lines (using `geom_line()`) for each replicate (the `group` argument in `aes()` will be useful here).
+Use @eq-hill-1 and @eq-hill-2 to calculate the effective number of species of order 0 (species richness), 1 (Hill-Shannon, the exponential of Shannon's entropy) and 2 (Hill-Simpson, the inverse of Simpson's concentration index) at each site of our hypothetical metacommunity. Plot your results in a figure with 6 panels (one panel for each site). For each site, plot the effective number of species as a function of *q* (this is called a diversity profile plot). Plot separate lines (using `geom_line()`) for each replicate (the `group` argument in `aes()` will be useful here).
 
 What do you observe? What can you conclude about the taxonomic diversity at each site?
 
