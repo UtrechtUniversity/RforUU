@@ -12,7 +12,7 @@ author:
 
 Welcome to this tutorial on quantifying taxonomic diversity in R!
 
-Throughout this tutorial, you will **learn different ways to quantify species diversity in an ecosystem and become aware of some of the challenges associated with quantifying biodiversity**. This tutorial focuses on quantifying taxonomic diversity across scales (alpha, beta, and gamma diversity). In addition, you will use the knowledge gained in tutorials 1 and 2 to calculate Hill numbers of order *q* (i.e. the effective number of species for a given diversity order *q* ) and plot diversity profiles to analyse and compare biodiversity between different sites in a hypothetical metacommunity. Particular attention will be paid to the importance of sampling effort when comparing biodiversity estimates between sites with different levels of biodiversity.
+Throughout this tutorial, you will **learn different ways to quantify species diversity in an ecosystem and become aware of some of the challenges associated with quantifying biodiversity**. This tutorial focuses on quantifying taxonomic diversity across scales (alpha, beta, and gamma diversity sensu [Whittaker 1960](https://esajournals.onlinelibrary.wiley.com/doi/abs/10.2307/1943563)). In addition, you will use the knowledge gained in tutorials 1 and 2 to calculate Hill numbers of order *q* (i.e. the effective number of species for a given diversity order *q* ) and plot diversity profiles to analyse and compare biodiversity between different sites in a hypothetical metacommunity. Particular attention will be paid to the importance of sampling effort when comparing biodiversity estimates between sites with different levels of biodiversity.
 
 There are R packages that allow you to calculate all the diversity measures listed above, but we will not be using them in this tutorial. We would like you to write your own R code to calculate them. Once again, it's all about learning by doing.
 
@@ -63,7 +63,7 @@ library(viridis)
 
 ### Exercise 1: Calculate alpha, beta and gamma diversity
 
-**Alpha diversity** is the average number of species across sites in our hypothetical metacommunity. **Gamma diversity** is the total number of species present in our hypothetical metacommunity. **Beta diversity** is gamma diversity divided by alpha diversity.
+**Alpha diversity** (within-habitat diversity) is the average number of species across sites in our hypothetical metacommunity. **Gamma diversity** (regional diversity) is the total number of species present in our hypothetical metacommunity. **Beta diversity** (between-habitat diversity differentiation) is gamma diversity divided by alpha diversity.
 
 Using the data collected earlier, calculate alpha, beta and gamma diversity in our hypothetical metacommunity using R. First, import your data into R. Then, use knowledge from tutorials 1 and 2 to write R code to calculate alpha, beta, and gamma diversity in our metacommunity.
 
@@ -237,7 +237,7 @@ $$ ^qD = (\sum_{i=1}^{n}p_i^q)^{\frac{1}{1-q}}  $$ {#eq-hill-1}
 
 $$ ^1D=exp(-\sum_{i=1}^{n}p_i\log p_i) $$ {#eq-hill-2}
 
-Use the @eq-hill-1 and @eq-hill-2 to calculate the effective number of species of order 0, 1 and 2 at each site of our hypothetical metacommunity. Plot your results in a figure with 6 panels (one panel for each site). For each site, plot the effective number of species as a function of *q* (this is called a diversity profile plot). Plot separate lines (using `geom_line()`) for each replicate (the `group` argument in `aes()` will be useful here).
+Use @eq-hill-1 and @eq-hill-2 to calculate the effective number of species of order 0, 1 and 2 at each site of our hypothetical metacommunity. Plot your results in a figure with 6 panels (one panel for each site). For each site, plot the effective number of species as a function of *q* (this is called a diversity profile plot). Plot separate lines (using `geom_line()`) for each replicate (the `group` argument in `aes()` will be useful here).
 
 What do you observe? What can you conclude about the taxonomic diversity at each site?
 
