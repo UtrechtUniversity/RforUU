@@ -12,4 +12,429 @@ author:
 
 Welcome to this tutorial on data exploration in R!
 
-Throughout this tutorial, **our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R.** Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!
+Throughout this tutorial, **our aim is to provide you with the basic tools for exploring your data before carrying out any type of analysis**. Data exploration is a very important step before starting any kind of analysis on ecological data, not to generate hypotheses (this should be done *a priori*, even before collecting data), but to make sure that the underlying assumptions of statistical models are respected, or to make sure that there are no outliers in our data that could strongly influence our analysis, thereby reducing the risk of type I (i.e., detecting an effect when none exists) or type II (i.e., not detecting an effect when there is one) errors. Data exploration is an important but often overlooked step, and this tutorial aims to understand some of the things to look for when exploring ecological data.
+
+This tutorial builds on the previous ones and will focus on how we can use graphical tools to detect possible problems with our data. This tutorial is based on the excellent paper of Alain Zuur, Elena Ieno and Chris Elphick (2010), [A protocol for data exploration to avoid common statistical problems](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.2041-210X.2009.00001.x), *Methods in Ecology and Evolution*, 1, 3-14. We strongly recommend that you read it. We will be using the same data to illustrate different data exploration techniques, but we will be constructing the graphs differently, relying mainly on the tools available in *tidyverse*. All the data needed for this tutorial are provided as supplementary information (Annex 1) of [Zuur et al (2010)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.2041-210X.2009.00001.x).
+
+Let's get started!
+
+## Load R packages
+
+Load *tidyverse*, *knitr*, and *corrplot*.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false  
+
+library(tidyverse) 
+library(knitr) 
+library(corrplot)
+```
+
+## Step 1: Are there outliers?
+
+Zuur et al (2010) defined an outlier as "*an observation that has a relatively large or small value compared to the majority of observations*". There is no hard rule as to what "relatively" means in this context, but observations that qualify as outliers usually "stand out" and look very different from all other data points, perhaps due to measurement errors. Two types of graph are well suited to outlier detection: **box plots** and **Cleveland plots**.
+
+### Box plots
+
+Let's start by loading the "SparrowsElphick.txt" dataset into R (use `read_delim()`). Have a look at how this dataset is structured using `View()` or `head()`. This dataset contains observations measured on 1295 sparrows. For the moment, we will look at just one response variable: wing length (expressed in millimeters). This variable is named "wingcrd" in the sparrows dataset.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+
+#Load data into R
+sparrows <- read_delim("Data_Zuur_et_al_2010/SparrowsElphick.txt")
+
+#View data
+kable(head(sparrows, n=10))
+```
+
+Now use *ggplot2* to create a box plot using wing length as a response variable.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+#| fig-width: 2.5
+#| fig-height: 4
+
+ggplot(sparrows,
+       aes(y=wingcrd))+
+  geom_boxplot()+
+  theme_bw()+
+  xlab("")+
+  ylab("Wing length (mm)")+
+  theme(axis.text = element_text(colour = "black"),
+        axis.text.x = element_blank(),
+        axis.title.y = element_text(margin = margin(r=10)))
+```
+
+Such a box plot displays descriptive statistics on your data: the median value (represented by a thick horizontal line), as well as the 25% and 75% quartiles (lower and upper limits of the box). The difference between the 75% and 25% quartiles is called the interquartile range (the height of the box). Exactly half the observations in your data fall within this interquartile range. By default, the box plot whiskers are as long as 1.5 times the interquartile range. Observations beyond the whiskers are represented by individual dots and are possible outliers (i.e. observations whose values are rather large or small compared to the rest of the data) which will need to be checked to ensure that they are not measurement errors. It would be a mistake to remove all these observations without first checking them to make sure they are measurement errors.
+
+### Cleveland plots
+
+A Cleveland plot is a method of choice for detecting outliers. To create a Cleveland plot, you just need to plot your variable of interest on the horizontal axis and the row number of your observations on the vertical axis. You can easily add a new column with the row number to your data using `add_column()`.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+#| fig-width: 4.5
+#| fig-height: 4.5
+
+sparrows |> 
+  add_column(row_number=1:nrow(sparrows),
+             .before="wingcrd") |> 
+  ggplot(aes(x=wingcrd,
+             y=row_number))+
+    geom_point(shape=1)+
+    theme_bw()+
+    ylab("Row number")+
+    xlab("Wing length (mm)")+
+    theme(axis.text = element_text(colour = "black"),
+          axis.title.y = element_text(margin = margin(r=10)),
+          axis.title.x = element_text(margin = margin(t=10)))
+```
+
+When looking closely at this Cleveland plot, none of the observations on the left and right sides of the graph seem to stand out. All the wing length values seem reasonable, with no particularly small or large values to check.
+
+Let's continue our exploration of the sparrows data by looking at other response variables: Culmen length (culmen), Nalospi to bill tip (nalospi), Weight (wt), Wing length (wingcrd), Tarsus length (tarsus), and Head length (head). Before plotting, sort the sparrow observations by increasing weight values (to be consistent with Zuur et al, 2010). Then, create a figure with 6 panels, each displaying a Cleveland plot for each of these morphometric variables. You can do this using `facet_wrap()`. In `facet_wrap()`, set the `scales` argument to "free_x" to allow for different horizontal axis scales. Check what would happen if you keep `scales = "fixed"` (which is the default).
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+#| fig-width: 7
+#| fig-height: 5.5
+
+sparrows |> 
+  select(culmen, nalospi, wt, wingcrd, tarsus, head) |> 
+  arrange(wt) |> 
+  add_column(row_number=1:nrow(sparrows),
+             .before="culmen") |> 
+  pivot_longer(culmen:head,
+               names_to="variable",
+               values_to = "value") |>
+  mutate(variable = replace(variable, variable == "culmen", "Culmen length"),
+         variable = replace(variable, variable == "nalospi", "Nalospi to bill tip"),
+         variable = replace(variable, variable == "wt", "Weight"),
+         variable = replace(variable, variable == "wingcrd", "Wing length"),
+         variable = replace(variable, variable == "tarsus", "Tarsus length"),
+         variable = replace(variable, variable == "head", "Head length")) |> 
+  ggplot(aes(x=value,
+             y=row_number))+
+    geom_point(shape=1)+
+    theme_bw()+
+    ylab("Row number")+
+    xlab("Value")+
+    theme(axis.text = element_text(colour = "black"),
+          axis.title.y = element_text(margin = margin(r=10)),
+          axis.title.x = element_text(margin = margin(t=10)))+
+    facet_wrap(~variable, scales = "free_x")
+```
+
+Looking at this figure, we quickly notice that two head length values appear smaller than the others, while one tarsus length value appears larger than the others. These observations seem to qualify as outliers and should be checked. It is unlikely that such extreme values could have occurred by chance. If these observations are indeed measurement (or observation) errors, they should be dropped before continuing the analysis. If you decide to remove observations from your dataset, always clearly document this decision in your code and give reasons for it. This is where having a detailed field notebook or experimental log comes in handy.
+
+## Step 2: Do we have homogeneity of variance?
+
+Homogeneity of variance is an important assumption of regression-related techniques such as ANalysis Of VAriance (ANOVA). One way to check for this is to use a **conditional box plot**. Let's create one using a new set of bird data. The "Godwits.txt" data file contains observations for 9 variables measured on 330 Hudsonian godwits (*Limosa haemastica*).
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+
+#Load data into R
+godwits <- read_delim("Data_Zuur_et_al_2010/Godwits.txt",
+                      col_select = 1:9)
+
+#View data
+kable(head(godwits, n=10))
+```
+
+We would be interested to test if the mean food intake rate (mgconsumed) of godwits changes between sexes (variable: SEX; either female or male) and time periods (variable: PERIOD; either summer, pre-migration, or winter). Before fitting a linear model to our data, we first need to check if all groups have similar variance. Use *ggplot2* to create a conditional box plot visualising this. Pay attention to the following:
+
+-   SEX is a variable with 3 levels: 0 (no information), 1 (female) and 2 (male). Filter out observations with SEX=0 and replace 1's by "Female" and 2's by "Male".
+
+-   PERIOD is a variable with 3 levels: 0 (Summer), 1 (Pre-migration) and 2 (Winter). Replace 0's by "Summer", 1's by "Pre-migration" and 2's by "Winter".
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+#| fig-width: 7
+#| fig-height: 4
+
+godwits |> 
+  filter(SEX != 0) |> 
+  mutate(SEX = replace(SEX, SEX == 1, "Female"),
+         SEX = replace(SEX, SEX == 2, "Male"),
+         PERIOD = replace(PERIOD, PERIOD == 0, "Summer"),
+         PERIOD = replace(PERIOD, PERIOD == 1, "Pre-migration"),
+         PERIOD = replace(PERIOD, PERIOD == 2, "Winter")) |> 
+  ggplot(aes(x=PERIOD,
+             y=mgconsumed))+
+    geom_boxplot(width=0.4)+
+    theme_bw()+
+    ylab("Food intake rate")+
+    xlab("Migration period")+
+    theme(axis.text = element_text(colour = "black"),
+          axis.title.y = element_text(margin = margin(r=10)),
+          axis.title.x = element_text(margin = margin(t=10)))+
+    facet_wrap(~SEX)
+```
+
+From this figure, what can you conclude about (1) the variation in food intake rate between sexes (across migration periods), (2) the variation in food intake rate between migration periods (across sexes), and (3) the variation in food intake rate between migration periods within each sex category?
+
+## Step 3: Are the data normally distributed?
+
+Another important assumption of linear regression is that data are normally distributed (i.e., data follow a normal distribution). But what data are we talking about? Can I simply verify this assumption by creating a histogram from ALL the values of the response variable I am interested in? The answer is: no, you can't. Why not? Because the assumption to be verifed is that the data [**within each group**]{.underline} are normally distributed. This underlines the importance of having a sufficient number of replicates at each level of your covariate, which should have been carefully considered when designing the study. You can check whether your data are normally distributed by making **histograms** of the raw data for each group.
+
+Let's go back to the sparrows dataset. Use *ggplot2* to create a histogram of the weight (wt) of sparrows in June, July, and August. Use `geom_histogram()` to do this. What patterns do you observe?
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+#| fig-width: 7
+#| fig-height: 4
+
+sparrows |> 
+  filter(Month >= 6 & Month <= 8) |> 
+  mutate(Month=replace(Month, Month==6, "June"),
+         Month=replace(Month, Month==7, "July"),
+         Month=replace(Month, Month==8, "August")) |> 
+  mutate(Month=factor(Month, levels=c("June",
+                                      "July", 
+                                      "August"))) |> #Reorder factor levels to reorder facets
+  ggplot(aes(x=wt))+
+    geom_histogram()+
+    theme_bw()+
+    ylab("Frequency")+
+    xlab("Weight (g)")+
+    theme(axis.text = element_text(colour = "black"),
+          axis.title.y = element_text(margin = margin(r=10)),
+          axis.title.x = element_text(margin = margin(t=10)))+
+    facet_wrap(~Month)
+```
+
+## Step 4: Are there lots of zeros in the data?
+
+When modelling the relationship between a response variable whose value is often zero and other covariates, the use of zero-inflated models is often an option. But how can we visualise if our response variable of interest is often equal to zero? Sounds like you need to create a **frequency plot**. You can do this using `geom_bar()`. In `geom_bar()`, use `stat="count"`.
+
+To create a frequency plot, we will use another dataset ("ElphickBirdData.txt"). This dataset contains 2035 observations of the number of waterbirds (AQBIRDS) observed in flooded rice fields.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+
+#Load data into R
+waterbirds <- read_delim("Data_Zuur_et_al_2010/ElphickBirdData.txt")
+
+#View data
+kable(head(waterbirds, n=10))
+```
+
+How many times is the number of waterbirds equal to zero in this dataset? Create a frequency plot to find out! Focus on observed values between 0 and 100, and do not forget to round them off (use `round()`).
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+#| fig-width: 5.5
+#| fig-height: 3.5
+
+waterbirds |> 
+  filter(AQBIRDS < 100) |> 
+  ggplot(aes(x=round(AQBIRDS)))+
+    geom_bar(stat = "count")+
+    theme_bw()+
+    ylab("Frequency")+
+    xlab("Observed values")+
+    theme(axis.text = element_text(colour = "black"),
+          axis.title.y = element_text(margin = margin(r=10)),
+          axis.title.x = element_text(margin = margin(t=10)))
+```
+
+What can you conclude from this frequency plot?
+
+## Step 5: Is there colinearity among covariates?
+
+Zuur et al (2010) defined colinearity as "*the existence of correlation between covariates*". The strength of the linear relationship between two continuous variables (X and Y) can be measured using Pearson's correlation coefficient (@eq-cor).
+
+$$
+r=\frac{cov(X,Y)}{\sigma_X\sigma_Y}
+$$ {#eq-cor}
+
+In @eq-cor, $cov(X,Y)$ is the covariance between X and Y. $\sigma_X$ and $\sigma_Y$ are the standard deviation values for variables X and Y. If $r=0$, there is no linear relationship between X and Y. If $r=1$ or $r=-1$, there is a perfect positive or negative linear relationship between the two variables, respectively.
+
+A useful way to check for colinearity between covariates is to create a **correlation plot**. A scatter plot would also be a good idea, but as we will see how to create scatter plots in the next section, let's concentrate here on creating a correlation plot.
+
+In this example, we will work with a new sparrows dataset (VegSamplesV1.txt). The researchers who produced this dataset wanted to know whether the relative abundance of various plant species and other vegetation characteristics could explain the number of saltmarsh sparrows captured in each plot (Banded). We will work with the following covariates:
+
+-   Maximum vegetation height (Avgmaxht)
+-   Vegetation stem density (Avgdens)
+-   Height of thatch (ht.thatch)
+-   Percent cover of shrubs (Shrub)
+-   Percent cover of *Juncus gerardii* (Juncus)
+-   Percent cover of *Spartina patens* (S.patens)
+-   Percent cover of *Distichlis spicata* (Distichlis)
+-   Percent cover of short *Spartina alterniflora* (S.alternifloraShort)
+-   Percent cover of tall *Spartina alterniflora* (S.alternifloraTall)
+-   Percent cover of *Phragmites australis* (Phragmites)
+-   Percent cover of bare ground (Bare)
+-   Percent cover of water (Water)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+
+#Load data into R
+sparrows2 <- read_delim("Data_Zuur_et_al_2010/VegSamplesV1.txt",
+                        col_select = 1:19)
+
+#View data
+kable(head(sparrows2, n=10))
+```
+
+Now that the data have been imported into R, we can create a correlation plot to check for colinearity between the covariates we want to include in a statistical model. You can do this with the `corrplot()` or `corrplot.mixed()` function in the *corrplot* package.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+
+corrplot.mixed(corr=cor(sparrows2[,c("Avgmaxht",
+                                     "Avgdens",
+                                     "ht.thatch",
+                                     "Shrub",
+                                     "Juncus",
+                                     "S.patens",
+                                     "Distichlis",
+                                     "S.alternifloraShort",
+                                     "S.alternifloraTall",
+                                     "Phragmites",
+                                     "Bare",
+                                     "Water")]),
+           lower="number",
+           upper="ellipse",
+           tl.pos="lt",
+           diag="n",
+           tl.col="black",
+           number.cex=0.7)
+```
+
+What do you see? Is there colinearity among covariates in this dataset?
+
+## Step 6: What are the relationships between variables?
+
+The easiest way to find out how the relationship between a response variable of interest and a covariate looks like is to create a **scatter plot**. Let's do this using the sparrows dataset we just used to look as colinearity. Using *ggplot2*, create a figure with multiple panels showing the relationship between the number of sparrows observed in a plot (Banded) and all covariates used in the previous section. In *tidyverse*, this is done by combining `pivot_longer()`, `geom_point()` and `facet_wrap()`. Let's also add a smoother to each scatter plot to better visualise the relationships (use `geom_smooth()`). Give it a try!
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+
+sparrows2 |> 
+  select(Banded,
+         Avgmaxht,
+         Avgdens,
+         ht.thatch,
+         Shrub,
+         Juncus,
+         S.patens,
+         Distichlis,
+         S.alternifloraShort,
+         S.alternifloraTall,
+         Phragmites,
+         Bare,
+         Water) |>
+  pivot_longer(cols = Avgmaxht:Water,
+               names_to = "Covariate",
+               values_to = "Value") |> 
+  ggplot(aes(x=Value,
+             y=Banded))+
+  geom_point(shape=1)+
+  geom_smooth(span = 1.5)+
+  theme_bw()+
+  facet_wrap(~Covariate, scales = "free_x")+
+  ylab("Number of sparrows")+
+  xlab("Covariate value")+
+  theme(axis.text = element_text(colour = "black"),
+        axis.title.y = element_text(margin = margin(r=10)),
+        axis.title.x = element_text(margin = margin(t=10)))
+```
+
+Are there any covariates that seem to be good predictors of the number of sparrows in a plot?
+
+## Step 7: Should we consider interactions?
+
+What do we mean by interaction in this context? Let's return to the sparrow morphometric dataset used earlier. Let's imagine that a researcher wants to determine whether the relationship between body mass (response variable) and wing length depends on other covariates, such as time and sex. If the relationship between body mass and wing length changes over time and differs between males and females, this suggests that there is a three-way interaction between wing length, time and sex. On the contrary, if the relationship between body mass and wing length is stable over time and is similar for males and females, there is probably no interaction between wing length, time and sex.
+
+Let's visualise this! The best way to evaluate if interactions should be considered is to create a **conditioning plot** (or coplot). We can easily do this in *tidyverse* by combining `geom_point()` (to create scatter plots), `geom_smooth(method="lm")` (to add a linear model on top of each scatter plot), and `facet_grid()` (to create multiple panels, with males/females as rows, and June/July/August as columns). In the Sex column, males are labelled 4 and females 5. Only consider observations where SpeciesCode is equal to 1. Give it a try!
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+
+sparrows |> 
+  filter(SpeciesCode == 1) |> 
+  select(wt, wingcrd, Month, Sex) |> 
+  filter(Month >= 6 & Month <= 8) |> 
+  filter(Sex == 4 | Sex == 5) |> 
+  mutate(Month=replace(Month, Month==6, "June"),
+         Month=replace(Month, Month==7, "July"),
+         Month=replace(Month, Month==8, "August"),
+         Sex=replace(Sex, Sex==4, "Male"),
+         Sex=replace(Sex, Sex==5, "Female")) |> 
+  mutate(Month=factor(Month, levels=c("June",
+                                      "July", 
+                                      "August"))) |>
+  
+  ggplot(aes(x=wingcrd,
+             y=wt))+
+    geom_point(shape=1)+
+    theme_bw()+
+    ylab("Weight (g)")+
+    xlab("Wing length (mm)")+
+    theme(axis.text = element_text(colour = "black"),
+          axis.title.y = element_text(margin = margin(r=10)),
+          axis.title.x = element_text(margin = margin(t=10)))+
+    facet_grid(Sex~Month)+
+    geom_smooth(method="lm")
+```
+
+What can you conclude from this figure?
+
+## Take-home message
+
+We hope this tutorial has convinced you of the importance of taking the time to explore your data before starting any form of analysis. Many problems occurring at the data analysis stage could be avoided by spending more time exploring and getting to know your data. This is particularly true for large datasets. Graphical tools are essential in this endeavor, which is why we have spent a fair amount of time in this course familiarizing ourselves with R functions to organise and plot data. Of course, this tutorial is far from exhaustive and we encourage you to continue learning and practicing data exploration in R.

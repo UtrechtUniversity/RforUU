@@ -98,6 +98,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -260,6 +262,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#about-this-tutorial" id="toc-about-this-tutorial" class="nav-link active" data-scroll-target="#about-this-tutorial">About this tutorial</a></li>
+  <li><a href="#load-r-packages" id="toc-load-r-packages" class="nav-link" data-scroll-target="#load-r-packages">Load R packages</a></li>
+  <li><a href="#step-1-are-there-outliers" id="toc-step-1-are-there-outliers" class="nav-link" data-scroll-target="#step-1-are-there-outliers">Step 1: Are there outliers?</a>
+  <ul>
+  <li><a href="#box-plots" id="toc-box-plots" class="nav-link" data-scroll-target="#box-plots">Box plots</a></li>
+  <li><a href="#cleveland-plots" id="toc-cleveland-plots" class="nav-link" data-scroll-target="#cleveland-plots">Cleveland plots</a></li>
+  </ul></li>
+  <li><a href="#step-2-do-we-have-homogeneity-of-variance" id="toc-step-2-do-we-have-homogeneity-of-variance" class="nav-link" data-scroll-target="#step-2-do-we-have-homogeneity-of-variance">Step 2: Do we have homogeneity of variance?</a></li>
+  <li><a href="#step-3-are-the-data-normally-distributed" id="toc-step-3-are-the-data-normally-distributed" class="nav-link" data-scroll-target="#step-3-are-the-data-normally-distributed">Step 3: Are the data normally distributed?</a></li>
+  <li><a href="#step-4-are-there-lots-of-zeros-in-the-data" id="toc-step-4-are-there-lots-of-zeros-in-the-data" class="nav-link" data-scroll-target="#step-4-are-there-lots-of-zeros-in-the-data">Step 4: Are there lots of zeros in the data?</a></li>
+  <li><a href="#step-5-is-there-colinearity-among-covariates" id="toc-step-5-is-there-colinearity-among-covariates" class="nav-link" data-scroll-target="#step-5-is-there-colinearity-among-covariates">Step 5: Is there colinearity among covariates?</a></li>
+  <li><a href="#step-6-what-are-the-relationships-between-variables" id="toc-step-6-what-are-the-relationships-between-variables" class="nav-link" data-scroll-target="#step-6-what-are-the-relationships-between-variables">Step 6: What are the relationships between variables?</a></li>
+  <li><a href="#step-7-should-we-consider-interactions" id="toc-step-7-should-we-consider-interactions" class="nav-link" data-scroll-target="#step-7-should-we-consider-interactions">Step 7: Should we consider interactions?</a></li>
+  <li><a href="#take-home-message" id="toc-take-home-message" class="nav-link" data-scroll-target="#take-home-message">Take-home message</a></li>
   </ul>
 </nav>
     </div>
@@ -268,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Tutorial 4: Data exploration in R</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Tutorial 4: Data exploration in R</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -299,7 +314,1848 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="about-this-tutorial" class="level2">
 <h2 class="anchored" data-anchor-id="about-this-tutorial">About this tutorial</h2>
 <p>Welcome to this tutorial on data exploration in R!</p>
-<p>Throughout this tutorial, <strong>our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R.</strong> Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!</p>
+<p>Throughout this tutorial, <strong>our aim is to provide you with the basic tools for exploring your data before carrying out any type of analysis</strong>. Data exploration is a very important step before starting any kind of analysis on ecological data, not to generate hypotheses (this should be done <em>a priori</em>, even before collecting data), but to make sure that the underlying assumptions of statistical models are respected, or to make sure that there are no outliers in our data that could strongly influence our analysis, thereby reducing the risk of type I (i.e., detecting an effect when none exists) or type II (i.e., not detecting an effect when there is one) errors. Data exploration is an important but often overlooked step, and this tutorial aims to understand some of the things to look for when exploring ecological data.</p>
+<p>This tutorial builds on the previous ones and will focus on how we can use graphical tools to detect possible problems with our data. This tutorial is based on the excellent paper of Alain Zuur, Elena Ieno and Chris Elphick (2010), <a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.2041-210X.2009.00001.x">A protocol for data exploration to avoid common statistical problems</a>, <em>Methods in Ecology and Evolution</em>, 1, 3-14. We strongly recommend that you read it. We will be using the same data to illustrate different data exploration techniques, but we will be constructing the graphs differently, relying mainly on the tools available in <em>tidyverse</em>. All the data needed for this tutorial are provided as supplementary information (Annex 1) of <a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.2041-210X.2009.00001.x">Zuur et al (2010)</a>.</p>
+<p>Let’s get started!</p>
+</section>
+<section id="load-r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="load-r-packages">Load R packages</h2>
+<p>Load <em>tidyverse</em>, <em>knitr</em>, and <em>corrplot</em>.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr) </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="step-1-are-there-outliers" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-are-there-outliers">Step 1: Are there outliers?</h2>
+<p>Zuur et al (2010) defined an outlier as “<em>an observation that has a relatively large or small value compared to the majority of observations</em>”. There is no hard rule as to what “relatively” means in this context, but observations that qualify as outliers usually “stand out” and look very different from all other data points, perhaps due to measurement errors. Two types of graph are well suited to outlier detection: <strong>box plots</strong> and <strong>Cleveland plots</strong>.</p>
+<section id="box-plots" class="level3">
+<h3 class="anchored" data-anchor-id="box-plots">Box plots</h3>
+<p>Let’s start by loading the “SparrowsElphick.txt” dataset into R (use <code>read_delim()</code>). Have a look at how this dataset is structured using <code>View()</code> or <code>head()</code>. This dataset contains observations measured on 1295 sparrows. For the moment, we will look at just one response variable: wing length (expressed in millimeters). This variable is named “wingcrd” in the sparrows dataset.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load data into R</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sparrows <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"Data_Zuur_et_al_2010/SparrowsElphick.txt"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#View data</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sparrows, <span class="at">n=</span><span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 4%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 3%">
+<col style="width: 8%">
+<col style="width: 10%">
+<col style="width: 3%">
+<col style="width: 3%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">wingcrd</th>
+<th style="text-align: right;">flatwing</th>
+<th style="text-align: right;">tarsus</th>
+<th style="text-align: right;">head</th>
+<th style="text-align: right;">culmen</th>
+<th style="text-align: right;">nalospi</th>
+<th style="text-align: right;">wt</th>
+<th style="text-align: right;">bandstat</th>
+<th style="text-align: right;">initials</th>
+<th style="text-align: right;">Year</th>
+<th style="text-align: right;">Month</th>
+<th style="text-align: right;">Day</th>
+<th style="text-align: right;">Location</th>
+<th style="text-align: right;">SpeciesCode</th>
+<th style="text-align: right;">Sex</th>
+<th style="text-align: right;">Age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">59.0</td>
+<td style="text-align: right;">60.0</td>
+<td style="text-align: right;">22.3</td>
+<td style="text-align: right;">31.2</td>
+<td style="text-align: right;">12.3</td>
+<td style="text-align: right;">13.0</td>
+<td style="text-align: right;">9.5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">54.0</td>
+<td style="text-align: right;">55.0</td>
+<td style="text-align: right;">20.3</td>
+<td style="text-align: right;">28.3</td>
+<td style="text-align: right;">10.8</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">12.2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">53.0</td>
+<td style="text-align: right;">54.0</td>
+<td style="text-align: right;">21.6</td>
+<td style="text-align: right;">30.2</td>
+<td style="text-align: right;">12.5</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">13.8</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">55.0</td>
+<td style="text-align: right;">56.0</td>
+<td style="text-align: right;">19.7</td>
+<td style="text-align: right;">30.4</td>
+<td style="text-align: right;">12.1</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">13.8</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">55.0</td>
+<td style="text-align: right;">56.0</td>
+<td style="text-align: right;">20.3</td>
+<td style="text-align: right;">28.7</td>
+<td style="text-align: right;">11.2</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">14.1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">53.5</td>
+<td style="text-align: right;">54.5</td>
+<td style="text-align: right;">20.8</td>
+<td style="text-align: right;">30.6</td>
+<td style="text-align: right;">12.8</td>
+<td style="text-align: right;">8.6</td>
+<td style="text-align: right;">14.8</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2004</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">55.5</td>
+<td style="text-align: right;">57.0</td>
+<td style="text-align: right;">20.3</td>
+<td style="text-align: right;">29.5</td>
+<td style="text-align: right;">11.5</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">15.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">55.0</td>
+<td style="text-align: right;">56.0</td>
+<td style="text-align: right;">20.9</td>
+<td style="text-align: right;">30.0</td>
+<td style="text-align: right;">11.7</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">15.0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">54.0</td>
+<td style="text-align: right;">56.0</td>
+<td style="text-align: right;">21.4</td>
+<td style="text-align: right;">29.8</td>
+<td style="text-align: right;">11.0</td>
+<td style="text-align: right;">8.7</td>
+<td style="text-align: right;">15.1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">55.0</td>
+<td style="text-align: right;">56.0</td>
+<td style="text-align: right;">20.4</td>
+<td style="text-align: right;">29.8</td>
+<td style="text-align: right;">11.2</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">15.1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Now use <em>ggplot2</em> to create a box plot using wing length as a response variable.</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sparrows,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y=</span>wingcrd))<span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Wing length (mm)"</span>)<span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_exploration_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="240"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Such a box plot displays descriptive statistics on your data: the median value (represented by a thick horizontal line), as well as the 25% and 75% quartiles (lower and upper limits of the box). The difference between the 75% and 25% quartiles is called the interquartile range (the height of the box). Exactly half the observations in your data fall within this interquartile range. By default, the box plot whiskers are as long as 1.5 times the interquartile range. Observations beyond the whiskers are represented by individual dots and are possible outliers (i.e.&nbsp;observations whose values are rather large or small compared to the rest of the data) which will need to be checked to ensure that they are not measurement errors. It would be a mistake to remove all these observations without first checking them to make sure they are measurement errors.</p>
+</section>
+<section id="cleveland-plots" class="level3">
+<h3 class="anchored" data-anchor-id="cleveland-plots">Cleveland plots</h3>
+<p>A Cleveland plot is a method of choice for detecting outliers. To create a Cleveland plot, you just need to plot your variable of interest on the horizontal axis and the row number of your observations on the vertical axis. You can easily add a new column with the row number to your data using <code>add_column()</code>.</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sparrows <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_column</span>(<span class="at">row_number=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(sparrows),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">.before=</span><span class="st">"wingcrd"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>wingcrd,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">y=</span>row_number))<span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Row number"</span>)<span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Wing length (mm)"</span>)<span class="sc">+</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_exploration_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="432"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When looking closely at this Cleveland plot, none of the observations on the left and right sides of the graph seem to stand out. All the wing length values seem reasonable, with no particularly small or large values to check.</p>
+<p>Let’s continue our exploration of the sparrows data by looking at other response variables: Culmen length (culmen), Nalospi to bill tip (nalospi), Weight (wt), Wing length (wingcrd), Tarsus length (tarsus), and Head length (head). Before plotting, sort the sparrow observations by increasing weight values (to be consistent with Zuur et al, 2010). Then, create a figure with 6 panels, each displaying a Cleveland plot for each of these morphometric variables. You can do this using <code>facet_wrap()</code>. In <code>facet_wrap()</code>, set the <code>scales</code> argument to “free_x” to allow for different horizontal axis scales. Check what would happen if you keep <code>scales = "fixed"</code> (which is the default).</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sparrows <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(culmen, nalospi, wt, wingcrd, tarsus, head) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(wt) <span class="sc">|&gt;</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_column</span>(<span class="at">row_number=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(sparrows),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">.before=</span><span class="st">"culmen"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(culmen<span class="sc">:</span>head,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to=</span><span class="st">"variable"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="fu">replace</span>(variable, variable <span class="sc">==</span> <span class="st">"culmen"</span>, <span class="st">"Culmen length"</span>),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">variable =</span> <span class="fu">replace</span>(variable, variable <span class="sc">==</span> <span class="st">"nalospi"</span>, <span class="st">"Nalospi to bill tip"</span>),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">variable =</span> <span class="fu">replace</span>(variable, variable <span class="sc">==</span> <span class="st">"wt"</span>, <span class="st">"Weight"</span>),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">variable =</span> <span class="fu">replace</span>(variable, variable <span class="sc">==</span> <span class="st">"wingcrd"</span>, <span class="st">"Wing length"</span>),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">variable =</span> <span class="fu">replace</span>(variable, variable <span class="sc">==</span> <span class="st">"tarsus"</span>, <span class="st">"Tarsus length"</span>),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">variable =</span> <span class="fu">replace</span>(variable, variable <span class="sc">==</span> <span class="st">"head"</span>, <span class="st">"Head length"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>value,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">y=</span>row_number))<span class="sc">+</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Row number"</span>)<span class="sc">+</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Value"</span>)<span class="sc">+</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)))<span class="sc">+</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free_x"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_exploration_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Looking at this figure, we quickly notice that two head length values appear smaller than the others, while one tarsus length value appears larger than the others. These observations seem to qualify as outliers and should be checked. It is unlikely that such extreme values could have occurred by chance. If these observations are indeed measurement (or observation) errors, they should be dropped before continuing the analysis. If you decide to remove observations from your dataset, always clearly document this decision in your code and give reasons for it. This is where having a detailed field notebook or experimental log comes in handy.</p>
+</section>
+</section>
+<section id="step-2-do-we-have-homogeneity-of-variance" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-do-we-have-homogeneity-of-variance">Step 2: Do we have homogeneity of variance?</h2>
+<p>Homogeneity of variance is an important assumption of regression-related techniques such as ANalysis Of VAriance (ANOVA). One way to check for this is to use a <strong>conditional box plot</strong>. Let’s create one using a new set of bird data. The “Godwits.txt” data file contains observations for 9 variables measured on 330 Hudsonian godwits (<em>Limosa haemastica</em>).</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load data into R</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>godwits <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"Data_Zuur_et_al_2010/Godwits.txt"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">col_select =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#View data</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(godwits, <span class="at">n=</span><span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">RECORD</th>
+<th style="text-align: right;">DAY</th>
+<th style="text-align: right;">MONTH</th>
+<th style="text-align: right;">YEAR</th>
+<th style="text-align: right;">LOCATION</th>
+<th style="text-align: right;">AGE</th>
+<th style="text-align: right;">SEX</th>
+<th style="text-align: right;">PERIOD</th>
+<th style="text-align: right;">mgconsumed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.07</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.25</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.07</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.14</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.21</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.11</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.09</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We would be interested to test if the mean food intake rate (mgconsumed) of godwits changes between sexes (variable: SEX; either female or male) and time periods (variable: PERIOD; either summer, pre-migration, or winter). Before fitting a linear model to our data, we first need to check if all groups have similar variance. Use <em>ggplot2</em> to create a conditional box plot visualising this. Pay attention to the following:</p>
+<ul>
+<li><p>SEX is a variable with 3 levels: 0 (no information), 1 (female) and 2 (male). Filter out observations with SEX=0 and replace 1’s by “Female” and 2’s by “Male”.</p></li>
+<li><p>PERIOD is a variable with 3 levels: 0 (Summer), 1 (Pre-migration) and 2 (Winter). Replace 0’s by “Summer”, 1’s by “Pre-migration” and 2’s by “Winter”.</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>godwits <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(SEX <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SEX =</span> <span class="fu">replace</span>(SEX, SEX <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"Female"</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">SEX =</span> <span class="fu">replace</span>(SEX, SEX <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"Male"</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">PERIOD =</span> <span class="fu">replace</span>(PERIOD, PERIOD <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"Summer"</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">PERIOD =</span> <span class="fu">replace</span>(PERIOD, PERIOD <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"Pre-migration"</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">PERIOD =</span> <span class="fu">replace</span>(PERIOD, PERIOD <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"Winter"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>PERIOD,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">y=</span>mgconsumed))<span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.4</span>)<span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Food intake rate"</span>)<span class="sc">+</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Migration period"</span>)<span class="sc">+</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)))<span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>SEX)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_exploration_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From this figure, what can you conclude about (1) the variation in food intake rate between sexes (across migration periods), (2) the variation in food intake rate between migration periods (across sexes), and (3) the variation in food intake rate between migration periods within each sex category?</p>
+</section>
+<section id="step-3-are-the-data-normally-distributed" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-are-the-data-normally-distributed">Step 3: Are the data normally distributed?</h2>
+<p>Another important assumption of linear regression is that data are normally distributed (i.e., data follow a normal distribution). But what data are we talking about? Can I simply verify this assumption by creating a histogram from ALL the values of the response variable I am interested in? The answer is: no, you can’t. Why not? Because the assumption to be verifed is that the data <u><strong>within each group</strong></u> are normally distributed. This underlines the importance of having a sufficient number of replicates at each level of your covariate, which should have been carefully considered when designing the study. You can check whether your data are normally distributed by making <strong>histograms</strong> of the raw data for each group.</p>
+<p>Let’s go back to the sparrows dataset. Use <em>ggplot2</em> to create a histogram of the weight (wt) of sparrows in June, July, and August. Use <code>geom_histogram()</code> to do this. What patterns do you observe?</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sparrows <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Month <span class="sc">&gt;=</span> <span class="dv">6</span> <span class="sc">&amp;</span> Month <span class="sc">&lt;=</span> <span class="dv">8</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month=</span><span class="fu">replace</span>(Month, Month<span class="sc">==</span><span class="dv">6</span>, <span class="st">"June"</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">Month=</span><span class="fu">replace</span>(Month, Month<span class="sc">==</span><span class="dv">7</span>, <span class="st">"July"</span>),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">Month=</span><span class="fu">replace</span>(Month, Month<span class="sc">==</span><span class="dv">8</span>, <span class="st">"August"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month=</span><span class="fu">factor</span>(Month, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"June"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"July"</span>, </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"August"</span>))) <span class="sc">|&gt;</span> <span class="co">#Reorder factor levels to reorder facets</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>wt))<span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>()<span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Frequency"</span>)<span class="sc">+</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Weight (g)"</span>)<span class="sc">+</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)))<span class="sc">+</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_exploration_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-are-there-lots-of-zeros-in-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-are-there-lots-of-zeros-in-the-data">Step 4: Are there lots of zeros in the data?</h2>
+<p>When modelling the relationship between a response variable whose value is often zero and other covariates, the use of zero-inflated models is often an option. But how can we visualise if our response variable of interest is often equal to zero? Sounds like you need to create a <strong>frequency plot</strong>. You can do this using <code>geom_bar()</code>. In <code>geom_bar()</code>, use <code>stat="count"</code>.</p>
+<p>To create a frequency plot, we will use another dataset (“ElphickBirdData.txt”). This dataset contains 2035 observations of the number of waterbirds (AQBIRDS) observed in flooded rice fields.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load data into R</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>waterbirds <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"Data_Zuur_et_al_2010/ElphickBirdData.txt"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#View data</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(waterbirds, <span class="at">n=</span><span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">CENSUS</th>
+<th style="text-align: right;">YEAR</th>
+<th style="text-align: left;">DATE…3</th>
+<th style="text-align: right;">Data</th>
+<th style="text-align: right;">DATE…5</th>
+<th style="text-align: left;">SITE</th>
+<th style="text-align: right;">BLOCK</th>
+<th style="text-align: right;">FIELD</th>
+<th style="text-align: right;">FIELDNEW</th>
+<th style="text-align: right;">CHECK</th>
+<th style="text-align: right;">AREA</th>
+<th style="text-align: left;">SPTREAT</th>
+<th style="text-align: right;">DEPTH</th>
+<th style="text-align: right;">TUSW</th>
+<th style="text-align: right;">GWFG</th>
+<th style="text-align: right;">WHGO</th>
+<th style="text-align: right;">CAGO</th>
+<th style="text-align: right;">MALL</th>
+<th style="text-align: right;">GADW</th>
+<th style="text-align: right;">GWTE</th>
+<th style="text-align: right;">CITE</th>
+<th style="text-align: right;">UNTE</th>
+<th style="text-align: right;">AMWI</th>
+<th style="text-align: right;">NOPI</th>
+<th style="text-align: right;">NOSH</th>
+<th style="text-align: right;">RIDU</th>
+<th style="text-align: right;">CANV</th>
+<th style="text-align: right;">BUFF</th>
+<th style="text-align: right;">WODU</th>
+<th style="text-align: right;">RUDU</th>
+<th style="text-align: right;">EUWI</th>
+<th style="text-align: right;">UNDU</th>
+<th style="text-align: right;">PBGB</th>
+<th style="text-align: right;">SORA</th>
+<th style="text-align: right;">COOT</th>
+<th style="text-align: right;">COMO</th>
+<th style="text-align: right;">AMBI</th>
+<th style="text-align: right;">BCNH</th>
+<th style="text-align: right;">GBHE</th>
+<th style="text-align: right;">SNEG</th>
+<th style="text-align: right;">GREG</th>
+<th style="text-align: right;">WFIB</th>
+<th style="text-align: right;">SACR</th>
+<th style="text-align: right;">AMAV</th>
+<th style="text-align: right;">BNST</th>
+<th style="text-align: right;">BBPL</th>
+<th style="text-align: right;">KILL</th>
+<th style="text-align: right;">LBCU</th>
+<th style="text-align: right;">GRYE</th>
+<th style="text-align: right;">LEYE</th>
+<th style="text-align: right;">LBDO</th>
+<th style="text-align: right;">SNIP</th>
+<th style="text-align: right;">DUNL</th>
+<th style="text-align: right;">WESA</th>
+<th style="text-align: right;">LESA</th>
+<th style="text-align: right;">PEEP</th>
+<th style="text-align: right;">RUFF</th>
+<th style="text-align: right;">UNSH</th>
+<th style="text-align: right;">RBGU</th>
+<th style="text-align: right;">HEGU</th>
+<th style="text-align: right;">CAGU</th>
+<th style="text-align: right;">GUSP</th>
+<th style="text-align: right;">WATERFWL</th>
+<th style="text-align: right;">LLWADERS</th>
+<th style="text-align: right;">SHOREBDS</th>
+<th style="text-align: right;">AQBIRDS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">24-Jan-95</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">754</td>
+<td style="text-align: left;">4mile</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3.38</td>
+<td style="text-align: left;">rlfld</td>
+<td style="text-align: right;">83.9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.591716</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.5917160</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.591716</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">13-Mar-95</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">802</td>
+<td style="text-align: left;">4mile</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3.38</td>
+<td style="text-align: left;">rlfld</td>
+<td style="text-align: right;">73.9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.1834320</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.1834320</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.183432</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">24-Jan-95</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">754</td>
+<td style="text-align: left;">4mile</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">7.66</td>
+<td style="text-align: left;">rlfld</td>
+<td style="text-align: right;">54.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.9582245</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0.5221932</td>
+<td style="text-align: right;">0.2610966</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6.527415</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.7415144</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9.268930</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">13-Mar-95</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">802</td>
+<td style="text-align: left;">4mile</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">7.66</td>
+<td style="text-align: left;">rlfld</td>
+<td style="text-align: right;">53.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.2610966</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4.569191</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.2610966</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4.830287</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">24-Jan-95</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">754</td>
+<td style="text-align: left;">4mile</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">103</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">19.14</td>
+<td style="text-align: left;">rlfld</td>
+<td style="text-align: right;">44.2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.3134796</td>
+<td style="text-align: right;">0.3134796</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.4702194</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1044932</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0522466</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3.761756</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.2016719</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5.015674</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">13-Mar-95</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">802</td>
+<td style="text-align: left;">4mile</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">103</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">19.14</td>
+<td style="text-align: left;">rlfld</td>
+<td style="text-align: right;">43.2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1044932</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1567398</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.2089864</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0522466</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0522466</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.567398</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.5224660</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.142111</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">13-Mar-95</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">802</td>
+<td style="text-align: left;">4mile</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3.36</td>
+<td style="text-align: left;">fld</td>
+<td style="text-align: right;">41.8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">24-Jan-95</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">754</td>
+<td style="text-align: left;">4mile</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4.52</td>
+<td style="text-align: left;">rlfld</td>
+<td style="text-align: right;">41.5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.2212389</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">18.584071</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.6637168</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.6637168</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">19.469027</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">29-Jan-95</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">759</td>
+<td style="text-align: left;">4mile</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">7.66</td>
+<td style="text-align: left;">rlfld</td>
+<td style="text-align: right;">40.1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5.3524804</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0.3916449</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4.830287</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5.7441253</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10.574412</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">27-Jan-94</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">392</td>
+<td style="text-align: left;">4mile</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3.36</td>
+<td style="text-align: left;">fld</td>
+<td style="text-align: right;">40.0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.000000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>How many times is the number of waterbirds equal to zero in this dataset? Create a frequency plot to find out! Focus on observed values between 0 and 100, and do not forget to round them off (use <code>round()</code>).</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>waterbirds <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AQBIRDS <span class="sc">&lt;</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">round</span>(AQBIRDS)))<span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>)<span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Frequency"</span>)<span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Observed values"</span>)<span class="sc">+</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_exploration_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="528"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>What can you conclude from this frequency plot?</p>
+</section>
+<section id="step-5-is-there-colinearity-among-covariates" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-is-there-colinearity-among-covariates">Step 5: Is there colinearity among covariates?</h2>
+<p>Zuur et al (2010) defined colinearity as “<em>the existence of correlation between covariates</em>”. The strength of the linear relationship between two continuous variables (X and Y) can be measured using Pearson’s correlation coefficient (<a href="#eq-cor">Equation&nbsp;1</a>).</p>
+<p><span id="eq-cor"><span class="math display">\[
+r=\frac{cov(X,Y)}{\sigma_X\sigma_Y}
+\tag{1}\]</span></span></p>
+<p>In <a href="#eq-cor">Equation&nbsp;1</a>, <span class="math inline">\(cov(X,Y)\)</span> is the covariance between X and Y. <span class="math inline">\(\sigma_X\)</span> and <span class="math inline">\(\sigma_Y\)</span> are the standard deviation values for variables X and Y. If <span class="math inline">\(r=0\)</span>, there is no linear relationship between X and Y. If <span class="math inline">\(r=1\)</span> or <span class="math inline">\(r=-1\)</span>, there is a perfect positive or negative linear relationship between the two variables, respectively.</p>
+<p>A useful way to check for colinearity between covariates is to create a <strong>correlation plot</strong>. A scatter plot would also be a good idea, but as we will see how to create scatter plots in the next section, let’s concentrate here on creating a correlation plot.</p>
+<p>In this example, we will work with a new sparrows dataset (VegSamplesV1.txt). The researchers who produced this dataset wanted to know whether the relative abundance of various plant species and other vegetation characteristics could explain the number of saltmarsh sparrows captured in each plot (Banded). We will work with the following covariates:</p>
+<ul>
+<li>Maximum vegetation height (Avgmaxht)</li>
+<li>Vegetation stem density (Avgdens)</li>
+<li>Height of thatch (ht.thatch)</li>
+<li>Percent cover of shrubs (Shrub)</li>
+<li>Percent cover of <em>Juncus gerardii</em> (Juncus)</li>
+<li>Percent cover of <em>Spartina patens</em> (S.patens)</li>
+<li>Percent cover of <em>Distichlis spicata</em> (Distichlis)</li>
+<li>Percent cover of short <em>Spartina alterniflora</em> (S.alternifloraShort)</li>
+<li>Percent cover of tall <em>Spartina alterniflora</em> (S.alternifloraTall)</li>
+<li>Percent cover of <em>Phragmites australis</em> (Phragmites)</li>
+<li>Percent cover of bare ground (Bare)</li>
+<li>Percent cover of water (Water)</li>
+</ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load data into R</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sparrows2 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"Data_Zuur_et_al_2010/VegSamplesV1.txt"</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">col_select =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">19</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#View data</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sparrows2, <span class="at">n=</span><span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 7%">
+<col style="width: 9%">
+<col style="width: 3%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 10%">
+<col style="width: 9%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 5%">
+<col style="width: 3%">
+<col style="width: 5%">
+<col style="width: 3%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Year</th>
+<th style="text-align: left;">Site</th>
+<th style="text-align: left;">UniversalPlotName</th>
+<th style="text-align: right;">Banded</th>
+<th style="text-align: right;">PtCountsum</th>
+<th style="text-align: right;">Avgmaxht</th>
+<th style="text-align: right;">Avgdens</th>
+<th style="text-align: right;">ht.thatch</th>
+<th style="text-align: right;">S.patens</th>
+<th style="text-align: right;">Distichlis</th>
+<th style="text-align: right;">S.alternifloraShort</th>
+<th style="text-align: right;">S.alternifloraTall</th>
+<th style="text-align: right;">Juncus</th>
+<th style="text-align: right;">Bare</th>
+<th style="text-align: right;">Other</th>
+<th style="text-align: right;">Phragmites</th>
+<th style="text-align: right;">Shrub</th>
+<th style="text-align: right;">Tallsedge</th>
+<th style="text-align: right;">Water</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2002</td>
+<td style="text-align: left;">EastRiverMarsh</td>
+<td style="text-align: left;">02PLOT012</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">33.19</td>
+<td style="text-align: right;">23.30</td>
+<td style="text-align: right;">4.67</td>
+<td style="text-align: right;">21.31</td>
+<td style="text-align: right;">41.47</td>
+<td style="text-align: right;">32.22</td>
+<td style="text-align: right;">2.78</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.67</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2002</td>
+<td style="text-align: left;">EastRiverMarsh</td>
+<td style="text-align: left;">02PLOT013</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">48.22</td>
+<td style="text-align: right;">27.63</td>
+<td style="text-align: right;">6.56</td>
+<td style="text-align: right;">11.67</td>
+<td style="text-align: right;">52.78</td>
+<td style="text-align: right;">23.61</td>
+<td style="text-align: right;">9.72</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2002</td>
+<td style="text-align: left;">EastRiverMarsh</td>
+<td style="text-align: left;">02PLOT014</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">33.81</td>
+<td style="text-align: right;">26.40</td>
+<td style="text-align: right;">3.33</td>
+<td style="text-align: right;">29.09</td>
+<td style="text-align: right;">17.80</td>
+<td style="text-align: right;">35.89</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">2.22</td>
+<td style="text-align: right;">8.33</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6.67</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2002</td>
+<td style="text-align: left;">EastRiverMarsh</td>
+<td style="text-align: left;">02PLOT015</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">28.34</td>
+<td style="text-align: right;">45.63</td>
+<td style="text-align: right;">7.33</td>
+<td style="text-align: right;">52.22</td>
+<td style="text-align: right;">19.76</td>
+<td style="text-align: right;">5.56</td>
+<td style="text-align: right;">3.33</td>
+<td style="text-align: right;">7.78</td>
+<td style="text-align: right;">2.22</td>
+<td style="text-align: right;">8.89</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2002</td>
+<td style="text-align: left;">EastRiverMarsh</td>
+<td style="text-align: left;">02PLOT016</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">28.75</td>
+<td style="text-align: right;">38.88</td>
+<td style="text-align: right;">3.44</td>
+<td style="text-align: right;">47.84</td>
+<td style="text-align: right;">12.78</td>
+<td style="text-align: right;">15.49</td>
+<td style="text-align: right;">10.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">10.14</td>
+<td style="text-align: right;">3.75</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2002</td>
+<td style="text-align: left;">EastRiverMarsh</td>
+<td style="text-align: left;">02PLOT017</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">24.19</td>
+<td style="text-align: right;">53.60</td>
+<td style="text-align: right;">3.44</td>
+<td style="text-align: right;">60.42</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">26.44</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">2.01</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11.11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2002</td>
+<td style="text-align: left;">EastRiverMarsh</td>
+<td style="text-align: left;">02PLOT018</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">39.34</td>
+<td style="text-align: right;">18.20</td>
+<td style="text-align: right;">2.11</td>
+<td style="text-align: right;">17.35</td>
+<td style="text-align: right;">2.67</td>
+<td style="text-align: right;">42.56</td>
+<td style="text-align: right;">25.03</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">11.29</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2002</td>
+<td style="text-align: left;">EastRiverMarsh</td>
+<td style="text-align: left;">02PLOT019</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">38.75</td>
+<td style="text-align: right;">48.18</td>
+<td style="text-align: right;">5.89</td>
+<td style="text-align: right;">55.34</td>
+<td style="text-align: right;">10.32</td>
+<td style="text-align: right;">20.56</td>
+<td style="text-align: right;">6.44</td>
+<td style="text-align: right;">5.56</td>
+<td style="text-align: right;">1.78</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2002</td>
+<td style="text-align: left;">HammonassetSP</td>
+<td style="text-align: left;">02PLOT001</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">38.06</td>
+<td style="text-align: right;">33.53</td>
+<td style="text-align: right;">5.22</td>
+<td style="text-align: right;">42.78</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">37.76</td>
+<td style="text-align: right;">9.78</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">3.33</td>
+<td style="text-align: right;">1.91</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4.44</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2002</td>
+<td style="text-align: left;">HammonassetSP</td>
+<td style="text-align: left;">02PLOT002</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">27.34</td>
+<td style="text-align: right;">17.40</td>
+<td style="text-align: right;">0.89</td>
+<td style="text-align: right;">17.22</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">29.74</td>
+<td style="text-align: right;">16.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">14.56</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">22.22</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Now that the data have been imported into R, we can create a correlation plot to check for colinearity between the covariates we want to include in a statistical model. You can do this with the <code>corrplot()</code> or <code>corrplot.mixed()</code> function in the <em>corrplot</em> package.</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot.mixed</span>(<span class="at">corr=</span><span class="fu">cor</span>(sparrows2[,<span class="fu">c</span>(<span class="st">"Avgmaxht"</span>,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Avgdens"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"ht.thatch"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Shrub"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Juncus"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"S.patens"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Distichlis"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"S.alternifloraShort"</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"S.alternifloraTall"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Phragmites"</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Bare"</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Water"</span>)]),</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">lower=</span><span class="st">"number"</span>,</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">upper=</span><span class="st">"ellipse"</span>,</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">tl.pos=</span><span class="st">"lt"</span>,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">diag=</span><span class="st">"n"</span>,</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">tl.col=</span><span class="st">"black"</span>,</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>           <span class="at">number.cex=</span><span class="fl">0.7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_exploration_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>What do you see? Is there colinearity among covariates in this dataset?</p>
+</section>
+<section id="step-6-what-are-the-relationships-between-variables" class="level2">
+<h2 class="anchored" data-anchor-id="step-6-what-are-the-relationships-between-variables">Step 6: What are the relationships between variables?</h2>
+<p>The easiest way to find out how the relationship between a response variable of interest and a covariate looks like is to create a <strong>scatter plot</strong>. Let’s do this using the sparrows dataset we just used to look as colinearity. Using <em>ggplot2</em>, create a figure with multiple panels showing the relationship between the number of sparrows observed in a plot (Banded) and all covariates used in the previous section. In <em>tidyverse</em>, this is done by combining <code>pivot_longer()</code>, <code>geom_point()</code> and <code>facet_wrap()</code>. Let’s also add a smoother to each scatter plot to better visualise the relationships (use <code>geom_smooth()</code>). Give it a try!</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sparrows2 <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Banded,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>         Avgmaxht,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>         Avgdens,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>         ht.thatch,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>         Shrub,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>         Juncus,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>         S.patens,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>         Distichlis,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>         S.alternifloraShort,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>         S.alternifloraTall,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>         Phragmites,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>         Bare,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>         Water) <span class="sc">|&gt;</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Avgmaxht<span class="sc">:</span>Water,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Covariate"</span>,</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Value"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Value,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">y=</span>Banded))<span class="sc">+</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">span =</span> <span class="fl">1.5</span>)<span class="sc">+</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Covariate, <span class="at">scales =</span> <span class="st">"free_x"</span>)<span class="sc">+</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Number of sparrows"</span>)<span class="sc">+</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Covariate value"</span>)<span class="sc">+</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_exploration_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Are there any covariates that seem to be good predictors of the number of sparrows in a plot?</p>
+</section>
+<section id="step-7-should-we-consider-interactions" class="level2">
+<h2 class="anchored" data-anchor-id="step-7-should-we-consider-interactions">Step 7: Should we consider interactions?</h2>
+<p>What do we mean by interaction in this context? Let’s return to the sparrow morphometric dataset used earlier. Let’s imagine that a researcher wants to determine whether the relationship between body mass (response variable) and wing length depends on other covariates, such as time and sex. If the relationship between body mass and wing length changes over time and differs between males and females, this suggests that there is a three-way interaction between wing length, time and sex. On the contrary, if the relationship between body mass and wing length is stable over time and is similar for males and females, there is probably no interaction between wing length, time and sex.</p>
+<p>Let’s visualise this! The best way to evaluate if interactions should be considered is to create a <strong>conditioning plot</strong> (or coplot). We can easily do this in <em>tidyverse</em> by combining <code>geom_point()</code> (to create scatter plots), <code>geom_smooth(method="lm")</code> (to add a linear model on top of each scatter plot), and <code>facet_grid()</code> (to create multiple panels, with males/females as rows, and June/July/August as columns). In the Sex column, males are labelled 4 and females 5. Only consider observations where SpeciesCode is equal to 1. Give it a try!</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sparrows <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(SpeciesCode <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(wt, wingcrd, Month, Sex) <span class="sc">|&gt;</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Month <span class="sc">&gt;=</span> <span class="dv">6</span> <span class="sc">&amp;</span> Month <span class="sc">&lt;=</span> <span class="dv">8</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="dv">4</span> <span class="sc">|</span> Sex <span class="sc">==</span> <span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month=</span><span class="fu">replace</span>(Month, Month<span class="sc">==</span><span class="dv">6</span>, <span class="st">"June"</span>),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">Month=</span><span class="fu">replace</span>(Month, Month<span class="sc">==</span><span class="dv">7</span>, <span class="st">"July"</span>),</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">Month=</span><span class="fu">replace</span>(Month, Month<span class="sc">==</span><span class="dv">8</span>, <span class="st">"August"</span>),</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">Sex=</span><span class="fu">replace</span>(Sex, Sex<span class="sc">==</span><span class="dv">4</span>, <span class="st">"Male"</span>),</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">Sex=</span><span class="fu">replace</span>(Sex, Sex<span class="sc">==</span><span class="dv">5</span>, <span class="st">"Female"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month=</span><span class="fu">factor</span>(Month, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"June"</span>,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"July"</span>, </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"August"</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>wingcrd,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">y=</span>wt))<span class="sc">+</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Weight (g)"</span>)<span class="sc">+</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Wing length (mm)"</span>)<span class="sc">+</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)))<span class="sc">+</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(Sex<span class="sc">~</span>Month)<span class="sc">+</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="data_exploration_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>What can you conclude from this figure?</p>
+</section>
+<section id="take-home-message" class="level2">
+<h2 class="anchored" data-anchor-id="take-home-message">Take-home message</h2>
+<p>We hope this tutorial has convinced you of the importance of taking the time to explore your data before starting any form of analysis. Many problems occurring at the data analysis stage could be avoided by spending more time exploring and getting to know your data. This is particularly true for large datasets. Graphical tools are essential in this endeavor, which is why we have spent a fair amount of time in this course familiarizing ourselves with R functions to organise and plot data. Of course, this tutorial is far from exhaustive and we encourage you to continue learning and practicing data exploration in R.</p>
 
 
 <!-- -->
@@ -718,21 +2574,447 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Tutorial 4: Data exploration in R"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Benjamin Delory</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-1190-8060</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    email: b.m.m.delory@uu.nl</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Environmental sciences group, Copernicus institute of sustainable development, Utrecht University</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## About this tutorial</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Welcome to this tutorial on data exploration in R!</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>Throughout this tutorial, **our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R.** Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Tutorial 4: Data exploration in R"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Benjamin Delory</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-1190-8060</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">    email: b.m.m.delory@uu.nl</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Environmental sciences group, Copernicus institute of sustainable development, Utrecht University</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## About this tutorial</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>Welcome to this tutorial on data exploration in R!</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>Throughout this tutorial, **our aim is to provide you with the basic tools for exploring your data before carrying out any type of analysis**. Data exploration is a very important step before starting any kind of analysis on ecological data, not to generate hypotheses (this should be done *a priori*, even before collecting data), but to make sure that the underlying assumptions of statistical models are respected, or to make sure that there are no outliers in our data that could strongly influence our analysis, thereby reducing the risk of type I (i.e., detecting an effect when none exists) or type II (i.e., not detecting an effect when there is one) errors. Data exploration is an important but often overlooked step, and this tutorial aims to understand some of the things to look for when exploring ecological data.</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>This tutorial builds on the previous ones and will focus on how we can use graphical tools to detect possible problems with our data. This tutorial is based on the excellent paper of Alain Zuur, Elena Ieno and Chris Elphick (2010), <span class="co">[</span><span class="ot">A protocol for data exploration to avoid common statistical problems</span><span class="co">](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.2041-210X.2009.00001.x)</span>, *Methods in Ecology and Evolution*, 1, 3-14. We strongly recommend that you read it. We will be using the same data to illustrate different data exploration techniques, but we will be constructing the graphs differently, relying mainly on the tools available in *tidyverse*. All the data needed for this tutorial are provided as supplementary information (Annex 1) of <span class="co">[</span><span class="ot">Zuur et al (2010)</span><span class="co">](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.2041-210X.2009.00001.x)</span>.</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>Let's get started!</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load R packages</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>Load *tidyverse*, *knitr*, and *corrplot*.</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false  </span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr) </span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 1: Are there outliers?</span></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>Zuur et al (2010) defined an outlier as "*an observation that has a relatively large or small value compared to the majority of observations*". There is no hard rule as to what "relatively" means in this context, but observations that qualify as outliers usually "stand out" and look very different from all other data points, perhaps due to measurement errors. Two types of graph are well suited to outlier detection: **box plots** and **Cleveland plots**.</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a><span class="fu">### Box plots</span></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>Let's start by loading the "SparrowsElphick.txt" dataset into R (use <span class="in">`read_delim()`</span>). Have a look at how this dataset is structured using <span class="in">`View()`</span> or <span class="in">`head()`</span>. This dataset contains observations measured on 1295 sparrows. For the moment, we will look at just one response variable: wing length (expressed in millimeters). This variable is named "wingcrd" in the sparrows dataset.</span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a><span class="co">#Load data into R</span></span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>sparrows <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"Data_Zuur_et_al_2010/SparrowsElphick.txt"</span>)</span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a><span class="co">#View data</span></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sparrows, <span class="at">n=</span><span class="dv">10</span>))</span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a>Now use *ggplot2* to create a box plot using wing length as a response variable.</span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 2.5</span></span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sparrows,</span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">y=</span>wingcrd))<span class="sc">+</span></span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Wing length (mm)"</span>)<span class="sc">+</span></span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)))</span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>Such a box plot displays descriptive statistics on your data: the median value (represented by a thick horizontal line), as well as the 25% and 75% quartiles (lower and upper limits of the box). The difference between the 75% and 25% quartiles is called the interquartile range (the height of the box). Exactly half the observations in your data fall within this interquartile range. By default, the box plot whiskers are as long as 1.5 times the interquartile range. Observations beyond the whiskers are represented by individual dots and are possible outliers (i.e. observations whose values are rather large or small compared to the rest of the data) which will need to be checked to ensure that they are not measurement errors. It would be a mistake to remove all these observations without first checking them to make sure they are measurement errors.</span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cleveland plots</span></span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a>A Cleveland plot is a method of choice for detecting outliers. To create a Cleveland plot, you just need to plot your variable of interest on the horizontal axis and the row number of your observations on the vertical axis. You can easily add a new column with the row number to your data using <span class="in">`add_column()`</span>.</span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 4.5</span></span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4.5</span></span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a>sparrows <span class="sc">|&gt;</span> </span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_column</span>(<span class="at">row_number=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(sparrows),</span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a>             <span class="at">.before=</span><span class="st">"wingcrd"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>wingcrd,</span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a>             <span class="at">y=</span>row_number))<span class="sc">+</span></span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Row number"</span>)<span class="sc">+</span></span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Wing length (mm)"</span>)<span class="sc">+</span></span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
+<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)))</span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a>When looking closely at this Cleveland plot, none of the observations on the left and right sides of the graph seem to stand out. All the wing length values seem reasonable, with no particularly small or large values to check.</span>
+<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a>Let's continue our exploration of the sparrows data by looking at other response variables: Culmen length (culmen), Nalospi to bill tip (nalospi), Weight (wt), Wing length (wingcrd), Tarsus length (tarsus), and Head length (head). Before plotting, sort the sparrow observations by increasing weight values (to be consistent with Zuur et al, 2010). Then, create a figure with 6 panels, each displaying a Cleveland plot for each of these morphometric variables. You can do this using <span class="in">`facet_wrap()`</span>. In <span class="in">`facet_wrap()`</span>, set the <span class="in">`scales`</span> argument to "free_x" to allow for different horizontal axis scales. Check what would happen if you keep <span class="in">`scales = "fixed"`</span> (which is the default).</span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb15-125"><a href="#cb15-125" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb15-126"><a href="#cb15-126" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
+<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5.5</span></span>
+<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a>sparrows <span class="sc">|&gt;</span> </span>
+<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(culmen, nalospi, wt, wingcrd, tarsus, head) <span class="sc">|&gt;</span> </span>
+<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(wt) <span class="sc">|&gt;</span> </span>
+<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_column</span>(<span class="at">row_number=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(sparrows),</span>
+<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a>             <span class="at">.before=</span><span class="st">"culmen"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(culmen<span class="sc">:</span>head,</span>
+<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to=</span><span class="st">"variable"</span>,</span>
+<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="fu">replace</span>(variable, variable <span class="sc">==</span> <span class="st">"culmen"</span>, <span class="st">"Culmen length"</span>),</span>
+<span id="cb15-140"><a href="#cb15-140" aria-hidden="true" tabindex="-1"></a>         <span class="at">variable =</span> <span class="fu">replace</span>(variable, variable <span class="sc">==</span> <span class="st">"nalospi"</span>, <span class="st">"Nalospi to bill tip"</span>),</span>
+<span id="cb15-141"><a href="#cb15-141" aria-hidden="true" tabindex="-1"></a>         <span class="at">variable =</span> <span class="fu">replace</span>(variable, variable <span class="sc">==</span> <span class="st">"wt"</span>, <span class="st">"Weight"</span>),</span>
+<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a>         <span class="at">variable =</span> <span class="fu">replace</span>(variable, variable <span class="sc">==</span> <span class="st">"wingcrd"</span>, <span class="st">"Wing length"</span>),</span>
+<span id="cb15-143"><a href="#cb15-143" aria-hidden="true" tabindex="-1"></a>         <span class="at">variable =</span> <span class="fu">replace</span>(variable, variable <span class="sc">==</span> <span class="st">"tarsus"</span>, <span class="st">"Tarsus length"</span>),</span>
+<span id="cb15-144"><a href="#cb15-144" aria-hidden="true" tabindex="-1"></a>         <span class="at">variable =</span> <span class="fu">replace</span>(variable, variable <span class="sc">==</span> <span class="st">"head"</span>, <span class="st">"Head length"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>value,</span>
+<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a>             <span class="at">y=</span>row_number))<span class="sc">+</span></span>
+<span id="cb15-147"><a href="#cb15-147" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb15-149"><a href="#cb15-149" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Row number"</span>)<span class="sc">+</span></span>
+<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Value"</span>)<span class="sc">+</span></span>
+<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
+<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)))<span class="sc">+</span></span>
+<span id="cb15-154"><a href="#cb15-154" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free_x"</span>)</span>
+<span id="cb15-155"><a href="#cb15-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a>Looking at this figure, we quickly notice that two head length values appear smaller than the others, while one tarsus length value appears larger than the others. These observations seem to qualify as outliers and should be checked. It is unlikely that such extreme values could have occurred by chance. If these observations are indeed measurement (or observation) errors, they should be dropped before continuing the analysis. If you decide to remove observations from your dataset, always clearly document this decision in your code and give reasons for it. This is where having a detailed field notebook or experimental log comes in handy.</span>
+<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-159"><a href="#cb15-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 2: Do we have homogeneity of variance?</span></span>
+<span id="cb15-160"><a href="#cb15-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a>Homogeneity of variance is an important assumption of regression-related techniques such as ANalysis Of VAriance (ANOVA). One way to check for this is to use a **conditional box plot**. Let's create one using a new set of bird data. The "Godwits.txt" data file contains observations for 9 variables measured on 330 Hudsonian godwits (*Limosa haemastica*).</span>
+<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a><span class="co">#Load data into R</span></span>
+<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a>godwits <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"Data_Zuur_et_al_2010/Godwits.txt"</span>,</span>
+<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a>                      <span class="at">col_select =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span>
+<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a><span class="co">#View data</span></span>
+<span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(godwits, <span class="at">n=</span><span class="dv">10</span>))</span>
+<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-178"><a href="#cb15-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a>We would be interested to test if the mean food intake rate (mgconsumed) of godwits changes between sexes (variable: SEX; either female or male) and time periods (variable: PERIOD; either summer, pre-migration, or winter). Before fitting a linear model to our data, we first need to check if all groups have similar variance. Use *ggplot2* to create a conditional box plot visualising this. Pay attention to the following:</span>
+<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>SEX is a variable with 3 levels: 0 (no information), 1 (female) and 2 (male). Filter out observations with SEX=0 and replace 1's by "Female" and 2's by "Male".</span>
+<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>PERIOD is a variable with 3 levels: 0 (Summer), 1 (Pre-migration) and 2 (Winter). Replace 0's by "Summer", 1's by "Pre-migration" and 2's by "Winter".</span>
+<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-187"><a href="#cb15-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-188"><a href="#cb15-188" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
+<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a>godwits <span class="sc">|&gt;</span> </span>
+<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(SEX <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SEX =</span> <span class="fu">replace</span>(SEX, SEX <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"Female"</span>),</span>
+<span id="cb15-199"><a href="#cb15-199" aria-hidden="true" tabindex="-1"></a>         <span class="at">SEX =</span> <span class="fu">replace</span>(SEX, SEX <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"Male"</span>),</span>
+<span id="cb15-200"><a href="#cb15-200" aria-hidden="true" tabindex="-1"></a>         <span class="at">PERIOD =</span> <span class="fu">replace</span>(PERIOD, PERIOD <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"Summer"</span>),</span>
+<span id="cb15-201"><a href="#cb15-201" aria-hidden="true" tabindex="-1"></a>         <span class="at">PERIOD =</span> <span class="fu">replace</span>(PERIOD, PERIOD <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"Pre-migration"</span>),</span>
+<span id="cb15-202"><a href="#cb15-202" aria-hidden="true" tabindex="-1"></a>         <span class="at">PERIOD =</span> <span class="fu">replace</span>(PERIOD, PERIOD <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"Winter"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>PERIOD,</span>
+<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a>             <span class="at">y=</span>mgconsumed))<span class="sc">+</span></span>
+<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.4</span>)<span class="sc">+</span></span>
+<span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Food intake rate"</span>)<span class="sc">+</span></span>
+<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Migration period"</span>)<span class="sc">+</span></span>
+<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
+<span id="cb15-211"><a href="#cb15-211" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)))<span class="sc">+</span></span>
+<span id="cb15-212"><a href="#cb15-212" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>SEX)</span>
+<span id="cb15-213"><a href="#cb15-213" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-214"><a href="#cb15-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a>From this figure, what can you conclude about (1) the variation in food intake rate between sexes (across migration periods), (2) the variation in food intake rate between migration periods (across sexes), and (3) the variation in food intake rate between migration periods within each sex category?</span>
+<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 3: Are the data normally distributed?</span></span>
+<span id="cb15-218"><a href="#cb15-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-219"><a href="#cb15-219" aria-hidden="true" tabindex="-1"></a>Another important assumption of linear regression is that data are normally distributed (i.e., data follow a normal distribution). But what data are we talking about? Can I simply verify this assumption by creating a histogram from ALL the values of the response variable I am interested in? The answer is: no, you can't. Why not? Because the assumption to be verifed is that the data <span class="co">[</span><span class="ot">**within each group**</span><span class="co">]</span>{.underline} are normally distributed. This underlines the importance of having a sufficient number of replicates at each level of your covariate, which should have been carefully considered when designing the study. You can check whether your data are normally distributed by making **histograms** of the raw data for each group.</span>
+<span id="cb15-220"><a href="#cb15-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-221"><a href="#cb15-221" aria-hidden="true" tabindex="-1"></a>Let's go back to the sparrows dataset. Use *ggplot2* to create a histogram of the weight (wt) of sparrows in June, July, and August. Use <span class="in">`geom_histogram()`</span> to do this. What patterns do you observe?</span>
+<span id="cb15-222"><a href="#cb15-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-225"><a href="#cb15-225" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-226"><a href="#cb15-226" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb15-227"><a href="#cb15-227" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb15-228"><a href="#cb15-228" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb15-229"><a href="#cb15-229" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb15-230"><a href="#cb15-230" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb15-231"><a href="#cb15-231" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
+<span id="cb15-232"><a href="#cb15-232" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb15-233"><a href="#cb15-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-234"><a href="#cb15-234" aria-hidden="true" tabindex="-1"></a>sparrows <span class="sc">|&gt;</span> </span>
+<span id="cb15-235"><a href="#cb15-235" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Month <span class="sc">&gt;=</span> <span class="dv">6</span> <span class="sc">&amp;</span> Month <span class="sc">&lt;=</span> <span class="dv">8</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-236"><a href="#cb15-236" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month=</span><span class="fu">replace</span>(Month, Month<span class="sc">==</span><span class="dv">6</span>, <span class="st">"June"</span>),</span>
+<span id="cb15-237"><a href="#cb15-237" aria-hidden="true" tabindex="-1"></a>         <span class="at">Month=</span><span class="fu">replace</span>(Month, Month<span class="sc">==</span><span class="dv">7</span>, <span class="st">"July"</span>),</span>
+<span id="cb15-238"><a href="#cb15-238" aria-hidden="true" tabindex="-1"></a>         <span class="at">Month=</span><span class="fu">replace</span>(Month, Month<span class="sc">==</span><span class="dv">8</span>, <span class="st">"August"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb15-239"><a href="#cb15-239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month=</span><span class="fu">factor</span>(Month, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"June"</span>,</span>
+<span id="cb15-240"><a href="#cb15-240" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"July"</span>, </span>
+<span id="cb15-241"><a href="#cb15-241" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"August"</span>))) <span class="sc">|&gt;</span> <span class="co">#Reorder factor levels to reorder facets</span></span>
+<span id="cb15-242"><a href="#cb15-242" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>wt))<span class="sc">+</span></span>
+<span id="cb15-243"><a href="#cb15-243" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>()<span class="sc">+</span></span>
+<span id="cb15-244"><a href="#cb15-244" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb15-245"><a href="#cb15-245" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Frequency"</span>)<span class="sc">+</span></span>
+<span id="cb15-246"><a href="#cb15-246" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Weight (g)"</span>)<span class="sc">+</span></span>
+<span id="cb15-247"><a href="#cb15-247" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb15-248"><a href="#cb15-248" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
+<span id="cb15-249"><a href="#cb15-249" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)))<span class="sc">+</span></span>
+<span id="cb15-250"><a href="#cb15-250" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Month)</span>
+<span id="cb15-251"><a href="#cb15-251" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-252"><a href="#cb15-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-253"><a href="#cb15-253" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 4: Are there lots of zeros in the data?</span></span>
+<span id="cb15-254"><a href="#cb15-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-255"><a href="#cb15-255" aria-hidden="true" tabindex="-1"></a>When modelling the relationship between a response variable whose value is often zero and other covariates, the use of zero-inflated models is often an option. But how can we visualise if our response variable of interest is often equal to zero? Sounds like you need to create a **frequency plot**. You can do this using <span class="in">`geom_bar()`</span>. In <span class="in">`geom_bar()`</span>, use <span class="in">`stat="count"`</span>.</span>
+<span id="cb15-256"><a href="#cb15-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-257"><a href="#cb15-257" aria-hidden="true" tabindex="-1"></a>To create a frequency plot, we will use another dataset ("ElphickBirdData.txt"). This dataset contains 2035 observations of the number of waterbirds (AQBIRDS) observed in flooded rice fields.</span>
+<span id="cb15-258"><a href="#cb15-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-261"><a href="#cb15-261" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-262"><a href="#cb15-262" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb15-263"><a href="#cb15-263" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb15-264"><a href="#cb15-264" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb15-265"><a href="#cb15-265" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb15-266"><a href="#cb15-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-267"><a href="#cb15-267" aria-hidden="true" tabindex="-1"></a><span class="co">#Load data into R</span></span>
+<span id="cb15-268"><a href="#cb15-268" aria-hidden="true" tabindex="-1"></a>waterbirds <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"Data_Zuur_et_al_2010/ElphickBirdData.txt"</span>)</span>
+<span id="cb15-269"><a href="#cb15-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-270"><a href="#cb15-270" aria-hidden="true" tabindex="-1"></a><span class="co">#View data</span></span>
+<span id="cb15-271"><a href="#cb15-271" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(waterbirds, <span class="at">n=</span><span class="dv">10</span>))</span>
+<span id="cb15-272"><a href="#cb15-272" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-273"><a href="#cb15-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-274"><a href="#cb15-274" aria-hidden="true" tabindex="-1"></a>How many times is the number of waterbirds equal to zero in this dataset? Create a frequency plot to find out! Focus on observed values between 0 and 100, and do not forget to round them off (use <span class="in">`round()`</span>).</span>
+<span id="cb15-275"><a href="#cb15-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-278"><a href="#cb15-278" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-279"><a href="#cb15-279" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb15-280"><a href="#cb15-280" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb15-281"><a href="#cb15-281" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb15-282"><a href="#cb15-282" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb15-283"><a href="#cb15-283" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb15-284"><a href="#cb15-284" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 5.5</span></span>
+<span id="cb15-285"><a href="#cb15-285" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.5</span></span>
+<span id="cb15-286"><a href="#cb15-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-287"><a href="#cb15-287" aria-hidden="true" tabindex="-1"></a>waterbirds <span class="sc">|&gt;</span> </span>
+<span id="cb15-288"><a href="#cb15-288" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(AQBIRDS <span class="sc">&lt;</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-289"><a href="#cb15-289" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">round</span>(AQBIRDS)))<span class="sc">+</span></span>
+<span id="cb15-290"><a href="#cb15-290" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>)<span class="sc">+</span></span>
+<span id="cb15-291"><a href="#cb15-291" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb15-292"><a href="#cb15-292" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Frequency"</span>)<span class="sc">+</span></span>
+<span id="cb15-293"><a href="#cb15-293" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Observed values"</span>)<span class="sc">+</span></span>
+<span id="cb15-294"><a href="#cb15-294" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb15-295"><a href="#cb15-295" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
+<span id="cb15-296"><a href="#cb15-296" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)))</span>
+<span id="cb15-297"><a href="#cb15-297" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-298"><a href="#cb15-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-299"><a href="#cb15-299" aria-hidden="true" tabindex="-1"></a>What can you conclude from this frequency plot?</span>
+<span id="cb15-300"><a href="#cb15-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-301"><a href="#cb15-301" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 5: Is there colinearity among covariates?</span></span>
+<span id="cb15-302"><a href="#cb15-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-303"><a href="#cb15-303" aria-hidden="true" tabindex="-1"></a>Zuur et al (2010) defined colinearity as "*the existence of correlation between covariates*". The strength of the linear relationship between two continuous variables (X and Y) can be measured using Pearson's correlation coefficient (@eq-cor).</span>
+<span id="cb15-304"><a href="#cb15-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-305"><a href="#cb15-305" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb15-306"><a href="#cb15-306" aria-hidden="true" tabindex="-1"></a>r=\frac{cov(X,Y)}{\sigma_X\sigma_Y}</span>
+<span id="cb15-307"><a href="#cb15-307" aria-hidden="true" tabindex="-1"></a>$$ {#eq-cor}</span>
+<span id="cb15-308"><a href="#cb15-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-309"><a href="#cb15-309" aria-hidden="true" tabindex="-1"></a>In @eq-cor, $cov(X,Y)$ is the covariance between X and Y. $\sigma_X$ and $\sigma_Y$ are the standard deviation values for variables X and Y. If $r=0$, there is no linear relationship between X and Y. If $r=1$ or $r=-1$, there is a perfect positive or negative linear relationship between the two variables, respectively.</span>
+<span id="cb15-310"><a href="#cb15-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-311"><a href="#cb15-311" aria-hidden="true" tabindex="-1"></a>A useful way to check for colinearity between covariates is to create a **correlation plot**. A scatter plot would also be a good idea, but as we will see how to create scatter plots in the next section, let's concentrate here on creating a correlation plot.</span>
+<span id="cb15-312"><a href="#cb15-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-313"><a href="#cb15-313" aria-hidden="true" tabindex="-1"></a>In this example, we will work with a new sparrows dataset (VegSamplesV1.txt). The researchers who produced this dataset wanted to know whether the relative abundance of various plant species and other vegetation characteristics could explain the number of saltmarsh sparrows captured in each plot (Banded). We will work with the following covariates:</span>
+<span id="cb15-314"><a href="#cb15-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-315"><a href="#cb15-315" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Maximum vegetation height (Avgmaxht)</span>
+<span id="cb15-316"><a href="#cb15-316" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Vegetation stem density (Avgdens)</span>
+<span id="cb15-317"><a href="#cb15-317" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Height of thatch (ht.thatch)</span>
+<span id="cb15-318"><a href="#cb15-318" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Percent cover of shrubs (Shrub)</span>
+<span id="cb15-319"><a href="#cb15-319" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Percent cover of *Juncus gerardii* (Juncus)</span>
+<span id="cb15-320"><a href="#cb15-320" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Percent cover of *Spartina patens* (S.patens)</span>
+<span id="cb15-321"><a href="#cb15-321" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Percent cover of *Distichlis spicata* (Distichlis)</span>
+<span id="cb15-322"><a href="#cb15-322" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Percent cover of short *Spartina alterniflora* (S.alternifloraShort)</span>
+<span id="cb15-323"><a href="#cb15-323" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Percent cover of tall *Spartina alterniflora* (S.alternifloraTall)</span>
+<span id="cb15-324"><a href="#cb15-324" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Percent cover of *Phragmites australis* (Phragmites)</span>
+<span id="cb15-325"><a href="#cb15-325" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Percent cover of bare ground (Bare)</span>
+<span id="cb15-326"><a href="#cb15-326" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Percent cover of water (Water)</span>
+<span id="cb15-327"><a href="#cb15-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-330"><a href="#cb15-330" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-331"><a href="#cb15-331" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb15-332"><a href="#cb15-332" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb15-333"><a href="#cb15-333" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb15-334"><a href="#cb15-334" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb15-335"><a href="#cb15-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-336"><a href="#cb15-336" aria-hidden="true" tabindex="-1"></a><span class="co">#Load data into R</span></span>
+<span id="cb15-337"><a href="#cb15-337" aria-hidden="true" tabindex="-1"></a>sparrows2 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"Data_Zuur_et_al_2010/VegSamplesV1.txt"</span>,</span>
+<span id="cb15-338"><a href="#cb15-338" aria-hidden="true" tabindex="-1"></a>                        <span class="at">col_select =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">19</span>)</span>
+<span id="cb15-339"><a href="#cb15-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-340"><a href="#cb15-340" aria-hidden="true" tabindex="-1"></a><span class="co">#View data</span></span>
+<span id="cb15-341"><a href="#cb15-341" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sparrows2, <span class="at">n=</span><span class="dv">10</span>))</span>
+<span id="cb15-342"><a href="#cb15-342" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-343"><a href="#cb15-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-344"><a href="#cb15-344" aria-hidden="true" tabindex="-1"></a>Now that the data have been imported into R, we can create a correlation plot to check for colinearity between the covariates we want to include in a statistical model. You can do this with the <span class="in">`corrplot()`</span> or <span class="in">`corrplot.mixed()`</span> function in the *corrplot* package.</span>
+<span id="cb15-345"><a href="#cb15-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-348"><a href="#cb15-348" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-349"><a href="#cb15-349" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb15-350"><a href="#cb15-350" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb15-351"><a href="#cb15-351" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb15-352"><a href="#cb15-352" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb15-353"><a href="#cb15-353" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb15-354"><a href="#cb15-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-355"><a href="#cb15-355" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot.mixed</span>(<span class="at">corr=</span><span class="fu">cor</span>(sparrows2[,<span class="fu">c</span>(<span class="st">"Avgmaxht"</span>,</span>
+<span id="cb15-356"><a href="#cb15-356" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Avgdens"</span>,</span>
+<span id="cb15-357"><a href="#cb15-357" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"ht.thatch"</span>,</span>
+<span id="cb15-358"><a href="#cb15-358" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Shrub"</span>,</span>
+<span id="cb15-359"><a href="#cb15-359" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Juncus"</span>,</span>
+<span id="cb15-360"><a href="#cb15-360" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"S.patens"</span>,</span>
+<span id="cb15-361"><a href="#cb15-361" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Distichlis"</span>,</span>
+<span id="cb15-362"><a href="#cb15-362" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"S.alternifloraShort"</span>,</span>
+<span id="cb15-363"><a href="#cb15-363" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"S.alternifloraTall"</span>,</span>
+<span id="cb15-364"><a href="#cb15-364" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Phragmites"</span>,</span>
+<span id="cb15-365"><a href="#cb15-365" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Bare"</span>,</span>
+<span id="cb15-366"><a href="#cb15-366" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Water"</span>)]),</span>
+<span id="cb15-367"><a href="#cb15-367" aria-hidden="true" tabindex="-1"></a>           <span class="at">lower=</span><span class="st">"number"</span>,</span>
+<span id="cb15-368"><a href="#cb15-368" aria-hidden="true" tabindex="-1"></a>           <span class="at">upper=</span><span class="st">"ellipse"</span>,</span>
+<span id="cb15-369"><a href="#cb15-369" aria-hidden="true" tabindex="-1"></a>           <span class="at">tl.pos=</span><span class="st">"lt"</span>,</span>
+<span id="cb15-370"><a href="#cb15-370" aria-hidden="true" tabindex="-1"></a>           <span class="at">diag=</span><span class="st">"n"</span>,</span>
+<span id="cb15-371"><a href="#cb15-371" aria-hidden="true" tabindex="-1"></a>           <span class="at">tl.col=</span><span class="st">"black"</span>,</span>
+<span id="cb15-372"><a href="#cb15-372" aria-hidden="true" tabindex="-1"></a>           <span class="at">number.cex=</span><span class="fl">0.7</span>)</span>
+<span id="cb15-373"><a href="#cb15-373" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-374"><a href="#cb15-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-375"><a href="#cb15-375" aria-hidden="true" tabindex="-1"></a>What do you see? Is there colinearity among covariates in this dataset?</span>
+<span id="cb15-376"><a href="#cb15-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-377"><a href="#cb15-377" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 6: What are the relationships between variables?</span></span>
+<span id="cb15-378"><a href="#cb15-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-379"><a href="#cb15-379" aria-hidden="true" tabindex="-1"></a>The easiest way to find out how the relationship between a response variable of interest and a covariate looks like is to create a **scatter plot**. Let's do this using the sparrows dataset we just used to look as colinearity. Using *ggplot2*, create a figure with multiple panels showing the relationship between the number of sparrows observed in a plot (Banded) and all covariates used in the previous section. In *tidyverse*, this is done by combining <span class="in">`pivot_longer()`</span>, <span class="in">`geom_point()`</span> and <span class="in">`facet_wrap()`</span>. Let's also add a smoother to each scatter plot to better visualise the relationships (use <span class="in">`geom_smooth()`</span>). Give it a try!</span>
+<span id="cb15-380"><a href="#cb15-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-383"><a href="#cb15-383" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-384"><a href="#cb15-384" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb15-385"><a href="#cb15-385" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb15-386"><a href="#cb15-386" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb15-387"><a href="#cb15-387" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb15-388"><a href="#cb15-388" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb15-389"><a href="#cb15-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-390"><a href="#cb15-390" aria-hidden="true" tabindex="-1"></a>sparrows2 <span class="sc">|&gt;</span> </span>
+<span id="cb15-391"><a href="#cb15-391" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Banded,</span>
+<span id="cb15-392"><a href="#cb15-392" aria-hidden="true" tabindex="-1"></a>         Avgmaxht,</span>
+<span id="cb15-393"><a href="#cb15-393" aria-hidden="true" tabindex="-1"></a>         Avgdens,</span>
+<span id="cb15-394"><a href="#cb15-394" aria-hidden="true" tabindex="-1"></a>         ht.thatch,</span>
+<span id="cb15-395"><a href="#cb15-395" aria-hidden="true" tabindex="-1"></a>         Shrub,</span>
+<span id="cb15-396"><a href="#cb15-396" aria-hidden="true" tabindex="-1"></a>         Juncus,</span>
+<span id="cb15-397"><a href="#cb15-397" aria-hidden="true" tabindex="-1"></a>         S.patens,</span>
+<span id="cb15-398"><a href="#cb15-398" aria-hidden="true" tabindex="-1"></a>         Distichlis,</span>
+<span id="cb15-399"><a href="#cb15-399" aria-hidden="true" tabindex="-1"></a>         S.alternifloraShort,</span>
+<span id="cb15-400"><a href="#cb15-400" aria-hidden="true" tabindex="-1"></a>         S.alternifloraTall,</span>
+<span id="cb15-401"><a href="#cb15-401" aria-hidden="true" tabindex="-1"></a>         Phragmites,</span>
+<span id="cb15-402"><a href="#cb15-402" aria-hidden="true" tabindex="-1"></a>         Bare,</span>
+<span id="cb15-403"><a href="#cb15-403" aria-hidden="true" tabindex="-1"></a>         Water) <span class="sc">|&gt;</span></span>
+<span id="cb15-404"><a href="#cb15-404" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Avgmaxht<span class="sc">:</span>Water,</span>
+<span id="cb15-405"><a href="#cb15-405" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Covariate"</span>,</span>
+<span id="cb15-406"><a href="#cb15-406" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Value"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-407"><a href="#cb15-407" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Value,</span>
+<span id="cb15-408"><a href="#cb15-408" aria-hidden="true" tabindex="-1"></a>             <span class="at">y=</span>Banded))<span class="sc">+</span></span>
+<span id="cb15-409"><a href="#cb15-409" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb15-410"><a href="#cb15-410" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">span =</span> <span class="fl">1.5</span>)<span class="sc">+</span></span>
+<span id="cb15-411"><a href="#cb15-411" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb15-412"><a href="#cb15-412" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Covariate, <span class="at">scales =</span> <span class="st">"free_x"</span>)<span class="sc">+</span></span>
+<span id="cb15-413"><a href="#cb15-413" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Number of sparrows"</span>)<span class="sc">+</span></span>
+<span id="cb15-414"><a href="#cb15-414" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Covariate value"</span>)<span class="sc">+</span></span>
+<span id="cb15-415"><a href="#cb15-415" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb15-416"><a href="#cb15-416" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
+<span id="cb15-417"><a href="#cb15-417" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)))</span>
+<span id="cb15-418"><a href="#cb15-418" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-419"><a href="#cb15-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-420"><a href="#cb15-420" aria-hidden="true" tabindex="-1"></a>Are there any covariates that seem to be good predictors of the number of sparrows in a plot?</span>
+<span id="cb15-421"><a href="#cb15-421" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-422"><a href="#cb15-422" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 7: Should we consider interactions?</span></span>
+<span id="cb15-423"><a href="#cb15-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-424"><a href="#cb15-424" aria-hidden="true" tabindex="-1"></a>What do we mean by interaction in this context? Let's return to the sparrow morphometric dataset used earlier. Let's imagine that a researcher wants to determine whether the relationship between body mass (response variable) and wing length depends on other covariates, such as time and sex. If the relationship between body mass and wing length changes over time and differs between males and females, this suggests that there is a three-way interaction between wing length, time and sex. On the contrary, if the relationship between body mass and wing length is stable over time and is similar for males and females, there is probably no interaction between wing length, time and sex.</span>
+<span id="cb15-425"><a href="#cb15-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-426"><a href="#cb15-426" aria-hidden="true" tabindex="-1"></a>Let's visualise this! The best way to evaluate if interactions should be considered is to create a **conditioning plot** (or coplot). We can easily do this in *tidyverse* by combining <span class="in">`geom_point()`</span> (to create scatter plots), <span class="in">`geom_smooth(method="lm")`</span> (to add a linear model on top of each scatter plot), and <span class="in">`facet_grid()`</span> (to create multiple panels, with males/females as rows, and June/July/August as columns). In the Sex column, males are labelled 4 and females 5. Only consider observations where SpeciesCode is equal to 1. Give it a try!</span>
+<span id="cb15-427"><a href="#cb15-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-430"><a href="#cb15-430" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-431"><a href="#cb15-431" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb15-432"><a href="#cb15-432" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb15-433"><a href="#cb15-433" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb15-434"><a href="#cb15-434" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb15-435"><a href="#cb15-435" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb15-436"><a href="#cb15-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-437"><a href="#cb15-437" aria-hidden="true" tabindex="-1"></a>sparrows <span class="sc">|&gt;</span> </span>
+<span id="cb15-438"><a href="#cb15-438" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(SpeciesCode <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-439"><a href="#cb15-439" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(wt, wingcrd, Month, Sex) <span class="sc">|&gt;</span> </span>
+<span id="cb15-440"><a href="#cb15-440" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Month <span class="sc">&gt;=</span> <span class="dv">6</span> <span class="sc">&amp;</span> Month <span class="sc">&lt;=</span> <span class="dv">8</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-441"><a href="#cb15-441" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="dv">4</span> <span class="sc">|</span> Sex <span class="sc">==</span> <span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-442"><a href="#cb15-442" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month=</span><span class="fu">replace</span>(Month, Month<span class="sc">==</span><span class="dv">6</span>, <span class="st">"June"</span>),</span>
+<span id="cb15-443"><a href="#cb15-443" aria-hidden="true" tabindex="-1"></a>         <span class="at">Month=</span><span class="fu">replace</span>(Month, Month<span class="sc">==</span><span class="dv">7</span>, <span class="st">"July"</span>),</span>
+<span id="cb15-444"><a href="#cb15-444" aria-hidden="true" tabindex="-1"></a>         <span class="at">Month=</span><span class="fu">replace</span>(Month, Month<span class="sc">==</span><span class="dv">8</span>, <span class="st">"August"</span>),</span>
+<span id="cb15-445"><a href="#cb15-445" aria-hidden="true" tabindex="-1"></a>         <span class="at">Sex=</span><span class="fu">replace</span>(Sex, Sex<span class="sc">==</span><span class="dv">4</span>, <span class="st">"Male"</span>),</span>
+<span id="cb15-446"><a href="#cb15-446" aria-hidden="true" tabindex="-1"></a>         <span class="at">Sex=</span><span class="fu">replace</span>(Sex, Sex<span class="sc">==</span><span class="dv">5</span>, <span class="st">"Female"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb15-447"><a href="#cb15-447" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month=</span><span class="fu">factor</span>(Month, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"June"</span>,</span>
+<span id="cb15-448"><a href="#cb15-448" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"July"</span>, </span>
+<span id="cb15-449"><a href="#cb15-449" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"August"</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb15-450"><a href="#cb15-450" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-451"><a href="#cb15-451" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>wingcrd,</span>
+<span id="cb15-452"><a href="#cb15-452" aria-hidden="true" tabindex="-1"></a>             <span class="at">y=</span>wt))<span class="sc">+</span></span>
+<span id="cb15-453"><a href="#cb15-453" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb15-454"><a href="#cb15-454" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb15-455"><a href="#cb15-455" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Weight (g)"</span>)<span class="sc">+</span></span>
+<span id="cb15-456"><a href="#cb15-456" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Wing length (mm)"</span>)<span class="sc">+</span></span>
+<span id="cb15-457"><a href="#cb15-457" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"black"</span>),</span>
+<span id="cb15-458"><a href="#cb15-458" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
+<span id="cb15-459"><a href="#cb15-459" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)))<span class="sc">+</span></span>
+<span id="cb15-460"><a href="#cb15-460" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(Sex<span class="sc">~</span>Month)<span class="sc">+</span></span>
+<span id="cb15-461"><a href="#cb15-461" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span>
+<span id="cb15-462"><a href="#cb15-462" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-463"><a href="#cb15-463" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-464"><a href="#cb15-464" aria-hidden="true" tabindex="-1"></a>What can you conclude from this figure?</span>
+<span id="cb15-465"><a href="#cb15-465" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-466"><a href="#cb15-466" aria-hidden="true" tabindex="-1"></a><span class="fu">## Take-home message</span></span>
+<span id="cb15-467"><a href="#cb15-467" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-468"><a href="#cb15-468" aria-hidden="true" tabindex="-1"></a>We hope this tutorial has convinced you of the importance of taking the time to explore your data before starting any form of analysis. Many problems occurring at the data analysis stage could be avoided by spending more time exploring and getting to know your data. This is particularly true for large datasets. Graphical tools are essential in this endeavor, which is why we have spent a fair amount of time in this course familiarizing ourselves with R functions to organise and plot data. Of course, this tutorial is far from exhaustive and we encourage you to continue learning and practicing data exploration in R.</span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

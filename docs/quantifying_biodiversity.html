@@ -702,7 +702,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>            <span class="fu">facet_wrap</span>(<span class="sc">~</span>Bag)<span class="sc">+</span></span>
 <span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
 <span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>            <span class="fu">xlab</span>(<span class="st">"Diversity order (q)"</span>)<span class="sc">+</span></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ylab</span>(<span class="st">"Effective number of species"</span>)<span class="sc">+</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ylab</span>(<span class="st">"Effective number of species (D)"</span>)<span class="sc">+</span></span>
 <span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_colour_viridis</span>(<span class="at">discrete=</span><span class="cn">TRUE</span>)<span class="sc">+</span></span>
 <span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)),</span>
 <span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
@@ -782,7 +782,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>            <span class="fu">facet_wrap</span>(<span class="sc">~</span>Bag)<span class="sc">+</span></span>
 <span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
 <span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>            <span class="fu">xlab</span>(<span class="st">"Diversity order (q)"</span>)<span class="sc">+</span></span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ylab</span>(<span class="st">"Effective number of species"</span>)<span class="sc">+</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ylab</span>(<span class="st">"Effective number of species (D)"</span>)<span class="sc">+</span></span>
 <span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_colour_viridis</span>(<span class="at">discrete=</span><span class="cn">TRUE</span>)<span class="sc">+</span></span>
 <span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)),</span>
 <span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
@@ -818,6 +818,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="suggested-further-reading" class="level2">
 <h2 class="anchored" data-anchor-id="suggested-further-reading">Suggested further reading</h2>
+<p>Our tutorial can’t cover everything, and there’s still a lot to learn about quantifying biodiversity! If you are interested, take a look at these excellent papers.</p>
 <p><strong>Chao A, Chiu C-H, Jost L</strong>. <strong>2014</strong>. <a href="https://www.annualreviews.org/content/journals/10.1146/annurev-ecolsys-120213-091540">Unifying Species Diversity, Phylogenetic Diversity, Functional Diversity, and Related Similarity and Differentiation Measures Through Hill Numbers.</a> <em>Annual review of ecology, evolution, and systematics</em> <strong>45</strong>: 297–324.</p>
 <p><strong>Hill MO</strong>. <strong>1973</strong>. <a href="https://www.jstor.org/stable/1934352?seq=1">Diversity and evenness: A unifying notation and its consequences</a>. <em>Ecology</em> <strong>54</strong>: 427–432.</p>
 <p><strong>Roswell M, Dushoff J, Winfree R</strong>. <strong>2021</strong>. <a href="https://nsojournals.onlinelibrary.wiley.com/doi/full/10.1111/oik.07202">A conceptual guide to measuring species diversity</a>. <em>Oikos</em> <strong>130</strong>: 321–338.</p>
@@ -1528,7 +1529,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb12-304"><a href="#cb12-304" aria-hidden="true" tabindex="-1"></a>            <span class="fu">facet_wrap</span>(<span class="sc">~</span>Bag)<span class="sc">+</span></span>
 <span id="cb12-305"><a href="#cb12-305" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
 <span id="cb12-306"><a href="#cb12-306" aria-hidden="true" tabindex="-1"></a>            <span class="fu">xlab</span>(<span class="st">"Diversity order (q)"</span>)<span class="sc">+</span></span>
-<span id="cb12-307"><a href="#cb12-307" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ylab</span>(<span class="st">"Effective number of species"</span>)<span class="sc">+</span></span>
+<span id="cb12-307"><a href="#cb12-307" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ylab</span>(<span class="st">"Effective number of species (D)"</span>)<span class="sc">+</span></span>
 <span id="cb12-308"><a href="#cb12-308" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_colour_viridis</span>(<span class="at">discrete=</span><span class="cn">TRUE</span>)<span class="sc">+</span></span>
 <span id="cb12-309"><a href="#cb12-309" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)),</span>
 <span id="cb12-310"><a href="#cb12-310" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
@@ -1667,7 +1668,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb12-449"><a href="#cb12-449" aria-hidden="true" tabindex="-1"></a>            <span class="fu">facet_wrap</span>(<span class="sc">~</span>Bag)<span class="sc">+</span></span>
 <span id="cb12-450"><a href="#cb12-450" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
 <span id="cb12-451"><a href="#cb12-451" aria-hidden="true" tabindex="-1"></a>            <span class="fu">xlab</span>(<span class="st">"Diversity order (q)"</span>)<span class="sc">+</span></span>
-<span id="cb12-452"><a href="#cb12-452" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ylab</span>(<span class="st">"Effective number of species"</span>)<span class="sc">+</span></span>
+<span id="cb12-452"><a href="#cb12-452" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ylab</span>(<span class="st">"Effective number of species (D)"</span>)<span class="sc">+</span></span>
 <span id="cb12-453"><a href="#cb12-453" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_colour_viridis</span>(<span class="at">discrete=</span><span class="cn">TRUE</span>)<span class="sc">+</span></span>
 <span id="cb12-454"><a href="#cb12-454" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>)),</span>
 <span id="cb12-455"><a href="#cb12-455" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>)),</span>
@@ -1696,13 +1697,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb12-480"><a href="#cb12-480" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-481"><a href="#cb12-481" aria-hidden="true" tabindex="-1"></a><span class="fu">## Suggested further reading</span></span>
 <span id="cb12-482"><a href="#cb12-482" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-483"><a href="#cb12-483" aria-hidden="true" tabindex="-1"></a>**Chao A, Chiu C-H, Jost L**. **2014**. [Unifying Species Diversity, Phylogenetic Diversity, Functional Diversity, and Related Similarity and Differentiation Measures Through Hill Numbers.](https://www.annualreviews.org/content/journals/10.1146/annurev-ecolsys-120213-091540) *Annual review of ecology, evolution, and systematics* **45**: 297--324.</span>
+<span id="cb12-483"><a href="#cb12-483" aria-hidden="true" tabindex="-1"></a>Our tutorial can't cover everything, and there's still a lot to learn about quantifying biodiversity! If you are interested, take a look at these excellent papers.</span>
 <span id="cb12-484"><a href="#cb12-484" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-485"><a href="#cb12-485" aria-hidden="true" tabindex="-1"></a>**Hill MO**. **1973**. [Diversity and evenness: A unifying notation and its consequences](https://www.jstor.org/stable/1934352?seq=1). *Ecology* **54**: 427--432.</span>
+<span id="cb12-485"><a href="#cb12-485" aria-hidden="true" tabindex="-1"></a>**Chao A, Chiu C-H, Jost L**. **2014**. [Unifying Species Diversity, Phylogenetic Diversity, Functional Diversity, and Related Similarity and Differentiation Measures Through Hill Numbers.](https://www.annualreviews.org/content/journals/10.1146/annurev-ecolsys-120213-091540) *Annual review of ecology, evolution, and systematics* **45**: 297--324.</span>
 <span id="cb12-486"><a href="#cb12-486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-487"><a href="#cb12-487" aria-hidden="true" tabindex="-1"></a>**Roswell M, Dushoff J, Winfree R**. **2021**. [A conceptual guide to measuring species diversity](https://nsojournals.onlinelibrary.wiley.com/doi/full/10.1111/oik.07202). *Oikos* **130**: 321--338.</span>
+<span id="cb12-487"><a href="#cb12-487" aria-hidden="true" tabindex="-1"></a>**Hill MO**. **1973**. [Diversity and evenness: A unifying notation and its consequences](https://www.jstor.org/stable/1934352?seq=1). *Ecology* **54**: 427--432.</span>
 <span id="cb12-488"><a href="#cb12-488" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-489"><a href="#cb12-489" aria-hidden="true" tabindex="-1"></a>**Whittaker RH**. **1960**. [Vegetation of the siskiyou mountains, Oregon and California](https://www.jstor.org/stable/1943563). *Ecological monographs* **30**: 279--338.</span>
+<span id="cb12-489"><a href="#cb12-489" aria-hidden="true" tabindex="-1"></a>**Roswell M, Dushoff J, Winfree R**. **2021**. [A conceptual guide to measuring species diversity](https://nsojournals.onlinelibrary.wiley.com/doi/full/10.1111/oik.07202). *Oikos* **130**: 321--338.</span>
+<span id="cb12-490"><a href="#cb12-490" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-491"><a href="#cb12-491" aria-hidden="true" tabindex="-1"></a>**Whittaker RH**. **1960**. [Vegetation of the siskiyou mountains, Oregon and California](https://www.jstor.org/stable/1943563). *Ecological monographs* **30**: 279--338.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

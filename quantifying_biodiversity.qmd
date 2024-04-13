@@ -286,7 +286,7 @@ plot <- data |>
             facet_wrap(~Bag)+
             theme_bw()+
             xlab("Diversity order (q)")+
-            ylab("Effective number of species")+
+            ylab("Effective number of species (D)")+
             scale_colour_viridis(discrete=TRUE)+
             theme(axis.title.x = element_text(margin = margin(t=10)),
                   axis.title.y = element_text(margin = margin(r=10)),
@@ -425,7 +425,7 @@ plot <- data |>
             facet_wrap(~Bag)+
             theme_bw()+
             xlab("Diversity order (q)")+
-            ylab("Effective number of species")+
+            ylab("Effective number of species (D)")+
             scale_colour_viridis(discrete=TRUE)+
             theme(axis.title.x = element_text(margin = margin(t=10)),
                   axis.title.y = element_text(margin = margin(r=10)),
@@ -453,6 +453,8 @@ plot
 :::
 
 ## Suggested further reading
+
+Our tutorial can't cover everything, and there's still a lot to learn about quantifying biodiversity! If you are interested, take a look at these excellent papers.
 
 **Chao A, Chiu C-H, Jost L**. **2014**. [Unifying Species Diversity, Phylogenetic Diversity, Functional Diversity, and Related Similarity and Differentiation Measures Through Hill Numbers.](https://www.annualreviews.org/content/journals/10.1146/annurev-ecolsys-120213-091540) *Annual review of ecology, evolution, and systematics* **45**: 297--324.
 

@@ -12,4 +12,4 @@ author:
 
 Welcome to this tutorial on data analysis in R!
 
-Throughout this tutorial, **our goal is to provide you with basic tools for efficiently managing, tidying, and transforming datasets in R.** Whether you are working with ecological data for exploration or analysis, a significant portion of your code will focus on tasks like importing data, organizing variables, computing new ones, and filtering data for statistical analyses and plotting. This tutorial is all about mastering these fundamental skills!
+The rest is coming soon :-)
