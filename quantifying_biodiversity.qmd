@@ -24,6 +24,8 @@ The first step is to create some data to work with. You will do this by sampling
 
 Our species pool consists of 10 different species, each represented by a different colour. This is a small species pool, but it is enough to meet the objectives of this tutorial.
 
+![](Colors_meeples.png){fig-align="center" width="850"}
+
 ## Sampling procedure
 
 The aim of this exercise is to simulate a survey carried out to characterise the taxonomic diversity of six sites making up our metacommunity. Each site will be sampled multiple times to simulate surveys in a number of quadrats/locations at each site.
