@@ -69,7 +69,7 @@ format:
     code-tools: true
     code-overflow: scroll
     fig-cap-location: bottom
-    fig-dpi: 600
+    fig-format: svg
 
 editor: visual
 editor_options: 
