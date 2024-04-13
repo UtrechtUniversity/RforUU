@@ -26,7 +26,7 @@ Load *tidyverse*, *knitr*, and *corrplot*.
 #| eval: true 
 #| echo: true 
 #| warning: false 
-#| message: false  
+#| message: false
 
 library(tidyverse) 
 library(knitr) 
