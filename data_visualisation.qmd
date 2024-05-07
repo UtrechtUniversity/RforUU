@@ -69,6 +69,10 @@ library(Hmisc)
 library(ggpubr)
 ```
 
+## Download data from GitHub
+
+Download the data needed for this tutorial from [GitHub](https://github.com/UtrechtUniversity/RforUU/tree/main/Data_ggplot2).
+
 ## Exercise 1: Creating a box plot
 
 ### Import data into R

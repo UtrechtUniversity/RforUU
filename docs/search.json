@@ -376,5 +376,12 @@
     "title": "Tutorial 4: Data exploration in R",
     "section": "Take-home message",
     "text": "Take-home message\nWe hope this tutorial has convinced you of the importance of taking the time to explore your data before starting any form of analysis. Many problems occurring at the data analysis stage could be avoided by spending more time exploring and getting to know your data. This is particularly true for large datasets. Graphical tools are essential in this endeavor, which is why we have spent a fair amount of time in this course familiarizing ourselves with R functions to organise and plot data. Of course, this tutorial is far from exhaustive and we encourage you to continue learning and practicing data exploration in R."
+  },
+  {
+    "objectID": "data_visualisation.html#download-data-from-github",
+    "href": "data_visualisation.html#download-data-from-github",
+    "title": "Tutorial 2: Data visualisation in R",
+    "section": "Download data from GitHub",
+    "text": "Download data from GitHub\nDownload the data needed for this tutorial from GitHub."
   }
 ]
