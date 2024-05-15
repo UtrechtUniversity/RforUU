@@ -40,9 +40,9 @@ You can start generating biodiversity data using the following procedure:
 
 4.  Write down your observations in an Excel sheet (site as rows, species as columns).
 
-5.  Once your observations have been recorded, put your sample back into the bag and give the bag to another person in your group. Then, repeat the previous steps until you have at least five replicates. In your data sheet, report your observations independently for each replicate (i.e., each row in your data is a replicate within a site).
+5.  Once your observations have been recorded, put your sample back into the bag and give the bag to another person in your group. Then, repeat the previous steps until you have three replicates. In your data sheet, report your observations independently for each replicate (i.e., each row in your data is a replicate within a site).
 
-6.  Once you have all the replicates needed for your bag, switch bags with another group and repeat the previous steps. Do this until you have five replicates for each bag.
+6.  Once you have all the replicates needed for your bag, switch bags with another group and repeat the previous steps. Do this until you have three replicates for each bag.
 
 7.  Make sure that your data are formatted properly.
 
@@ -86,29 +86,29 @@ Bag4 <- c(0,7,0,0,11,0,0,5,0,7)
 Bag5 <- c(2,1,18,1,2,1,0,2,2,1)
 Bag6 <- c(6,0,0,0,0,0,17,0,5,2)
 
-data <- data.frame(Bag = rep(1:6, each=5),
-                   Replicate = rep(1:5, 6),
-                   Red=rep(NA, 30),
-                   Orange=rep(NA, 30),
-                   Yellow=rep(NA, 30),
-                   Green=rep(NA, 30),
-                   Blue=rep(NA, 30),
-                   Purple=rep(NA, 30),
-                   Pink=rep(NA, 30),
-                   White=rep(NA, 30),
-                   Grey=rep(NA, 30),
-                   Black=rep(NA, 30))
+data <- data.frame(Bag = rep(1:6, each=3),
+                   Replicate = rep(1:3, 6),
+                   Red=rep(NA, 18),
+                   Orange=rep(NA, 18),
+                   Yellow=rep(NA, 18),
+                   Green=rep(NA, 18),
+                   Blue=rep(NA, 18),
+                   Purple=rep(NA, 18),
+                   Pink=rep(NA, 18),
+                   White=rep(NA, 18),
+                   Grey=rep(NA, 18),
+                   Black=rep(NA, 18))
 
 set.seed(123)
 
 for (i in 1:nrow(data)){
   
-  if (i <= 5){bag <- Bag1}
-  if (i > 5 & i<=10){bag <- Bag2}
-  if (i > 10 & i<=15){bag <- Bag3}
-  if (i > 15 & i<=20){bag <- Bag4}
-  if (i > 20 & i<=25){bag <- Bag5}
-  if (i > 25 & i<=30){bag <- Bag6}
+  if (i <= 3){bag <- Bag1}
+  if (i > 3 & i<=6){bag <- Bag2}
+  if (i > 6 & i<=9){bag <- Bag3}
+  if (i > 9 & i<=12){bag <- Bag4}
+  if (i > 12 & i<=15){bag <- Bag5}
+  if (i > 15 & i<=18){bag <- Bag6}
   
   s <- sample(c(rep("red", bag[1]),
           rep("orange", bag[2]),
@@ -338,29 +338,29 @@ Bag4 <- c(0,7,0,0,11,0,0,5,0,7)
 Bag5 <- c(2,1,18,1,2,1,0,2,2,1)
 Bag6 <- c(6,0,0,0,0,0,17,0,5,2)
 
-data <- data.frame(Bag = rep(1:6, each=5),
-                   Replicate = rep(1:5, 6),
-                   Red=rep(NA, 30),
-                   Orange=rep(NA, 30),
-                   Yellow=rep(NA, 30),
-                   Green=rep(NA, 30),
-                   Blue=rep(NA, 30),
-                   Purple=rep(NA, 30),
-                   Pink=rep(NA, 30),
-                   White=rep(NA, 30),
-                   Grey=rep(NA, 30),
-                   Black=rep(NA, 30))
+data <- data.frame(Bag = rep(1:6, each=3),
+                   Replicate = rep(1:3, 6),
+                   Red=rep(NA, 18),
+                   Orange=rep(NA, 18),
+                   Yellow=rep(NA, 18),
+                   Green=rep(NA, 18),
+                   Blue=rep(NA, 18),
+                   Purple=rep(NA, 18),
+                   Pink=rep(NA, 18),
+                   White=rep(NA, 18),
+                   Grey=rep(NA, 18),
+                   Black=rep(NA, 18))
 
 set.seed(234)
 
 for (i in 1:nrow(data)){
   
-  if (i <= 5){bag <- Bag1}
-  if (i > 5 & i<=10){bag <- Bag2}
-  if (i > 10 & i<=15){bag <- Bag3}
-  if (i > 15 & i<=20){bag <- Bag4}
-  if (i > 20 & i<=25){bag <- Bag5}
-  if (i > 25 & i<=30){bag <- Bag6}
+  if (i <= 3){bag <- Bag1}
+  if (i > 3 & i<=6){bag <- Bag2}
+  if (i > 6 & i<=9){bag <- Bag3}
+  if (i > 9 & i<=12){bag <- Bag4}
+  if (i > 12 & i<=15){bag <- Bag5}
+  if (i > 15 & i<=18){bag <- Bag6}
   
   s <- sample(c(rep("red", bag[1]),
           rep("orange", bag[2]),
