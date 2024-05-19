@@ -12,4 +12,781 @@ author:
 
 Welcome to this tutorial on data analysis in R!
 
-The rest is coming soon :-)
+In this tutorial, **our goal is to review some of the R functions you will need to analyse the data you have collected in the field and answer your research questions**. For this tutorial, we strongly recommend that you reflect on what you have learned in the Statistics GSS course during Period 3. The Statistics GSS course taught you many useful tools for data analysis. Now it's time to put them into practice on a real ecological data set. For this tutorial, you will be using the same POEM data as in the tutorial on data wrangling. If you don't remember what these data are, please refer to the first sections of the first tutorial on data wrangling.
+
+Let's get started!
+
+## Importing POEM data
+
+The first thing to do after opening RStudio is to import the POEM data. This is exactly the same as what we already did in the first tutorial. [Try writing the code yourself this time]{.underline} (i.e. without looking too quickly at the solution)!
+
+### Download the POEM data from Zenodo
+
+The POEM data that will be used in this tutorial are available on a [Zenodo repository](https://zenodo.org/records/10119982). You can download the data manually, but you can also do it using an R function called `download_zenodo()`. Let's give it a try.
+
+First, install the *inborutils* R package using the following code:
+
+```{r}
+#| eval: false 
+#| echo: true 
+#| warning: false 
+#| message: false 
+#| code-fold: false  
+
+install.packages("inborutils", 
+                 repos = c(inbo = "https://inbo.r-universe.dev",
+                           CRAN = "https://cloud.r-project.org"))
+```
+
+You can now download the data used in this tutorial using `download_zenodo()`.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false  
+
+inborutils::download_zenodo(doi="10.5281/zenodo.10119982",
+                            quiet=TRUE)
+```
+
+By default, the data will be downloaded as a zip file and will be stored in your working directory. If you do not know what is your working directory, run `getwd()` in your R console. Let's extract (or unzip) the files we have just downloaded from Zenodo and let's store these files in a new folder called "Data_POEM":
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false  
+
+unzip(zipfile = "Data_POEM_Paper1_Alonso-Crespo_et_al_2024-v1.0.zip",       
+      exdir = "Data_POEM")
+```
+
+### Load R packages
+
+Most of the functions we need for the rest of this tutorial are available with base R and in R packages from the *tidyverse* collection. We will also need the `read_excel()` function from the *readxl* package and the `kable()` function from the *knitr* package. We will also need functions from the *vegan*, *car*, *emmeans,* and *viridis* R packages later in this tutorial. If they are not yet installed in your library, install it using `install.packages()`.
+
+You can load all the packages required for this tutorial using `library()`.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false  
+
+library(tidyverse) 
+library(readxl) 
+library(knitr)
+library(vegan)
+library(car)
+library(emmeans)
+library(viridis)
+```
+
+### Import data into R
+
+In the POEM project, raw biomass data (measured at the species level) are stored in different folders for the experiment started in 2020 (POEM2020) and the experiment started in 2021 (POEM2021). For each experiment, there is one data file for each growing season. As the data is stored in Excel files (.xlsx), we can use `read_excel()` to import our data into R. For now, we will simply store each set of data in separate R objects.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false  
+
+#Import data from the first experiment (POEM2020)  
+
+poem2020_year1 <- read_excel("Data_POEM/POEMexperiment-Data_POEM_Paper1_Alonso-Crespo_et_al_2024-0c2abb7/Data/POEM2020/Data_Biomass_POEM2020_2020-07.xlsx")
+
+poem2020_year2 <- read_excel("Data_POEM/POEMexperiment-Data_POEM_Paper1_Alonso-Crespo_et_al_2024-0c2abb7/Data/POEM2020/Data_Biomass_POEM2020_2021-06.xlsx")
+
+poem2020_year3 <- read_excel("Data_POEM/POEMexperiment-Data_POEM_Paper1_Alonso-Crespo_et_al_2024-0c2abb7/Data/POEM2020/Data_Biomass_POEM2020_2022-06.xlsx")  
+
+#Import data from the second experiment (POEM2021)  
+
+poem2021_year1 <- read_excel("Data_POEM/POEMexperiment-Data_POEM_Paper1_Alonso-Crespo_et_al_2024-0c2abb7/Data/POEM2021/Data_Biomass_POEM2021_2021-07.xlsx")  
+
+poem2021_year2 <- read_excel("Data_POEM/POEMexperiment-Data_POEM_Paper1_Alonso-Crespo_et_al_2024-0c2abb7/Data/POEM2021/Data_Biomass_POEM2021_2022-06.xlsx")  
+
+poem2021_year3 <- read_excel("Data_POEM/POEMexperiment-Data_POEM_Paper1_Alonso-Crespo_et_al_2024-0c2abb7/Data/POEM2021/Data_Biomass_POEM2021_2023-06.xlsx")
+```
+
+In RStudio, you can see how each data frame looks like using `View()`.
+
+```{r}
+#| eval: false 
+#| echo: true 
+#| warning: false 
+#| message: false  
+
+View(poem2021_year1)
+```
+
+You can see that each dataset consists of a number of observations (rows) of 6 variables (columns). These variables are:
+
+-   **Year**: the year of initiation of each experiment
+-   **Harvest**: the date at which biomass data were collected (YYYY-MM)
+-   **Plot**: the plot identification number (plot number - arrival order/replicate)
+-   **Quadrat**: the quadrat identification number (plant biomass was collected in 2 or 4 quadrats per plot)
+-   **Species**: the plant species name
+-   **SDW_g**: the shoot dry weight in grams
+
+To enable data exploration and analysis, we now need to combine these different datasets, so that all the data is stored in the same R object. You can do this using `rbind()`.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false  
+
+poem_data <- rbind(poem2020_year1,
+                   poem2020_year2,
+                   poem2020_year3,
+                   poem2021_year1,
+                   poem2021_year2,
+                   poem2021_year3)
+```
+
+## Organise POEM data
+
+Write R code to reorganise the data so that we can analyse them. Make sure to do the following:
+
+-   Create new columns based on the information contained in the Plot column. This can be done easily using `separate_wider_delim()` and `separate_wider_position()`. Make sure to add the following three columns to the dataset:
+
+    -   PlotID (the plot number)
+    -   Arrival (the order of arrival treatment: S, F, G, L, B)
+    -   Replicate (the replicate number)
+
+-   Make sure that PlotID and Replicate are stored as numerical variables. You can do this by combining `mutate()` with `as.numeric()`.
+
+-   Finally, rename the column storing plant biomass values (SDW_g). Name it "Biomass". You can do this using `rename()`.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+
+poem_data <- poem_data |> 
+  separate_wider_delim(cols = Plot,
+                       delim="-",
+                       names=c("PlotID", "Treatment"),
+                       cols_remove=TRUE) |> 
+  separate_wider_position(cols = Treatment,
+                          width=c(Arrival=1, Replicate=1),
+                          cols_remove=TRUE) |> 
+  mutate(PlotID=as.numeric(PlotID),
+         Replicate=as.numeric(Replicate)) |> 
+  rename(Biomass=SDW_g)
+```
+
+Let's take a quick look at the first ten rows of our dataset using `head().` We can also use `kable()` in the *knitr* package to produce a nice looking table in your R console.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false  
+
+kable(head(poem_data, n = 10))
+```
+
+## Exercise 1: Do plant order of arrival and year of initiation of an experiment affect the total aboveground biomass production of plant communities?
+
+### Step 1: Calculate the total biomass production in each plot
+
+Before starting analysing our data, we must first calculate the total biomass production of each plant community at each harvest date. This can be done by summing the biomass value of all species collected in a plot at a given harvest date. Use what you learned in the data wrangling tutorial to write a piece of R code that does that. When writing your code, remember the following:
+
+-   Store the dataset in a new object called `poem_data_biomass`.
+
+-   Do not forget to standardise biomass data in g/m². Each quadrat has a surface area of 0.1 m². Use `mutate()` to add a new column called "Std_biomass" to the dataset.
+
+-   Depending on the harvest date, all plant species located within 2 or 4 randomly positioned quadrats were collected in each plot. To obtain a biomass value per species and per plot, it is first necessary to calculate the average biomass value for each species in a plot at each harvest date (i.e., across quadrats). Use `group_by()` and `summarise()` to do that.
+
+-   Once you have calculated the average biomass value for each species in a plot, use `group_by()` and `summarise()` again to calculate the total aboveground biomass in each plot by adding up the yield (in g/m²) of all species in a plot.
+
+-   Only keep the data for the second harvest date of each sub-experiment (2021-06 for the experiment initiated in 2020, 2022-06 for the experiment initiated in 2021).
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+
+poem_data_biomass <- poem_data |> 
+  mutate(Std_biomass=Biomass/0.1, #Convert to g/m²
+         .after = "Biomass") |>  #Specify that we want this new column to be after the Biomass column
+  group_by(Year, Harvest, PlotID, Arrival, Species) |> #Define grouping factors in your data
+  summarise(Std_biomass=mean(Std_biomass)) |> #Calculates the average productivity of each species in a plot
+  group_by(Year, Harvest, PlotID, Arrival) |> #Redefine groups (interested in summing biomass values across species)
+  summarise(Total_biomass=sum(Std_biomass)) |>  #Calculate total biomass production in each plot
+  filter((Year == 2020 & Harvest == "2021-06")|(Year == 2021 & Harvest == "2022-06"))
+```
+
+Let's take a quick look at the first ten rows of our new dataset using `head().`
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false  
+
+kable(head(poem_data_biomass, n = 10))
+```
+
+### Step 2: Visualise raw data
+
+Before fitting a statistical model to our data, let's first create a plot to help us answer our research question: Do plant order of arrival and year of initiation of an experiment affect the total aboveground biomass production of plant communities?
+
+This research question gives us important information about what needs to be represented. The first half of the question tells us that our graph should present results for all possible combinations of plant arrival order (S, F, G, L, B) and year of initiation (2020 and 2021). These are the fixed factors of the experiment. We can make sure that these columns are correctly interpreted as factors by using `factor()`. It may also be a good idea to reorder factor levels in a meaningful way (S, F, G, L, B). The second half of the research question tells us that we need to show the differences in total aboveground biomass production between all possible treatment combinations. This is the response variable of our experiment.
+
+Using what you have learned in the previous tutorials, create a high-quality figure that answers the research question. Feel free to personalise your plot in any way you think best communicates the results (you do not necessarily have to produce the same plot as below). What can you already notice from this graph? Does it look like ANOVA (ANalysis Of VAriance)) assumptions are met?
+
+::: panel-tabset
+## Solution (code)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+
+poem_data_biomass$Year <- factor(poem_data_biomass$Year)
+poem_data_biomass$Arrival <- factor(poem_data_biomass$Arrival,
+                                    levels=c("S", "F", "G", "L", "B"))
+
+plot <- poem_data_biomass |> 
+          ggplot(aes(x=Arrival,
+                     y=Total_biomass))+
+          facet_grid(~Year)+
+          geom_jitter(height = 0,
+                      width=0.1,
+                      shape=1)+
+          stat_summary(fun.data = "mean_cl_boot")+
+          theme_bw()+
+          xlab("Plant order of arrival")+
+          ylab("Total shoot dry weight (g/m²)")+
+          theme(axis.title.x = element_text(margin = margin(t=10)),
+                axis.title.y = element_text(margin = margin(r=10)),
+                axis.text = element_text(colour="black"))+
+          scale_y_continuous(breaks=seq(from = 100,
+                                        to = 600,
+                                        by = 100))
+```
+
+## Solution (plot)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+
+plot
+```
+:::
+
+### Step 3: Fit a model
+
+Let's fit a statistical model to study the relationship between our response variable of interest (Total_biomass) and our two experimental factors (Year and Arrival). There are different ways to do this in R. First, let's check whether a ***simple linear regression model*** can correctly model our data. We will use the `lm()` function to fit this linear model (this will give us the same results as the `aov()` function). Note that each group being compared has 5 independent observations, which is not sufficient to test the assumption that the data are normally distributed at each combination of factor levels.
+
+The syntax to fit a simple linear regression model with two predictor variables in R is as follows:
+
+`model <- lm(Response ~ Predictor1*Predictor2, data)`
+
+The asterisks (\*) means that we want to take the interaction between predictor variables into account (you then assume that Predictor1 and Predictor2 have non-additive effects on your response variable). Using a plus sign (+) instead of an asterisks would fit a model without considering an interaction between predictors (in that case, you then assume that Predictor1 and Predictor2 have additive effects on your response variable).
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false 
+
+#Fit simple linear regression model
+
+model1 <- lm(Total_biomass ~ Year*Arrival,
+             data = poem_data_biomass)
+```
+
+Before checking model results, let's first make sure that model assumptions are met. We can check for homoscedasticity by plotting model residuals (i.e., the difference between model predictions and observations) against fitted values (i.e., model predictions). This is called a residual plot. Fitted values can be calculated using `predict()`. Residuals can be calculated using `residuals()`. Try to create such a plot using what you have learned in previous tutorials. Do you notice any pattern in this residual plot?
+
+::: panel-tabset
+## Solution (code)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+
+plot <- data.frame(predicted = predict(model1),
+           residuals = residuals(model1)) |> 
+        ggplot(aes(x=predicted,
+                 y=residuals))+
+        geom_point()+
+        geom_hline(yintercept = 0,
+                   colour = "red",
+                   linetype = 2)+
+        theme_bw()+
+        xlab("Predicted values")+
+        ylab("Residuals")+
+        theme(axis.title.x = element_text(margin = margin(t=10)),
+              axis.title.y = element_text(margin = margin(r=10)),
+              axis.text = element_text(colour="black"))
+```
+
+## Solution (plot)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+
+plot
+```
+:::
+
+It seems that there is a strong mean - variance relationship in our data (heteroscedasticity), which means that the model we just fitted is not the best option. A better approach is to switch to a ***generalised linear model*** (also referred to as GLM). Generalised linear models can be fitted using the `glm()` function in the *stats* package. The syntax is exactly the same as for the `lm()` function, but there is an extra argument to specify: `family`. The `family` argument allows you to describe the error distribution and the link function to be used in the model.
+
+::: callout-note
+## Relationship between `lm()` and `glm()`
+
+A simple linear regression model (`lm()`) is a special case of a gaussian generalised linear model with an identity link. This means that
+
+`lm(Response ~ Predictor1*Predictor2, data)`
+
+and
+
+`glm(Response ~ Predictor1*Predictor2, data, family=gaussian(link="identity")`
+
+produce the same results.
+:::
+
+Instead of using a gaussian distribution, a gamma distribution can be used for a response variable that is continuous and strictly positive. Negative values and zeros are not allowed with a gamma distribution. This distribution is useful to model variables such as biomass, length, etc. Using a log link function will also help deal with heteroscedasticity. This can be done by writing `family=Gamma(link="log")` in `glm()`.
+
+Let's fit a new model (this time a GLM) to our data.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false 
+
+#Fit simple linear regression model
+
+model2 <- glm(Total_biomass ~ Year*Arrival,
+              data = poem_data_biomass,
+              family = Gamma(link="log"))
+```
+
+Before checking model results, let's first create a residual plot. What do you notice? What's new in this residual plot?
+
+::: panel-tabset
+## Solution (code)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+
+plot <- data.frame(predicted = predict(model2),
+           residuals = residuals(model2)) |> 
+        ggplot(aes(x=predicted,
+                 y=residuals))+
+        geom_point()+
+        geom_hline(yintercept = 0,
+                   colour = "red",
+                   linetype = 2)+
+        theme_bw()+
+        xlab("Predicted values")+
+        ylab("Pearson residuals")+
+        theme(axis.title.x = element_text(margin = margin(t=10)),
+              axis.title.y = element_text(margin = margin(r=10)),
+              axis.text = element_text(colour="black"))
+```
+
+## Solution (plot)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+
+plot
+```
+:::
+
+Let's now take a look at model outputs. You can do this using `summary()`. This output contains a wealth of useful information. The coefficient table gives you the coefficients of the model. When looking at the results of the statistical tests, it seems that only three to four coefficients in the equation above can be considered significantly different from zero (marked with a dot or an asterisks).
+
+::: panel-tabset
+## Solution (code)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false 
+
+output <- summary(model2)
+```
+
+## Solution (output)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+
+output
+```
+:::
+
+GLM models do not return any R² values (like for simple linear regression models). The closest we can get is to calculate the explained deviance:
+
+$$
+ExplainedDeviance = 100 \times \frac{NullDeviance - ResidualDeviance}{NullDeviance}
+$$
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false 
+
+null_deviance <- summary(model2)$null.deviance
+residual_deviance <- summary(model2)$deviance
+
+explained_deviance <- 100*(null_deviance-residual_deviance)/null_deviance
+```
+
+The explanatory variables included in the model explain `r round(explained_deviance, 1)`% of the variation in total plant biomass production.
+
+### Step 4: Compare group means
+
+You can use the `Anova()` function in the *car* package to produce an ANOVA table (in this case, an analysis of deviance table). This table shows that the two factors of our experiment interact with each other. This means that the effect of plant order of arrival on community biomass depends on the year of initiation of an experiment.
+
+::: panel-tabset
+## Solution (code)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false 
+
+table <- Anova(model2)
+```
+
+## Solution (table)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false 
+
+table
+```
+:::
+
+To determine where the differences in community productivity lie between the plant arrival order scenarios for each sub-experiment, we need to perform a posthoc test. The `emmeans()` function in the *emmeans* R package is a good option for this. For the `emmeans()` function, we will need to specify a value for the following arguments:
+
+-   `object` (the object containing the fitted model)
+-   `specs` (a character vector specifying the names of the predictors for which levels must be compared). In this example, this is plant arrival order.
+-   `by` (a character vector specifying the names of the predictors to condition on). In this example, this is the year of initiation of an experiment.
+-   `contr` (a character value specifying the contrasts to be added). We will use pairwise contrasts (i.e., all possible pairs of groups will be compared).
+
+To check the results of the posthoc test, we will then call a `summary()` function on the object produced by `emmeans()` . In `summary()`, we will use the `type` argument to specify that we want model predictions to be on the same scale as the original data (not log scale, but original scale in g/m²).
+
+What can you conclude from this posthoc test?
+
+::: panel-tabset
+## Solution (code)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false 
+
+table <- summary(emmeans(object = model2, 
+                         specs = "Arrival", 
+                         by= "Year",
+                         contr = "pairwise"), 
+         type="response")
+```
+
+## Solution (table)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false 
+
+table
+```
+:::
+
+For the sub-experiment set up in 2020, all plots where seeds were added (S, F, G, L) were on average more productive than free succession plots. Consequently, the observed effect on community productivity does not appear to be due to the manipulation of plant arrival order, but solely to whether or not seeds were sown in the plots at the start of the experiment. In 2021, there is no evidence of any difference in aboveground biomass production between plant arrival order scenarios.
+
+### Step 5: Add posthoc test results to the graph
+
+We can add posthoc test results to a graph by adding annotations. This is often done by adding letters next to the groups being compared. Groups that do not share a common letter are considered statistically significantly different from each other (p \< 0.05). We can easily add these letters to our graph in two steps:
+
+-   Start by creating a data frame (called `annotations` in the code below) that contains all the information that *ggplot2* needs to add the annotations to your graph. In our example, this data frame should have as many rows as annotations to add to the graph and must contain the following columns:
+
+    -   **Year**: the year of initiation of an experiment (2020 or 2021). Use the same column name as in `poem_data_biomass`.
+    -   **Arrival**: the plant order of arrival (S, F, G, L, B). Use the same column name as in `poem_data_biomass`.
+    -   **y**: the vertical coordinates where annotations should be added. You can freely choose the name of this column.
+    -   **Label**: the annotations to be added to the graph. You can freely choose the name of this column.
+
+-   Once this is done, add an extra layer to your ggplot object using `geom_text()`.
+
+::: panel-tabset
+## Solution (code)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false 
+#| fig-align: center
+
+annotations <- data.frame(Year=rep(c(2020,2021), each=5),
+                          Arrival=rep(c("S", "F", "G", "L", "B"), 2),
+                          y=rep(600, 10),
+                          Label=c("a", "a", "a", "a", "b", "a", "a", "a", "a", "a"))
+
+plot <- poem_data_biomass |> 
+          ggplot(aes(x=Arrival,
+                     y=Total_biomass))+
+          facet_grid(~Year)+
+          geom_jitter(height = 0,
+                      width=0.1,
+                      shape=1)+
+          stat_summary(fun.data = "mean_cl_boot")+
+          theme_bw()+
+          xlab("Plant order of arrival")+
+          ylab("Total shoot dry weight (g/m²)")+
+          theme(axis.title.x = element_text(margin = margin(t=10)),
+                axis.title.y = element_text(margin = margin(r=10)),
+                axis.text = element_text(colour="black"))+
+          scale_y_continuous(breaks=seq(from = 100,
+                                        to = 600,
+                                        by = 100))+
+          geom_text(data=annotations,
+                    aes(x=Arrival,
+                        y=y,
+                        label=Label))
+```
+
+## Solution (plot)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false 
+#| fig-align: center
+
+plot
+```
+:::
+
+## Exercise 2: Non-metric multidimensional scaling
+
+### Step 1: Choose a measure of association
+
+**Non-metric multidimensional scaling** (NMDS) is a technique often used in ecological research to visualise differences (or (dis)similarities) in species composition between ecological communities.
+
+The first step is to choose a measure of association and calculate a dissimilarity matrix. This dissimilarity matrix will have as many rows and columns as ecological communities to be compared. The help page of the `vegdist()` function of the *vegan* package lists a number of dissimilarity indices for ecologists wishing to quantify dissimilarity in species composition between communities. You can access this help page by running `?vegdist` in your R console (a detailed discussion of the advantages and disadvantages of each dissimilarity index is beyond the scope of this tutorial). The Bray-Curtis dissimilarity is usually good at detecting ecological gradients (see `?vegdist`) and is often used as default when performing NMDS. This is the dissimilarity index we are going to use in this tutorial too.
+
+### Step 2: Organise your data
+
+To obtain the dissimilarity matrix required for NMDS, we first need to reorganise our data so that each species has its own column and each ecological community has its own row (i.e., a site-by-species matrix). Use the `poem_data` object as a starting point. In your code, include the following steps:
+
+-   Store the dataset in a new object called `poem_data_wide`.
+-   Standardise biomass data in g/m². Each quadrat has a surface area of 0.1 m². Use `mutate()` to add a new column called "Std_biomass" to the dataset.
+-   Depending on the harvest date, all plant species located within 2 or 4 randomly positioned quadrats were collected in each plot. To obtain a biomass value per species and per plot, it is first necessary to calculate the average biomass value for each species in a plot at each harvest date (i.e., across quadrats). Use `group_by()` and `summarise()` to do that.
+-   Use `pivot_wider()` to reorganise your data (one column per species).
+-   Only keep the data for the second harvest date of each sub-experiment (2021-06 for the experiment initiated in 2020, 2022-06 for the experiment initiated in 2021).
+-   Remove all species columns that only contain zeros. You can do this using `select(where( ~ is.numeric(.x) && sum(.x) != 0))`.
+-   Remove the column named "Unknown".
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false 
+
+poem_data_wide <- poem_data |> 
+  mutate(Std_biomass=Biomass/0.1, #Convert to g/m²
+         .after = "Biomass") |>  #Specify that we want this new column to be after the Biomass column
+  group_by(Year, Harvest, PlotID, Arrival, Species) |> #Define grouping factors in your data
+  summarise(Std_biomass=mean(Std_biomass)) |> 
+  pivot_wider(names_from = Species, #Species names will be used as column names
+              values_from = Std_biomass, #Biomass values are stored in the Std_biomass column
+              values_fill = 0, #If a species is absent in a plot, its biomass value is zero
+              values_fn = sum) |>  #Sum biomass values measured on the same species and in the same quadrat
+  filter((Year == 2020 & Harvest == "2021-06")|(Year == 2021 & Harvest == "2022-06")) |>  #Filter data
+  select(where( ~ is.numeric(.x) && sum(.x) != 0)) |> 
+  select(-Unknown)
+
+kable(head(poem_data_wide, 10))
+```
+
+### Step 3: Perform the NMDS
+
+Now that our community dataset has the right format, we can perform the NMDS using the `metaMDS()` function of the *vegan* package. The following arguments are of particular importance:
+
+-   `comm`: the community data (only select the species columns).
+-   `distance`: a character value for the dissimilarity index used. Use "bray" for the Bray-Curtis dissimilarity index.
+-   `k`: the number of dimensions to compute. Let's start with `k=2` (we want to produce a 2D plot).
+-   `trymax`: the maximum number of random starts in search of a stable solution. The NMDS algorithm iteratively searches for a stable solution (numerical optimisation methods). Increasing the value of this argument can help reaching a stable solution.
+
+We will keep the default values for all other arguments. Store the results in an object named `nmds`. Do not forget to set a seed (using `set.seed()` for reproducibility).
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false 
+
+set.seed(123)
+
+nmds <- metaMDS(comm = poem_data_wide[,5:ncol(poem_data_wide)],
+                distance = "bray",
+                k = 2,
+                trymax = 100)
+```
+
+### Step 4: Check NMDS results
+
+The main goal of NMDS is to visualise a dissimilarity matrix in a lower (typically 2D) dimensional space. Contrary to principal coordinate analysis (PCoA), which aims to create a plot in which distances between points match the original dissimilarities as closely as possible, NMDS focuses on representing the order, or ranking, of the original dissimilarities as closely as possible (Zuur AF, Ieno EN, Smith GM. 2007. *Analysing ecological data*. Springer.).
+
+The first way to assess the quality of the display is to look at a parameter called "stress". You can extract it from the `nmds` object created earlier using `nmds$stress`. In our example, the stress value is equal to `r round(nmds$stress, 3)`. Zuur et al (2007) provided some guidelines on how to interpret stress values (usually, the lower the stress value, the better):
+
+-   stress \< 0.05: Excellent configuration
+-   stress between 0.05 and 0.1: Good configuration
+-   stress between 0.1 and 0.2: Be careful with interpretation
+-   stress between 0.2 and 0.3: Problems start. Consider increasing the number of dimensions (`k`).
+-   stress above 0.3: Poor representation. Increase the number of dimensions (`k`).
+
+Another way to assess the quality of the configuration is to create a Shepard plot. A Shepard plot shows the relationship between ordination distances (i.e., distances in the configuration produced by the NMDS) and original distances. You can produce a Shepard plot using the `stressplot()` function in *vegan*. What can you conclude from this Shepard plot?
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+
+stressplot(nmds)
+```
+
+### Step 5: Visualise NMDS results
+
+NMDS results are stored in our `nmds` object. You can extract the coordinates of each community using `nmds$points`. To make it easier to work with *ggplot2*, we will create a new data frame (`data_nmds`) by merging the first four columns of `poem_data_wide` (Harvest, Arrival, Year, PlotID) with NMDS results.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+
+data_nmds <- cbind(poem_data_wide[, 1:4], nmds$points)
+
+kable(head(data_nmds, 10))
+```
+
+We now have everything we need to plot the results of the NMDS using *ggplot2*:
+
+-   Create a plot displaying MDS1 on the horizontal axis and MDS2 on the vertical axis.
+-   Use a specific colour for each plant order of arrival scenario (mind colour-blind people!).
+-   Use a specific shape for each year of initiation.
+-   Add an informative legend to your graph.
+-   Add an annotation on the top left corner of your graph for the stress value. Use `geom_text()` to do that.
+
+What can you conclude from this NMDS?
+
+::: panel-tabset
+## Solution (code)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+
+#Make sure that Arrival and Year are factors
+
+data_nmds$Arrival <- factor(data_nmds$Arrival,
+                            levels=c("S", "F", "G", "L", "B"))
+
+data_nmds$Year <- factor(data_nmds$Year,
+                         levels=c("2020", "2021"))
+
+#Plot results
+
+plot <- data_nmds |> 
+  ggplot(aes(x = MDS1,
+             y = MDS2,
+             colour = Arrival,
+             shape = Year))+
+  geom_point(size=2)+
+  theme_bw()+
+  scale_colour_viridis(name = "Plant order of arrival",
+                       discrete = TRUE,
+                       option = "D")+
+  scale_shape_manual(name = "Year of initiation",
+                     values = c(16, 17))+
+  theme(axis.text = element_text(colour="black"),
+        axis.title.x = element_text(margin = margin(t=10)),
+        axis.title.y = element_text(margin = margin(r=10)))+
+  xlab("NMDS1")+
+  ylab("NMDS2")+
+  geom_text(data=data.frame(x=min(data_nmds$MDS1),
+                            y=max(data_nmds$MDS2),
+                            label=paste("Stress = ", 
+                                        round(nmds$stress, 3), 
+                                        sep="")), 
+            aes(x = x, 
+                y = y, 
+                label = label),
+            hjust = 0.1, 
+            vjust = 0, 
+            inherit.aes = FALSE)
+```
+
+## Solution (plot)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false
+#| fig-align: center
+
+plot
+```
+:::
+
+```{r}
+#| eval: true 
+#| echo: false 
+#| warning: false 
+#| message: false  
+
+unlink("Data_POEM", recursive = TRUE) 
+file.remove("Data_POEM_Paper1_Alonso-Crespo_et_al_2024-v1.0.zip")
+```
