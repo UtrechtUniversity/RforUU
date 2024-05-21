@@ -352,7 +352,7 @@ What do you see? Is there colinearity among covariates in this dataset?
 
 ## Step 6: What are the relationships between variables?
 
-The easiest way to find out how the relationship between a response variable of interest and a covariate looks like is to create a **scatter plot**. Let's do this using the sparrows dataset we just used to look as colinearity. Using *ggplot2*, create a figure with multiple panels showing the relationship between the number of sparrows observed in a plot (Banded) and all covariates used in the previous section. In *tidyverse*, this is done by combining `pivot_longer()`, `geom_point()` and `facet_wrap()`. Let's also add a smoother to each scatter plot to better visualise the relationships (use `geom_smooth()`). Give it a try!
+The easiest way to find out how the relationship between a response variable of interest and a covariate looks like is to create a **scatter plot**. Let's do this using the sparrows dataset we just used to look at colinearity. Using *ggplot2*, create a figure with multiple panels showing the relationship between the number of sparrows observed in a plot (Banded) and all covariates used in the previous section. In *tidyverse*, this is done by combining `pivot_longer()`, `geom_point()` and `facet_wrap()`. Let's also add a smoother to each scatter plot to better visualise the relationships (use `geom_smooth()`). Give it a try!
 
 ```{r}
 #| eval: true 
