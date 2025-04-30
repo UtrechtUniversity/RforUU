@@ -438,7 +438,7 @@ The pipe: |&gt;
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract information from the Plot column using the pipe</span></span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract information from the Site column using the pipe</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(<span class="at">cols =</span> <span class="st">"Site"</span>,</span>
@@ -783,7 +783,7 @@ The pipe: |&gt;
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>data_summary <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Date, Habitat, Location, Plot, Species) <span class="sc">|&gt;</span> <span class="co">#Define grouping factors in your data</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Avg_cover=</span><span class="fu">mean</span>(Cover), <span class="co">#Calculates summary statistics</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Avg_cover=</span><span class="fu">mean</span>(Cover), <span class="co">#Calculate summary statistics</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">Sd_cover=</span><span class="fu">sd</span>(Cover),</span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">n_cover=</span><span class="fu">length</span>(Cover)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1393,7 +1393,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-162"><a href="#cb20-162" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb20-163"><a href="#cb20-163" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
 <span id="cb20-164"><a href="#cb20-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-165"><a href="#cb20-165" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract information from the Plot column using the pipe</span></span>
+<span id="cb20-165"><a href="#cb20-165" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract information from the Site column using the pipe</span></span>
 <span id="cb20-166"><a href="#cb20-166" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-167"><a href="#cb20-167" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
 <span id="cb20-168"><a href="#cb20-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(<span class="at">cols =</span> <span class="st">"Site"</span>,</span>
@@ -1611,7 +1611,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-402"><a href="#cb20-402" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-403"><a href="#cb20-403" aria-hidden="true" tabindex="-1"></a>data_summary <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
 <span id="cb20-404"><a href="#cb20-404" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Date, Habitat, Location, Plot, Species) <span class="sc">|&gt;</span> <span class="co">#Define grouping factors in your data</span></span>
-<span id="cb20-405"><a href="#cb20-405" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Avg_cover=</span><span class="fu">mean</span>(Cover), <span class="co">#Calculates summary statistics</span></span>
+<span id="cb20-405"><a href="#cb20-405" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Avg_cover=</span><span class="fu">mean</span>(Cover), <span class="co">#Calculate summary statistics</span></span>
 <span id="cb20-406"><a href="#cb20-406" aria-hidden="true" tabindex="-1"></a>            <span class="at">Sd_cover=</span><span class="fu">sd</span>(Cover),</span>
 <span id="cb20-407"><a href="#cb20-407" aria-hidden="true" tabindex="-1"></a>            <span class="at">n_cover=</span><span class="fu">length</span>(Cover)) </span>
 <span id="cb20-408"><a href="#cb20-408" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>

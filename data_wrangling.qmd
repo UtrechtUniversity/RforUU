@@ -150,7 +150,7 @@ Now we can rewrite our code using the pipe.
 #| warning: false
 #| message: false
 
-#Extract information from the Plot column using the pipe
+#Extract information from the Site column using the pipe
 
 data <- data |> 
   separate_wider_delim(cols = "Site",
@@ -368,7 +368,7 @@ Let's combine `group_by()` and `summarise()` to calculate the average cover of e
 
 data_summary <- data |> 
   group_by(Date, Habitat, Location, Plot, Species) |> #Define grouping factors in your data
-  summarise(Avg_cover=mean(Cover), #Calculates summary statistics
+  summarise(Avg_cover=mean(Cover), #Calculate summary statistics
             Sd_cover=sd(Cover),
             n_cover=length(Cover)) 
 ```
