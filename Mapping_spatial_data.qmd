@@ -1,0 +1,77 @@
+---
+title: "Mapping_spatial_data"
+author: "Benjamin Delory"
+---
+
+## Exercise 3: Mapping spatial data
+
+Creating and extracting data from maps is very useful for ecological field research. This exercise will give you a brief introduction to mapping spatial data in R.
+
+For this exercise, we will use the following files:
+
+-   A geopackage database file (GPKG) containing the spatial coordinates of field sites around Utrecht University (Locations_EFR.gpkg)
+
+-   A map of the highest ground water table (GWT_high.tif). This map is stored as a TIFF file (Tag Image File Format), which is a widely used file format for storing raster graphics images.
+
+-   A geopackage database file containing soil type information (Basisregistratie Ondergrond)
+
+### Load R packages to handle spatial data
+
+Before starting this exercise, make sure that the *sf*, *raster*, and *mapview* packages are installed in your library.
+
+```{r} #| eval: true #| echo: true #| warning: false #| message: false  library(sf) library(raster) library(mapview)}
+```
+
+### Import geospatial data
+
+GPKG files can be read using `st_read()` in th *sf* R package. Use this function to load the locations of our field sites into R. We can then plot these locations using `geom_sf()` in *ggplot2*.
+
+```{r} #| eval: true #| echo: true #| warning: false #| message: false #| fig-align: center  #Read field site locations locations_sf <- st_read(dsn = "Data_ggplot2/Locations_EFR.gpkg",                         quiet = TRUE)  #Create a ggplot ggplot(data = locations_sf)+   geom_sf()+   theme_minimal()}
+```
+
+Question: Why do we not see a map in the background?
+
+### Add raster data (ground water)
+
+To add information about the highest ground water table in the background of our map, we first need to read our raster data (GWT_high.tif) using `raster()`. This will create a RasterLayer object which will need to be converted into a data frame using `as.data.frame()` so that the data can be used in *ggplot2*. In our ggplot, use `geom_raster()` to add a raster layer to your graph.
+
+In maps, the colour code used to display information is something to be considered carefully, so that your map is as informative and easy to understand as possible. In this ground water example, we would like areas with a high water table (i.e. low GWT_high values in our dataset) to appear in blue, while areas with a low water table (i.e. high GWT_high values in our dataset) would appear in red. Such a divergent colour gradient (low-medium-high) can be created using `scale_colour_gradient2()`. We will set the midpoint value to 2 (which means that values below 2 will appear blue, while values above 2 will appear red). We will also apply a pseudo-log transformation to improve the readability of our map. You can do this using the `transform` argument in `scale_fill_gradient2()`. As our raster data also contains missing values, we will use the `na.value` argument in `scale_fill_gradient2()` to make them transparent.
+
+```{r} #| eval: true #| echo: true #| warning: false #| message: false #| fig-align: center  #Create RasterLayer object GWT<-raster("Data_ggplot2/GWT_high.tif")  #Convert to data frame GWT_df <- as.data.frame(GWT,                          xy = TRUE)  #Plot raster and location data ggplot()+   geom_raster(data = GWT_df,                aes(x = x,                    y = y,                    fill = GWT_high))+   geom_sf(data = locations_sf)+   theme_minimal()+   scale_fill_gradient2(name = "Ground\nwater\ntable",                        low = "blue",                         mid = "white",                         high = "red",                        midpoint = 2,                        transform = "pseudo_log",                        na.value = "transparent")}
+```
+
+Let's now look at how we can customise the legend for this ggplot. It would be interesting to edit the break values along the colour bar and provide an informative title for each axis. Give it a try!
+
+```{r} #| eval: true #| echo: true #| warning: false #| message: false #| fig-align: center  #Plot raster and location data ggplot()+   geom_raster(data = GWT_df,                aes(x = x,                    y = y,                    fill = GWT_high))+   geom_sf(data = locations_sf)+   theme_minimal()+   scale_fill_gradient2("Ground\nwater\ntable",                        low = "blue",                         mid = "white",                         high = "red",                        midpoint = 2,                        transform = "pseudo_log",                        na.value = "transparent",                        breaks = c(0, 2, 10, 40))+   ylab("Latitude")+   xlab("Longitude")+   theme(axis.title.x = element_text(margin = margin(t=10)),         axis.title.y = element_text(margin = margin(r=10)))}
+```
+
+### Add more geospatial information (soil type)
+
+Let's create a new map with soil type information! Soil type data is stored as a geopackage (Soil_BRO.gpkg). You can read it using `st_read()`.
+
+```{r} #| eval: true #| echo: true #| warning: false #| message: false  soil_sf <- st_read(dsn = "Data_ggplot2/Soil_BRO.gpkg",                    quiet = TRUE)}
+```
+
+In `soil_sf`, the column 'VEREENV' contains soil type information. There are four soil type options in this column: DV (Peat), V (Peat), M (Clay), Z (Sand). Combine `mutate()` and `replace()` to rename elements in this column.
+
+```{r} #| eval: true #| echo: true #| warning: false #| message: false  soil_sf <- soil_sf |>    mutate(VEREENV = replace(VEREENV, VEREENV %in% c("DV", "V"), "Peat")) |>    mutate(VEREENV = replace(VEREENV, VEREENV == "M", "Clay")) |>    mutate(VEREENV = replace(VEREENV, VEREENV == "Z", "Sand"))}
+```
+
+Now let's create our map of soil types and plot our site locations on top of it (use `geom_sf()` in both cases). Use `scale_fill_manual()` to assign colours to each soil type.
+
+```{r} #| eval: true #| echo: true #| warning: false #| message: false #| fig-align: center  ggplot() +   geom_sf(data = soil_sf,            aes(fill = VEREENV),           alpha = 0.5) +   geom_sf(data = locations_sf) +   scale_fill_manual(name = "Soil Type",                     values = c("Peat" = "black",                                 "Sand" = "yellow",                                 "Clay" = "brown"),                     na.value = "transparent") +   theme_minimal()+   ylab("Latitude")+   xlab("Longitude")+   theme(axis.title.x = element_text(margin = margin(t=10)),         axis.title.y = element_text(margin = margin(r=10)))}
+```
+
+### Adding a base map
+
+Your maps look great, but they are all missing a base map. This can be done using `mapView()` in *mapview*. Have a look at the code below to see how to add a base map to our soil type map.
+
+```{r} #| eval: true #| echo: true #| warning: false #| message: false #| code-fold: false #| fig-align: center  mapviewOptions(fgb = FALSE)  my_map <- mapView(x = locations_sf,                   map.types = c("OpenStreetMap"))+           mapView(x = soil_sf,                    zcol = "VEREENV",                   col.regions = c("brown",                                    "transparent",                                    "black",                                    "yellow"),                    alpha.regions = 0.4,                   stroke = FALSE,                    map.types = c("OpenStreetMap"))  my_map}
+```
+
+You can then use `mapshot()` to export your map as an image file.
+
+```{r} #| eval: false #| echo: true #| warning: false #| message: false #| code-fold: false  mapshot(my_map,         file = "my_map.png",          scalebar = TRUE)}
+```
+
+## 
