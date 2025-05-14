@@ -63,13 +63,9 @@ library(knitr)
 library(viridis)
 ```
 
-### Exercise 1: Calculate alpha, beta and gamma diversity
+### Exercise 1: Calculate the average species richness at each site
 
-**Alpha diversity** (within-habitat diversity) is the average number of species across sites in our hypothetical metacommunity. **Gamma diversity** (regional diversity) is the total number of species present in our hypothetical metacommunity. **Beta diversity** (between-habitat diversity differentiation) is gamma diversity divided by alpha diversity.
-
-Using the data collected earlier, calculate alpha, beta and gamma diversity in our hypothetical metacommunity. You can do this manually, but we also want you to be able to do this in R! The functions `pivot_longer()`, `group_by()`, and `summarise()` are essential for this purpose.
-
-First, import your data into R. Then, use knowledge from tutorials 1 and 2 to write R code to calculate alpha, beta, and gamma diversity in our metacommunity.
+Use what you learned in previous tutorials to calculate the average number of species at each site. Once again, the functions `pivot_longer()`, `group_by()`, and `summarise()` are essential for this purpose.
 
 ::: panel-tabset
 ## Example dataset
@@ -144,6 +140,45 @@ for (i in 1:nrow(data)){
 kable(head(data, n=10))
 ```
 
+## Solution (code)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false  
+
+table <- data |>            
+  pivot_longer(Red:Black,                        
+               names_to = "Species",                        
+               values_to = "Abundance") |>            
+  group_by(Bag, Replicate) |>            
+  summarise(Richness = sum(Abundance>0)) |>            
+  group_by(Bag) |>            
+  summarise(Avg_richness = round(mean(Richness), 1))
+```
+
+## Solution (table)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| warning: false 
+#| message: false  
+
+kable(table)
+```
+:::
+
+### Exercise 2: Calculate alpha, beta and gamma diversity
+
+**Alpha diversity** (within-habitat diversity) is the average number of species across sites in our hypothetical metacommunity. **Gamma diversity** (regional diversity) is the total number of species present in our hypothetical metacommunity. **Beta diversity** (between-habitat diversity differentiation) is gamma diversity divided by alpha diversity.
+
+Using the data collected earlier, calculate alpha, beta and gamma diversity in our hypothetical metacommunity. You can do this manually, but we also want you to be able to do this in R! The functions `pivot_longer()`, `group_by()`, and `summarise()` are essential for this purpose.
+
+First, import your data into R. Then, use knowledge from tutorials 1 and 2 to write R code to calculate alpha, beta, and gamma diversity in our metacommunity.
+
+::: panel-tabset
 ## Solution (gamma)
 
 ```{r}
@@ -198,41 +233,6 @@ beta <- round(gamma/alpha, 1)
 Beta diversity: `r beta`
 :::
 
-### Exercise 2: Calculate the average species richness at each site
-
-Use what you learned in previous tutorials to calculate the average number of species at each site. Once again, the functions `pivot_longer()`, `group_by()`, and `summarise()` are essential for this purpose.
-
-::: panel-tabset
-## Solution (code)
-
-```{r}
-#| eval: true
-#| echo: true
-#| warning: false
-#| message: false
-
-table <- data |> 
-          pivot_longer(Red:Black,
-                       names_to = "Species",
-                       values_to = "Abundance") |> 
-          group_by(Bag, Replicate) |> 
-          summarise(Richness = sum(Abundance>0)) |> 
-          group_by(Bag) |> 
-          summarise(Avg_richness = round(mean(Richness), 1))
-```
-
-## Solution (table)
-
-```{r}
-#| eval: true
-#| echo: true
-#| warning: false
-#| message: false
-
-kable(table)
-```
-:::
-
 ### Exercise 3: Calculate the effective number of species (Hill numbers)
 
 In a community consisting of *n* species, the Hill number (or effective number of species) of order *q* can be calculated using @eq-hill-1 ($q \geq 0$, $q\neq1$) and @eq-hill-2 ($q=1$), where *p~i~* is the relative abundance of species *i* in the community ($p_i \in [0,1]$).
@@ -256,7 +256,7 @@ Your code should include the following steps (use the pipe!):
 4.  Filter the data to eliminate all rows where the relative abundance of a species is zero. You can use `filter()` to do this.
 5.  For each replicate, use @eq-hill-1 and @eq-hill-2 to calculate the effective number of species at q=0 (name this variable "q0"), q=1 (name this variable "q1"), and q=2 (name this variable "q2"). You can do this using `group_by()` and `summarise()`.
 6.  Use `pivot_longer()` to reorganise the dataset and create a column called "q" to store all diversity order values (0, 1, and 2) and a column called "diversity" to store the effective number of species in each community. In `pivot_longer()`, you will need to use two extra arguments: `names_prefix = "q"` (this will make sure to remove the letter "q" from "q0", "q1", and "q2") and `names_transform = as.numeric` (to convert "0", "1" and "2" into numeric values).
-7.  Finally, transform the contents of the \"Bag\" column by adding the string \"Bag \" (do not forget the space!) in front of the bag number (for example, converting 1 to \"Bag 1\"), and ensure that the Replicate variable is considered a factor. You can perform all these transformations using `mutate()`, `paste()` and `as.factor()`.
+7.  Finally, transform the contents of the "Bag" column by adding the string "Bag " (do not forget the space!) in front of the bag number (for example, converting 1 to "Bag 1"), and ensure that the Replicate variable is considered a factor. You can perform all these transformations using `mutate()`, `paste()` and `as.factor()`.
 8.  Finally, use *gggplot2* to plot your results in a figure with 6 panels (one panel for each site). For each site (1 site = 1 bag), plot the effective number of species as a function of *q* (this is called a diversity profile plot). Plot separate lines (using `geom_line()`) for each replicate (the `group` argument in `aes()` will be useful here). Personalise your plot to make it look nice! Be sure to apply the data visualisation principles discussed in the last lecture and tutorial.
 
 ```{r}

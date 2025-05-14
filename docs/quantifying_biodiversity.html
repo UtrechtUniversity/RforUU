@@ -267,8 +267,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
   <ul>
   <li><a href="#load-r-packages" id="toc-load-r-packages" class="nav-link" data-scroll-target="#load-r-packages">Load R packages</a></li>
-  <li><a href="#exercise-1-calculate-alpha-beta-and-gamma-diversity" id="toc-exercise-1-calculate-alpha-beta-and-gamma-diversity" class="nav-link" data-scroll-target="#exercise-1-calculate-alpha-beta-and-gamma-diversity">Exercise 1: Calculate alpha, beta and gamma diversity</a></li>
-  <li><a href="#exercise-2-calculate-the-average-species-richness-at-each-site" id="toc-exercise-2-calculate-the-average-species-richness-at-each-site" class="nav-link" data-scroll-target="#exercise-2-calculate-the-average-species-richness-at-each-site">Exercise 2: Calculate the average species richness at each site</a></li>
+  <li><a href="#exercise-1-calculate-the-average-species-richness-at-each-site" id="toc-exercise-1-calculate-the-average-species-richness-at-each-site" class="nav-link" data-scroll-target="#exercise-1-calculate-the-average-species-richness-at-each-site">Exercise 1: Calculate the average species richness at each site</a></li>
+  <li><a href="#exercise-2-calculate-alpha-beta-and-gamma-diversity" id="toc-exercise-2-calculate-alpha-beta-and-gamma-diversity" class="nav-link" data-scroll-target="#exercise-2-calculate-alpha-beta-and-gamma-diversity">Exercise 2: Calculate alpha, beta and gamma diversity</a></li>
   <li><a href="#exercise-3-calculate-the-effective-number-of-species-hill-numbers" id="toc-exercise-3-calculate-the-effective-number-of-species-hill-numbers" class="nav-link" data-scroll-target="#exercise-3-calculate-the-effective-number-of-species-hill-numbers">Exercise 3: Calculate the effective number of species (Hill numbers)</a></li>
   </ul></li>
   <li><a href="#suggested-further-reading" id="toc-suggested-further-reading" class="nav-link" data-scroll-target="#suggested-further-reading">Suggested further reading</a></li>
@@ -353,13 +353,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </section>
-<section id="exercise-1-calculate-alpha-beta-and-gamma-diversity" class="level3">
-<h3 class="anchored" data-anchor-id="exercise-1-calculate-alpha-beta-and-gamma-diversity">Exercise 1: Calculate alpha, beta and gamma diversity</h3>
-<p><strong>Alpha diversity</strong> (within-habitat diversity) is the average number of species across sites in our hypothetical metacommunity. <strong>Gamma diversity</strong> (regional diversity) is the total number of species present in our hypothetical metacommunity. <strong>Beta diversity</strong> (between-habitat diversity differentiation) is gamma diversity divided by alpha diversity.</p>
-<p>Using the data collected earlier, calculate alpha, beta and gamma diversity in our hypothetical metacommunity. You can do this manually, but we also want you to be able to do this in R! The functions <code>pivot_longer()</code>, <code>group_by()</code>, and <code>summarise()</code> are essential for this purpose.</p>
-<p>First, import your data into R. Then, use knowledge from tutorials 1 and 2 to write R code to calculate alpha, beta, and gamma diversity in our metacommunity.</p>
+<section id="exercise-1-calculate-the-average-species-richness-at-each-site" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-1-calculate-the-average-species-richness-at-each-site">Exercise 1: Calculate the average species richness at each site</h3>
+<p>Use what you learned in previous tutorials to calculate the average number of species at each site. Once again, the functions <code>pivot_longer()</code>, <code>group_by()</code>, and <code>summarise()</code> are essential for this purpose.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Example dataset</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Solution (gamma)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Solution (alpha)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">Solution (beta)</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Example dataset</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Solution (code)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Solution (table)</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
@@ -549,72 +547,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gamma <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(data <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">pivot_longer</span>(Red<span class="sc">:</span>Black,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">names_to =</span> <span class="st">"Species"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values_to =</span> <span class="st">"Abundance"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">summarise</span>(<span class="at">Abundance =</span> <span class="fu">sum</span>(Abundance)) <span class="sc">|&gt;</span> </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">summarise</span>(<span class="at">Gamma =</span> <span class="fu">sum</span>(Abundance <span class="sc">&gt;</span> <span class="dv">0</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>table <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span>            </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(Red<span class="sc">:</span>Black,                        </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Species"</span>,                        </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Abundance"</span>) <span class="sc">|&gt;</span>            </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Bag, Replicate) <span class="sc">|&gt;</span>            </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Richness =</span> <span class="fu">sum</span>(Abundance<span class="sc">&gt;</span><span class="dv">0</span>)) <span class="sc">|&gt;</span>            </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Bag) <span class="sc">|&gt;</span>            </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Avg_richness =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Richness), <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Gamma diversity: 10</p>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(data <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">pivot_longer</span>(Red<span class="sc">:</span>Black,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">names_to =</span> <span class="st">"Species"</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">values_to =</span> <span class="st">"Abundance"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">group_by</span>(Bag, Species) <span class="sc">|&gt;</span> </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">summarise</span>(<span class="at">Abundance =</span> <span class="fu">sum</span>(Abundance)) <span class="sc">|&gt;</span> </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">group_by</span>(Bag) <span class="sc">|&gt;</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">summarise</span>(<span class="at">Alpha =</span> <span class="fu">sum</span>(Abundance <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">summarise</span>(<span class="at">Alpha =</span> <span class="fu">mean</span>(Alpha))), <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Alpha diversity: 5.7</p>
-</div>
-<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">round</span>(gamma<span class="sc">/</span>alpha, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Beta diversity: 1.8</p>
-</div>
-</div>
-</div>
-</section>
-<section id="exercise-2-calculate-the-average-species-richness-at-each-site" class="level3">
-<h3 class="anchored" data-anchor-id="exercise-2-calculate-the-average-species-richness-at-each-site">Exercise 2: Calculate the average species richness at each site</h3>
-<p>Use what you learned in previous tutorials to calculate the average number of species at each site. Once again, the functions <code>pivot_longer()</code>, <code>group_by()</code>, and <code>summarise()</code> are essential for this purpose.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Solution (code)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Solution (table)</a></li></ul>
-<div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>table <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">pivot_longer</span>(Red<span class="sc">:</span>Black,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">names_to =</span> <span class="st">"Species"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">values_to =</span> <span class="st">"Abundance"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">group_by</span>(Bag, Replicate) <span class="sc">|&gt;</span> </span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>          <span class="fu">summarise</span>(<span class="at">Richness =</span> <span class="fu">sum</span>(Abundance<span class="sc">&gt;</span><span class="dv">0</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">group_by</span>(Bag) <span class="sc">|&gt;</span> </span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>          <span class="fu">summarise</span>(<span class="at">Avg_richness =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Richness), <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -657,6 +605,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
+<section id="exercise-2-calculate-alpha-beta-and-gamma-diversity" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-2-calculate-alpha-beta-and-gamma-diversity">Exercise 2: Calculate alpha, beta and gamma diversity</h3>
+<p><strong>Alpha diversity</strong> (within-habitat diversity) is the average number of species across sites in our hypothetical metacommunity. <strong>Gamma diversity</strong> (regional diversity) is the total number of species present in our hypothetical metacommunity. <strong>Beta diversity</strong> (between-habitat diversity differentiation) is gamma diversity divided by alpha diversity.</p>
+<p>Using the data collected earlier, calculate alpha, beta and gamma diversity in our hypothetical metacommunity. You can do this manually, but we also want you to be able to do this in R! The functions <code>pivot_longer()</code>, <code>group_by()</code>, and <code>summarise()</code> are essential for this purpose.</p>
+<p>First, import your data into R. Then, use knowledge from tutorials 1 and 2 to write R code to calculate alpha, beta, and gamma diversity in our metacommunity.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Solution (gamma)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Solution (alpha)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Solution (beta)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gamma <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(data <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">pivot_longer</span>(Red<span class="sc">:</span>Black,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">names_to =</span> <span class="st">"Species"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values_to =</span> <span class="st">"Abundance"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">summarise</span>(<span class="at">Abundance =</span> <span class="fu">sum</span>(Abundance)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">summarise</span>(<span class="at">Gamma =</span> <span class="fu">sum</span>(Abundance <span class="sc">&gt;</span> <span class="dv">0</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Gamma diversity: 10</p>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(data <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">pivot_longer</span>(Red<span class="sc">:</span>Black,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">names_to =</span> <span class="st">"Species"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">values_to =</span> <span class="st">"Abundance"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">group_by</span>(Bag, Species) <span class="sc">|&gt;</span> </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">summarise</span>(<span class="at">Abundance =</span> <span class="fu">sum</span>(Abundance)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">group_by</span>(Bag) <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">summarise</span>(<span class="at">Alpha =</span> <span class="fu">sum</span>(Abundance <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">summarise</span>(<span class="at">Alpha =</span> <span class="fu">mean</span>(Alpha))), <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Alpha diversity: 5.7</p>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">round</span>(gamma<span class="sc">/</span>alpha, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Beta diversity: 1.8</p>
+</div>
+</div>
+</div>
+</section>
 <section id="exercise-3-calculate-the-effective-number-of-species-hill-numbers" class="level3">
 <h3 class="anchored" data-anchor-id="exercise-3-calculate-the-effective-number-of-species-hill-numbers">Exercise 3: Calculate the effective number of species (Hill numbers)</h3>
 <p>In a community consisting of <em>n</em> species, the Hill number (or effective number of species) of order <em>q</em> can be calculated using <a href="#eq-hill-1">Equation&nbsp;1</a> (<span class="math inline">\(q \geq 0\)</span>, <span class="math inline">\(q\neq1\)</span>) and <a href="#eq-hill-2">Equation&nbsp;2</a> (<span class="math inline">\(q=1\)</span>), where <em>p<sub>i</sub></em> is the relative abundance of species <em>i</em> in the community (<span class="math inline">\(p_i \in [0,1]\)</span>).</p>
@@ -676,7 +676,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Filter the data to eliminate all rows where the relative abundance of a species is zero. You can use <code>filter()</code> to do this.</li>
 <li>For each replicate, use <a href="#eq-hill-1">Equation&nbsp;1</a> and <a href="#eq-hill-2">Equation&nbsp;2</a> to calculate the effective number of species at q=0 (name this variable “q0”), q=1 (name this variable “q1”), and q=2 (name this variable “q2”). You can do this using <code>group_by()</code> and <code>summarise()</code>.</li>
 <li>Use <code>pivot_longer()</code> to reorganise the dataset and create a column called “q” to store all diversity order values (0, 1, and 2) and a column called “diversity” to store the effective number of species in each community. In <code>pivot_longer()</code>, you will need to use two extra arguments: <code>names_prefix = "q"</code> (this will make sure to remove the letter “q” from “q0”, “q1”, and “q2”) and <code>names_transform = as.numeric</code> (to convert “0”, “1” and “2” into numeric values).</li>
-<li>Finally, transform the contents of the "Bag" column by adding the string "Bag " (do not forget the space!) in front of the bag number (for example, converting 1 to "Bag 1"), and ensure that the Replicate variable is considered a factor. You can perform all these transformations using <code>mutate()</code>, <code>paste()</code> and <code>as.factor()</code>.</li>
+<li>Finally, transform the contents of the “Bag” column by adding the string “Bag” (do not forget the space!) in front of the bag number (for example, converting 1 to “Bag 1”), and ensure that the Replicate variable is considered a factor. You can perform all these transformations using <code>mutate()</code>, <code>paste()</code> and <code>as.factor()</code>.</li>
 <li>Finally, use <em>gggplot2</em> to plot your results in a figure with 6 panels (one panel for each site). For each site (1 site = 1 bag), plot the effective number of species as a function of <em>q</em> (this is called a diversity profile plot). Plot separate lines (using <code>geom_line()</code>) for each replicate (the <code>group</code> argument in <code>aes()</code> will be useful here). Personalise your plot to make it look nice! Be sure to apply the data visualisation principles discussed in the last lecture and tutorial.</li>
 </ol>
 <div class="cell">
@@ -1248,174 +1248,174 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
 <span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise 1: Calculate alpha, beta and gamma diversity</span></span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise 1: Calculate the average species richness at each site</span></span>
 <span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>**Alpha diversity** (within-habitat diversity) is the average number of species across sites in our hypothetical metacommunity. **Gamma diversity** (regional diversity) is the total number of species present in our hypothetical metacommunity. **Beta diversity** (between-habitat diversity differentiation) is gamma diversity divided by alpha diversity.</span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>Use what you learned in previous tutorials to calculate the average number of species at each site. Once again, the functions <span class="in">`pivot_longer()`</span>, <span class="in">`group_by()`</span>, and <span class="in">`summarise()`</span> are essential for this purpose.</span>
 <span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>Using the data collected earlier, calculate alpha, beta and gamma diversity in our hypothetical metacommunity. You can do this manually, but we also want you to be able to do this in R! The functions <span class="in">`pivot_longer()`</span>, <span class="in">`group_by()`</span>, and <span class="in">`summarise()`</span> are essential for this purpose.</span>
-<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>First, import your data into R. Then, use knowledge from tutorials 1 and 2 to write R code to calculate alpha, beta, and gamma diversity in our metacommunity.</span>
-<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a><span class="fu">## Example dataset</span></span>
-<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a><span class="co">#Simulate some data</span></span>
-<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>Bag1 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">3</span>,<span class="dv">10</span>)</span>
-<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a>Bag2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">15</span>,<span class="dv">0</span>,<span class="dv">15</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)</span>
-<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a>Bag3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
-<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a>Bag4 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">7</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">11</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">0</span>,<span class="dv">7</span>)</span>
-<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a>Bag5 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">18</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>)</span>
-<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>Bag6 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">17</span>,<span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">2</span>)</span>
-<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Bag =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">each=</span><span class="dv">3</span>),</span>
-<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Replicate =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">6</span>),</span>
-<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Red=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
-<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Orange=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
-<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Yellow=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
-<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Green=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
-<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Blue=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
-<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Purple=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
-<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Pink=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
-<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a>                   <span class="at">White=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
-<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Grey=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
-<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Black=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>))</span>
-<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data)){</span>
-<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&lt;=</span> <span class="dv">3</span>){bag <span class="ot">&lt;-</span> Bag1}</span>
-<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">3</span> <span class="sc">&amp;</span> i<span class="sc">&lt;=</span><span class="dv">6</span>){bag <span class="ot">&lt;-</span> Bag2}</span>
-<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">6</span> <span class="sc">&amp;</span> i<span class="sc">&lt;=</span><span class="dv">9</span>){bag <span class="ot">&lt;-</span> Bag3}</span>
-<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">9</span> <span class="sc">&amp;</span> i<span class="sc">&lt;=</span><span class="dv">12</span>){bag <span class="ot">&lt;-</span> Bag4}</span>
-<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">12</span> <span class="sc">&amp;</span> i<span class="sc">&lt;=</span><span class="dv">15</span>){bag <span class="ot">&lt;-</span> Bag5}</span>
-<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">15</span> <span class="sc">&amp;</span> i<span class="sc">&lt;=</span><span class="dv">18</span>){bag <span class="ot">&lt;-</span> Bag6}</span>
-<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a>  s <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"red"</span>, bag[<span class="dv">1</span>]),</span>
-<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"orange"</span>, bag[<span class="dv">2</span>]),</span>
-<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"yellow"</span>, bag[<span class="dv">3</span>]),</span>
-<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"green"</span>, bag[<span class="dv">4</span>]),</span>
-<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"blue"</span>, bag[<span class="dv">5</span>]),</span>
-<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"purple"</span>, bag[<span class="dv">6</span>]),</span>
-<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"pink"</span>, bag[<span class="dv">7</span>]),</span>
-<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"white"</span>, bag[<span class="dv">8</span>]),</span>
-<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"grey"</span>, bag[<span class="dv">9</span>]),</span>
-<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"black"</span>, bag[<span class="dv">10</span>])), <span class="dv">6</span>, <span class="at">replace=</span><span class="cn">FALSE</span>)</span>
-<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Red[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"red"</span>)</span>
-<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Orange[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"orange"</span>)</span>
-<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Yellow[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"yellow"</span>)</span>
-<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Green[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"green"</span>)</span>
-<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Blue[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"blue"</span>)</span>
-<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Purple[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"purple"</span>)</span>
-<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Pink[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"pink"</span>)</span>
-<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>White[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"white"</span>)</span>
-<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Grey[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"grey"</span>)</span>
-<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Black[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"black"</span>)}</span>
-<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(data, <span class="at">n=</span><span class="dv">10</span>))</span>
-<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution (gamma)</span></span>
-<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a>gamma <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(data <span class="sc">|&gt;</span> </span>
-<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">pivot_longer</span>(Red<span class="sc">:</span>Black,</span>
-<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">names_to =</span> <span class="st">"Species"</span>,</span>
-<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values_to =</span> <span class="st">"Abundance"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span> </span>
-<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">summarise</span>(<span class="at">Abundance =</span> <span class="fu">sum</span>(Abundance)) <span class="sc">|&gt;</span> </span>
-<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">summarise</span>(<span class="at">Gamma =</span> <span class="fu">sum</span>(Abundance <span class="sc">&gt;</span> <span class="dv">0</span>)))</span>
-<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a>Gamma diversity: <span class="in">`r gamma`</span></span>
-<span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution (alpha)</span></span>
-<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(data <span class="sc">|&gt;</span> </span>
-<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">pivot_longer</span>(Red<span class="sc">:</span>Black,</span>
-<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">names_to =</span> <span class="st">"Species"</span>,</span>
-<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">values_to =</span> <span class="st">"Abundance"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">group_by</span>(Bag, Species) <span class="sc">|&gt;</span> </span>
-<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">summarise</span>(<span class="at">Abundance =</span> <span class="fu">sum</span>(Abundance)) <span class="sc">|&gt;</span> </span>
-<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">group_by</span>(Bag) <span class="sc">|&gt;</span></span>
-<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">summarise</span>(<span class="at">Alpha =</span> <span class="fu">sum</span>(Abundance <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">summarise</span>(<span class="at">Alpha =</span> <span class="fu">mean</span>(Alpha))), <span class="dv">1</span>)</span>
-<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-194"><a href="#cb10-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a>Alpha diversity: <span class="in">`r alpha`</span></span>
-<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution (beta)</span></span>
-<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">round</span>(gamma<span class="sc">/</span>alpha, <span class="dv">1</span>)</span>
-<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a>Beta diversity: <span class="in">`r beta`</span></span>
-<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a><span class="fu">## Example dataset</span></span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a><span class="co">#Simulate some data</span></span>
+<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>Bag1 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">3</span>,<span class="dv">10</span>)</span>
+<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a>Bag2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">15</span>,<span class="dv">0</span>,<span class="dv">15</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)</span>
+<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>Bag3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span>
+<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a>Bag4 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">7</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">11</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">0</span>,<span class="dv">7</span>)</span>
+<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>Bag5 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">18</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>)</span>
+<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a>Bag6 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">17</span>,<span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">2</span>)</span>
+<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Bag =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">each=</span><span class="dv">3</span>),</span>
+<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Replicate =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">6</span>),</span>
+<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Red=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
+<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Orange=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
+<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Yellow=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
+<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Green=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
+<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Blue=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
+<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Purple=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
+<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Pink=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
+<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a>                   <span class="at">White=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
+<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Grey=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>),</span>
+<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a>                   <span class="at">Black=</span><span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">18</span>))</span>
+<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data)){</span>
+<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&lt;=</span> <span class="dv">3</span>){bag <span class="ot">&lt;-</span> Bag1}</span>
+<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">3</span> <span class="sc">&amp;</span> i<span class="sc">&lt;=</span><span class="dv">6</span>){bag <span class="ot">&lt;-</span> Bag2}</span>
+<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">6</span> <span class="sc">&amp;</span> i<span class="sc">&lt;=</span><span class="dv">9</span>){bag <span class="ot">&lt;-</span> Bag3}</span>
+<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">9</span> <span class="sc">&amp;</span> i<span class="sc">&lt;=</span><span class="dv">12</span>){bag <span class="ot">&lt;-</span> Bag4}</span>
+<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">12</span> <span class="sc">&amp;</span> i<span class="sc">&lt;=</span><span class="dv">15</span>){bag <span class="ot">&lt;-</span> Bag5}</span>
+<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">15</span> <span class="sc">&amp;</span> i<span class="sc">&lt;=</span><span class="dv">18</span>){bag <span class="ot">&lt;-</span> Bag6}</span>
+<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a>  s <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"red"</span>, bag[<span class="dv">1</span>]),</span>
+<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"orange"</span>, bag[<span class="dv">2</span>]),</span>
+<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"yellow"</span>, bag[<span class="dv">3</span>]),</span>
+<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"green"</span>, bag[<span class="dv">4</span>]),</span>
+<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"blue"</span>, bag[<span class="dv">5</span>]),</span>
+<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"purple"</span>, bag[<span class="dv">6</span>]),</span>
+<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"pink"</span>, bag[<span class="dv">7</span>]),</span>
+<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"white"</span>, bag[<span class="dv">8</span>]),</span>
+<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"grey"</span>, bag[<span class="dv">9</span>]),</span>
+<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a>          <span class="fu">rep</span>(<span class="st">"black"</span>, bag[<span class="dv">10</span>])), <span class="dv">6</span>, <span class="at">replace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Red[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"red"</span>)</span>
+<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Orange[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"orange"</span>)</span>
+<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Yellow[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"yellow"</span>)</span>
+<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Green[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"green"</span>)</span>
+<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Blue[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"blue"</span>)</span>
+<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Purple[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"purple"</span>)</span>
+<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Pink[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"pink"</span>)</span>
+<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>White[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"white"</span>)</span>
+<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Grey[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"grey"</span>)</span>
+<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a>  data<span class="sc">$</span>Black[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(s<span class="sc">==</span><span class="st">"black"</span>)}</span>
+<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(data, <span class="at">n=</span><span class="dv">10</span>))</span>
+<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution (code)</span></span>
+<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false  </span></span>
+<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a>table <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span>            </span>
+<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(Red<span class="sc">:</span>Black,                        </span>
+<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Species"</span>,                        </span>
+<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Abundance"</span>) <span class="sc">|&gt;</span>            </span>
+<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Bag, Replicate) <span class="sc">|&gt;</span>            </span>
+<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Richness =</span> <span class="fu">sum</span>(Abundance<span class="sc">&gt;</span><span class="dv">0</span>)) <span class="sc">|&gt;</span>            </span>
+<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Bag) <span class="sc">|&gt;</span>            </span>
+<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Avg_richness =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Richness), <span class="dv">1</span>))</span>
+<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution (table)</span></span>
+<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false  </span></span>
+<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(table)</span>
+<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise 2: Calculate alpha, beta and gamma diversity</span></span>
+<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a>**Alpha diversity** (within-habitat diversity) is the average number of species across sites in our hypothetical metacommunity. **Gamma diversity** (regional diversity) is the total number of species present in our hypothetical metacommunity. **Beta diversity** (between-habitat diversity differentiation) is gamma diversity divided by alpha diversity.</span>
+<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a>Using the data collected earlier, calculate alpha, beta and gamma diversity in our hypothetical metacommunity. You can do this manually, but we also want you to be able to do this in R! The functions <span class="in">`pivot_longer()`</span>, <span class="in">`group_by()`</span>, and <span class="in">`summarise()`</span> are essential for this purpose.</span>
+<span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a>First, import your data into R. Then, use knowledge from tutorials 1 and 2 to write R code to calculate alpha, beta, and gamma diversity in our metacommunity.</span>
+<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution (gamma)</span></span>
+<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a>gamma <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(data <span class="sc">|&gt;</span> </span>
+<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">pivot_longer</span>(Red<span class="sc">:</span>Black,</span>
+<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">names_to =</span> <span class="st">"Species"</span>,</span>
+<span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">values_to =</span> <span class="st">"Abundance"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">group_by</span>(Species) <span class="sc">|&gt;</span> </span>
+<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">summarise</span>(<span class="at">Abundance =</span> <span class="fu">sum</span>(Abundance)) <span class="sc">|&gt;</span> </span>
+<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">summarise</span>(<span class="at">Gamma =</span> <span class="fu">sum</span>(Abundance <span class="sc">&gt;</span> <span class="dv">0</span>)))</span>
+<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a>Gamma diversity: <span class="in">`r gamma`</span></span>
 <span id="cb10-212"><a href="#cb10-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-213"><a href="#cb10-213" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise 2: Calculate the average species richness at each site</span></span>
+<span id="cb10-213"><a href="#cb10-213" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution (alpha)</span></span>
 <span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-215"><a href="#cb10-215" aria-hidden="true" tabindex="-1"></a>Use what you learned in previous tutorials to calculate the average number of species at each site. Once again, the functions <span class="in">`pivot_longer()`</span>, <span class="in">`group_by()`</span>, and <span class="in">`summarise()`</span> are essential for this purpose.</span>
-<span id="cb10-216"><a href="#cb10-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-217"><a href="#cb10-217" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution (code)</span></span>
-<span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-222"><a href="#cb10-222" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-223"><a href="#cb10-223" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb10-224"><a href="#cb10-224" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb10-225"><a href="#cb10-225" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb10-226"><a href="#cb10-226" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-228"><a href="#cb10-228" aria-hidden="true" tabindex="-1"></a>table <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
-<span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a>          <span class="fu">pivot_longer</span>(Red<span class="sc">:</span>Black,</span>
-<span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a>                       <span class="at">names_to =</span> <span class="st">"Species"</span>,</span>
-<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a>                       <span class="at">values_to =</span> <span class="st">"Abundance"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-232"><a href="#cb10-232" aria-hidden="true" tabindex="-1"></a>          <span class="fu">group_by</span>(Bag, Replicate) <span class="sc">|&gt;</span> </span>
-<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a>          <span class="fu">summarise</span>(<span class="at">Richness =</span> <span class="fu">sum</span>(Abundance<span class="sc">&gt;</span><span class="dv">0</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a>          <span class="fu">group_by</span>(Bag) <span class="sc">|&gt;</span> </span>
-<span id="cb10-235"><a href="#cb10-235" aria-hidden="true" tabindex="-1"></a>          <span class="fu">summarise</span>(<span class="at">Avg_richness =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Richness), <span class="dv">1</span>))</span>
-<span id="cb10-236"><a href="#cb10-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-217"><a href="#cb10-217" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb10-220"><a href="#cb10-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb10-222"><a href="#cb10-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-223"><a href="#cb10-223" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(data <span class="sc">|&gt;</span> </span>
+<span id="cb10-224"><a href="#cb10-224" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">pivot_longer</span>(Red<span class="sc">:</span>Black,</span>
+<span id="cb10-225"><a href="#cb10-225" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">names_to =</span> <span class="st">"Species"</span>,</span>
+<span id="cb10-226"><a href="#cb10-226" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">values_to =</span> <span class="st">"Abundance"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">group_by</span>(Bag, Species) <span class="sc">|&gt;</span> </span>
+<span id="cb10-228"><a href="#cb10-228" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">summarise</span>(<span class="at">Abundance =</span> <span class="fu">sum</span>(Abundance)) <span class="sc">|&gt;</span> </span>
+<span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">group_by</span>(Bag) <span class="sc">|&gt;</span></span>
+<span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">summarise</span>(<span class="at">Alpha =</span> <span class="fu">sum</span>(Abundance <span class="sc">&gt;</span> <span class="dv">0</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">summarise</span>(<span class="at">Alpha =</span> <span class="fu">mean</span>(Alpha))), <span class="dv">1</span>)</span>
+<span id="cb10-232"><a href="#cb10-232" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a>Alpha diversity: <span class="in">`r alpha`</span></span>
+<span id="cb10-235"><a href="#cb10-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-236"><a href="#cb10-236" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution (beta)</span></span>
 <span id="cb10-237"><a href="#cb10-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-238"><a href="#cb10-238" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution (table)</span></span>
-<span id="cb10-239"><a href="#cb10-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-242"><a href="#cb10-242" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-243"><a href="#cb10-243" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb10-245"><a href="#cb10-245" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb10-246"><a href="#cb10-246" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb10-247"><a href="#cb10-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-248"><a href="#cb10-248" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(table)</span>
-<span id="cb10-249"><a href="#cb10-249" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-240"><a href="#cb10-240" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-241"><a href="#cb10-241" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb10-242"><a href="#cb10-242" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb10-243"><a href="#cb10-243" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb10-245"><a href="#cb10-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-246"><a href="#cb10-246" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">round</span>(gamma<span class="sc">/</span>alpha, <span class="dv">1</span>)</span>
+<span id="cb10-247"><a href="#cb10-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-248"><a href="#cb10-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-249"><a href="#cb10-249" aria-hidden="true" tabindex="-1"></a>Beta diversity: <span class="in">`r beta`</span></span>
 <span id="cb10-250"><a href="#cb10-250" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb10-251"><a href="#cb10-251" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-252"><a href="#cb10-252" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exercise 3: Calculate the effective number of species (Hill numbers)</span></span>
@@ -1441,7 +1441,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb10-272"><a href="#cb10-272" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Filter the data to eliminate all rows where the relative abundance of a species is zero. You can use <span class="in">`filter()`</span> to do this.</span>
 <span id="cb10-273"><a href="#cb10-273" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>For each replicate, use @eq-hill-1 and @eq-hill-2 to calculate the effective number of species at q=0 (name this variable "q0"), q=1 (name this variable "q1"), and q=2 (name this variable "q2"). You can do this using <span class="in">`group_by()`</span> and <span class="in">`summarise()`</span>.</span>
 <span id="cb10-274"><a href="#cb10-274" aria-hidden="true" tabindex="-1"></a><span class="ss">6.  </span>Use <span class="in">`pivot_longer()`</span> to reorganise the dataset and create a column called "q" to store all diversity order values (0, 1, and 2) and a column called "diversity" to store the effective number of species in each community. In <span class="in">`pivot_longer()`</span>, you will need to use two extra arguments: <span class="in">`names_prefix = "q"`</span> (this will make sure to remove the letter "q" from "q0", "q1", and "q2") and <span class="in">`names_transform = as.numeric`</span> (to convert "0", "1" and "2" into numeric values).</span>
-<span id="cb10-275"><a href="#cb10-275" aria-hidden="true" tabindex="-1"></a><span class="ss">7.  </span>Finally, transform the contents of the \"Bag\" column by adding the string \"Bag \" (do not forget the space!) in front of the bag number (for example, converting 1 to \"Bag 1\"), and ensure that the Replicate variable is considered a factor. You can perform all these transformations using <span class="in">`mutate()`</span>, <span class="in">`paste()`</span> and <span class="in">`as.factor()`</span>.</span>
+<span id="cb10-275"><a href="#cb10-275" aria-hidden="true" tabindex="-1"></a><span class="ss">7.  </span>Finally, transform the contents of the "Bag" column by adding the string "Bag " (do not forget the space!) in front of the bag number (for example, converting 1 to "Bag 1"), and ensure that the Replicate variable is considered a factor. You can perform all these transformations using <span class="in">`mutate()`</span>, <span class="in">`paste()`</span> and <span class="in">`as.factor()`</span>.</span>
 <span id="cb10-276"><a href="#cb10-276" aria-hidden="true" tabindex="-1"></a><span class="ss">8.  </span>Finally, use *gggplot2* to plot your results in a figure with 6 panels (one panel for each site). For each site (1 site = 1 bag), plot the effective number of species as a function of *q* (this is called a diversity profile plot). Plot separate lines (using <span class="in">`geom_line()`</span>) for each replicate (the <span class="in">`group`</span> argument in <span class="in">`aes()`</span> will be useful here). Personalise your plot to make it look nice! Be sure to apply the data visualisation principles discussed in the last lecture and tutorial.</span>
 <span id="cb10-277"><a href="#cb10-277" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-280"><a href="#cb10-280" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
