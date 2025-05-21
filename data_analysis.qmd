@@ -71,7 +71,7 @@ You can see that the dataset consists of a number of observations (rows) of 7 va
 
 Before carrying out any statistical analysis, we first need to get to know our data. The best way to do this is to represent them graphically. That's precisely what we are going to do next, but first we need to organize our data in such a way that we can represent plant species diversity (calculated using Hill numbers, see the tutorial on quantifying biodiversity) in different habitat types.
 
-For the moment, the data set consists of numerous individual observations made by different students at different sites on four different dates... This is a lot of information, and we first need to summarize it by calculating the average cover of each plant species in a plot (i.e. across all students and all observation dates).
+For the moment, the data set consists of numerous individual observations made by different students at different sites on four different dates... This is a lot of information, and we first need to summarise it by calculating the average cover of each plant species in a plot (i.e. across all students and all observation dates).
 
 ::: callout-note
 Note that it would also have been possible to plot the results separately for each observation date, but for simplicity's sake we won't dwell on this temporal aspect in this tutorial.
@@ -85,7 +85,7 @@ The first step is to write R code to do the following:
 
 -   Group data by Site, Plot, and Species (you can do this using `group_by()`). We will deliberately ignore the `Location` variable in this tutorial (despite the fact that there may be small differences in species composition and diversity between locations).
 
--   Calculate an average cover value for each unique combination of Site, Location, Plot, and Species (you can do this using `summarize()`).
+-   Calculate an average cover value for each unique combination of Site, Location, Plot, and Species (you can do this using `summarise()`).
 
 -   Convert Site as a factor (you can do this using `mutate()`).
 
