@@ -6,6 +6,16 @@ author:
     email: b.m.m.delory@uu.nl
     affiliations:
       - name: Copernicus institute of sustainable development, Utrecht University
+  - name: Natalie Davis
+    orcid: 0000-0002-2678-0389
+    email: n.a.davis@vu.nl
+    affiliations:
+      - name: Amsterdam sustainability institute, Vrije Universiteit Amsterdam
+  - name: Heitor Mancini Teixeira
+    orcid: 0000-0001-6992-0671
+    email: heitor.teixeira@ufv.br
+    affiliations:
+      - name: Departamento de Solos Centro de Ciências Agrárias, Universidade Federal de Vicosa, Brazil
 format: html
 editor: visual
 editor_options: 
@@ -110,6 +120,68 @@ Every line that starts with `#` will be ignored by R and will not be executed.
 We strongly advise you to add comments to your R code. At the very least, these comments should indicate ***why*** you have written each section of your code. It can also be useful to add information about the ***what*** and ***how***. These comments can save a lot of time if you need to go back over your code after a while or, even more difficult, if someone else needs to go through your code and understand what you've done.
 :::
 
+## Arithmetic operators
+
+Arithmetic operators are used to perform calculations in R. The five main arithmetic operators are summarized in @tbl-arithmeticoperators. These operators work on single values as well as on vectors.
+
+| Operator | Description    |
+|----------|----------------|
+| \+       | Addition       |
+| \-       | Subtraction    |
+| \*       | Multiplication |
+| /        | Division       |
+| \^       | Exponential    |
+
+: Arithmetic operators in R {#tbl-arithmeticoperators}
+
+## Relational operators
+
+Relational operators are used to compare values. They return logical values: `TRUE` or `FALSE`. The main relational operators are summarized in @tbl-relationaloperators. These operators are fundamental for filtering data or writing conditions to use in R programs.
+
+| Operator | Description              |
+|----------|--------------------------|
+| \>       | Greater than             |
+| \<       | Lower than               |
+| \>=      | Greater than or equal to |
+| \<=      | Lower than or equal to   |
+| ==       | Equal to                 |
+| !=       | Not equal to             |
+
+: Relational operators in R {#tbl-relationaloperators}
+
+::: callout-tip
+## Exercise 1
+
+Do the following calculations in your R console:
+
+1.  Multiply 5 by 3
+2.  Add 10 to the result of step 1
+3.  Raise the result of step 2 to the power 3
+4.  Check if the result of step 3 is lower or equal to 16000 (use a relational operator to do this)
+5.  Check if the result of step 3 is equal to 15625 (use a relational operator to do this)
+:::
+
+```{r}
+#| eval: true
+#| echo: true
+#| output: false
+
+#Step 1
+5*3
+
+#Step 2
+(5*3)+10
+
+#Step 3
+((5*3)+10)^3
+
+#Step 4
+((5*3)+10)^3 <= 16000
+
+#Step 5
+((5*3)+10)^3 == 15625
+```
+
 ## Creating R objects
 
 New R objects are created using the assigment operator: `<-`
@@ -126,7 +198,7 @@ You can think of this assignment operator as an arrow that puts what's on its ri
 :::
 
 ::: callout-tip
-## Exercise 1
+## Exercise 2
 
 Create an object called `x` that contains the value 2. Then, multiply it by 10.
 :::
@@ -153,15 +225,16 @@ A scalar is a quantity that can only hold one value at a time. Here are the most
 -   *Numeric*: numbers with a decimal value (e.g., 17.8)
 -   *Integer*: numbers without a decimal value (e.g., 18)
 -   *Character*: a letter or a combination of letters. Character strings must be enclosed by quotes in your R code.
--   *Factor*: data type used in statistical modelling to specify what are the factors in the model
+-   *Factor*: data type used in statistical modelling to specify what are the factors in the model (categorical variables with a defined set of
+    categories, called ‘levels’ in R)
 -   *Logical*: a logical variable can be either `TRUE` or `FALSE`
 
 You can check the data type of an R object using the `class()` function.
 
 ::: callout-tip
-## Exercise 2
+## Exercise 3
 
-Check the data type of the R object (`x`) you created in Exercise 1.
+Check the data type of the R object (`x`) you created in Exercise 2.
 :::
 
 ```{r}
@@ -187,11 +260,12 @@ By contrast, **you should not use quotation marks when referring to existing obj
 :::
 
 ::: callout-tip
-## Exercise 3
+## Exercise 4
 
 1.  Create a numeric vector called `x1` that contains all integer values from 1 to 5.
 2.  Create a character vector called `x2` containing the strings "control" and "treatment".
 3.  Check how many elements are in `x1` and `x2`. You can check how many elements there are in a vector using the `length()` function.
+4.  Multiply `x1` by 10 and look at the results. What do you notice?
 :::
 
 ```{r}
@@ -211,6 +285,10 @@ x2 <- c("control", "treatment")
 #Check the number of elements in x1 and x2
 length(x1)
 length(x2)
+
+#Multiply x1 by 10
+#All elements in x1 have been multiplied by 10 (vectorized operation)
+x1*10
 ```
 
 ### Matrices
@@ -220,7 +298,7 @@ A matrix is an ensemble of data elements of the same type arranged in a 2D layou
 You can check the size of a matrix using the `dim()` function. The first element of the output is the number of rows. The second element of the output is the number of columns. You can also extract the number of rows and columns using `nrow()` and `ncol()`, respectively.
 
 ::: callout-tip
-## Exercise 4
+## Exercise 5
 
 1.  Create a matrix called `x3` that contains all integer values from 1 to 30 arranged in a 5 by 6 layout (5 rows and 6 columns). See the help page for the `matrix()` function in the help pane to find out which arguments must be provided to perform this operation. You can easily do this by running `?matrix` in your R console.
 2.  Check the size of `x3` using `dim()`, `ncol()`, and `nrow()`.
@@ -249,8 +327,20 @@ nrow(x3)
 
 A data frame is an ensemble of data elements arranged in a 2D layout (i.e., like a table). Different columns of a data frame can contain different types of data (character, logical, numeric, etc.). It is probably the most common data structure used when analysing ecological data. Data frames can be created using the `data.frame()` function. The functions `dim()`, `ncol()`, and `nrow()` can also be used on data frames.
 
+Note that in this course, we will be working with data stored in tidy data frames.
+
+::: callout-important
+## What's make a dataset tidy?
+
+A **tidy dataset** follows these [three rules]{.underline}:
+
+1.  Each variable is a column and each column is a variable
+2.  Each observation is a row and each row is an observation
+3.  Each value is a cell and each cell is a single value
+:::
+
 ::: callout-tip
-## Exercise 5
+## Exercise 6
 
 Create a data frame with three variables:
 
@@ -292,7 +382,7 @@ x4
 A list is a vector containing other objects (vectors, matrices, data frames, other lists, etc.). It can contain elements of various data types. Lists can be created using the `list()` function. The `length()` function can be used to check how many data elements there are in a list.
 
 ::: callout-tip
-## Exercise 6
+## Exercise 7
 
 1.  Create a list (`x5`) containing the objects `x1`, `x2`, `x3` and `x4` created earlier.
 2.  Check how many elements are in this list using `length()`.
@@ -322,9 +412,9 @@ One of the main advantages of R is that it is very easy to extract any given val
 To extract the *i^th^* value of a vector object called `x`, you should write `x[i]`.
 
 ::: callout-tip
-## Exercise 7
+## Exercise 8
 
-Extract the third value of the `x1` object (numeric vector) created in Exercise 3.
+Extract the third value of the `x1` object (numeric vector) created in Exercise 4.
 :::
 
 ```{r}
@@ -343,9 +433,9 @@ x1[3]
 To extract the value located at the intersection between the *i^th^* row and *j^th^* column of a matrix or a data frame object called `x`, you should write `x[i,j]`.
 
 ::: callout-tip
-## Exercise 8
+## Exercise 9
 
-Extract the value at the intersection of row 2 and column 3 in the `x3` object (matrix) created in Exercise 4.
+Extract the value at the intersection of row 2 and column 3 in the `x3` object (matrix) created in Exercise 5.
 :::
 
 ```{r}
@@ -359,12 +449,12 @@ Extract the value at the intersection of row 2 and column 3 in the `x3` object (
 x3[2, 3]
 ```
 
-With a data frame, there are a couple of other options to extract data from specific columns. One option is to use the dollar symbol (`$`) followed by the column name. Another option to extract all the values from a specific column is to use square brakets (`[]`) after the object name (as in Exercise 8) and simply leave the square brackets empty before the comma. It is important to specify the name of the column (in quotes), otherwise you will simply extract all the values from your data frame.
+With a data frame, there are a couple of other options to extract data from specific columns. One option is to use the dollar symbol (`$`) followed by the column name. Another option to extract all the values from a specific column is to use square brakets (`[]`) after the object name (as in Exercise 9) and simply leave the square brackets empty before the comma. It is important to specify the name of the column (in quotes), otherwise you will simply extract all the values from your data frame.
 
 ::: callout-tip
-## Exercise 9
+## Exercise 10
 
-Extract all the values stored in the second column (Var2) of the `x4` object (data frame) created in Exercise 5. Use both options explained above.
+Extract all the values stored in the second column (Var2) of the `x4` object (data frame) created in Exercise 6. Use both options explained above.
 :::
 
 ```{r}
@@ -387,9 +477,9 @@ If you want to subset a matrix or a data frame called `x` (i.e., selecting only 
 `x[rows to select, columns to select]`
 
 ::: callout-tip
-## Exercise 10
+## Exercise 11
 
-Extract only the values located between rows 2 and 4 in the second column of the `x4` object (data frame) created in Exercise 5. Note that writing `2:4` means "from index 2 to index 4". It is exactly the same as writing `c(2,3,4)`.
+Extract only the values located between rows 2 and 4 in the second column of the `x4` object (data frame) created in Exercise 6. Note that writing `2:4` means "from index 2 to index 4". It is exactly the same as writing `c(2,3,4)`.
 :::
 
 ```{r}
@@ -409,9 +499,9 @@ x4[2:4, 2]
 To extract the *i^th^* element of a list object called `x`, you should write `x[[i]]`.
 
 ::: callout-tip
-## Exercise 11
+## Exercise 12
 
-Extract the second element of the `x5` object (list) created in Exercise 6.
+Extract the second element of the `x5` object (list) created in Exercise 7.
 :::
 
 ```{r}
@@ -440,9 +530,9 @@ Some arguments controlling graphical parameters are used very often, such as `pc
 There are many ways to personalize your plot to make it clear, informative, and visually appealing. Don’t hesitate to explore the available options and experiment with different settings to see how they affect the result.
 
 ::: callout-tip
-## Exercise 12: Let's create your first plot in R!
+## Exercise 13: Let's create your first plot in R!
 
-Use the `plot()` function to create a scatter plot displaying the relationship between `Var1` (X variable) and `Var2` (Y variable) stored in the `x4` object (data frame) created in Exercise 5. Create a plot with the following characteristics:
+Use the `plot()` function to create a scatter plot displaying the relationship between `Var1` (X variable) and `Var2` (Y variable) stored in the `x4` object (data frame) created in Exercise 6. Create a plot with the following characteristics:
 
 -   Create a line graph using the `type` argument
 
