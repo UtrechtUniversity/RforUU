@@ -54,7 +54,7 @@
     "href": "Courses/Statistics_GSS/Tutorials/index.html",
     "title": "Tutorials",
     "section": "",
-    "text": "Tutorial 1: Getting to know R and RStudio\n\n\n\nBenjamin Delory\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 2: Descriptive statistics\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 3: Comparing two groups (part 1)\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 4: Comparing two groups (part 2)\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 5: Comparing multiple groups\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 6: Contrasts and two-way ANOVA\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 7: Association continuous and discrete data\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 8: Linear regression (part 1)\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 9: Linear regression (part 2)\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 10: Introduction to linear mixed-effect models\n\n\n\nBenjamin Delory\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 11: Logistic regression\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 12: Association nominal variables\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 13: Principal component analysis\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\nNo matching items",
+    "text": "Tutorial 1: Getting to know R and RStudio\n\n\n\nBenjamin Delory\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 2: Introduction to R and descriptive statistics\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 3: Comparing two groups (part 1)\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 4: Comparing two groups (part 2)\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 5: Comparing multiple groups\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 6: Contrasts and two-way ANOVA\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 7: Association continuous and discrete data\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 8: Linear regression (part 1)\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 9: Linear regression (part 2)\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 10: Introduction to linear mixed-effect models\n\n\n\nBenjamin Delory\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 11: Logistic regression\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 12: Association nominal variables\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial 13: Principal component analysis\n\n\n\nBenjamin Delory, Natalie Davis, Heitor Mancini Teixeira\n\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Statistics GSS",
       "Tutorials"
@@ -63,25 +63,25 @@
   {
     "objectID": "Courses/Statistics_GSS/Tutorials/descriptive_statistics.html",
     "href": "Courses/Statistics_GSS/Tutorials/descriptive_statistics.html",
-    "title": "Tutorial 2: Descriptive statistics",
+    "title": "Tutorial 2: Introduction to R and descriptive statistics",
     "section": "",
     "text": "Start by setting up working directory and install R packages needed for the tutorial.",
     "crumbs": [
       "Statistics GSS",
       "Tutorials",
-      "2. Descriptive statistics"
+      "2. Introduction to R and descriptive statistics"
     ]
   },
   {
     "objectID": "Courses/Statistics_GSS/Tutorials/descriptive_statistics.html#installing-r-packages",
     "href": "Courses/Statistics_GSS/Tutorials/descriptive_statistics.html#installing-r-packages",
-    "title": "Tutorial 2: Descriptive statistics",
+    "title": "Tutorial 2: Introduction to R and descriptive statistics",
     "section": "Installing R packages",
     "text": "Installing R packages\nAn R package is like a toolbox, except that instead of containing tools, it contains functions for performing specific tasks such as filtering data, calculate descriptive statistics (such as average, variance, standard deviation, etc.), or fitting a statistical model. Most of the R packages you will need for these tutorials are freely available from CRAN (The Comprehensive R Archive Network) or GitHub. You can install CRAN R packages using install.packages(). If you want to install an R package stored in a GitHub repository, use install_github() in the devtools R package.\n\n\n\n\n\n\nExercise 1\n\n\n\nInstall an R package called readxl, which will allow you to import data from Excel files. When using install.packages() to perform this operation, remember to enclose readxl in quotation marks, as it is a character string.\n\n\n\n\nShow me the code\n#Install an R package to import data from Excel files\ninstall.packages(\"readxl\")",
     "crumbs": [
       "Statistics GSS",
       "Tutorials",
-      "2. Descriptive statistics"
+      "2. Introduction to R and descriptive statistics"
     ]
   },
   {
@@ -1019,7 +1019,7 @@
     "crumbs": [
       "Statistics GSS",
       "Tutorials",
-      "1. Getting to know R"
+      "1. Getting to know R and RStudio"
     ]
   },
   {
@@ -1031,7 +1031,7 @@
     "crumbs": [
       "Statistics GSS",
       "Tutorials",
-      "1. Getting to know R"
+      "1. Getting to know R and RStudio"
     ]
   },
   {
@@ -1043,7 +1043,7 @@
     "crumbs": [
       "Statistics GSS",
       "Tutorials",
-      "1. Getting to know R"
+      "1. Getting to know R and RStudio"
     ]
   },
   {
@@ -1055,7 +1055,7 @@
     "crumbs": [
       "Statistics GSS",
       "Tutorials",
-      "1. Getting to know R"
+      "1. Getting to know R and RStudio"
     ]
   },
   {
@@ -1067,7 +1067,7 @@
     "crumbs": [
       "Statistics GSS",
       "Tutorials",
-      "1. Getting to know R"
+      "1. Getting to know R and RStudio"
     ]
   },
   {
@@ -1079,7 +1079,7 @@
     "crumbs": [
       "Statistics GSS",
       "Tutorials",
-      "1. Getting to know R"
+      "1. Getting to know R and RStudio"
     ]
   },
   {
@@ -1091,7 +1091,7 @@
     "crumbs": [
       "Statistics GSS",
       "Tutorials",
-      "1. Getting to know R"
+      "1. Getting to know R and RStudio"
     ]
   },
   {
@@ -1103,7 +1103,7 @@
     "crumbs": [
       "Statistics GSS",
       "Tutorials",
-      "1. Getting to know R"
+      "1. Getting to know R and RStudio"
     ]
   },
   {
@@ -1220,5 +1220,17 @@
     "title": "Learn Python",
     "section": "",
     "text": "Content in development…"
+  },
+  {
+    "objectID": "Courses/Statistics_GSS/Tutorials/intro_to_dataset.html",
+    "href": "Courses/Statistics_GSS/Tutorials/intro_to_dataset.html",
+    "title": "Data used in these tutorials",
+    "section": "",
+    "text": "During the tutorials, we will use a dataset containing social and ecological variables associated with agricultural systems (coffee production). The variables are classified into four main groups:\n\nFarm structure, management, and production\nAccess to knowledge and subsidies\nSoil characteristics\nPlant diversity attributes.\n\nAnalysis of this data can contribute to the development of more sustainable and diversified agroecosystems. The list of variables with their descriptions and units is provided in the table below. The data file is available on Brightspace.\n\nList of variables contained in the dataset used for the tutorials, along with their associated units.\n\n\n\n\n\n\n\n\nVariable group\nVariable name\nDescription\nUnits\n\n\n\n\nFarm structure, management, and production\nmunicipality\nMunicipality\n-\n\n\n\nfarm_size\nSize of the farm\nha\n\n\n\naltitude\nAverage altitude of the\n\n\n\nfarm\nm\n\n\n\n\n\nfarm_type\nFarm type: Conventional\n\n\n\n(con); Agroecological (eco); or large-scale (large)\n-\n\n\n\n\n\nmanure\nTotal manure used as\n\n\n\nfertilizer\nkg/ha/year\n\n\n\n\n\npesticide\nQuantity of pesticides\n\n\n\nactive ingredients applied\ng/ha/year\n\n\n\n\n\nPmin\nMineral phosphorus input\n\n\n\n(fertilizer)\nkg/ha/year\n\n\n\n\n\nKmin\nMineral potassium input\n\n\n\n(fertilizer)\nkg/ha/year\n\n\n\n\n\ncoffee_prod\nCoffee productivity\n\n\n\n(average between two years)\nkg/ha/year\n\n\n\n\n\nmowing\nMowing intensity\nhours/ha/year\n\n\nAccess to knowledge and subsidies\nn_practices\nTotal number of agroecological practices adopted\n-\n\n\n\nn_ext_projects\nNumber of CTA projects accessed\n-\n\n\n\npolicy_access\nPolicy access (none, low, moderate, or high)\n-\n\n\nSoil characteristics\nCMB\nCarbon microbial biomass in the soil\nµg/g fry soil\n\n\n\npH\nSoil pH in water\n-\n\n\n\nSOM\nSoil organic matter\n%\n\n\n\nclay\nSoil clay content\nkg/kg\n\n\n\nP_soil\nSoil available phosphorus\nmg/dm³\n\n\n\nK_soil\nSoil available potassium\nmg/dm³\n\n\n\nSB\nSum of bases\ncmolc/dm³\n\n\n\nlitter_thickness\nLitter thickness\ncm\n\n\nPlant diversity attributes\ntree_cover\nTree cover in the plot\nm²\n\n\n\ntree_density\nNumber of trees per unit area\n/ha\n\n\n\ntotal_species\nTotal number of species found in the plot\n-\n\n\n\nshannon_PIM\nShannon-Weiner diversity index\n-\n\n\n\nCWM.SLA\nCommunity weighted mean of specific leaf area\ncm²/g\n\n\n\nCWM.N\nCommunity weighted mean of leaf nitrogen concentration\n%",
+    "crumbs": [
+      "Statistics GSS",
+      "Before starting",
+      "Data used in these tutorials"
+    ]
   }
 ]

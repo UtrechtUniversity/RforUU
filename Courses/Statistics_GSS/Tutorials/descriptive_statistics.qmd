@@ -1,5 +1,5 @@
 ---
-title: "Tutorial 2: Descriptive statistics"
+title: "Tutorial 2: Introduction to R and descriptive statistics"
 author:
   - name: Benjamin Delory
     orcid: 0000-0002-1190-8060

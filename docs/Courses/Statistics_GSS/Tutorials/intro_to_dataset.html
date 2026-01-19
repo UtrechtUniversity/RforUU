@@ -6,11 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Benjamin Delory">
-<meta name="author" content="Natalie Davis">
-<meta name="author" content="Heitor Mancini Teixeira">
 
-<title>Tutorial 2: Introduction to R and descriptive statistics</title>
+<title>Data used in these tutorials</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -68,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../Courses/Statistics_GSS/Tutorials/comparing_two_groups_part1.html" rel="next">
-<link href="../../../Courses/Statistics_GSS/Tutorials/getting_to_know_R.html" rel="prev">
+<link href="../../../Courses/Statistics_GSS/Tutorials/index.html" rel="next">
+<link href="../../../Courses/Statistics_GSS/Tutorials/prerequisites.html" rel="prev">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
@@ -359,7 +356,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/index.html">Statistics GSS</a></li><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/Tutorials/index.html">Tutorials</a></li><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/Tutorials/descriptive_statistics.html">2. Introduction to R and descriptive statistics</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/index.html">Statistics GSS</a></li><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/Tutorials/prologue.html">Before starting</a></li><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/Tutorials/intro_to_dataset.html">Data used in these tutorials</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -409,7 +406,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../Courses/Statistics_GSS/Tutorials/intro_to_dataset.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../Courses/Statistics_GSS/Tutorials/intro_to_dataset.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Data used in these tutorials</span></a>
   </div>
 </li>
@@ -432,7 +429,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../Courses/Statistics_GSS/Tutorials/descriptive_statistics.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../Courses/Statistics_GSS/Tutorials/descriptive_statistics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2. Introduction to R and descriptive statistics</span></a>
   </div>
 </li>
@@ -511,58 +508,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#installing-r-packages" id="toc-installing-r-packages" class="nav-link active" data-scroll-target="#installing-r-packages">Installing R packages</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/index.html">Statistics GSS</a></li><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/Tutorials/index.html">Tutorials</a></li><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/Tutorials/descriptive_statistics.html">2. Introduction to R and descriptive statistics</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/index.html">Statistics GSS</a></li><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/Tutorials/prologue.html">Before starting</a></li><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/Tutorials/intro_to_dataset.html">Data used in these tutorials</a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Tutorial 2: Introduction to R and descriptive statistics</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Data used in these tutorials</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
-<div class="quarto-title-meta-author">
-  <div class="quarto-title-meta-heading">Authors</div>
-  <div class="quarto-title-meta-heading">Affiliations</div>
-  
-    <div class="quarto-title-meta-contents">
-    <p class="author">Benjamin Delory <a href="mailto:b.m.m.delory@uu.nl" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-1190-8060" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
-  </div>
-  <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            Copernicus institute of sustainable development, Utrecht University
-          </p>
-      </div>
-    <div class="quarto-title-meta-contents">
-    <p class="author">Natalie Davis <a href="mailto:n.a.davis@vu.nl" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-2678-0389" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
-  </div>
-  <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            Amsterdam sustainability institute, Vrije Universiteit Amsterdam
-          </p>
-      </div>
-    <div class="quarto-title-meta-contents">
-    <p class="author">Heitor Mancini Teixeira <a href="mailto:heitor.teixeira@ufv.br" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0001-6992-0671" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
-  </div>
-  <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            Departamento de Solos Centro de Ciências Agrárias, Universidade Federal de Vicosa, Brazil
-          </p>
-      </div>
-  </div>
 
 <div class="quarto-title-meta">
 
-      
+    
   
     
   </div>
@@ -572,35 +534,241 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Start by setting up working directory and install R packages needed for the tutorial.</p>
-<section id="installing-r-packages" class="level2">
-<h2 class="anchored" data-anchor-id="installing-r-packages">Installing R packages</h2>
-<p>An R package is like a toolbox, except that instead of containing tools, it contains functions for performing specific tasks such as filtering data, calculate descriptive statistics (such as average, variance, standard deviation, etc.), or fitting a statistical model. Most of the R packages you will need for these tutorials are freely available from <a href="https://cran.r-project.org/">CRAN</a> (The Comprehensive R Archive Network) or <a href="https://github.com/">GitHub</a>. You can install CRAN R packages using <code>install.packages()</code>. If you want to install an R package stored in a GitHub repository, use <code>install_github()</code> in the <em>devtools</em> R package.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercise 1
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Install an R package called <em>readxl</em>, which will allow you to import data from Excel files. When using <code>install.packages()</code> to perform this operation, remember to enclose <em>readxl</em> in quotation marks, as it is a character string.</p>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold">
-<summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Install an R package to import data from Excel files</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readxl"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
+<p>During the tutorials, we will use a dataset containing social and ecological variables associated with agricultural systems (coffee production). The variables are classified into four main groups:</p>
+<ul>
+<li><p>Farm structure, management, and production</p></li>
+<li><p>Access to knowledge and subsidies</p></li>
+<li><p>Soil characteristics</p></li>
+<li><p>Plant diversity attributes.</p></li>
+</ul>
+<p>Analysis of this data can contribute to the development of more sustainable and diversified agroecosystems. The list of variables with their descriptions and units is provided in the table below. The data file is available on Brightspace.</p>
+<table class="caption-top table">
+<caption>List of variables contained in the dataset used for the tutorials, along with their associated units.</caption>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable group</th>
+<th>Variable name</th>
+<th>Description</th>
+<th>Units</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Farm structure, management, and production</td>
+<td>municipality</td>
+<td>Municipality</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>farm_size</td>
+<td>Size of the farm</td>
+<td>ha</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>altitude</td>
+<td>Average altitude of the</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>farm</td>
+<td>m</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>farm_type</td>
+<td>Farm type: Conventional</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>(con); Agroecological (eco); or large-scale (large)</td>
+<td>-</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>manure</td>
+<td>Total manure used as</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>fertilizer</td>
+<td>kg/ha/year</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>pesticide</td>
+<td>Quantity of pesticides</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>active ingredients applied</td>
+<td>g/ha/year</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Pmin</td>
+<td>Mineral phosphorus input</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>(fertilizer)</td>
+<td>kg/ha/year</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Kmin</td>
+<td>Mineral potassium input</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>(fertilizer)</td>
+<td>kg/ha/year</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>coffee_prod</td>
+<td>Coffee productivity</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>(average between two years)</td>
+<td>kg/ha/year</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>mowing</td>
+<td>Mowing intensity</td>
+<td>hours/ha/year</td>
+</tr>
+<tr class="even">
+<td>Access to knowledge and subsidies</td>
+<td>n_practices</td>
+<td>Total number of agroecological practices adopted</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>n_ext_projects</td>
+<td>Number of CTA projects accessed</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>policy_access</td>
+<td>Policy access (none, low, moderate, or high)</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>Soil characteristics</td>
+<td>CMB</td>
+<td>Carbon microbial biomass in the soil</td>
+<td>µg/g fry soil</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>pH</td>
+<td>Soil pH in water</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>SOM</td>
+<td>Soil organic matter</td>
+<td>%</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>clay</td>
+<td>Soil clay content</td>
+<td>kg/kg</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>P_soil</td>
+<td>Soil available phosphorus</td>
+<td>mg/dm³</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>K_soil</td>
+<td>Soil available potassium</td>
+<td>mg/dm³</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>SB</td>
+<td>Sum of bases</td>
+<td>cmolc/dm³</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>litter_thickness</td>
+<td>Litter thickness</td>
+<td>cm</td>
+</tr>
+<tr class="odd">
+<td>Plant diversity attributes</td>
+<td>tree_cover</td>
+<td>Tree cover in the plot</td>
+<td>m²</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>tree_density</td>
+<td>Number of trees per unit area</td>
+<td>/ha</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>total_species</td>
+<td>Total number of species found in the plot</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>shannon_PIM</td>
+<td>Shannon-Weiner diversity index</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>CWM.SLA</td>
+<td>Community weighted mean of specific leaf area</td>
+<td>cm²/g</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>CWM.N</td>
+<td>Community weighted mean of leaf nitrogen concentration</td>
+<td>%</td>
+</tr>
+</tbody>
+</table>
 
 
 <!-- -->
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1068,61 +1236,64 @@ Exercise 1
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../Courses/Statistics_GSS/Tutorials/getting_to_know_R.html" class="pagination-link" aria-label="1. Getting to know R and RStudio">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">1. Getting to know R and RStudio</span>
+      <a href="../../../Courses/Statistics_GSS/Tutorials/prerequisites.html" class="pagination-link" aria-label="Prerequisites">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Prerequisites</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../Courses/Statistics_GSS/Tutorials/comparing_two_groups_part1.html" class="pagination-link" aria-label="3. Comparing two groups (part 1)">
-        <span class="nav-page-text">3. Comparing two groups (part 1)</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../Courses/Statistics_GSS/Tutorials/index.html" class="pagination-link" aria-label="Tutorials">
+        <span class="nav-page-text">Tutorials</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Tutorial 2: Introduction to R and descriptive statistics"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Benjamin Delory</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-1190-8060</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">    email: b.m.m.delory@uu.nl</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Copernicus institute of sustainable development, Utrecht University</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Natalie Davis</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-2678-0389</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">    email: n.a.davis@vu.nl</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Amsterdam sustainability institute, Vrije Universiteit Amsterdam</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Heitor Mancini Teixeira</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-6992-0671</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">    email: heitor.teixeira@ufv.br</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Departamento de Solos Centro de Ciências Agrárias, Universidade Federal de Vicosa, Brazil</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="an">editor_options:</span><span class="co"> </span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">  chunk_output_type: console</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> /Images/Rlogo.png</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>Start by setting up working directory and install R packages needed for the tutorial.</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Installing R packages</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>An R package is like a toolbox, except that instead of containing tools, it contains functions for performing specific tasks such as filtering data, calculate descriptive statistics (such as average, variance, standard deviation, etc.), or fitting a statistical model. Most of the R packages you will need for these tutorials are freely available from <span class="co">[</span><span class="ot">CRAN</span><span class="co">](https://cran.r-project.org/)</span> (The Comprehensive R Archive Network) or <span class="co">[</span><span class="ot">GitHub</span><span class="co">](https://github.com/)</span>. You can install CRAN R packages using <span class="in">`install.packages()`</span>. If you want to install an R package stored in a GitHub repository, use <span class="in">`install_github()`</span> in the *devtools* R package.</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 1</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>Install an R package called *readxl*, which will allow you to import data from Excel files. When using `install.packages()` to perform this operation, remember to enclose *readxl* in quotation marks, as it is a character string.</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true    </span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co">#Install an R package to import data from Excel files</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readxl"</span>)</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Data used in these tutorials"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">tbl-cap-location:</span><span class="co"> top</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>During the tutorials, we will use a dataset containing social and ecological variables associated with agricultural systems (coffee production). The variables are classified into four main groups:</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Farm structure, management, and production</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Access to knowledge and subsidies</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Soil characteristics</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Plant diversity attributes.</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>Analysis of this data can contribute to the development of more sustainable and diversified agroecosystems. The list of variables with their descriptions and units is provided in the table below. The data file is available on Brightspace.</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Variable group <span class="pp">|</span> Variable name <span class="pp">|</span> Description <span class="pp">|</span> Units <span class="pp">|</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="pp">|------------------|------------------|------------------|------------------|</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Farm structure, management, and production <span class="pp">|</span> municipality <span class="pp">|</span> Municipality <span class="pp">|</span> <span class="sc">\-</span> <span class="pp">|</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> farm_size <span class="pp">|</span> Size of the farm <span class="pp">|</span> ha <span class="pp">|</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> altitude <span class="pp">|</span> Average altitude of the farm <span class="pp">|</span> m <span class="pp">|</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> farm_type <span class="pp">|</span> Farm type: Conventional (con); Agroecological (eco); or large-scale (large) <span class="pp">|</span> <span class="sc">\-</span> <span class="pp">|</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> manure <span class="pp">|</span> Total manure used as fertilizer <span class="pp">|</span> kg/ha/year <span class="pp">|</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> pesticide <span class="pp">|</span> Quantity of active ingredients (pesticides) applied <span class="pp">|</span> g/ha/year <span class="pp">|</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> Pmin <span class="pp">|</span> Mineral phosphorus input (fertilizer) <span class="pp">|</span> kg/ha/year <span class="pp">|</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> Kmin <span class="pp">|</span> Mineral potassium input (fertilizer) <span class="pp">|</span> kg/ha/year <span class="pp">|</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> coffee_prod <span class="pp">|</span> Coffee productivity (average between two years) <span class="pp">|</span> kg/ha/year <span class="pp">|</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> mowing <span class="pp">|</span> Mowing intensity <span class="pp">|</span> hours/ha/year <span class="pp">|</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Access to knowledge and subsidies <span class="pp">|</span> n_practices <span class="pp">|</span> Total number of agroecological practices adopted <span class="pp">|</span> <span class="sc">\-</span> <span class="pp">|</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> n_ext_projects <span class="pp">|</span> Number of CTA projects accessed <span class="pp">|</span> <span class="sc">\-</span> <span class="pp">|</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> policy_access <span class="pp">|</span> Policy access (none, low, moderate, or high) <span class="pp">|</span> <span class="sc">\-</span> <span class="pp">|</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Soil characteristics <span class="pp">|</span> CMB <span class="pp">|</span> Carbon microbial biomass in the soil <span class="pp">|</span> µg/g dry soil <span class="pp">|</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> pH <span class="pp">|</span> Soil pH in water <span class="pp">|</span> <span class="sc">\-</span> <span class="pp">|</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> SOM <span class="pp">|</span> Soil organic matter <span class="pp">|</span> \% <span class="pp">|</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> clay <span class="pp">|</span> Soil clay content <span class="pp">|</span> kg/kg <span class="pp">|</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> P_soil <span class="pp">|</span> Soil available phosphorus <span class="pp">|</span> mg/dm³ <span class="pp">|</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> K_soil <span class="pp">|</span> Soil available potassium <span class="pp">|</span> mg/dm³ <span class="pp">|</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> SB <span class="pp">|</span> Sum of bases <span class="pp">|</span> cmolc/dm³ <span class="pp">|</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> litter_thickness <span class="pp">|</span> Litter thickness <span class="pp">|</span> cm <span class="pp">|</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Plant diversity attributes <span class="pp">|</span> tree_cover <span class="pp">|</span> Tree cover in the plot <span class="pp">|</span> m² <span class="pp">|</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> tree_density <span class="pp">|</span> Number of trees per unit area <span class="pp">|</span> /ha <span class="pp">|</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> total_species <span class="pp">|</span> Total number of species found in the plot <span class="pp">|</span> <span class="sc">\-</span> <span class="pp">|</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> shannon_PIM <span class="pp">|</span> Shannon-Weiner diversity index <span class="pp">|</span> <span class="sc">\-</span> <span class="pp">|</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> CWM.SLA <span class="pp">|</span> Community weighted mean of specific leaf area <span class="pp">|</span> cm²/g <span class="pp">|</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>  <span class="pp">|</span> CWM.N <span class="pp">|</span> Community weighted mean of leaf nitrogen concentration <span class="pp">|</span> \% <span class="pp">|</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>: List of variables contained in the dataset used for the tutorials, along with their associated units {#tbl-overviewdata}</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

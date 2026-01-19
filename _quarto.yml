@@ -102,13 +102,15 @@ website:
                 text: "Prologue"
               - href: Courses/Statistics_GSS/Tutorials/prerequisites.qmd
                 text: "Prerequisites"
+              - href: Courses/Statistics_GSS/Tutorials/intro_to_dataset.qmd
+                text: "Data used in these tutorials"  
           - section: "Tutorials"
             href: Courses/Statistics_GSS/Tutorials/index.qmd
             contents:
               - href: Courses/Statistics_GSS/Tutorials/getting_to_know_R.qmd
                 text: "1. Getting to know R and RStudio"
               - href: Courses/Statistics_GSS/Tutorials/descriptive_statistics.qmd
-                text: "2. Descriptive statistics"
+                text: "2. Introduction to R and descriptive statistics"
               - href: Courses/Statistics_GSS/Tutorials/comparing_two_groups_part1.qmd
                 text: "3. Comparing two groups (part 1)"
               - href: Courses/Statistics_GSS/Tutorials/comparing_two_groups_part2.qmd
