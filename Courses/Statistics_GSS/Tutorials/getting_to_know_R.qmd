@@ -171,7 +171,6 @@ Do the following calculations in your R console:
 3.  Raise the result of step 2 to the power 3
 4.  Check if the result of step 3 is lower or equal to 16000 (use a relational operator to do this)
 5.  Check if the result of step 3 is equal to 15625 (use a relational operator to do this)
-:::
 
 ```{r}
 #| eval: true
@@ -193,6 +192,7 @@ Do the following calculations in your R console:
 #Step 5
 ((5*3)+10)^3 == 15625
 ```
+:::
 
 ## Creating R objects
 
@@ -213,7 +213,6 @@ You can think of this assignment operator as an arrow that puts what's on its ri
 ## Exercise 2
 
 Create an object called `x` that contains the value 2. Then, multiply it by 10.
-:::
 
 ```{r}
 #| eval: true
@@ -229,6 +228,7 @@ x
 #Multiply x by 10
 x*10
 ```
+:::
 
 ### Scalars
 
@@ -246,7 +246,6 @@ You can check the data type of an R object using the `class()` function.
 ## Exercise 3
 
 Check the data type of the R object (`x`) you created in Exercise 2.
-:::
 
 ```{r}
 #| eval: true
@@ -255,6 +254,7 @@ Check the data type of the R object (`x`) you created in Exercise 2.
 
 class(x)
 ```
+:::
 
 ### Vectors
 
@@ -277,7 +277,6 @@ By contrast, **you should not use quotation marks when referring to existing obj
 2.  Create a character vector called `x2` containing the strings "control" and "treatment".
 3.  Check how many elements are in `x1` and `x2`. You can check how many elements there are in a vector using the `length()` function.
 4.  Multiply `x1` by 10 and look at the results. What do you notice?
-:::
 
 ```{r}
 #| eval: true
@@ -301,6 +300,7 @@ length(x2)
 #All elements in x1 have been multiplied by 10 (vectorized operation)
 x1*10
 ```
+:::
 
 ### Matrices
 
@@ -313,7 +313,6 @@ You can check the size of a matrix using the `dim()` function. The first element
 
 1.  Create a matrix called `x3` that contains all integer values from 1 to 30 arranged in a 5 by 6 layout (5 rows and 6 columns). See the help page for the `matrix()` function in the help pane to find out which arguments must be provided to perform this operation. You can easily do this by running `?matrix` in your R console.
 2.  Check the size of `x3` using `dim()`, `ncol()`, and `nrow()`.
-:::
 
 ```{r}
 #| eval: true
@@ -333,6 +332,7 @@ dim(x3)
 ncol(x3)
 nrow(x3)
 ```
+:::
 
 ### Data frames
 
@@ -364,7 +364,6 @@ Create a data frame with three variables:
 Check the help page of the `data.frame()` function to figure out how to use it (`?data.frame`).
 
 Note: when you have to repeat an element multiple times in a vector, you can use the function `rep()` to shorten your code. See example in the solution below.
-:::
 
 ```{r}
 #| eval: true
@@ -387,6 +386,7 @@ x4 <- data.frame(
 #View data frame
 x4
 ```
+:::
 
 ### Lists
 
@@ -397,7 +397,6 @@ A list is a vector containing other objects (vectors, matrices, data frames, oth
 
 1.  Create a list (`x5`) containing the objects `x1`, `x2`, `x3` and `x4` created earlier.
 2.  Check how many elements are in this list using `length()`.
-:::
 
 ```{r}
 #| eval: true
@@ -413,6 +412,7 @@ x5
 #Check the number of elements in the list
 length(x5)
 ```
+:::
 
 ## Indexing
 
@@ -432,7 +432,6 @@ To extract the *i^th^* value of a vector object called `x`, you should write `x[
 ## Exercise 8
 
 Extract the third value of the `x1` object (numeric vector) created in Exercise 4.
-:::
 
 ```{r}
 #| eval: true
@@ -444,6 +443,7 @@ Extract the third value of the `x1` object (numeric vector) created in Exercise 
 
 x1[3]
 ```
+:::
 
 ### Matrices and data frames
 
@@ -453,7 +453,6 @@ To extract the value located at the intersection between the *i^th^* row and *j^
 ## Exercise 9
 
 Extract the value at the intersection of row 2 and column 3 in the `x3` object (matrix) created in Exercise 5.
-:::
 
 ```{r}
 #| eval: true
@@ -465,6 +464,7 @@ Extract the value at the intersection of row 2 and column 3 in the `x3` object (
 
 x3[2, 3]
 ```
+:::
 
 With a data frame, there are a couple of other options to extract data from specific columns. One option is to use the dollar symbol (`$`) followed by the column name. Another option to extract all the values from a specific column is to use square brakets (`[]`) after the object name (as in Exercise 9) and simply leave the square brackets empty before the comma. It is important to specify the name of the column (in quotes), otherwise you will simply extract all the values from your data frame.
 
@@ -472,7 +472,6 @@ With a data frame, there are a couple of other options to extract data from spec
 ## Exercise 10
 
 Extract all the values stored in the second column (Var2) of the `x4` object (data frame) created in Exercise 6. Use both options explained above.
-:::
 
 ```{r}
 #| eval: true
@@ -488,6 +487,7 @@ x4$Var2
 #Option 2
 x4[, "Var2"]
 ```
+:::
 
 If you want to subset a matrix or a data frame called `x` (i.e., selecting only specifics rows and columns), you should write:
 
@@ -497,7 +497,6 @@ If you want to subset a matrix or a data frame called `x` (i.e., selecting only 
 ## Exercise 11
 
 Extract only the values located between rows 2 and 4 in the second column of the `x4` object (data frame) created in Exercise 6. Note that writing `2:4` means "from index 2 to index 4". It is exactly the same as writing `c(2,3,4)`.
-:::
 
 ```{r}
 #| eval: true
@@ -510,6 +509,7 @@ Extract only the values located between rows 2 and 4 in the second column of the
 
 x4[2:4, 2]
 ```
+:::
 
 ### Lists
 
@@ -519,7 +519,6 @@ To extract the *i^th^* element of a list object called `x`, you should write `x[
 ## Exercise 12
 
 Extract the second element of the `x5` object (list) created in Exercise 7.
-:::
 
 ```{r}
 #| eval: true
@@ -531,6 +530,7 @@ Extract the second element of the `x5` object (list) created in Exercise 7.
 
 x5[[2]]
 ```
+:::
 
 ## Create your first R plot
 
@@ -592,7 +592,6 @@ generateRPointShapes <- function() {
 }
 generateRPointShapes()
 ```
-:::
 
 ```{r}
 #| eval: true
@@ -612,3 +611,4 @@ points(x = x4$Var1,
        y = x4$Var2,
        pch = 16)
 ```
+:::

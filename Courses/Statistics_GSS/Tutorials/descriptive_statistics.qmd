@@ -65,7 +65,6 @@ An R package is like a toolbox, except that instead of containing tools, it cont
 Install an R package called *readxl*, which will allow you to import data from Excel files. When using `install.packages()` to perform this operation, remember to enclose *readxl* in quotation marks, as it is a character string.
 
 Once this is done, install the [*tidyverse*](https://www.tidyverse.org/) package, which is a collection of R packages for data science. When installing *tidyverse*, you will install a suite of R packages that are very commonly used when processing and visualising data, such as *readr*, *dyplr*, *tibble*, *ggplot2*, and more!
-:::
 
 ```{r}
 #| eval: false
@@ -79,6 +78,7 @@ install.packages("readxl")
 #Install tidyverse
 install.packages("tidyverse")
 ```
+:::
 
 ## Loading R packages
 
@@ -94,7 +94,6 @@ R packages can also be loaded directly in RStudio without writing any code. In t
 ## Exercise 3
 
 Load *readxl* and *tidyverse* using `library()`.
-:::
 
 ```{r}
 #| eval: true
@@ -105,6 +104,7 @@ Load *readxl* and *tidyverse* using `library()`.
 library(readxl)
 library(tidyverse)
 ```
+:::
 
 ## Importing data
 
@@ -124,7 +124,6 @@ To use the functions listed above, you simply provide the file name and extensio
 ## Exercise 4
 
 Load the data from one of the two files available on Brightspace (gss_statistics_master_data_set2). Store the data in an R object called `data`. If you choose the CSV file, use the `read_csv()` function; if you choose the Excel file, use the `read_excel()` function.
-:::
 
 ```{r}
 #| eval: true
@@ -138,6 +137,7 @@ data <- read_csv("gss_statistics_master_data_set2.csv")
 #Option 2 (Excel file)
 data <- read_excel("gss_statistics_master_data_set2.xlsx")
 ```
+:::
 
 ::: callout-note
 ## Missing values in R
@@ -163,12 +163,11 @@ To make the `filter()` function work, you must provide a data frame as the first
 In R, the notation `::` is used to access a specific object (such as a function or dataset) from a particular package without attaching that package with `library()`. For example, `dplyr::filter()` explicitly calls the `filter()` function from the *dplyr* package, avoiding ambiguity if another package defines a function with the same name.
 :::
 
-::: callout-tip
+:::: callout-tip
 ## Exercise 5
 
 1.  Create a new data frame called `subset1` that only contains observations associated with eco farms (`farm_type` variable). Make sure to use the `filter()` function in the *dplyr* package using `dplyr::filter()`.
 2.  Create a new data frame called `subset2` that only contains observations associated with eco farms (`farm_type` variable) that have a coffee productivity greater than or equal to 1000 kg/ha/year (`coffee_prod` variable).
-:::
 
 ::: panel-tabset
 ## Solution 1
@@ -193,6 +192,7 @@ subset1 <- dplyr::filter(data, farm_type == "eco")
 subset2 <- dplyr::filter(data, farm_type == "eco" & coffee_prod >= 1000)
 ```
 :::
+::::
 
 ### Selecting variables
 
@@ -202,7 +202,6 @@ If you have a large dataset, you may want to subset your data and only keep the 
 ## Exercise 6
 
 Create a new data frame called `subset3` that only contains information about the farm type and soil characteristics. Make sure to use the `select()` function in the *dplyr* package using `dplyr::select()`.
-:::
 
 ```{r}
 #| eval: true
@@ -220,6 +219,7 @@ subset3 <- dplyr::select(data,
                          SB,
                          litter_thickness)
 ```
+:::
 
 ## Calculating descriptive statistics
 
@@ -379,7 +379,6 @@ You can start creating a plot using the function `ggplot()`. Later on, we will a
 ## Exercise 8
 
 Create your first ggplot using `farm_type` and `coffee_prod` as the **x** and **y** variables, respectively.
-:::
 
 ```{r}
 #| eval: true 
@@ -392,6 +391,7 @@ Create your first ggplot using `farm_type` and `coffee_prod` as the **x** and **
 
 ggplot(data = data, mapping = aes(x = farm_type, y = coffee_prod))
 ```
+:::
 
 As you can see, the structure of the plot is there, but it does not display any data yet. This is because we have not specified in our code how our observations should be represented in our plot. You can do this by defining a **geom**. In *ggplot2*, there are a number of geom to choose from. Here are a few examples (but see [ggplot2 cheat sheet](https://rstudio.github.io/cheatsheets/data-visualization.pdf) for more examples):
 
@@ -411,7 +411,6 @@ As you can see, the structure of the plot is there, but it does not display any 
 ## Exercise 9
 
 Use `geom_boxplot()` to create a box plot showing how coffee productivity (`coffee_prod`) varies among farm types (`farm_type`). Make the boxes narrower by adjusting the `width` argument in `geom_boxplot()` (the default is `width = 1`). Use `xlab()` and `ylab()` to add clear and informative axis labels, including units. Optionally, you may change the appearance of the plot by applying a different theme, such as `theme_bw()` for a dark-on-light style.
-:::
 
 ```{r}
 #| eval: true
@@ -428,3 +427,4 @@ ggplot(data = data, mapping = aes(x = farm_type, y = coffee_prod)) +
   ylab("Coffee productivity (kg/ha/year)")+ #Change name of y axis
   theme_bw() #This creates a black/white plot
 ```
+:::
