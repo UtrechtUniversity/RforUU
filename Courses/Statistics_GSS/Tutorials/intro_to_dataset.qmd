@@ -11,7 +11,7 @@ During the tutorials, we will use a dataset containing social and ecological var
 
 -   Soil characteristics
 
--   Plant diversity attributes.
+-   Plant variables
 
 Analysis of this data can contribute to the development of more sustainable and diversified agroecosystems. The list of variables with their descriptions and units is provided in @tbl-overviewdata. The data file is available on Brightspace.
 
@@ -25,7 +25,8 @@ Analysis of this data can contribute to the development of more sustainable and 
 | Farm structure, management, and production | pesticide | Quantity of active ingredients (pesticides) applied | g/ha/year |
 | Farm structure, management, and production | Pmin | Mineral phosphorus input (fertilizer) | kg/ha/year |
 | Farm structure, management, and production | Kmin | Mineral potassium input (fertilizer) | kg/ha/year |
-| Farm structure, management, and production | coffee_prod | Coffee productivity (average between two years) | kg/ha/year |
+| Farm structure, management, and production | coffee_prod_past | Coffee productivity in 2015 | kg/ha/year |
+| Farm structure, management, and production | coffee_prod | Coffee productivity in 2020 | kg/ha/year |
 | Farm structure, management, and production | mowing | Mowing intensity | hours/ha/year |
 | Access to knowledge and subsidies | n_practices | Total number of agroecological practices adopted | \- |
 | Access to knowledge and subsidies | n_ext_projects | Number of CTA projects accessed | \- |
@@ -38,11 +39,11 @@ Analysis of this data can contribute to the development of more sustainable and 
 | Soil characteristics | K_soil | Soil available potassium | mg/dm³ |
 | Soil characteristics | SB | Sum of bases | cmolc/dm³ |
 | Soil characteristics | litter_thickness | Litter thickness | cm |
-| Plant diversity attributes | tree_cover | Tree cover in the plot | m² |
-| Plant diversity attributes | tree_density | Number of trees per unit area | /ha |
-| Plant diversity attributes | total_species | Total number of species found in the plot | \- |
-| Plant diversity attributes | shannon_PIM | Shannon-Weiner diversity index | \- |
-| Plant diversity attributes | CWM.SLA | Community weighted mean of specific leaf area | cm²/g |
-| Plant diversity attributes | CWM.N | Community weighted mean of leaf nitrogen concentration | \% |
+| Plant variables | tree_cover | Tree cover in the plot | m² |
+| Plant variables | tree_density | Number of trees per unit area | /ha |
+| Plant variables | total_species | Total number of species found in the plot | \- |
+| Plant variables | shannon_PIM | Shannon-Weiner diversity index | \- |
+| Plant variables | CWM.SLA | Community weighted mean of specific leaf area | cm²/g |
+| Plant variables | CWM.N | Community weighted mean of leaf nitrogen concentration | \% |
 
 : List of variables contained in the dataset used for the tutorials, along with their associated units {#tbl-overviewdata}

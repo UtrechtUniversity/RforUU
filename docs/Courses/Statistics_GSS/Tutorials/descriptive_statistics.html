@@ -112,6 +112,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -516,7 +545,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#installing-r-packages" id="toc-installing-r-packages" class="nav-link active" data-scroll-target="#installing-r-packages">Installing R packages</a></li>
+  <li><a href="#about-this-tutorial" id="toc-about-this-tutorial" class="nav-link active" data-scroll-target="#about-this-tutorial">About this tutorial</a></li>
+  <li><a href="#before-starting" id="toc-before-starting" class="nav-link" data-scroll-target="#before-starting">Before starting</a></li>
+  <li><a href="#setting-your-working-directory" id="toc-setting-your-working-directory" class="nav-link" data-scroll-target="#setting-your-working-directory">Setting your working directory</a></li>
+  <li><a href="#installing-r-packages" id="toc-installing-r-packages" class="nav-link" data-scroll-target="#installing-r-packages">Installing R packages</a></li>
+  <li><a href="#loading-r-packages" id="toc-loading-r-packages" class="nav-link" data-scroll-target="#loading-r-packages">Loading R packages</a></li>
+  <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data">Importing data</a></li>
+  <li><a href="#transforming-data" id="toc-transforming-data" class="nav-link" data-scroll-target="#transforming-data">Transforming data</a>
+  <ul>
+  <li><a href="#filtering-data" id="toc-filtering-data" class="nav-link" data-scroll-target="#filtering-data">Filtering data</a></li>
+  <li><a href="#selecting-variables" id="toc-selecting-variables" class="nav-link" data-scroll-target="#selecting-variables">Selecting variables</a></li>
+  </ul></li>
+  <li><a href="#calculating-descriptive-statistics" id="toc-calculating-descriptive-statistics" class="nav-link" data-scroll-target="#calculating-descriptive-statistics">Calculating descriptive statistics</a></li>
+  <li><a href="#create-a-box-plot" id="toc-create-a-box-plot" class="nav-link" data-scroll-target="#create-a-box-plot">Create a box plot</a>
+  <ul>
+  <li><a href="#making-graphs-using-ggplot2" id="toc-making-graphs-using-ggplot2" class="nav-link" data-scroll-target="#making-graphs-using-ggplot2">Making graphs using <em>ggplot2</em></a></li>
+  <li><a href="#start-by-creating-a-ggplot" id="toc-start-by-creating-a-ggplot" class="nav-link" data-scroll-target="#start-by-creating-a-ggplot">Start by creating a ggplot</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -572,10 +617,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Start by setting up working directory and install R packages needed for the tutorial.</p>
-<section id="installing-r-packages" class="level2">
-<h2 class="anchored" data-anchor-id="installing-r-packages">Installing R packages</h2>
-<p>An R package is like a toolbox, except that instead of containing tools, it contains functions for performing specific tasks such as filtering data, calculate descriptive statistics (such as average, variance, standard deviation, etc.), or fitting a statistical model. Most of the R packages you will need for these tutorials are freely available from <a href="https://cran.r-project.org/">CRAN</a> (The Comprehensive R Archive Network) or <a href="https://github.com/">GitHub</a>. You can install CRAN R packages using <code>install.packages()</code>. If you want to install an R package stored in a GitHub repository, use <code>install_github()</code> in the <em>devtools</em> R package.</p>
+<section id="about-this-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="about-this-tutorial">About this tutorial</h2>
+<p>Welcome to this introductory tutorial on R and descriptive statistics!</p>
+<p>By the end of this tutorial, you should be able to set your working directory, install and load R packages, import and filter data, and calculate summary statistics from that data. You will also create your first box plot!</p>
+<p>Let’s get started!</p>
+</section>
+<section id="before-starting" class="level2">
+<h2 class="anchored" data-anchor-id="before-starting">Before starting</h2>
+<p>Before you begin, make sure you download the data files needed for the tutorials. These files are available on Brightspace. Save these files in a specific folder (give it any name you like) so you can find them easily.</p>
+</section>
+<section id="setting-your-working-directory" class="level2">
+<h2 class="anchored" data-anchor-id="setting-your-working-directory">Setting your working directory</h2>
+<p>In R, the working directory is the default folder on your computer where R looks for files you want to read and where it saves files you create. When you refer to a file without giving its full path, R assumes it is located in the working directory. You can check the current working directory using <code>getwd()</code>, and you can change it with <code>setwd("path/to/your/folder")</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+How do you find the path to a folder on your computer?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To set a working directory in R, you first need the path to the folder on your computer. How you get this path depends on your operating system.</p>
+<p>On <strong>Windows</strong>, open <em>File Explorer</em> and navigate to the folder you want to use. Click in the address bar at the top of the window. The folder location will turn into a text path (for example, <code>C:\Users\Name\Documents\Project</code>). Copy this path. When using it in R, remember that backslashes must either be doubled (<code>C:\\Users\\Name\\Documents\\Project</code>) or replaced by forward slashes (<code>C:/Users/Name/Documents/Project</code>).</p>
+<p>On <strong>macOS</strong>, open <em>Finder</em> and navigate to the folder. Right-click (or Control-click) the folder and hold the Option key. The menu will show “Copy … as Pathname”. Copying this gives you a path such as <code>/Users/name/Documents/Project</code>, which you can paste directly into R without modification.</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -586,20 +655,497 @@ Exercise 1
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>Set a working directory using <code>setwd()</code>. Choose the folder in which you saved the data files that you downloaded from Brightspace.</p>
+</div>
+</div>
+</section>
+<section id="installing-r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="installing-r-packages">Installing R packages</h2>
+<p>An R package is like a toolbox, except that instead of containing tools, it contains functions for performing specific tasks such as filtering data, calculate descriptive statistics (such as average, variance, standard deviation, etc.), or fitting a statistical model. Most of the R packages you will need for these tutorials are freely available from <a href="https://cran.r-project.org/">CRAN</a> (The Comprehensive R Archive Network) or <a href="https://github.com/">GitHub</a>. You can install CRAN R packages using <code>install.packages()</code>. If you want to install an R package stored in a GitHub repository, use <code>install_github()</code> in the <em>devtools</em> R package.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Install an R package called <em>readxl</em>, which will allow you to import data from Excel files. When using <code>install.packages()</code> to perform this operation, remember to enclose <em>readxl</em> in quotation marks, as it is a character string.</p>
+<p>Once this is done, install the <a href="https://www.tidyverse.org/"><em>tidyverse</em></a> package, which is a collection of R packages for data science. When installing <em>tidyverse</em>, you will install a suite of R packages that are very commonly used when processing and visualising data, such as <em>readr</em>, <em>dyplr</em>, <em>tibble</em>, <em>ggplot2</em>, and more!</p>
 </div>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Install an R package to import data from Excel files</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readxl"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Install readxl</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readxl"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Install tidyverse</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+</div>
+</section>
+<section id="loading-r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="loading-r-packages">Loading R packages</h2>
+<p>In R, you load an R package using the <code>library()</code> function. You simply write the name of the package inside the parentheses <u>without quotation marks</u>. Once a package is loaded, all of its functions become available for use in your session. You only need to load a package once per R session, but you must do so every time you restart R.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Loading R packages in RStudio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>R packages can also be loaded directly in RStudio without writing any code. In the Packages tab (usually in the bottom-right pane), you can tick the box next to a package name to load it. RStudio will automatically run the corresponding <code>library()</code> command in the background. While this can be convenient, writing <code>library()</code> in your script is recommended for reproducibility, as it makes your code self-contained and easier to share.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Load <em>readxl</em> and <em>tidyverse</em> using <code>library()</code>.</p>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="importing-data" class="level2">
+<h2 class="anchored" data-anchor-id="importing-data">Importing data</h2>
+<p>On Brightspace, you will find the raw data file (gss_statistics_master_data_set2) in two formats: an Excel worksheet (.xlsx extension) and a Comma Separated Values file (.csv extension). Both files contain exactly the same data, but they give us the opportunity to explore different ways to import data into R.</p>
+<p>R offers a variety of functions for importing data, and the best choice usually depends on the file format. For example:</p>
+<ul>
+<li>For CSV files (comma-separated values), <code>read_csv()</code> from the <em>readr</em> package is a convenient option.</li>
+<li>For general text files with different delimiters, <code>read_delim()</code> is more flexible.</li>
+<li>For Excel files (.xlsx), <code>read_excel()</code> from the <em>readxl</em> package allows you to import the data directly.</li>
+</ul>
+<p>Using these functions, you can quickly bring your data into R and start exploring it. By default, all of these functions assume that the first row of your data contains the column names (or variable names).</p>
+<p>To use the functions listed above, you simply provide the file name and extension in quotation marks as an argument.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Load the data from one of the two files available on Brightspace (gss_statistics_master_data_set2). Store the data in an R object called <code>data</code>. If you choose the CSV file, use the <code>read_csv()</code> function; if you choose the Excel file, use the <code>read_excel()</code> function.</p>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1 (csv file)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"gss_statistics_master_data_set2.csv"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 2 (Excel file)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"gss_statistics_master_data_set2.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Missing values in R
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In R, missing values in a dataset are represented by <code>NA</code>, which stands for Not Available. R treats <code>NA</code> as an unknown value rather than as zero. As a result, any calculation or comparison involving a missing value usually returns <code>NA</code>, because the result cannot be determined.</p>
+<p>Before working with a new dataset, it is always recommended to check how many values are missing and where they occur in the data. Identifying missing values and the groups they affect is important, as they can have implications for data analysis (discussed later in this course).</p>
+</div>
+</div>
+</section>
+<section id="transforming-data" class="level2">
+<h2 class="anchored" data-anchor-id="transforming-data">Transforming data</h2>
+<p>In the previous tutorial, you learned about indexing (i.e., how to extract a value from an R object). When working with tidy data frames, it is very handy to rely on functions of the <em>dplyr</em> package to filter data and select variables.</p>
+<section id="filtering-data" class="level3">
+<h3 class="anchored" data-anchor-id="filtering-data">Filtering data</h3>
+<p>Filtering allows you to select specific rows in your dataset based on column values. This is particularly useful if you only want to work on specific factor levels. We can do this using <code>filter()</code> from the <em>dplyr</em> package.</p>
+<p>To make the <code>filter()</code> function work, you must provide a data frame as the first input (this is the dataset you want to filter). Then, you need to specify one or more logical conditions that describe which rows should be kept. These conditions are usually built using relational and logical operators and are written using the variable names from the dataset, without quotation marks. <code>filter()</code> then returns a new data frame containing only the rows that satisfy the given conditions.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Double colon operator
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In R, the notation <code>::</code> is used to access a specific object (such as a function or dataset) from a particular package without attaching that package with <code>library()</code>. For example, <code>dplyr::filter()</code> explicitly calls the <code>filter()</code> function from the <em>dplyr</em> package, avoiding ambiguity if another package defines a function with the same name.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Create a new data frame called <code>subset1</code> that only contains observations associated with eco farms (<code>farm_type</code> variable). Make sure to use the <code>filter()</code> function in the <em>dplyr</em> package using <code>dplyr::filter()</code>.</li>
+<li>Create a new data frame called <code>subset2</code> that only contains observations associated with eco farms (<code>farm_type</code> variable) that have a coffee productivity greater than or equal to 1000 kg/ha/year (<code>coffee_prod</code> variable).</li>
+</ol>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Solution 2</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>subset1 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"eco"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>subset2 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"eco"</span> <span class="sc">&amp;</span> coffee_prod <span class="sc">&gt;=</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="selecting-variables" class="level3">
+<h3 class="anchored" data-anchor-id="selecting-variables">Selecting variables</h3>
+<p>If you have a large dataset, you may want to subset your data and only keep the variables that interest you the most. This is done using <code>select()</code>. You can use the same function to selectively remove columns from your dataset. It works in a similar way to <code>filter()</code>, but instead of using logical conditions to keep rows, <code>select()</code> uses variable (column) names to choose which columns to keep (or remove). The variable names are written without quotation marks, and the result is a new data frame containing only the selected columns.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Create a new data frame called <code>subset3</code> that only contains information about the farm type and soil characteristics. Make sure to use the <code>select()</code> function in the <em>dplyr</em> package using <code>dplyr::select()</code>.</p>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>subset3 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">select</span>(data,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                         farm_type,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                         pH,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                         SOM,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                         clay,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                         P_soil,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                         K_soil,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                         SB,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                         litter_thickness)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="calculating-descriptive-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-descriptive-statistics">Calculating descriptive statistics</h2>
+<p>Descriptive statistics are useful to better understand and describe our data. It is possible to calculate descriptive statistics in R using base R functions or formulas. Some of the most important functions to compute statistical parameters are shown in <a href="#tbl-statfunctions" class="quarto-xref">Table&nbsp;1</a>.</p>
+<div id="tbl-statfunctions" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-statfunctions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: R functions to calculate common statistical parameters
+</figcaption>
+<div aria-describedby="tbl-statfunctions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>R function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>sum()</code></td>
+<td>Returns the sum of a set of observations</td>
+</tr>
+<tr class="even">
+<td><code>mean()</code></td>
+<td>Returns the average value of a set of observations</td>
+</tr>
+<tr class="odd">
+<td><code>sd()</code></td>
+<td>Returns the standard deviation of a set of observations</td>
+</tr>
+<tr class="even">
+<td><code>var()</code></td>
+<td>Returns the variance of a set of observations</td>
+</tr>
+<tr class="odd">
+<td><code>min()</code></td>
+<td>Returns the minimum value of a set of observations</td>
+</tr>
+<tr class="even">
+<td><code>max()</code></td>
+<td>Returns the maximum value of a set of observations</td>
+</tr>
+<tr class="odd">
+<td><code>range()</code></td>
+<td>Returns the range [min - max] of a set of observations</td>
+</tr>
+<tr class="even">
+<td><code>median()</code></td>
+<td>Returns the median value of a set of observations</td>
+</tr>
+<tr class="odd">
+<td><code>quantile()</code></td>
+<td>Returns the quantile values of a set of observations</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Take a good look at the dataset (<code>data</code>) and answer the questions below.</p>
+<ol type="1">
+<li><p>Calculate the average, variance, and range of all the plant variables and store these values into separate R objects. Remember that the dollar sign (<code>$</code>) can be used to access a specific column in a data frame.</p></li>
+<li><p>Use this information to calculate the coefficient of variation of each plant variable. Remember that the coefficient of variation (CV) is calculated by dividing the standard deviation (the square root of the variance) by the mean. It provides a standardized measure of variability relative to the size of the mean. The <code>sqrt()</code> function allows you to calculate the square root of a number. Which variable has the highest variation relative to the mean?</p></li>
+<li><p>Calculate the standard deviation of <code>tree_density</code> using two different approaches. Remember that the general formula to calculate a standard deviation is:</p>
+<p><span class="math display">\[
+s = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} \left(x_i - \bar{x}\right)^2}
+\]</span></p>
+<ul>
+<li><u>Approach 1</u>: Use the <code>sum()</code> and <code>length()</code> functions to write a formula to calculate the standard deviation</li>
+<li><u>Approach 2</u>: Use the <code>sd()</code> function to calculate the standard deviation</li>
+</ul></li>
+<li><p>Reflect on the differences between the mean and the median. What is the main difference between these two descriptive statistics? Which one is more sensitive to the presence of outliers in the data?</p></li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Solution 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false">Solution 4</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate mean values</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mean_tree_cover <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>tree_cover)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>mean_tree_density <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>tree_density)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>mean_total_species <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>total_species)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>mean_shannon <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>shannon_PIM)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>mean_CWM_SLA <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>CWM.SLA)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>mean_CWM_N <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>CWM.N)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate variance values</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>var_tree_cover <span class="ot">&lt;-</span> <span class="fu">var</span>(data<span class="sc">$</span>tree_cover)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>var_tree_density <span class="ot">&lt;-</span> <span class="fu">var</span>(data<span class="sc">$</span>tree_density)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>var_total_species <span class="ot">&lt;-</span> <span class="fu">var</span>(data<span class="sc">$</span>total_species)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>var_shannon <span class="ot">&lt;-</span> <span class="fu">var</span>(data<span class="sc">$</span>shannon_PIM)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>var_CWM_SLA <span class="ot">&lt;-</span> <span class="fu">var</span>(data<span class="sc">$</span>CWM.SLA)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>var_CWM_N <span class="ot">&lt;-</span> <span class="fu">var</span>(data<span class="sc">$</span>CWM.N)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate range values</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>range_tree_cover <span class="ot">&lt;-</span> <span class="fu">range</span>(data<span class="sc">$</span>tree_cover)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>range_tree_density <span class="ot">&lt;-</span> <span class="fu">range</span>(data<span class="sc">$</span>tree_density)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>range_total_species <span class="ot">&lt;-</span> <span class="fu">range</span>(data<span class="sc">$</span>total_species)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>range_shannon <span class="ot">&lt;-</span> <span class="fu">range</span>(data<span class="sc">$</span>shannon_PIM)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>range_CWM_SLA <span class="ot">&lt;-</span> <span class="fu">range</span>(data<span class="sc">$</span>CWM.SLA)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>range_CWM_N <span class="ot">&lt;-</span> <span class="fu">range</span>(data<span class="sc">$</span>CWM.N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate coefficients of variation (CV)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>CV_tree_cover <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(var_tree_cover) <span class="sc">/</span> mean_tree_cover</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>CV_tree_density <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(var_tree_density) <span class="sc">/</span> mean_tree_density</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>CV_total_species <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(var_total_species) <span class="sc">/</span> mean_total_species</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>CV_shannon <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(var_shannon) <span class="sc">/</span> mean_shannon</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>CV_CWM_SLA <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(var_CWM_SLA) <span class="sc">/</span> mean_CWM_SLA</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>CV_CWM_N <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(var_CWM_N) <span class="sc">/</span> mean_CWM_N</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Find the variable with the greatest CV value</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Start by creating a named vector containing all the CV values</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>all_CVs <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">CV_tree_cover =</span> CV_tree_cover,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">CV_tree_density =</span> CV_tree_density,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">CV_total_species =</span> CV_total_species,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">CV_shannon =</span> CV_shannon,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">CV_CWM_SLA =</span> CV_CWM_SLA,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">CV_CWM_N =</span> CV_CWM_N</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#Then, sort values in the vector from the largest to the smallest</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(all_CVs, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The variable <code>tree_cover</code> presents the highest variation in relation to the mean (CV=1.592). The variation is very high because some farms have a lot of trees (high tree cover) while others have none.</p>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Approach 1</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sum_of_squares <span class="ot">&lt;-</span> <span class="fu">sum</span>((data<span class="sc">$</span>tree_density <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>tree_density))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sd_tree_density <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(sum_of_squares <span class="sc">/</span> (<span class="fu">length</span>(data<span class="sc">$</span>tree_density)<span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Approach 2</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>sd_tree_density <span class="ot">&lt;-</span> <span class="fu">sd</span>(data<span class="sc">$</span>tree_density)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<p>The mean and the median are both measures of central tendency. The mean is calculated as the arithmetic average and therefore depends on the magnitude of all observations, whereas the median is the middle value when the data are ordered from smallest to largest. Because the mean incorporates all values directly, it is highly sensitive to outliers: a single extreme observation can substantially shift it. The median, in contrast, is more robust to outliers (unless extreme values alter the middle position of the dataset).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="create-a-box-plot" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-box-plot">Create a box plot</h2>
+<section id="making-graphs-using-ggplot2" class="level3">
+<h3 class="anchored" data-anchor-id="making-graphs-using-ggplot2">Making graphs using <em>ggplot2</em></h3>
+<p>When visualising data in R, you can of course use base R functions (e.g., <code>plot</code>, <code>points</code>, <code>lines</code>, <code>boxplot</code>, etc.). In this course, however, we will mostly focus on functions of the <em>ggplot2</em> R package (although we will also use some base R functions to create plots from time to time). This is because <em>ggplot2</em> can produce high-quality figures very quickly, even for complex datasets. With <em>ggplot2</em>, you can generate a wide variety of graphs, including scatter plots, bar charts, histograms, box plots and much more, while having control over layouts, labels and aesthetics, such as colours, sizes and shapes. <em>ggplot2</em> relies on a coherent system for building graphs: the <strong>grammar of graphics</strong>. Using <em>ggplot2</em> requires you to learn a new grammar, which may sound overwhelming at first, but is in fact easy to learn because it relies on a simple set of core principles.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+ggplot2: Elegant Graphics for Data Analysis
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This tutorial will only give you a very brief introduction to <em>ggplot2</em>. If you want to explore all the possibilities offered by <em>ggplot2</em> for data scientists, we recommend going through Hadley Wickham’s reference book: <strong>ggplot2: Elegant Graphics for Data Analysis</strong>. To freely access the content of this book, just click on its cover.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://ggplot2-book.org/"><img src="../../..\Images/Cover_ggplot2.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" width="200"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Posit cheat sheet
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Posit, the open source data science company behind RStudio, developed some very useful cheat sheets to help you remember how to use some of the core <em>tidyverse</em> packages, including <em>ggplot2</em>. You can download the ggplot2 cheat sheet using this <a href="https://rstudio.github.io/cheatsheets/html/data-visualization.html?_gl=1*19kcxbo*_ga*NzQwNjg4NjIuMTcxMjA0NzkyNA..*_ga_2C0WZ1JHG0*MTcxMjMwNDYwNS4zLjEuMTcxMjMwNDcyMS4wLjAuMA..">link</a>.</p>
+</div>
+</div>
+<p>In this last section of the tutorial, we are going to create a box plot that shows how coffee productivity (<code>coffee_prod</code> variable) depends on farm type (<code>farm_type</code> variable).</p>
+</section>
+<section id="start-by-creating-a-ggplot" class="level3">
+<h3 class="anchored" data-anchor-id="start-by-creating-a-ggplot">Start by creating a ggplot</h3>
+<p>You can start creating a plot using the function <code>ggplot()</code>. Later on, we will add new layers to this ggplot object (using the <code>+</code> sign).</p>
+<p><code>ggplot()</code> has two main arguments: <code>data</code> and <code>mapping</code>. The <code>data</code> argument is used to specify the name of the dataset that should be used to create the graph. The <code>mapping</code> argument is used to specify how variables in your dataset are linked to visual properties (referred to <strong>aesthetics</strong>) of your plot. You should always use the <code>aes()</code> function for the <code>mapping</code> argument. The <code>x</code> and <code>y</code> arguments of <code>aes()</code> are used to choose the x (horizontal) and y (vertical) variables of your plot, respectively. The general syntax to create a ggplot object looks like this:</p>
+<p><code>ggplot(data = your_data, mapping = aes(x, y, other aesthetics))</code></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Create your first ggplot using <code>farm_type</code> and <code>coffee_prod</code> as the <strong>x</strong> and <strong>y</strong> variables, respectively.</p>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> farm_type, <span class="at">y =</span> coffee_prod))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="descriptive_statistics_files/figure-html/unnamed-chunk-10-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As you can see, the structure of the plot is there, but it does not display any data yet. This is because we have not specified in our code how our observations should be represented in our plot. You can do this by defining a <strong>geom</strong>. In <em>ggplot2</em>, there are a number of geom to choose from. Here are a few examples (but see <a href="https://rstudio.github.io/cheatsheets/data-visualization.pdf">ggplot2 cheat sheet</a> for more examples):</p>
+<ul>
+<li><p><code>geom_point()</code>: This geom is used to display individual data points and create a scatter plot.</p></li>
+<li><p><code>geom_jitter()</code>: This geom is similar to <code>geom_point()</code> but jitters the data to improve readability.</p></li>
+<li><p><code>geom_line()</code> and <code>geom_path()</code>: These geom are used to add lines connecting observations in your graph. While <code>geom_path()</code> connects observations in the order in which they appear in the data, <code>geom_line()</code> connects observations in the order of the variable plotted on the x axis of your graph.</p></li>
+<li><p><code>geom_boxplot()</code>: This geom is used to create a box plot, which is particularly useful to display and compare the distribution of a response variable for different groups.</p></li>
+<li><p><code>geom_bar()</code>: This geom is used to create bar charts.</p></li>
+<li><p><code>geom_abline()</code>: This geom is used to add horizontal, vertical, and diagonal lines to your graph.</p></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use <code>geom_boxplot()</code> to create a box plot showing how coffee productivity (<code>coffee_prod</code>) varies among farm types (<code>farm_type</code>). Make the boxes narrower by adjusting the <code>width</code> argument in <code>geom_boxplot()</code> (the default is <code>width = 1</code>). Use <code>xlab()</code> and <code>ylab()</code> to add clear and informative axis labels, including units. Optionally, you may change the appearance of the plot by applying a different theme, such as <code>theme_bw()</code> for a dark-on-light style.</p>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> farm_type, <span class="at">y =</span> coffee_prod)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.5</span>)<span class="sc">+</span> <span class="co">#Create a box plot</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Farm type"</span>)<span class="sc">+</span> <span class="co">#Change name of x axis</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Coffee productivity (kg/ha/year)"</span>)<span class="sc">+</span> <span class="co">#Change name of y axis</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="co">#This creates a black/white plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="descriptive_statistics_files/figure-html/unnamed-chunk-11-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
 </div>
 
 
 <!-- -->
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1078,50 +1624,436 @@ Exercise 1
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Tutorial 2: Introduction to R and descriptive statistics"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Benjamin Delory</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-1190-8060</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">    email: b.m.m.delory@uu.nl</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Copernicus institute of sustainable development, Utrecht University</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Natalie Davis</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-2678-0389</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">    email: n.a.davis@vu.nl</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Amsterdam sustainability institute, Vrije Universiteit Amsterdam</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Heitor Mancini Teixeira</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-6992-0671</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">    email: heitor.teixeira@ufv.br</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Departamento de Solos Centro de Ciências Agrárias, Universidade Federal de Vicosa, Brazil</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="an">editor_options:</span><span class="co"> </span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">  chunk_output_type: console</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> /Images/Rlogo.png</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>Start by setting up working directory and install R packages needed for the tutorial.</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Installing R packages</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>An R package is like a toolbox, except that instead of containing tools, it contains functions for performing specific tasks such as filtering data, calculate descriptive statistics (such as average, variance, standard deviation, etc.), or fitting a statistical model. Most of the R packages you will need for these tutorials are freely available from <span class="co">[</span><span class="ot">CRAN</span><span class="co">](https://cran.r-project.org/)</span> (The Comprehensive R Archive Network) or <span class="co">[</span><span class="ot">GitHub</span><span class="co">](https://github.com/)</span>. You can install CRAN R packages using <span class="in">`install.packages()`</span>. If you want to install an R package stored in a GitHub repository, use <span class="in">`install_github()`</span> in the *devtools* R package.</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 1</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>Install an R package called *readxl*, which will allow you to import data from Excel files. When using `install.packages()` to perform this operation, remember to enclose *readxl* in quotation marks, as it is a character string.</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true    </span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co">#Install an R package to import data from Excel files</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readxl"</span>)</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Tutorial 2: Introduction to R and descriptive statistics"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Benjamin Delory</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-1190-8060</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">    email: b.m.m.delory@uu.nl</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Copernicus institute of sustainable development, Utrecht University</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Natalie Davis</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-2678-0389</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">    email: n.a.davis@vu.nl</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Amsterdam sustainability institute, Vrije Universiteit Amsterdam</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Heitor Mancini Teixeira</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-6992-0671</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">    email: heitor.teixeira@ufv.br</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Departamento de Solos Centro de Ciências Agrárias, Universidade Federal de Vicosa, Brazil</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="an">editor_options:</span><span class="co"> </span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co">  chunk_output_type: console</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> /Images/Rlogo.png</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## About this tutorial</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>Welcome to this introductory tutorial on R and descriptive statistics!</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>By the end of this tutorial, you should be able to set your working directory, install and load R packages, import and filter data, and calculate summary statistics from that data. You will also create your first box plot!</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>Let's get started!</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## Before starting</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>Before you begin, make sure you download the data files needed for the tutorials. These files are available on Brightspace. Save these files in a specific folder (give it any name you like) so you can find them easily.</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setting your working directory</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>In R, the working directory is the default folder on your computer where R looks for files you want to read and where it saves files you create. When you refer to a file without giving its full path, R assumes it is located in the working directory. You can check the current working directory using <span class="in">`getwd()`</span>, and you can change it with <span class="in">`setwd("path/to/your/folder")`</span>.</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## How do you find the path to a folder on your computer?</span></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>To set a working directory in R, you first need the path to the folder on your computer. How you get this path depends on your operating system.</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>On **Windows**, open *File Explorer* and navigate to the folder you want to use. Click in the address bar at the top of the window. The folder location will turn into a text path (for example, <span class="in">`C:\Users\Name\Documents\Project`</span>). Copy this path. When using it in R, remember that backslashes must either be doubled (<span class="in">`C:\\Users\\Name\\Documents\\Project`</span>) or replaced by forward slashes (<span class="in">`C:/Users/Name/Documents/Project`</span>).</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>On **macOS**, open *Finder* and navigate to the folder. Right-click (or Control-click) the folder and hold the Option key. The menu will show “Copy … as Pathname”. Copying this gives you a path such as <span class="in">`/Users/name/Documents/Project`</span>, which you can paste directly into R without modification.</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 1</span></span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>Set a working directory using <span class="in">`setwd()`</span>. Choose the folder in which you saved the data files that you downloaded from Brightspace.</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a><span class="fu">## Installing R packages</span></span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>An R package is like a toolbox, except that instead of containing tools, it contains functions for performing specific tasks such as filtering data, calculate descriptive statistics (such as average, variance, standard deviation, etc.), or fitting a statistical model. Most of the R packages you will need for these tutorials are freely available from <span class="co">[</span><span class="ot">CRAN</span><span class="co">](https://cran.r-project.org/)</span> (The Comprehensive R Archive Network) or <span class="co">[</span><span class="ot">GitHub</span><span class="co">](https://github.com/)</span>. You can install CRAN R packages using <span class="in">`install.packages()`</span>. If you want to install an R package stored in a GitHub repository, use <span class="in">`install_github()`</span> in the *devtools* R package.</span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 2</span></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>Install an R package called *readxl*, which will allow you to import data from Excel files. When using `install.packages()` to perform this operation, remember to enclose *readxl* in quotation marks, as it is a character string.</span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>Once this is done, install the <span class="co">[</span><span class="ot">*tidyverse*</span><span class="co">](https://www.tidyverse.org/)</span> package, which is a collection of R packages for data science. When installing *tidyverse*, you will install a suite of R packages that are very commonly used when processing and visualising data, such as *readr*, *dyplr*, *tibble*, *ggplot2*, and more!</span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a><span class="co">#Install readxl</span></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readxl"</span>)</span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a><span class="co">#Install tidyverse</span></span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a><span class="fu">## Loading R packages</span></span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>In R, you load an R package using the <span class="in">`library()`</span> function. You simply write the name of the package inside the parentheses <span class="co">[</span><span class="ot">without quotation marks</span><span class="co">]</span>{.underline}. Once a package is loaded, all of its functions become available for use in your session. You only need to load a package once per R session, but you must do so every time you restart R.</span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a><span class="fu">## Loading R packages in RStudio</span></span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>R packages can also be loaded directly in RStudio without writing any code. In the Packages tab (usually in the bottom-right pane), you can tick the box next to a package name to load it. RStudio will automatically run the corresponding <span class="in">`library()`</span> command in the background. While this can be convenient, writing <span class="in">`library()`</span> in your script is recommended for reproducibility, as it makes your code self-contained and easier to share.</span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 3</span></span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a>Load *readxl* and *tidyverse* using <span class="in">`library()`</span>.</span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a><span class="fu">## Importing data</span></span>
+<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a>On Brightspace, you will find the raw data file (gss_statistics_master_data_set2) in two formats: an Excel worksheet (.xlsx extension) and a Comma Separated Values file (.csv extension). Both files contain exactly the same data, but they give us the opportunity to explore different ways to import data into R.</span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a>R offers a variety of functions for importing data, and the best choice usually depends on the file format. For example:</span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>For CSV files (comma-separated values), <span class="in">`read_csv()`</span> from the *readr* package is a convenient option.</span>
+<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>For general text files with different delimiters, <span class="in">`read_delim()`</span> is more flexible.</span>
+<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>For Excel files (.xlsx), <span class="in">`read_excel()`</span> from the *readxl* package allows you to import the data directly.</span>
+<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a>Using these functions, you can quickly bring your data into R and start exploring it. By default, all of these functions assume that the first row of your data contains the column names (or variable names).</span>
+<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a>To use the functions listed above, you simply provide the file name and extension in quotation marks as an argument.</span>
+<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 4</span></span>
+<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a>Load the data from one of the two files available on Brightspace (gss_statistics_master_data_set2). Store the data in an R object called <span class="in">`data`</span>. If you choose the CSV file, use the <span class="in">`read_csv()`</span> function; if you choose the Excel file, use the <span class="in">`read_excel()`</span> function.</span>
+<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1 (csv file)</span></span>
+<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"gss_statistics_master_data_set2.csv"</span>)</span>
+<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 2 (Excel file)</span></span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"gss_statistics_master_data_set2.xlsx"</span>)</span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a><span class="fu">## Missing values in R</span></span>
+<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a>In R, missing values in a dataset are represented by <span class="in">`NA`</span>, which stands for Not Available. R treats <span class="in">`NA`</span> as an unknown value rather than as zero. As a result, any calculation or comparison involving a missing value usually returns <span class="in">`NA`</span>, because the result cannot be determined.</span>
+<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a>Before working with a new dataset, it is always recommended to check how many values are missing and where they occur in the data. Identifying missing values and the groups they affect is important, as they can have implications for data analysis (discussed later in this course).</span>
+<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a><span class="fu">## Transforming data</span></span>
+<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a>In the previous tutorial, you learned about indexing (i.e., how to extract a value from an R object). When working with tidy data frames, it is very handy to rely on functions of the *dplyr* package to filter data and select variables.</span>
+<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a><span class="fu">### Filtering data</span></span>
+<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a>Filtering allows you to select specific rows in your dataset based on column values. This is particularly useful if you only want to work on specific factor levels. We can do this using <span class="in">`filter()`</span> from the *dplyr* package.</span>
+<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a>To make the <span class="in">`filter()`</span> function work, you must provide a data frame as the first input (this is the dataset you want to filter). Then, you need to specify one or more logical conditions that describe which rows should be kept. These conditions are usually built using relational and logical operators and are written using the variable names from the dataset, without quotation marks. <span class="in">`filter()`</span> then returns a new data frame containing only the rows that satisfy the given conditions.</span>
+<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a><span class="fu">## Double colon operator</span></span>
+<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a>In R, the notation <span class="in">`::`</span> is used to access a specific object (such as a function or dataset) from a particular package without attaching that package with <span class="in">`library()`</span>. For example, <span class="in">`dplyr::filter()`</span> explicitly calls the <span class="in">`filter()`</span> function from the *dplyr* package, avoiding ambiguity if another package defines a function with the same name.</span>
+<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 5</span></span>
+<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Create a new data frame called <span class="in">`subset1`</span> that only contains observations associated with eco farms (<span class="in">`farm_type`</span> variable). Make sure to use the <span class="in">`filter()`</span> function in the *dplyr* package using <span class="in">`dplyr::filter()`</span>.</span>
+<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Create a new data frame called <span class="in">`subset2`</span> that only contains observations associated with eco farms (<span class="in">`farm_type`</span> variable) that have a coffee productivity greater than or equal to 1000 kg/ha/year (<span class="in">`coffee_prod`</span> variable).</span>
+<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a>subset1 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"eco"</span>)</span>
+<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a>subset2 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"eco"</span> <span class="sc">&amp;</span> coffee_prod <span class="sc">&gt;=</span> <span class="dv">1000</span>)</span>
+<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a><span class="fu">### Selecting variables</span></span>
+<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a>If you have a large dataset, you may want to subset your data and only keep the variables that interest you the most. This is done using <span class="in">`select()`</span>. You can use the same function to selectively remove columns from your dataset. It works in a similar way to <span class="in">`filter()`</span>, but instead of using logical conditions to keep rows, <span class="in">`select()`</span> uses variable (column) names to choose which columns to keep (or remove). The variable names are written without quotation marks, and the result is a new data frame containing only the selected columns.</span>
+<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 6</span></span>
+<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a>Create a new data frame called <span class="in">`subset3`</span> that only contains information about the farm type and soil characteristics. Make sure to use the <span class="in">`select()`</span> function in the *dplyr* package using <span class="in">`dplyr::select()`</span>.</span>
+<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a>subset3 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">select</span>(data,</span>
+<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a>                         farm_type,</span>
+<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a>                         pH,</span>
+<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a>                         SOM,</span>
+<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a>                         clay,</span>
+<span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a>                         P_soil,</span>
+<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a>                         K_soil,</span>
+<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a>                         SB,</span>
+<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a>                         litter_thickness)</span>
+<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calculating descriptive statistics</span></span>
+<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a>Descriptive statistics are useful to better understand and describe our data. It is possible to calculate descriptive statistics in R using base R functions or formulas. Some of the most important functions to compute statistical parameters are shown in @tbl-statfunctions.</span>
+<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> R function   <span class="pp">|</span> Description                                              <span class="pp">|</span></span>
+<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------------|----------------------------------------------------------|</span></span>
+<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`sum()`</span>      <span class="pp">|</span> Returns the sum of a set of observations                 <span class="pp">|</span></span>
+<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`mean()`</span>     <span class="pp">|</span> Returns the average value of a set of observations       <span class="pp">|</span></span>
+<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`sd()`</span>       <span class="pp">|</span> Returns the standard deviation of a set of observations  <span class="pp">|</span></span>
+<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`var()`</span>      <span class="pp">|</span> Returns the variance of a set of observations            <span class="pp">|</span></span>
+<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`min()`</span>      <span class="pp">|</span> Returns the minimum value of a set of observations       <span class="pp">|</span></span>
+<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`max()`</span>      <span class="pp">|</span> Returns the maximum value of a set of observations       <span class="pp">|</span></span>
+<span id="cb12-248"><a href="#cb12-248" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`range()`</span>    <span class="pp">|</span> Returns the range <span class="sc">\[</span>min - max<span class="sc">\]</span> of a set of observations <span class="pp">|</span></span>
+<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`median()`</span>   <span class="pp">|</span> Returns the median value of a set of observations        <span class="pp">|</span></span>
+<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`quantile()`</span> <span class="pp">|</span> Returns the quantile values of a set of observations     <span class="pp">|</span></span>
+<span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a>: R functions to calculate common statistical parameters {#tbl-statfunctions}</span>
+<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 7</span></span>
+<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a>Take a good look at the dataset (<span class="in">`data`</span>) and answer the questions below.</span>
+<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-259"><a href="#cb12-259" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Calculate the average, variance, and range of all the plant variables and store these values into separate R objects. Remember that the dollar sign (<span class="in">`$`</span>) can be used to access a specific column in a data frame.</span>
+<span id="cb12-260"><a href="#cb12-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-261"><a href="#cb12-261" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Use this information to calculate the coefficient of variation of each plant variable. Remember that the coefficient of variation (CV) is calculated by dividing the standard deviation (the square root of the variance) by the mean. It provides a standardized measure of variability relative to the size of the mean. The <span class="in">`sqrt()`</span> function allows you to calculate the square root of a number. Which variable has the highest variation relative to the mean?</span>
+<span id="cb12-262"><a href="#cb12-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-263"><a href="#cb12-263" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Calculate the standard deviation of <span class="in">`tree_density`</span> using two different approaches. Remember that the general formula to calculate a standard deviation is:</span>
+<span id="cb12-264"><a href="#cb12-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-265"><a href="#cb12-265" aria-hidden="true" tabindex="-1"></a>    $$</span>
+<span id="cb12-266"><a href="#cb12-266" aria-hidden="true" tabindex="-1"></a>    s = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} \left(x_i - \bar{x}\right)^2}</span>
+<span id="cb12-267"><a href="#cb12-267" aria-hidden="true" tabindex="-1"></a>    $$</span>
+<span id="cb12-268"><a href="#cb12-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-269"><a href="#cb12-269" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="co">[</span><span class="ot">Approach 1</span><span class="co">]</span>{.underline}: Use the <span class="in">`sum()`</span> and <span class="in">`length()`</span> functions to write a formula to calculate the standard deviation</span>
+<span id="cb12-270"><a href="#cb12-270" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="co">[</span><span class="ot">Approach 2</span><span class="co">]</span>{.underline}: Use the <span class="in">`sd()`</span> function to calculate the standard deviation</span>
+<span id="cb12-271"><a href="#cb12-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-272"><a href="#cb12-272" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Reflect on the differences between the mean and the median. What is the main difference between these two descriptive statistics? Which one is more sensitive to the presence of outliers in the data?</span>
+<span id="cb12-273"><a href="#cb12-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-274"><a href="#cb12-274" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb12-275"><a href="#cb12-275" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb12-276"><a href="#cb12-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-279"><a href="#cb12-279" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-280"><a href="#cb12-280" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-281"><a href="#cb12-281" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb12-282"><a href="#cb12-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-283"><a href="#cb12-283" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate mean values</span></span>
+<span id="cb12-284"><a href="#cb12-284" aria-hidden="true" tabindex="-1"></a>mean_tree_cover <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>tree_cover)</span>
+<span id="cb12-285"><a href="#cb12-285" aria-hidden="true" tabindex="-1"></a>mean_tree_density <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>tree_density)</span>
+<span id="cb12-286"><a href="#cb12-286" aria-hidden="true" tabindex="-1"></a>mean_total_species <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>total_species)</span>
+<span id="cb12-287"><a href="#cb12-287" aria-hidden="true" tabindex="-1"></a>mean_shannon <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>shannon_PIM)</span>
+<span id="cb12-288"><a href="#cb12-288" aria-hidden="true" tabindex="-1"></a>mean_CWM_SLA <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>CWM.SLA)</span>
+<span id="cb12-289"><a href="#cb12-289" aria-hidden="true" tabindex="-1"></a>mean_CWM_N <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>CWM.N)</span>
+<span id="cb12-290"><a href="#cb12-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-291"><a href="#cb12-291" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate variance values</span></span>
+<span id="cb12-292"><a href="#cb12-292" aria-hidden="true" tabindex="-1"></a>var_tree_cover <span class="ot">&lt;-</span> <span class="fu">var</span>(data<span class="sc">$</span>tree_cover)</span>
+<span id="cb12-293"><a href="#cb12-293" aria-hidden="true" tabindex="-1"></a>var_tree_density <span class="ot">&lt;-</span> <span class="fu">var</span>(data<span class="sc">$</span>tree_density)</span>
+<span id="cb12-294"><a href="#cb12-294" aria-hidden="true" tabindex="-1"></a>var_total_species <span class="ot">&lt;-</span> <span class="fu">var</span>(data<span class="sc">$</span>total_species)</span>
+<span id="cb12-295"><a href="#cb12-295" aria-hidden="true" tabindex="-1"></a>var_shannon <span class="ot">&lt;-</span> <span class="fu">var</span>(data<span class="sc">$</span>shannon_PIM)</span>
+<span id="cb12-296"><a href="#cb12-296" aria-hidden="true" tabindex="-1"></a>var_CWM_SLA <span class="ot">&lt;-</span> <span class="fu">var</span>(data<span class="sc">$</span>CWM.SLA)</span>
+<span id="cb12-297"><a href="#cb12-297" aria-hidden="true" tabindex="-1"></a>var_CWM_N <span class="ot">&lt;-</span> <span class="fu">var</span>(data<span class="sc">$</span>CWM.N)</span>
+<span id="cb12-298"><a href="#cb12-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-299"><a href="#cb12-299" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate range values</span></span>
+<span id="cb12-300"><a href="#cb12-300" aria-hidden="true" tabindex="-1"></a>range_tree_cover <span class="ot">&lt;-</span> <span class="fu">range</span>(data<span class="sc">$</span>tree_cover)</span>
+<span id="cb12-301"><a href="#cb12-301" aria-hidden="true" tabindex="-1"></a>range_tree_density <span class="ot">&lt;-</span> <span class="fu">range</span>(data<span class="sc">$</span>tree_density)</span>
+<span id="cb12-302"><a href="#cb12-302" aria-hidden="true" tabindex="-1"></a>range_total_species <span class="ot">&lt;-</span> <span class="fu">range</span>(data<span class="sc">$</span>total_species)</span>
+<span id="cb12-303"><a href="#cb12-303" aria-hidden="true" tabindex="-1"></a>range_shannon <span class="ot">&lt;-</span> <span class="fu">range</span>(data<span class="sc">$</span>shannon_PIM)</span>
+<span id="cb12-304"><a href="#cb12-304" aria-hidden="true" tabindex="-1"></a>range_CWM_SLA <span class="ot">&lt;-</span> <span class="fu">range</span>(data<span class="sc">$</span>CWM.SLA)</span>
+<span id="cb12-305"><a href="#cb12-305" aria-hidden="true" tabindex="-1"></a>range_CWM_N <span class="ot">&lt;-</span> <span class="fu">range</span>(data<span class="sc">$</span>CWM.N)</span>
+<span id="cb12-306"><a href="#cb12-306" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-307"><a href="#cb12-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-308"><a href="#cb12-308" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb12-309"><a href="#cb12-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-312"><a href="#cb12-312" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-313"><a href="#cb12-313" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-314"><a href="#cb12-314" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb12-315"><a href="#cb12-315" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb12-316"><a href="#cb12-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-317"><a href="#cb12-317" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate coefficients of variation (CV)</span></span>
+<span id="cb12-318"><a href="#cb12-318" aria-hidden="true" tabindex="-1"></a>CV_tree_cover <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(var_tree_cover) <span class="sc">/</span> mean_tree_cover</span>
+<span id="cb12-319"><a href="#cb12-319" aria-hidden="true" tabindex="-1"></a>CV_tree_density <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(var_tree_density) <span class="sc">/</span> mean_tree_density</span>
+<span id="cb12-320"><a href="#cb12-320" aria-hidden="true" tabindex="-1"></a>CV_total_species <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(var_total_species) <span class="sc">/</span> mean_total_species</span>
+<span id="cb12-321"><a href="#cb12-321" aria-hidden="true" tabindex="-1"></a>CV_shannon <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(var_shannon) <span class="sc">/</span> mean_shannon</span>
+<span id="cb12-322"><a href="#cb12-322" aria-hidden="true" tabindex="-1"></a>CV_CWM_SLA <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(var_CWM_SLA) <span class="sc">/</span> mean_CWM_SLA</span>
+<span id="cb12-323"><a href="#cb12-323" aria-hidden="true" tabindex="-1"></a>CV_CWM_N <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(var_CWM_N) <span class="sc">/</span> mean_CWM_N</span>
+<span id="cb12-324"><a href="#cb12-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-325"><a href="#cb12-325" aria-hidden="true" tabindex="-1"></a><span class="co">#Find the variable with the greatest CV value</span></span>
+<span id="cb12-326"><a href="#cb12-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-327"><a href="#cb12-327" aria-hidden="true" tabindex="-1"></a><span class="co">#Start by creating a named vector containing all the CV values</span></span>
+<span id="cb12-328"><a href="#cb12-328" aria-hidden="true" tabindex="-1"></a>all_CVs <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb12-329"><a href="#cb12-329" aria-hidden="true" tabindex="-1"></a>  <span class="at">CV_tree_cover =</span> CV_tree_cover,</span>
+<span id="cb12-330"><a href="#cb12-330" aria-hidden="true" tabindex="-1"></a>  <span class="at">CV_tree_density =</span> CV_tree_density,</span>
+<span id="cb12-331"><a href="#cb12-331" aria-hidden="true" tabindex="-1"></a>  <span class="at">CV_total_species =</span> CV_total_species,</span>
+<span id="cb12-332"><a href="#cb12-332" aria-hidden="true" tabindex="-1"></a>  <span class="at">CV_shannon =</span> CV_shannon,</span>
+<span id="cb12-333"><a href="#cb12-333" aria-hidden="true" tabindex="-1"></a>  <span class="at">CV_CWM_SLA =</span> CV_CWM_SLA,</span>
+<span id="cb12-334"><a href="#cb12-334" aria-hidden="true" tabindex="-1"></a>  <span class="at">CV_CWM_N =</span> CV_CWM_N</span>
+<span id="cb12-335"><a href="#cb12-335" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-336"><a href="#cb12-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-337"><a href="#cb12-337" aria-hidden="true" tabindex="-1"></a><span class="co">#Then, sort values in the vector from the largest to the smallest</span></span>
+<span id="cb12-338"><a href="#cb12-338" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(all_CVs, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-339"><a href="#cb12-339" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-340"><a href="#cb12-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-341"><a href="#cb12-341" aria-hidden="true" tabindex="-1"></a>The variable <span class="in">`tree_cover`</span> presents the highest variation in relation to the mean (CV=<span class="in">`{r} round(CV_tree_cover, 3)`</span>). The variation is very high because some farms have a lot of trees (high tree cover) while others have none.</span>
+<span id="cb12-342"><a href="#cb12-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-343"><a href="#cb12-343" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb12-344"><a href="#cb12-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-347"><a href="#cb12-347" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-348"><a href="#cb12-348" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-349"><a href="#cb12-349" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb12-350"><a href="#cb12-350" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb12-351"><a href="#cb12-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-352"><a href="#cb12-352" aria-hidden="true" tabindex="-1"></a><span class="co">#Approach 1</span></span>
+<span id="cb12-353"><a href="#cb12-353" aria-hidden="true" tabindex="-1"></a>sum_of_squares <span class="ot">&lt;-</span> <span class="fu">sum</span>((data<span class="sc">$</span>tree_density <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>tree_density))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb12-354"><a href="#cb12-354" aria-hidden="true" tabindex="-1"></a>sd_tree_density <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(sum_of_squares <span class="sc">/</span> (<span class="fu">length</span>(data<span class="sc">$</span>tree_density)<span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb12-355"><a href="#cb12-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-356"><a href="#cb12-356" aria-hidden="true" tabindex="-1"></a><span class="co">#Approach 2</span></span>
+<span id="cb12-357"><a href="#cb12-357" aria-hidden="true" tabindex="-1"></a>sd_tree_density <span class="ot">&lt;-</span> <span class="fu">sd</span>(data<span class="sc">$</span>tree_density)</span>
+<span id="cb12-358"><a href="#cb12-358" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-359"><a href="#cb12-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-360"><a href="#cb12-360" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 4</span></span>
+<span id="cb12-361"><a href="#cb12-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-362"><a href="#cb12-362" aria-hidden="true" tabindex="-1"></a>The mean and the median are both measures of central tendency. The mean is calculated as the arithmetic average and therefore depends on the magnitude of all observations, whereas the median is the middle value when the data are ordered from smallest to largest. Because the mean incorporates all values directly, it is highly sensitive to outliers: a single extreme observation can substantially shift it. The median, in contrast, is more robust to outliers (unless extreme values alter the middle position of the dataset).</span>
+<span id="cb12-363"><a href="#cb12-363" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-364"><a href="#cb12-364" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb12-365"><a href="#cb12-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-366"><a href="#cb12-366" aria-hidden="true" tabindex="-1"></a><span class="fu">## Create a box plot</span></span>
+<span id="cb12-367"><a href="#cb12-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-368"><a href="#cb12-368" aria-hidden="true" tabindex="-1"></a><span class="fu">### Making graphs using *ggplot2*</span></span>
+<span id="cb12-369"><a href="#cb12-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-370"><a href="#cb12-370" aria-hidden="true" tabindex="-1"></a>When visualising data in R, you can of course use base R functions (e.g., <span class="in">`plot`</span>, <span class="in">`points`</span>, <span class="in">`lines`</span>, <span class="in">`boxplot`</span>, etc.). In this course, however, we will mostly focus on functions of the *ggplot2* R package (although we will also use some base R functions to create plots from time to time). This is because *ggplot2* can produce high-quality figures very quickly, even for complex datasets. With *ggplot2*, you can generate a wide variety of graphs, including scatter plots, bar charts, histograms, box plots and much more, while having control over layouts, labels and aesthetics, such as colours, sizes and shapes. *ggplot2* relies on a coherent system for building graphs: the **grammar of graphics**. Using *ggplot2* requires you to learn a new grammar, which may sound overwhelming at first, but is in fact easy to learn because it relies on a simple set of core principles.</span>
+<span id="cb12-371"><a href="#cb12-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-372"><a href="#cb12-372" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb12-373"><a href="#cb12-373" aria-hidden="true" tabindex="-1"></a><span class="fu">## ggplot2: Elegant Graphics for Data Analysis</span></span>
+<span id="cb12-374"><a href="#cb12-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-375"><a href="#cb12-375" aria-hidden="true" tabindex="-1"></a>This tutorial will only give you a very brief introduction to *ggplot2*. If you want to explore all the possibilities offered by *ggplot2* for data scientists, we recommend going through Hadley Wickham's reference book: **ggplot2: Elegant Graphics for Data Analysis**. To freely access the content of this book, just click on its cover.</span>
+<span id="cb12-376"><a href="#cb12-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-377"><a href="#cb12-377" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="al">![](/Images/Cover_ggplot2.jpg)</span><span class="ot">{fig-align="center" width="200"}</span><span class="co">](https://ggplot2-book.org/)</span></span>
+<span id="cb12-378"><a href="#cb12-378" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-379"><a href="#cb12-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-380"><a href="#cb12-380" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb12-381"><a href="#cb12-381" aria-hidden="true" tabindex="-1"></a><span class="fu">## Posit cheat sheet</span></span>
+<span id="cb12-382"><a href="#cb12-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-383"><a href="#cb12-383" aria-hidden="true" tabindex="-1"></a>Posit, the open source data science company behind RStudio, developed some very useful cheat sheets to help you remember how to use some of the core *tidyverse* packages, including *ggplot2*. You can download the ggplot2 cheat sheet using this [link](https://rstudio.github.io/cheatsheets/html/data-visualization.html?_gl=1*19kcxbo*_ga*NzQwNjg4NjIuMTcxMjA0NzkyNA..*_ga_2C0WZ1JHG0*MTcxMjMwNDYwNS4zLjEuMTcxMjMwNDcyMS4wLjAuMA..).</span>
+<span id="cb12-384"><a href="#cb12-384" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-385"><a href="#cb12-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-386"><a href="#cb12-386" aria-hidden="true" tabindex="-1"></a>In this last section of the tutorial, we are going to create a box plot that shows how coffee productivity (<span class="in">`coffee_prod`</span> variable) depends on farm type (<span class="in">`farm_type`</span> variable).</span>
+<span id="cb12-387"><a href="#cb12-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-388"><a href="#cb12-388" aria-hidden="true" tabindex="-1"></a><span class="fu">### Start by creating a ggplot</span></span>
+<span id="cb12-389"><a href="#cb12-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-390"><a href="#cb12-390" aria-hidden="true" tabindex="-1"></a>You can start creating a plot using the function <span class="in">`ggplot()`</span>. Later on, we will add new layers to this ggplot object (using the <span class="in">`+`</span> sign).</span>
+<span id="cb12-391"><a href="#cb12-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-392"><a href="#cb12-392" aria-hidden="true" tabindex="-1"></a><span class="in">`ggplot()`</span> has two main arguments: <span class="in">`data`</span> and <span class="in">`mapping`</span>. The <span class="in">`data`</span> argument is used to specify the name of the dataset that should be used to create the graph. The <span class="in">`mapping`</span> argument is used to specify how variables in your dataset are linked to visual properties (referred to **aesthetics**) of your plot. You should always use the <span class="in">`aes()`</span> function for the <span class="in">`mapping`</span> argument. The <span class="in">`x`</span> and <span class="in">`y`</span> arguments of <span class="in">`aes()`</span> are used to choose the x (horizontal) and y (vertical) variables of your plot, respectively. The general syntax to create a ggplot object looks like this:</span>
+<span id="cb12-393"><a href="#cb12-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-394"><a href="#cb12-394" aria-hidden="true" tabindex="-1"></a><span class="in">`ggplot(data = your_data, mapping = aes(x, y, other aesthetics))`</span></span>
+<span id="cb12-395"><a href="#cb12-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-396"><a href="#cb12-396" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb12-397"><a href="#cb12-397" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 8</span></span>
+<span id="cb12-398"><a href="#cb12-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-399"><a href="#cb12-399" aria-hidden="true" tabindex="-1"></a>Create your first ggplot using <span class="in">`farm_type`</span> and <span class="in">`coffee_prod`</span> as the **x** and **y** variables, respectively.</span>
+<span id="cb12-400"><a href="#cb12-400" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-401"><a href="#cb12-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-404"><a href="#cb12-404" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-405"><a href="#cb12-405" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb12-406"><a href="#cb12-406" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb12-407"><a href="#cb12-407" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false </span></span>
+<span id="cb12-408"><a href="#cb12-408" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb12-409"><a href="#cb12-409" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 4</span></span>
+<span id="cb12-410"><a href="#cb12-410" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4 </span></span>
+<span id="cb12-411"><a href="#cb12-411" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center  </span></span>
+<span id="cb12-412"><a href="#cb12-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-413"><a href="#cb12-413" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> farm_type, <span class="at">y =</span> coffee_prod))</span>
+<span id="cb12-414"><a href="#cb12-414" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-415"><a href="#cb12-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-416"><a href="#cb12-416" aria-hidden="true" tabindex="-1"></a>As you can see, the structure of the plot is there, but it does not display any data yet. This is because we have not specified in our code how our observations should be represented in our plot. You can do this by defining a **geom**. In *ggplot2*, there are a number of geom to choose from. Here are a few examples (but see <span class="co">[</span><span class="ot">ggplot2 cheat sheet</span><span class="co">](https://rstudio.github.io/cheatsheets/data-visualization.pdf)</span> for more examples):</span>
+<span id="cb12-417"><a href="#cb12-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-418"><a href="#cb12-418" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_point()`</span>: This geom is used to display individual data points and create a scatter plot.</span>
+<span id="cb12-419"><a href="#cb12-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-420"><a href="#cb12-420" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_jitter()`</span>: This geom is similar to <span class="in">`geom_point()`</span> but jitters the data to improve readability.</span>
+<span id="cb12-421"><a href="#cb12-421" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-422"><a href="#cb12-422" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_line()`</span> and <span class="in">`geom_path()`</span>: These geom are used to add lines connecting observations in your graph. While <span class="in">`geom_path()`</span> connects observations in the order in which they appear in the data, <span class="in">`geom_line()`</span> connects observations in the order of the variable plotted on the x axis of your graph.</span>
+<span id="cb12-423"><a href="#cb12-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-424"><a href="#cb12-424" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_boxplot()`</span>: This geom is used to create a box plot, which is particularly useful to display and compare the distribution of a response variable for different groups.</span>
+<span id="cb12-425"><a href="#cb12-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-426"><a href="#cb12-426" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_bar()`</span>: This geom is used to create bar charts.</span>
+<span id="cb12-427"><a href="#cb12-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-428"><a href="#cb12-428" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_abline()`</span>: This geom is used to add horizontal, vertical, and diagonal lines to your graph.</span>
+<span id="cb12-429"><a href="#cb12-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-430"><a href="#cb12-430" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb12-431"><a href="#cb12-431" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 9</span></span>
+<span id="cb12-432"><a href="#cb12-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-433"><a href="#cb12-433" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`geom_boxplot()`</span> to create a box plot showing how coffee productivity (<span class="in">`coffee_prod`</span>) varies among farm types (<span class="in">`farm_type`</span>). Make the boxes narrower by adjusting the <span class="in">`width`</span> argument in <span class="in">`geom_boxplot()`</span> (the default is <span class="in">`width = 1`</span>). Use <span class="in">`xlab()`</span> and <span class="in">`ylab()`</span> to add clear and informative axis labels, including units. Optionally, you may change the appearance of the plot by applying a different theme, such as <span class="in">`theme_bw()`</span> for a dark-on-light style.</span>
+<span id="cb12-434"><a href="#cb12-434" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-435"><a href="#cb12-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-438"><a href="#cb12-438" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-439"><a href="#cb12-439" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-440"><a href="#cb12-440" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb12-441"><a href="#cb12-441" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb12-442"><a href="#cb12-442" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb12-443"><a href="#cb12-443" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 4</span></span>
+<span id="cb12-444"><a href="#cb12-444" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb12-445"><a href="#cb12-445" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb12-446"><a href="#cb12-446" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-447"><a href="#cb12-447" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> farm_type, <span class="at">y =</span> coffee_prod)) <span class="sc">+</span></span>
+<span id="cb12-448"><a href="#cb12-448" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.5</span>)<span class="sc">+</span> <span class="co">#Create a box plot</span></span>
+<span id="cb12-449"><a href="#cb12-449" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Farm type"</span>)<span class="sc">+</span> <span class="co">#Change name of x axis</span></span>
+<span id="cb12-450"><a href="#cb12-450" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Coffee productivity (kg/ha/year)"</span>)<span class="sc">+</span> <span class="co">#Change name of y axis</span></span>
+<span id="cb12-451"><a href="#cb12-451" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="co">#This creates a black/white plot</span></span>
+<span id="cb12-452"><a href="#cb12-452" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

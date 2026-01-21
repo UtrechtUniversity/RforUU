@@ -149,6 +149,18 @@ Relational operators are used to compare values. They return logical values: `TR
 
 : Relational operators in R {#tbl-relationaloperators}
 
+## Logical operators
+
+Logical operators are particularly useful when you need to define conditions to filter your data, for example. This happens very frequently when working with data. The main logical operators are summarized in @tbl-logicaloperators.
+
+| Operator | Description |
+|----------|-------------|
+| &        | AND         |
+| \|       | OR          |
+| !        | NOT         |
+
+: Logical operators in R {#tbl-logicaloperators}
+
 ::: callout-tip
 ## Exercise 1
 
@@ -225,8 +237,7 @@ A scalar is a quantity that can only hold one value at a time. Here are the most
 -   *Numeric*: numbers with a decimal value (e.g., 17.8)
 -   *Integer*: numbers without a decimal value (e.g., 18)
 -   *Character*: a letter or a combination of letters. Character strings must be enclosed by quotes in your R code.
--   *Factor*: data type used in statistical modelling to specify what are the factors in the model (categorical variables with a defined set of
-    categories, called ‘levels’ in R)
+-   *Factor*: data type used in statistical modelling to specify what are the factors in the model (categorical variables with a defined set of categories, called ‘levels’ in R)
 -   *Logical*: a logical variable can be either `TRUE` or `FALSE`
 
 You can check the data type of an R object using the `class()` function.
@@ -406,6 +417,12 @@ length(x5)
 ## Indexing
 
 One of the main advantages of R is that it is very easy to extract any given value from a data set. This is called indexing. Let's have a look at a few examples.
+
+::: callout-note
+## Indexing works differently in R and Python
+
+R starts counting at 1 rather than 0. For example, the first element of an object is accessed with index `1`. This differs from Python, which starts counting at zero.
+:::
 
 ### Vectors
 

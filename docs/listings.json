@@ -1,5 +1,15 @@
 [
   {
+    "listing": "/Courses/Ecological_field_research/Tutorials/index.html",
+    "items": [
+      "/Courses/Ecological_field_research/Tutorials/data_wrangling.html",
+      "/Courses/Ecological_field_research/Tutorials/data_visualisation.html",
+      "/Courses/Ecological_field_research/Tutorials/quantifying_biodiversity.html",
+      "/Courses/Ecological_field_research/Tutorials/data_exploration.html",
+      "/Courses/Ecological_field_research/Tutorials/data_analysis.html"
+    ]
+  },
+  {
     "listing": "/Courses/Statistics_GSS/Tutorials/index.html",
     "items": [
       "/Courses/Statistics_GSS/Tutorials/getting_to_know_R.html",
@@ -15,16 +25,6 @@
       "/Courses/Statistics_GSS/Tutorials/logistic_regression.html",
       "/Courses/Statistics_GSS/Tutorials/association_nominal_variables.html",
       "/Courses/Statistics_GSS/Tutorials/principal_component_analysis.html"
-    ]
-  },
-  {
-    "listing": "/Courses/Ecological_field_research/Tutorials/index.html",
-    "items": [
-      "/Courses/Ecological_field_research/Tutorials/data_wrangling.html",
-      "/Courses/Ecological_field_research/Tutorials/data_visualisation.html",
-      "/Courses/Ecological_field_research/Tutorials/quantifying_biodiversity.html",
-      "/Courses/Ecological_field_research/Tutorials/data_exploration.html",
-      "/Courses/Ecological_field_research/Tutorials/data_analysis.html"
     ]
   }
 ]
