@@ -386,8 +386,8 @@ Create your first ggplot using `farm_type` and `coffee_prod` as the **x** and **
 #| echo: true 
 #| warning: false 
 #| message: false
-#| fig-width: 4
-#| fig-height: 4 
+#| fig-width: 5
+#| fig-height: 5 
 #| fig-align: center  
 
 ggplot(data = data, mapping = aes(x = farm_type, y = coffee_prod))
@@ -418,8 +418,8 @@ Use `geom_boxplot()` to create a box plot showing how coffee productivity (`coff
 #| echo: true
 #| warning: false
 #| message: false
-#| fig-width: 4
-#| fig-height: 4
+#| fig-width: 5
+#| fig-height: 5
 #| fig-align: center
 
 ggplot(data = data, mapping = aes(x = farm_type, y = coffee_prod)) +
