@@ -418,7 +418,7 @@ window.Quarto = {
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Before starting</span></a>
+ <span class="menu-text">Read before starting</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -561,6 +561,7 @@ window.Quarto = {
   <ul>
   <li><a href="#making-graphs-using-ggplot2" id="toc-making-graphs-using-ggplot2" class="nav-link" data-scroll-target="#making-graphs-using-ggplot2">Making graphs using <em>ggplot2</em></a></li>
   <li><a href="#start-by-creating-a-ggplot" id="toc-start-by-creating-a-ggplot" class="nav-link" data-scroll-target="#start-by-creating-a-ggplot">Start by creating a ggplot</a></li>
+  <li><a href="#then-add-a-geom" id="toc-then-add-a-geom" class="nav-link" data-scroll-target="#then-add-a-geom">Then add a geom</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -1102,6 +1103,9 @@ Exercise 8
 </div>
 </div>
 </div>
+</section>
+<section id="then-add-a-geom" class="level3">
+<h3 class="anchored" data-anchor-id="then-add-a-geom">Then add a geom</h3>
 <p>As you can see, the structure of the plot is there, but it does not display any data yet. This is because we have not specified in our code how our observations should be represented in our plot. You can do this by defining a <strong>geom</strong>. In <em>ggplot2</em>, there are a number of geom to choose from. Here are a few examples (but see <a href="https://rstudio.github.io/cheatsheets/data-visualization.pdf">ggplot2 cheat sheet</a> for more examples):</p>
 <ul>
 <li><p><code>geom_point()</code>: This geom is used to display individual data points and create a scatter plot.</p></li>
@@ -2019,41 +2023,43 @@ Exercise 9
 <span id="cb12-413"><a href="#cb12-413" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb12-414"><a href="#cb12-414" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-415"><a href="#cb12-415" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-416"><a href="#cb12-416" aria-hidden="true" tabindex="-1"></a>As you can see, the structure of the plot is there, but it does not display any data yet. This is because we have not specified in our code how our observations should be represented in our plot. You can do this by defining a **geom**. In *ggplot2*, there are a number of geom to choose from. Here are a few examples (but see <span class="co">[</span><span class="ot">ggplot2 cheat sheet</span><span class="co">](https://rstudio.github.io/cheatsheets/data-visualization.pdf)</span> for more examples):</span>
+<span id="cb12-416"><a href="#cb12-416" aria-hidden="true" tabindex="-1"></a><span class="fu">### Then add a geom</span></span>
 <span id="cb12-417"><a href="#cb12-417" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-418"><a href="#cb12-418" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_point()`</span>: This geom is used to display individual data points and create a scatter plot.</span>
+<span id="cb12-418"><a href="#cb12-418" aria-hidden="true" tabindex="-1"></a>As you can see, the structure of the plot is there, but it does not display any data yet. This is because we have not specified in our code how our observations should be represented in our plot. You can do this by defining a **geom**. In *ggplot2*, there are a number of geom to choose from. Here are a few examples (but see <span class="co">[</span><span class="ot">ggplot2 cheat sheet</span><span class="co">](https://rstudio.github.io/cheatsheets/data-visualization.pdf)</span> for more examples):</span>
 <span id="cb12-419"><a href="#cb12-419" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-420"><a href="#cb12-420" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_jitter()`</span>: This geom is similar to <span class="in">`geom_point()`</span> but jitters the data to improve readability.</span>
+<span id="cb12-420"><a href="#cb12-420" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_point()`</span>: This geom is used to display individual data points and create a scatter plot.</span>
 <span id="cb12-421"><a href="#cb12-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-422"><a href="#cb12-422" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_line()`</span> and <span class="in">`geom_path()`</span>: These geom are used to add lines connecting observations in your graph. While <span class="in">`geom_path()`</span> connects observations in the order in which they appear in the data, <span class="in">`geom_line()`</span> connects observations in the order of the variable plotted on the x axis of your graph.</span>
+<span id="cb12-422"><a href="#cb12-422" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_jitter()`</span>: This geom is similar to <span class="in">`geom_point()`</span> but jitters the data to improve readability.</span>
 <span id="cb12-423"><a href="#cb12-423" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-424"><a href="#cb12-424" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_boxplot()`</span>: This geom is used to create a box plot, which is particularly useful to display and compare the distribution of a response variable for different groups.</span>
+<span id="cb12-424"><a href="#cb12-424" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_line()`</span> and <span class="in">`geom_path()`</span>: These geom are used to add lines connecting observations in your graph. While <span class="in">`geom_path()`</span> connects observations in the order in which they appear in the data, <span class="in">`geom_line()`</span> connects observations in the order of the variable plotted on the x axis of your graph.</span>
 <span id="cb12-425"><a href="#cb12-425" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-426"><a href="#cb12-426" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_bar()`</span>: This geom is used to create bar charts.</span>
+<span id="cb12-426"><a href="#cb12-426" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_boxplot()`</span>: This geom is used to create a box plot, which is particularly useful to display and compare the distribution of a response variable for different groups.</span>
 <span id="cb12-427"><a href="#cb12-427" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-428"><a href="#cb12-428" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_abline()`</span>: This geom is used to add horizontal, vertical, and diagonal lines to your graph.</span>
+<span id="cb12-428"><a href="#cb12-428" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_bar()`</span>: This geom is used to create bar charts.</span>
 <span id="cb12-429"><a href="#cb12-429" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-430"><a href="#cb12-430" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb12-431"><a href="#cb12-431" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 9</span></span>
-<span id="cb12-432"><a href="#cb12-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-433"><a href="#cb12-433" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`geom_boxplot()`</span> to create a box plot showing how coffee productivity (<span class="in">`coffee_prod`</span>) varies among farm types (<span class="in">`farm_type`</span>). Make the boxes narrower by adjusting the <span class="in">`width`</span> argument in <span class="in">`geom_boxplot()`</span> (the default is <span class="in">`width = 1`</span>). Use <span class="in">`xlab()`</span> and <span class="in">`ylab()`</span> to add clear and informative axis labels, including units. Optionally, you may change the appearance of the plot by applying a different theme, such as <span class="in">`theme_bw()`</span> for a dark-on-light style.</span>
+<span id="cb12-430"><a href="#cb12-430" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`geom_abline()`</span>: This geom is used to add horizontal, vertical, and diagonal lines to your graph.</span>
+<span id="cb12-431"><a href="#cb12-431" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-432"><a href="#cb12-432" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb12-433"><a href="#cb12-433" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 9</span></span>
 <span id="cb12-434"><a href="#cb12-434" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-437"><a href="#cb12-437" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-438"><a href="#cb12-438" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb12-439"><a href="#cb12-439" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb12-440"><a href="#cb12-440" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb12-441"><a href="#cb12-441" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb12-442"><a href="#cb12-442" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 5</span></span>
-<span id="cb12-443"><a href="#cb12-443" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
-<span id="cb12-444"><a href="#cb12-444" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
-<span id="cb12-445"><a href="#cb12-445" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-446"><a href="#cb12-446" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> farm_type, <span class="at">y =</span> coffee_prod)) <span class="sc">+</span></span>
-<span id="cb12-447"><a href="#cb12-447" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.5</span>)<span class="sc">+</span> <span class="co">#Create a box plot</span></span>
-<span id="cb12-448"><a href="#cb12-448" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Farm type"</span>)<span class="sc">+</span> <span class="co">#Change name of x axis</span></span>
-<span id="cb12-449"><a href="#cb12-449" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Coffee productivity (kg/ha/year)"</span>)<span class="sc">+</span> <span class="co">#Change name of y axis</span></span>
-<span id="cb12-450"><a href="#cb12-450" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="co">#This creates a black/white plot</span></span>
-<span id="cb12-451"><a href="#cb12-451" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-452"><a href="#cb12-452" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-435"><a href="#cb12-435" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`geom_boxplot()`</span> to create a box plot showing how coffee productivity (<span class="in">`coffee_prod`</span>) varies among farm types (<span class="in">`farm_type`</span>). Make the boxes narrower by adjusting the <span class="in">`width`</span> argument in <span class="in">`geom_boxplot()`</span> (the default is <span class="in">`width = 1`</span>). Use <span class="in">`xlab()`</span> and <span class="in">`ylab()`</span> to add clear and informative axis labels, including units. Optionally, you may change the appearance of the plot by applying a different theme, such as <span class="in">`theme_bw()`</span> for a dark-on-light style.</span>
+<span id="cb12-436"><a href="#cb12-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-439"><a href="#cb12-439" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-440"><a href="#cb12-440" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb12-441"><a href="#cb12-441" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb12-442"><a href="#cb12-442" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb12-443"><a href="#cb12-443" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb12-444"><a href="#cb12-444" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 5</span></span>
+<span id="cb12-445"><a href="#cb12-445" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb12-446"><a href="#cb12-446" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb12-447"><a href="#cb12-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-448"><a href="#cb12-448" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> farm_type, <span class="at">y =</span> coffee_prod)) <span class="sc">+</span></span>
+<span id="cb12-449"><a href="#cb12-449" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.5</span>)<span class="sc">+</span> <span class="co">#Create a box plot</span></span>
+<span id="cb12-450"><a href="#cb12-450" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Farm type"</span>)<span class="sc">+</span> <span class="co">#Change name of x axis</span></span>
+<span id="cb12-451"><a href="#cb12-451" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Coffee productivity (kg/ha/year)"</span>)<span class="sc">+</span> <span class="co">#Change name of y axis</span></span>
+<span id="cb12-452"><a href="#cb12-452" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="co">#This creates a black/white plot</span></span>
+<span id="cb12-453"><a href="#cb12-453" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-454"><a href="#cb12-454" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

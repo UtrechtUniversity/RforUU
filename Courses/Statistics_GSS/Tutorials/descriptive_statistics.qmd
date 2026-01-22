@@ -393,6 +393,8 @@ ggplot(data = data, mapping = aes(x = farm_type, y = coffee_prod))
 ```
 :::
 
+### Then add a geom
+
 As you can see, the structure of the plot is there, but it does not display any data yet. This is because we have not specified in our code how our observations should be represented in our plot. You can do this by defining a **geom**. In *ggplot2*, there are a number of geom to choose from. Here are a few examples (but see [ggplot2 cheat sheet](https://rstudio.github.io/cheatsheets/data-visualization.pdf) for more examples):
 
 -   `geom_point()`: This geom is used to display individual data points and create a scatter plot.

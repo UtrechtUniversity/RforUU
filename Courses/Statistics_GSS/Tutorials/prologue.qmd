@@ -1,9 +1,9 @@
----
-title: Welcome to the Statistics GSS course!
----
+## Welcome to the Statistics GSS course!
 
-Each tutorial is designed as a step-by-step guide to common data analysis tasks. Alongside the R code, we explain the goal of each step and the purpose of the functions used. By default, the code is hidden so that you can try writing it yourself (this is the most effective way to learn R). We always indicate which function you need for each task, but we strongly encourage you to type the code rather than copy and paste it, as this helps you become familiar with the R syntax and remember commands more easily. Use the R help pages to learn more about the functions you encounter. If you get stuck, you can reveal the solution by clicking on “**Show me the code**”, or display all code at once using “**Show All Code**” from the Code menu at the top right of the page.
+Each tutorial is designed as a step-by-step guide to common data analysis tasks. Alongside the R code, we explain the goal of each step and the purpose of the functions used. By default, the code is hidden so that you can try writing it yourself (this is the most effective way to learn R). Use the R help pages to learn more about the functions you encounter. If you get stuck, you can reveal the solution by clicking on “**Show me the code**”, or display all code at once using “**Show All Code**” from the Code menu at the top right of the page.
 
-Rather than passively reading the tutorials, we encourage you to work through them actively and take time to understand what each function does. Learning R can feel challenging at first, but this is normal. Like learning a new language, progress comes with regular practice: you start with simple commands and gradually build fluency by reusing them. With patience and practice, your skills will quickly improve.
+## Best practices during tutorials
+
+We always indicate which function you need for each task, but [*we strongly encourage you to type the code yourself*]{.underline} rather than copy and paste it, as this helps you become familiar with the R syntax and remember commands more easily. Rather than passively reading the tutorials, we encourage you to work through them actively and take time to understand what each function does. Learning R can feel challenging at first, but this is normal. Like learning a new language, progress comes with regular practice: you start with simple commands and gradually build fluency by reusing them. With patience and practice, your skills will quickly improve.
 
 Now get ready to build your statistics skills. Let’s get started!

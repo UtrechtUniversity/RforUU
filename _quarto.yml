@@ -96,7 +96,7 @@ website:
           contents:   
           - href: Courses/Statistics_GSS/index.qmd
             text: "Course information"
-          - section: "Before starting"
+          - section: "Read before starting"
             contents:
               - href: Courses/Statistics_GSS/Tutorials/prologue.qmd
                 text: "Prologue"
