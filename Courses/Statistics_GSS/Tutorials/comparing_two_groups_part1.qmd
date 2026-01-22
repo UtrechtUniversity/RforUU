@@ -627,7 +627,7 @@ The value of the test statistic is `{r} round(t, 3)`
 :::
 ::::
 
-We can now calculate the p-value associated with this test. We can do this by using the table of critical values of Student's *t* distribution available on Brightspace or by using the `pt()` function in R. Both approaches should lead you to the same result. [**Make sure you can use both approaches for the exam**]{.underline}.
+We can now calculate the p-value associated with this test. We can do this using the `pt()` function in R.
 
 To calculate this p-value, it is important to remember that we are testing a directed (one-sided) hypothesis, as we expect coffee productivity in 2020 to be higher than in 2015. Graphically, this corresponds to calculating the area under the distribution curve to the right of the dashed vertical line shown in @fig-studentdistribution. This area represents the p-value and appears to be very small.
 
