@@ -29,6 +29,10 @@ In this tutorial, we will enter the world of inferential statistics. We will use
 
 Let's get started!
 
+## Where are we in the course?
+
+![](/Images/Where_are_we_tutorial_3.png){fig-align="center"}
+
 ## Load R packages
 
 To work on this tutorial, you will need to load the *readxl* and *tidyverse* packages. You can load them using `library()`.
@@ -158,7 +162,7 @@ We now need to calculate the probability of a value of the standard normal takin
 ht <- seq(-3,3,0.01)
 pd <- dnorm(ht,0,1)
 
-plot(ht,dnorm(ht,0,1),type="l",col="black", ylab="Probability density", xlab="Z-score", main="Standard normal distribution")
+plot(ht,dnorm(ht,0,1),type="l",col="black", ylab="Probability density", xlab="z-score", main="Standard normal distribution")
 xv <- ht[ht>=zscore]
 yv <- pd[ht>=zscore]
 xv <- c(xv,3,zscore)
@@ -246,7 +250,7 @@ polygon(xv,yv,col="#FFCD00")
 #| message: false
 #| output: false
 
-#Calculate Z-scores
+#Calculate z-scores
 low_z <- (800 - mean(data$coffee_prod))/sd(data$coffee_prod)
 high_z <- (1200 - mean(data$coffee_prod))/sd(data$coffee_prod)
 
