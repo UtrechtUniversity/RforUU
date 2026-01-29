@@ -25,7 +25,7 @@ image: /Images/Rlogo.png
 
 ## About this tutorial
 
-In this tutorial, we will enter the world of inferential statistics. We will use R to perform our first statistical test! By the end of this tutorial, you should be able to calculate z-scores and tail probabilities, check the normality assumption of the data, calculate 95% confidence intervals, perform a paired t-test, and interpret its results in R.
+In this tutorial, we will enter the world of inferential statistics. We will use R to perform our first statistical test! By the end of this tutorial, you will be able to calculate z-scores and tail probabilities, check the normality assumption of the data, calculate 95% confidence intervals, perform a paired t-test, and interpret its results in R.
 
 Let's get started!
 
@@ -49,7 +49,7 @@ library(tidyverse)
 
 ## Importing data
 
-Start by important the data used in this course (see previous tutorial).
+Start by importing the data used in this course (see previous tutorial).
 
 ```{r}
 #| eval: true
@@ -167,7 +167,7 @@ xv <- ht[ht>=zscore]
 yv <- pd[ht>=zscore]
 xv <- c(xv,3,zscore)
 yv <- c(yv,0,0)
-polygon(xv,yv,col="#FFCD00")
+polygon(xv,yv,col="#FFCD00",border=NA)
 ```
 
 The `pnorm()` function takes four main arguments:
@@ -237,7 +237,7 @@ xv <- ht[ht>=800 & ht <= 1200]
 yv <- pd[ht>=800 & ht <= 1200]
 xv <- c(xv,1200,800)
 yv <- c(yv,0,0)
-polygon(xv,yv,col="#FFCD00")
+polygon(xv,yv,col="#FFCD00",border=NA)
 ```
 
 ::: panel-tabset
@@ -264,7 +264,7 @@ p_high_z - p_low_z
 
 ## Answer
 
-The probability that a randomly selected farm has a coffee productivity comprised between 800 and 1200 kg/ha/year is `{r} round(100*(p_high_z - p_low_z), 1)`%
+The probability that a randomly selected farm has a coffee productivity comprised between 800 and 1200 kg/ha/year is `{r} round(100*(p_high_z - p_low_z), 1)`%.
 :::
 ::::
 
@@ -608,13 +608,17 @@ $$
 t = \frac{\bar{v}}{s_v / \sqrt{n}}
 $$ {#eq-pairedttest}
 
+Under the null hypothesis (i.e., if there is no difference in the means of the two populations being compared), the $t$ statistic follows a Student’s *t* distribution with $n-1$ degrees of freedom, where $n$ is the number of paired observations (@fig-studentdistribution).
+
 :::: callout-tip
 ## Exercise 11
 
-Calculate the value of the test statistic ($t$) using @eq-pairedttest.
+1.  Calculate the value of the test statistic ($t$) using @eq-pairedttest.
+2.  Use the table of critical values of Student's *t* distribution available on Brightspace to obtain the critical value of the test.
+3.  Based on the calculated test statistic and critical value, what can you conclude about the effect of the intervention on coffee productivity?
 
 ::: panel-tabset
-## Code
+## Solution 1
 
 ```{r}
 #| eval: true
@@ -625,15 +629,27 @@ Calculate the value of the test statistic ($t$) using @eq-pairedttest.
 t <- mean(data$coffee_prod_diff)/(sd(data$coffee_prod_diff)/sqrt(nrow(data)))
 ```
 
-## Answer
-
 The value of the test statistic is `{r} round(t, 3)`
+
+## Solution 2
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+#35 degrees of freedom, directed hypothesis (5%)
+critical_value <- (1.697+1.684)/2
+```
+
+The critical value of the test is `{r} round(critical_value, 3)`
+
+## Solution 3
+
+The absolute value of the calculated test statistic ($t$) is greater than the critical value. Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity.
 :::
 ::::
-
-We can now calculate the p-value associated with this test. We can do this using the `pt()` function in R.
-
-To calculate this p-value, it is important to remember that we are testing a directed (one-sided) hypothesis, as we expect coffee productivity in 2020 to be higher than in 2015. Graphically, this corresponds to calculating the area under the distribution curve to the right of the dashed vertical line shown in @fig-studentdistribution. This area represents the p-value and appears to be very small.
 
 ```{r}
 #| eval: true
@@ -654,9 +670,13 @@ xv <- ht[ht>=t]
 yv <- pd[ht>=t]
 xv <- c(xv,6,t)
 yv <- c(yv,0,0)
-polygon(xv,yv,col="#FFCD00")
+polygon(xv,yv,col="#FFCD00",border=NA)
 abline(v=t, lty=2)
 ```
+
+We can now calculate the p-value associated with this test. We can do this using the `pt()` function in R.
+
+To calculate this p-value, it is important to remember that we are testing a directed (one-sided) hypothesis, as we expect coffee productivity in 2020 to be higher than in 2015. Graphically, this corresponds to calculating the area under the distribution curve to the right of the dashed vertical line shown in @fig-studentdistribution. This area represents the p-value and appears to be very small.
 
 In R, this probability can be calculated using the function `pt()`, which takes three main arguments:
 
@@ -669,7 +689,7 @@ In R, this probability can be calculated using the function `pt()`, which takes 
 :::: callout-tip
 ## Exercise 12
 
-Calculate the p-value of the paired *t*-test using `pt()`. Make sure that you also know how to use the table of critical values of Student's *t* distribution to obtain this p-value. What can you conclude from this test?
+Calculate the p-value of the paired *t*-test using `pt()`. What can you conclude from this test?
 
 ::: panel-tabset
 ## Code
@@ -685,7 +705,7 @@ p <- pt(t, df=nrow(data)-1, lower.tail=FALSE)
 
 ## Answer
 
-The calculate p-value is `{r} round(p, 7)`, which is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity. On average, coffee productivity in 2020 increased by `{r} round(mean(data$coffee_prod_diff), 1)` kg/ha/year.
+The calculate p-value is `{r} p`, which is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity. On average, coffee productivity in 2020 increased by `{r} round(mean(data$coffee_prod_diff), 1)` kg/ha/year.
 :::
 ::::
 
@@ -697,7 +717,7 @@ Of course, *t*-tests can be easily performed in R using the `t.test()` function.
 
 -   `paired`: a logical value (`TRUE` or `FALSE`) indicating whether the samples are paired (`TRUE`) or independent (`FALSE`)
 
--   `alternative`: specifies the type of test; `"two.sided"` (default), `"greater"`, or `"less"`
+-   `alternative`: specifies the type of test; `"two.sided"` (default, for undirected hypotheses), `"greater"`, or `"less"`
 
 -   `mu`: the expected difference between group means if the null hypothesis is true
 

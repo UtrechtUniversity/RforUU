@@ -112,6 +112,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -511,8 +540,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#about-this-tutorial" id="toc-about-this-tutorial" class="nav-link active" data-scroll-target="#about-this-tutorial">About this tutorial</a></li>
+  <li><a href="#where-are-we-in-the-course" id="toc-where-are-we-in-the-course" class="nav-link" data-scroll-target="#where-are-we-in-the-course">Where are we in the course?</a></li>
+  <li><a href="#install-r-packages" id="toc-install-r-packages" class="nav-link" data-scroll-target="#install-r-packages">Install R packages</a></li>
+  <li><a href="#load-r-packages" id="toc-load-r-packages" class="nav-link" data-scroll-target="#load-r-packages">Load R packages</a></li>
+  <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data">Importing data</a></li>
+  <li><a href="#non-parametric-tests-for-paired-samples" id="toc-non-parametric-tests-for-paired-samples" class="nav-link" data-scroll-target="#non-parametric-tests-for-paired-samples">Non-parametric tests for paired samples</a>
+  <ul>
+  <li><a href="#reminder-question-and-hypotheses" id="toc-reminder-question-and-hypotheses" class="nav-link" data-scroll-target="#reminder-question-and-hypotheses">Reminder: Question and hypotheses</a></li>
+  <li><a href="#wilcoxon-signed-rank-test" id="toc-wilcoxon-signed-rank-test" class="nav-link" data-scroll-target="#wilcoxon-signed-rank-test">Wilcoxon signed-rank test</a></li>
+  <li><a href="#sign-test-for-dependent-samples" id="toc-sign-test-for-dependent-samples" class="nav-link" data-scroll-target="#sign-test-for-dependent-samples">Sign test for dependent samples</a></li>
+  </ul></li>
+  <li><a href="#doing-an-independent-t-test" id="toc-doing-an-independent-t-test" class="nav-link" data-scroll-target="#doing-an-independent-t-test">Doing an independent <em>t</em>-test</a>
+  <ul>
+  <li><a href="#question-and-hypotheses" id="toc-question-and-hypotheses" class="nav-link" data-scroll-target="#question-and-hypotheses">Question and hypotheses</a></li>
+  <li><a href="#check-assumptions" id="toc-check-assumptions" class="nav-link" data-scroll-target="#check-assumptions">Check assumptions</a>
+  <ul>
+  <li><a href="#normality" id="toc-normality" class="nav-link" data-scroll-target="#normality">Normality</a></li>
+  <li><a href="#homoscedasticity" id="toc-homoscedasticity" class="nav-link" data-scroll-target="#homoscedasticity">Homoscedasticity</a></li>
+  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence">Independence</a></li>
+  </ul></li>
+  <li><a href="#the-slow-way" id="toc-the-slow-way" class="nav-link" data-scroll-target="#the-slow-way">The slow way</a></li>
+  <li><a href="#the-fast-way" id="toc-the-fast-way" class="nav-link" data-scroll-target="#the-fast-way">The fast way</a></li>
+  </ul></li>
+  <li><a href="#wilcoxon-rank-sum-test" id="toc-wilcoxon-rank-sum-test" class="nav-link" data-scroll-target="#wilcoxon-rank-sum-test">Wilcoxon rank-sum test</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -520,7 +578,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/index.html">Statistics GSS</a></li><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/Tutorials/index.html">Tutorials</a></li><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/Tutorials/comparing_two_groups_part2.html">4. Comparing two groups (part 2)</a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Tutorial 4: Comparing two groups (part 2)</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Tutorial 4: Comparing two groups (part 2)</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -566,11 +624,716 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Add text</p>
+<section id="about-this-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="about-this-tutorial">About this tutorial</h2>
+<p>In this tutorial, we will continue to explore different methods for testing differences between two groups. By the end of the tutorial, you will be able to apply non-parametric tests for paired samples (the Wilcoxon signed-rank test and the sign test), as well as both parametric (independent <em>t</em>-test) and non-parametric (Wilcoxon rank-sum test) approaches for independent samples.</p>
+<p>Let’s get started!</p>
+</section>
+<section id="where-are-we-in-the-course" class="level2">
+<h2 class="anchored" data-anchor-id="where-are-we-in-the-course">Where are we in the course?</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../..\Images/Where_are_we_tutorial_4.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="install-r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="install-r-packages">Install R packages</h2>
+<p>For one of the exercises, you will need to use a function in the <em>BSDA</em> R package. Make sure to install it before starting the tutorial.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"BSDA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="load-r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="load-r-packages">Load R packages</h2>
+<p>To work on this tutorial, you will need to load the <em>readxl</em>, <em>tidyverse,</em> and <em>BSDA</em> packages. You can load them using <code>library()</code>.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BSDA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="importing-data" class="level2">
+<h2 class="anchored" data-anchor-id="importing-data">Importing data</h2>
+<p>Start by importing the data used in this course (see previous tutorial). Recalculate the difference in coffee productivity between 2020 (<code>coffee_prod</code> variable) and 2015 (<code>coffee_prod_past</code> variable). Store these values in a new column called <code>coffee_prod_diff</code>.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1 (csv file)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"gss_statistics_master_data_set2.csv"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 2 (Excel file)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"gss_statistics_master_data_set2.xlsx"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Recalculate difference in coffee productivity between 2020 and 2015</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>coffee_prod_diff <span class="ot">&lt;-</span> data<span class="sc">$</span>coffee_prod <span class="sc">-</span> data<span class="sc">$</span>coffee_prod_past</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="non-parametric-tests-for-paired-samples" class="level2">
+<h2 class="anchored" data-anchor-id="non-parametric-tests-for-paired-samples">Non-parametric tests for paired samples</h2>
+<section id="reminder-question-and-hypotheses" class="level3">
+<h3 class="anchored" data-anchor-id="reminder-question-and-hypotheses">Reminder: Question and hypotheses</h3>
+<p>We want to determine whether coffee productivity measured in 2020 (after an intervention from extension services) is higher than that measured in 2015 (before an intervention from extension services). In other words, did the intervention increase coffee productivity on farms?</p>
+<p>In this example, the samples are paired because coffee productivity was measured on the <u>same farms</u> in two different years (before and after an intervention). This comparison also involves two groups: productivity measured in 2015 versus productivity measured in 2020.</p>
+<p><strong>Null hypothesis</strong>: there is no difference in coffee productivity between 2015 and 2020.</p>
+<p><strong>Alternative hypothesis</strong>: coffee productivity measured in 2020 <u>is higher</u> than coffee productivity measured in 2025 (which is what we would expect if the intervention had been successful). This is a directed hypothesis.</p>
+<p>In the previous tutorial, we checked whether the difference in coffee productivity between 2015 and 2020 followed a normal distribution before running a paired <em>t</em>-test. Both the Shapiro-Wilk’s test and the Q-Q plot suggested that the normality assumption was reasonable. But what should we do if this assumption is not met?</p>
+<p>One option is to use a non-parametric test for paired samples. The term <em>non-parametric</em> means that the test is based on the ranks of the data values rather than their raw values. In this tutorial, we will introduce two options: the <strong>Wilcoxon signed-rank test</strong> and the <strong>sign test</strong>. The underlying principles of these tests have already been covered in the associated lecture (see lecture slides if you need to refresh your memory).</p>
+</section>
+<section id="wilcoxon-signed-rank-test" class="level3">
+<h3 class="anchored" data-anchor-id="wilcoxon-signed-rank-test">Wilcoxon signed-rank test</h3>
+<p>The Wilcoxon signed-rank test calculates a test statistic (<span class="math inline">\(V\)</span>), which is the sum of the ranks of the positive differences between paired observations (after removing pairs with zero difference). The minimum value of the <span class="math inline">\(V\)</span> statistic is zero and occurs when all differences between paired observations are negative. The maximum value of the <span class="math inline">\(V\)</span> statistic occurs when all differences are positive. In that case, <span class="math inline">\(V\)</span> is simply the sum of the ranks from 1 to <span class="math inline">\(n\)</span>, where <span class="math inline">\(n\)</span> is the number of paired (non-zero) observations (<a href="#eq-maxV" class="quarto-xref">Equation&nbsp;1</a>).</p>
+<p><span id="eq-maxV"><span class="math display">\[
+V_{\max} = \sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+\tag{1}\]</span></span></p>
+<p>In R, you can run a Wilcoxon signed-rank test for paired samples using the <code>wilcox.test()</code> function. The arguments taken by this function are similar to those used in the <code>t.test()</code> function:</p>
+<ul>
+<li><p><code>x</code> and <code>y</code>: the numeric vectors of data to compare (one vector per group)</p></li>
+<li><p><code>paired</code>: a logical value (<code>TRUE</code> or <code>FALSE</code>) indicating whether the samples are paired (<code>TRUE</code>) or independent (<code>FALSE</code>)</p></li>
+<li><p><code>alternative</code>: specifies the type of test; <code>"two.sided"</code> (default, for undirected hypotheses), <code>"greater"</code>, or <code>"less"</code></p></li>
+<li><p><code>mu</code>: the expected difference between group means if the null hypothesis is true</p></li>
+<li><p><code>conf.level</code>: the confidence level for the interval (default is 0.95)</p></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use <a href="#eq-maxV" class="quarto-xref">Equation&nbsp;1</a> to calculate the maximum value of the <span class="math inline">\(V\)</span> statistic for our dataset. Then, use the <code>wilcox.test()</code> function to perform a Wilcoxon signed-rank test (assume that the normality assumption is not met). You can ignore the warning messages. They simply indicate the presence of ties in the data, meaning that some differences in coffee productivity between 2015 and 2020 have the same value and were therefore assigned the same rank.</p>
+<p>Examine the output of the test to identify the reported statistics, and use this information to determine whether there is evidence that coffee productivity in 2020 is higher that coffee productivity in 2015.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Answer</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the number of non-zero differences in coffee productivity</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(data<span class="sc">$</span>coffee_prod_diff[data<span class="sc">$</span>coffee_prod_diff <span class="sc">!=</span> <span class="dv">0</span>])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate Vmax</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>Vmax <span class="ot">&lt;-</span> (n<span class="sc">*</span>(n<span class="sc">+</span><span class="dv">1</span>))<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Do Wilcoxon signed-rank test</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(<span class="at">x =</span> data<span class="sc">$</span>coffee_prod,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> data<span class="sc">$</span>coffee_prod_past,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">paired =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">alternative =</span> <span class="st">"greater"</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">mu =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon signed rank test with continuity correction
+
+data:  data$coffee_prod and data$coffee_prod_past
+V = 573.5, p-value = 1.188e-05
+alternative hypothesis: true location shift is greater than 0</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>The p-value of the test is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020 (or that the distribution of the difference in coffee productivity between 2015 and 2020 is symmetric around zero). We conclude that coffee productivity in 2020 is significantly higher than in 2015.</p>
+<p>Note that the maximum value of the test statistic (<span class="math inline">\(V\)</span>) is 630. The observed value of the <span class="math inline">\(V\)</span> statistic is 573.5, which is fairly close to the maximum value. This tells you that most of the paired differences are positive (which is expected if coffee productivity is higher in 2020 than in 2015).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="sign-test-for-dependent-samples" class="level3">
+<h3 class="anchored" data-anchor-id="sign-test-for-dependent-samples">Sign test for dependent samples</h3>
+<p>The sign test for dependent samples calculates a test statistic (<span class="math inline">\(S\)</span>), which is equal to the number of non-zero paired observations for which the observed difference is positive. The minimum value of the <span class="math inline">\(S\)</span> statistic is zero and occurs when all non-zero differences between paired observations are negative. The maximum value of the <span class="math inline">\(S\)</span> statistic occurs when all differences are positive. In that case, <span class="math inline">\(S\)</span> is equal to the number of paired (non-zero) observations.</p>
+<p>In the sign test for dependent samples, the null hypothesis is that the median of the differences between paired observations is equal to zero. The sign test makes few assumptions about the underlying distribution of the data. However, compared with alternative tests, the sign test typically has lower statistical power.</p>
+<p>In R, you can run a sign test using the <code>SIGN.test()</code> function in the <em>BSDA</em> R package. Its arguments are similar to those of the <code>t.test()</code> function:</p>
+<ul>
+<li><p><code>x</code> and <code>y</code>: the numeric vectors of data to compare (one vector per group)</p></li>
+<li><p><code>alternative</code>: specifies the type of test; <code>"two.sided"</code> (default, for undirected hypotheses), <code>"greater"</code>, or <code>"less"</code></p></li>
+<li><p><code>md</code>: the expected median difference between groups if the null hypothesis is true</p></li>
+<li><p><code>conf.level</code>: the confidence level for the interval (default is 0.95)</p></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <code>SIGN.test()</code> function to perform a sign test for dependent samples (assume that the normality assumption is not met). Examine the output of the test to identify the reported statistics, and use this information to determine whether there is evidence that coffee productivity in 2020 is higher that coffee productivity in 2015.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Answer</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Do sign test</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">SIGN.test</span>(<span class="at">x =</span> data<span class="sc">$</span>coffee_prod,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> data<span class="sc">$</span>coffee_prod_past,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">alternative =</span> <span class="st">"greater"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">md =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Dependent-samples Sign-Test
+
+data:  data$coffee_prod and data$coffee_prod_past
+S = 28, p-value = 0.0002541
+alternative hypothesis: true median difference is greater than 0
+95 percent confidence interval:
+ 103.1007      Inf
+sample estimates:
+median of x-y 
+     212.8038 
+
+Achieved and Interpolated Confidence Intervals: 
+
+                  Conf.Level   L.E.pt U.E.pt
+Lower Achieved CI     0.9338 106.0000    Inf
+Interpolated CI       0.9500 103.1007    Inf
+Upper Achieved CI     0.9674 100.0000    Inf</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>The p-value of the test is lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that the median difference in coffee productivity between 2015 and 2020 is equal to zero. We conclude that coffee productivity in 2020 is significantly higher than in 2015.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="doing-an-independent-t-test" class="level2">
+<h2 class="anchored" data-anchor-id="doing-an-independent-t-test">Doing an independent <em>t</em>-test</h2>
+<section id="question-and-hypotheses" class="level3">
+<h3 class="anchored" data-anchor-id="question-and-hypotheses">Question and hypotheses</h3>
+<p>Before diving into a new type of parametric test to compare two groups (independent <em>t</em>-test), let’s first introduce new research questions.</p>
+<p>We now want to test whether coffee productivity (<code>coffee_prod</code>) and plant diversity (<code>shannon_PIM</code>) differ between farms that use pesticides and those that do not. Specifically, we are interested in whether pesticide use is associated with <u>higher coffee productivity</u> but <u>lower plant diversity</u>. In this example, the samples are independent because both response variables were measured on <u>different farms</u> (i.e., observations are not paired). The comparison involves two groups: farms that use pesticides and farms that do not, making an independent <em>t</em>-test a good candidate for testing our hypotheses.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Question</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Answer</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<p>Based on the information above, write a null and an alternative hypothesis for each independent <em>t</em>-test. Are the hypotheses directed or undirected?</p>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<p><strong>Null hypotheses (coffee productivity)</strong>: there is no difference in coffee productivity between farms that use or don’t use pesticides.</p>
+<p><strong>Alternative hypothesis (coffee productivity)</strong>: coffee productivity is higher in farms that use pesticides than in farms that do not. This is a directed hypothesis.</p>
+<p><strong>Null hypotheses (plant diversity)</strong>: there is no difference in plant diversity between farms that use or don’t use pesticides.</p>
+<p><strong>Alternative hypothesis (plant diversity)</strong>: plant diversity is lower in farms that use pesticides than in farms that do not. This is also a directed hypothesis.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Before checking whether the underlying assumptions of an independent <em>t</em>-test are met, we first need to create a new logical variable (let’s call it <code>pesticide2</code>). This variable should be <code>TRUE</code> for farms that use pesticides and <code>FALSE</code> for farms that do not. In R, new variables can be easily created from existing ones using the <code>mutate()</code> function from the <em>dplyr</em> package.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In <code>data</code>, create a new logical variable (<code>pesticide2</code>) that is <code>TRUE</code> for farms that use pesticides and <code>FALSE</code> for farms that do not. Use <code>dplyr::mutate()</code> to create this new variable. You will also need to use a relational operator (see first tutorial) to write a condition that will allow R to categorize farms based on pesticide use.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(data, <span class="at">pesticide2 =</span> pesticide <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+<p>After inspecting the dataset, we can see that it contains 23 farms that use pesticides (<code>pesticide2 = TRUE</code>) and 13 farms that do not (<code>pesticide2 = FALSE</code>). This means that the two groups we want to compare do not have the same number of observations. Let’s keep this in mind as we move forward.</p>
+</section>
+<section id="check-assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="check-assumptions">Check assumptions</h3>
+<p>Independent <em>t</em>-tests rely on three main assumptions. First, the data should be normally distributed within each group (the normality assumption). Second, the groups being compared should have equal variances (the homoscedasticity assumption). Third, the observations must be independent of one another. Let’s now check whether these assumptions are met.</p>
+<section id="normality" class="level4">
+<h4 class="anchored" data-anchor-id="normality">Normality</h4>
+<p>As discussed in the previous tutorial, the normality assumption can be checked using Shapiro-Wilk’s test and Q-Q plots (one test or plot per group). Time to put into practice what you learned in the previous tutorial!</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Use the Shapiro-Wilk’s test to assess whether the response variables of interest, coffee productivity (<code>coffee_prod</code>) and plant diversity (<code>shannon_PIM</code>), are normally distributed within each group of farms (those that use pesticides and those that do not).</li>
+<li>In addition, create Q–Q plots for both variables to visually evaluate normality within each group.</li>
+<li>Based on the Shapiro-Wilk test results and the Q-Q plots, assess whether the normality assumption is reasonably met for each response variable and group.</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Solution 3</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for farms that use pesticides</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>data_true <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, pesticide2 <span class="sc">==</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for farms that do not use pesticides</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>data_false <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, pesticide2 <span class="sc">==</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Shapiro-Wilk's tests for farms that use pesticides</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_true<span class="sc">$</span>coffee_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  data_true$coffee_prod
+W = 0.93837, p-value = 0.1658</code></pre>
+</div>
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_true<span class="sc">$</span>shannon_PIM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  data_true$shannon_PIM
+W = 0.963, p-value = 0.5266</code></pre>
+</div>
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Shapiro-Wilk's tests for farms that do not use pesticides</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_false<span class="sc">$</span>coffee_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  data_false$coffee_prod
+W = 0.92601, p-value = 0.3019</code></pre>
+</div>
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_false<span class="sc">$</span>shannon_PIM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  data_false$shannon_PIM
+W = 0.65895, p-value = 0.0002221</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create Q-Q plot for coffee productivity</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">sample =</span> coffee_prod)) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> pesticide2) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Theoretical quantiles"</span>)<span class="sc">+</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)<span class="sc">+</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Coffee productivity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="comparing_two_groups_part2_files/figure-html/unnamed-chunk-8-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create Q-Q plot for plant diversity</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">sample =</span> shannon_PIM)) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> pesticide2) <span class="sc">+</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Theoretical quantiles"</span>)<span class="sc">+</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)<span class="sc">+</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Plant diversity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="comparing_two_groups_part2_files/figure-html/unnamed-chunk-8-2.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<p>The <code>shannon_PIM</code> variable does not appear to follow a normal distribution in farms that do not use pesticides. This is indicated by the Shapiro-Wilk’s test, which yields a p-value below the 0.05 significance threshold, and by the corresponding Q–Q plot, where one observation deviates strongly from the reference line. In contrast, coffee productivity data meet the normality assumption in both farm groups. Overall, plant diversity data meet the normality assumption only in one group (farms that use pesticides). To test our hypothesis that plant diversity is higher in farms that do not use pesticides, we therefore need to use a statistical test that does not assume normality.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="homoscedasticity" class="level4">
+<h4 class="anchored" data-anchor-id="homoscedasticity">Homoscedasticity</h4>
+<p>The second assumption we need to check is that the groups being compared have equal variances. This can be assessed using Bartlett’s test (see the previous tutorial).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Use the Bartlett’s test to assess whether the response variables of interest, coffee productivity (<code>coffee_prod</code>) and plant diversity (<code>shannon_PIM</code>), have equal variances in the two farm groups (those that use pesticides and those that do not).</li>
+<li>What can you conclude from these tests?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Solution 2</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Test for coffee productivity</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="at">x =</span> data<span class="sc">$</span>coffee_prod,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">g =</span> data<span class="sc">$</span>pesticide2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Bartlett test of homogeneity of variances
+
+data:  data$coffee_prod and data$pesticide2
+Bartlett's K-squared = 1.8835, df = 1, p-value = 0.1699</code></pre>
+</div>
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Test for plant diversity</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="at">x =</span> data<span class="sc">$</span>shannon_PIM,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">g =</span> data<span class="sc">$</span>pesticide2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Bartlett test of homogeneity of variances
+
+data:  data$shannon_PIM and data$pesticide2
+Bartlett's K-squared = 0.18596, df = 1, p-value = 0.6663</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<p>Both tests indicate homoscedasticity (p-value &gt; 0.05). We therefore fail to reject the null hypothesis and conclude that the two farm groups have equal variances for both coffee productivity and plant diversity.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="independence" class="level4">
+<h4 class="anchored" data-anchor-id="independence">Independence</h4>
+<p>Independence of observations depends on the sampling design and data collection procedure. In the example used in this tutorial, data were collected from different farms, and we can therefore assume that the independence assumption is met.</p>
+</section>
+</section>
+<section id="the-slow-way" class="level3">
+<h3 class="anchored" data-anchor-id="the-slow-way">The slow way</h3>
+<p>Given that coffee productivity data meet all the assumptions of an independent <em>t</em>-test, we will focus on this variable to illustrate how to perform an independent <em>t</em>-test in R.</p>
+<p>As in the previous tutorial, let’s first do this using the “slow way” by manually computing the test statistic (<span class="math inline">\(t\)</span>) and the p-value of the test.</p>
+<p>The <span class="math inline">\(t\)</span> statistic quantifies the difference between the means of two independent groups relative to the variability in the data.</p>
+<p>When equal variances are assumed (which is the case here), the difference between the two sample means is divided by the standard error of the difference calculated using a pooled standard deviation. In this case, the <em>t</em> statistic can be calculated using <a href="#eq-indttest-equalvar" class="quarto-xref">Equation&nbsp;2</a>, where <span class="math inline">\(\bar{y}_A\)</span> is the mean of group A, <span class="math inline">\(\bar{y}_B\)</span> is the mean of group B, <span class="math inline">\(n_A\)</span> is the number of observations in group A, <span class="math inline">\(n_B\)</span> is the number of observations in group B, and <span class="math inline">\(s_p\)</span> is the pooled standard deviation. The pooled standard deviation can be calculated using <a href="#eq-pooledstandarddeviation" class="quarto-xref">Equation&nbsp;3</a>, where <span class="math inline">\(s_A^2\)</span> is the variance of group A and <span class="math inline">\(s_B^2\)</span> is the variance of group B.</p>
+<p><span id="eq-indttest-equalvar"><span class="math display">\[
+t = \frac{\bar{y}_A - \bar{y}_B}{s_p \sqrt{\frac{1}{n_A} + \frac{1}{n_B}}}
+\tag{2}\]</span></span></p>
+<p><span id="eq-pooledstandarddeviation"><span class="math display">\[
+s_p = \sqrt{\frac{(n_A - 1)s_A^2 + (n_B - 1)s_B^2}{n_A + n_B - 2}}
+\tag{3}\]</span></span></p>
+<p>When equal variances are not assumed (Welch’s <em>t</em>-test), the standard error of the difference is calculated using <a href="#eq-indttest-unequalvar" class="quarto-xref">Equation&nbsp;4</a>, without pooling.</p>
+<p><span id="eq-indttest-unequalvar"><span class="math display">\[
+t = \frac{\bar{y}_A - \bar{y}_B}{\sqrt{\frac{s_A^2}{n_A} + \frac{s_B^2}{n_B}}}
+\tag{4}\]</span></span></p>
+<p>Under the null hypothesis (i.e., if there is no difference in the means of the two populations being compared), the <span class="math inline">\(t\)</span> statistic follows a Student’s <em>t</em> distribution with <span class="math inline">\(n_A+n_B-2\)</span> degrees of freedom (<a href="#fig-studentdistribution" class="quarto-xref">Figure&nbsp;1</a>).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>We want to use an independent <em>t</em>-test find out if coffee productivity (<code>coffee_prod</code> variable) is higher in farms that use pesticides. You can assume homoscedasticity (groups have equal variances). Calculate the value of the test statistic (<span class="math inline">\(t\)</span>) using <a href="#eq-indttest-equalvar" class="quarto-xref">Equation&nbsp;2</a> and <a href="#eq-pooledstandarddeviation" class="quarto-xref">Equation&nbsp;3</a>.</li>
+<li>Use the table of critical values of Student’s <em>t</em> distribution available on Brightspace to obtain the critical value of the test.</li>
+<li>Based on the calculated test statistic and critical value, what can you conclude about the effect of pesticide application on coffee productivity?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false">Solution 3</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate group means</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>yA <span class="ot">&lt;-</span> <span class="fu">mean</span>(data_false<span class="sc">$</span>coffee_prod)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>yB <span class="ot">&lt;-</span> <span class="fu">mean</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate group variances</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>varA <span class="ot">&lt;-</span> <span class="fu">var</span>(data_false<span class="sc">$</span>coffee_prod)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>varB <span class="ot">&lt;-</span> <span class="fu">var</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the number of observations in each group</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>nA <span class="ot">&lt;-</span> <span class="fu">length</span>(data_false<span class="sc">$</span>coffee_prod)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>nB <span class="ot">&lt;-</span> <span class="fu">length</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the pooled standard deviation</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>sp <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(((nA<span class="dv">-1</span>)<span class="sc">*</span>varA <span class="sc">+</span> (nB<span class="dv">-1</span>)<span class="sc">*</span>varB)<span class="sc">/</span>(nA <span class="sc">+</span> nB <span class="sc">-</span> <span class="dv">2</span>))</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the value of the t statistic</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (yA <span class="sc">-</span> yB)<span class="sc">/</span>(sp<span class="sc">*</span><span class="fu">sqrt</span>((<span class="dv">1</span><span class="sc">/</span>nA)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span>nB)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The value of the test statistic is -0.614</p>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#34 degrees of freedom, directed hypothesis (5%)</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Interpolate value using linear approximation</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>critical_value <span class="ot">&lt;-</span> <span class="fl">1.697</span><span class="sc">+</span>(<span class="fl">1.697-1.684</span>)<span class="sc">/</span>(<span class="dv">30-40</span>)<span class="sc">*</span><span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The critical value of the test is 1.692</p>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<p>The absolute value of the test statistic is lower than the critical value. Therefore, we fail to reject the null hypothesis that there is no difference in coffee productivity between farms that use or do not use pesticides. We conclude that using pesticides do not lead to an increase in coffee productivity in our example.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-studentdistribution" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-studentdistribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="comparing_two_groups_part2_files/figure-html/fig-studentdistribution-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-studentdistribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Student’s t distribution with 34 degrees of freedom. The vertical dashed line shows the absolute value of the observed t statistic (independent t-test). The area under the curve highlighted in yellow is the exceedance probability (p-value).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can now calculate the p-value associated with this test. We can do this using the <code>pt()</code> function in R.</p>
+<p>To calculate this p-value, it is important to remember that we are testing a directed (one-sided) hypothesis, as we expect coffee productivity in farms that use pesticides to be higher than in farms that do not use pesticides. Graphically, this corresponds to calculating the area under the distribution curve to the right of the dashed vertical line shown in <a href="#fig-studentdistribution" class="quarto-xref">Figure&nbsp;1</a>. This area represents the p-value and appears to be quite large.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Calculate the p-value of the independent <em>t</em>-test using <code>pt()</code>. What can you conclude from this test?</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">Answer</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pt</span>(t, <span class="at">df=</span>nA<span class="sc">+</span>nB<span class="dv">-2</span>, <span class="at">lower.tail=</span><span class="cn">TRUE</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 2</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pt</span>(<span class="fu">abs</span>(t), <span class="at">df=</span>nA<span class="sc">+</span>nB<span class="dv">-2</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<p>The calculate p-value is 0.2715, which is greater than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that there is no difference in coffee productivity between farms that use or do not use pesticides. We conclude that using pesticides do not lead to an increase in coffee productivity in our example.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-fast-way" class="level3">
+<h3 class="anchored" data-anchor-id="the-fast-way">The fast way</h3>
+<p>Independent <em>t</em>-tests can be easily performed in R using the <code>t.test()</code> function. Here is a reminder of the most important arguments of this function:</p>
+<ul>
+<li><p><code>x</code> and <code>y</code>: the numeric vectors of data to compare (one vector per group)</p></li>
+<li><p><code>paired</code>: a logical value (<code>TRUE</code> or <code>FALSE</code>) indicating whether the samples are paired (<code>TRUE</code>) or independent (<code>FALSE</code>)</p></li>
+<li><p><code>alternative</code>: specifies the type of test; <code>"two.sided"</code> (default, for undirected hypotheses), <code>"greater"</code>, or <code>"less"</code></p></li>
+<li><p><code>mu</code>: the expected difference between group means if the null hypothesis is true</p></li>
+<li><p><code>var.equal</code>: a logical variable indicating whether to treat the two variances as being equal. If <code>TRUE</code> then the pooled variance is used to estimate the variance otherwise the Welch (or Satterthwaite) approximation to the degrees of freedom is used.</p></li>
+<li><p><code>conf.level</code>: the confidence level for the interval (default is 0.95)</p></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <code>t.test()</code> function to perform the statistical test. What information is shown in the R output? What can you conclude from this test? Write a few sentences to report this result, including the test statistic, p-value, sample size (degrees of freedom), and interpretation.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">Answer</a></li></ul>
+<div class="tab-content">
+<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x=</span>data_false<span class="sc">$</span>coffee_prod,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span>data_true<span class="sc">$</span>coffee_prod,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">paired =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"less"</span>, <span class="co">#Expect productivity in farms without pesticides to be lower</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  data_false$coffee_prod and data_true$coffee_prod
+t = -0.61433, df = 34, p-value = 0.2715
+alternative hypothesis: true difference in means is less than 0
+95 percent confidence interval:
+     -Inf 209.1183
+sample estimates:
+mean of x mean of y 
+ 1867.900  1987.228 </code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
+<p>We conducted an independent <em>t</em>-test to assess whether pesticide application is associated with increased coffee productivity (<a href="#fig-coffee-prod" class="quarto-xref">Figure&nbsp;2</a>). Coffee productivity was measured in farms that apply pesticides (<em>n</em> = 23) and in farms that do not apply pesticides (<em>n</em> = 13). We found no evidence that coffee productivity was higher in farms using pesticides (<em>t</em> = 0.61, p-value = 0.2715). On average, coffee productivity in farms where pesticides were applied was 6.4% higher than in farms without pesticide application.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-coffee-prod" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-coffee-prod-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="comparing_two_groups_part2_files/figure-html/fig-coffee-prod-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coffee-prod-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Coffee productivity measured in farms that apply pesticides (TRUE) and in farms that do not apply pesticides (FALSE). Summary statistics shown on the right side of each boxplot show the mean ± 95% CI (n=36).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="wilcoxon-rank-sum-test" class="level2">
+<h2 class="anchored" data-anchor-id="wilcoxon-rank-sum-test">Wilcoxon rank-sum test</h2>
+<p>If the normality assumption is not met (as was the case for the <code>shannon_PIM</code> variable quantifying plant diversity), it is more appropriate to use a non-parametric test to compare independent groups. One suitable option is the Wilcoxon rank-sum test.</p>
+<p>The Wilcoxon rank-sum test (also called the Mann-Whitney test) is a non-parametric test used to compare two independent samples, especially when the assumption of normality may not hold. This test calculates a test statistic (<span class="math inline">\(W\)</span>) based on the ranks of the observations in the two groups being compared (but see lecture slides for a step-by-step description of how this test statistic is calculated). The minimum value of <span class="math inline">\(W\)</span> is zero and occurs when all observations in one group are smaller (or larger) than all the observations in the other group. In other words, large differences between groups will translate into a small value of the test statistic <span class="math inline">\(W\)</span> (which is different from what we have seen so far). A large value of the test statistic <span class="math inline">\(W\)</span> suggests little difference between groups.</p>
+<p>In R, this test can be performed using the <code>wilcox.test()</code> function (see beginning of this tutorial). Because the samples are independent, the argument <code>paired = FALSE</code> must be specified.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 10
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <code>wilcox.test()</code> function to perform a Wilcoxon rank-sum test to test the hypothesis that plant diversity (<code>shannon_PIM</code> variable) is greater in farms that do not use pesticides. You can ignore the warning message. It simply indicates the presence of ties in the data.</p>
+<p>Examine the output of the test to identify the reported statistics, and use this information to determine whether there is evidence that plant communities are more diverse in farm that do not apply pesticides.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false">Answer</a></li></ul>
+<div class="tab-content">
+<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Do Wilcoxon rank-sum test</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(<span class="at">x =</span> data_false<span class="sc">$</span>shannon_PIM,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> data_true<span class="sc">$</span>shannon_PIM,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">paired =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">alternative =</span> <span class="st">"greater"</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">mu =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon rank sum test with continuity correction
+
+data:  data_false$shannon_PIM and data_true$shannon_PIM
+W = 263, p-value = 9.813e-05
+alternative hypothesis: true location shift is greater than 0</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
+<p>Given that the normality assumption was not met, we used a Wilcoxon ran-sum test to test the hypothesis that farms that do not use pesticides have a greater diversity of plant species than farms in which pesticides are applied. We found support for this hypothesis (<a href="#fig-plant-diversity" class="quarto-xref">Figure&nbsp;3</a>, W=263, P&lt;0.001). Compared to farms using pesticides, plant diversity (measured using the Shannon index) was 82.9% higher in farms that do not apply any pesticides.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-plant-diversity" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-plant-diversity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="comparing_two_groups_part2_files/figure-html/fig-plant-diversity-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plant-diversity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Plant diversity (Shannon index) measured in farms that apply pesticides (TRUE) and in farms that do not apply pesticides (FALSE). Summary statistics shown on the right side of each boxplot show the mean ± 95% CI (n=36).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
 <!-- -->
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1048,32 +1811,635 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Tutorial 4: Comparing two groups (part 2)"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Benjamin Delory</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-1190-8060</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    email: b.m.m.delory@uu.nl</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Copernicus institute of sustainable development, Utrecht University</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Natalie Davis</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-2678-0389</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    email: n.a.davis@vu.nl</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Amsterdam sustainability institute, Vrije Universiteit Amsterdam</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Heitor Mancini Teixeira</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-6992-0671</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">    email: heitor.teixeira@ufv.br</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Departamento de Solos Centro de Ciências Agrárias, Universidade Federal de Vicosa, Brazil</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="an">editor_options:</span><span class="co"> </span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">  chunk_output_type: console</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> /Images/Rlogo.png</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>Add text</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Tutorial 4: Comparing two groups (part 2)"</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Benjamin Delory</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-1190-8060</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co">    email: b.m.m.delory@uu.nl</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Copernicus institute of sustainable development, Utrecht University</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Natalie Davis</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-2678-0389</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="co">    email: n.a.davis@vu.nl</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Amsterdam sustainability institute, Vrije Universiteit Amsterdam</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Heitor Mancini Teixeira</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-6992-0671</span></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="co">    email: heitor.teixeira@ufv.br</span></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Departamento de Solos Centro de Ciências Agrárias, Universidade Federal de Vicosa, Brazil</span></span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a><span class="an">editor_options:</span><span class="co"> </span></span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a><span class="co">  chunk_output_type: console</span></span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> /Images/Rlogo.png</span></span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## About this tutorial</span></span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>In this tutorial, we will continue to explore different methods for testing differences between two groups. By the end of the tutorial, you will be able to apply non-parametric tests for paired samples (the Wilcoxon signed-rank test and the sign test), as well as both parametric (independent *t*-test) and non-parametric (Wilcoxon rank-sum test) approaches for independent samples.</span>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a>Let's get started!</span>
+<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-32"><a href="#cb30-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Where are we in the course?</span></span>
+<span id="cb30-33"><a href="#cb30-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-34"><a href="#cb30-34" aria-hidden="true" tabindex="-1"></a><span class="al">![](/Images/Where_are_we_tutorial_4.png)</span>{fig-align="center"}</span>
+<span id="cb30-35"><a href="#cb30-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-36"><a href="#cb30-36" aria-hidden="true" tabindex="-1"></a><span class="fu">## Install R packages</span></span>
+<span id="cb30-37"><a href="#cb30-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-38"><a href="#cb30-38" aria-hidden="true" tabindex="-1"></a>For one of the exercises, you will need to use a function in the *BSDA* R package. Make sure to install it before starting the tutorial.</span>
+<span id="cb30-39"><a href="#cb30-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-42"><a href="#cb30-42" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-43"><a href="#cb30-43" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false </span></span>
+<span id="cb30-44"><a href="#cb30-44" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb30-45"><a href="#cb30-45" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb30-46"><a href="#cb30-46" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false  </span></span>
+<span id="cb30-47"><a href="#cb30-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-48"><a href="#cb30-48" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"BSDA"</span>)</span>
+<span id="cb30-49"><a href="#cb30-49" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-50"><a href="#cb30-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-51"><a href="#cb30-51" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load R packages</span></span>
+<span id="cb30-52"><a href="#cb30-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-53"><a href="#cb30-53" aria-hidden="true" tabindex="-1"></a>To work on this tutorial, you will need to load the *readxl*, *tidyverse,* and *BSDA* packages. You can load them using <span class="in">`library()`</span>.</span>
+<span id="cb30-54"><a href="#cb30-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-57"><a href="#cb30-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-58"><a href="#cb30-58" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb30-59"><a href="#cb30-59" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb30-60"><a href="#cb30-60" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb30-61"><a href="#cb30-61" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false  </span></span>
+<span id="cb30-62"><a href="#cb30-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-63"><a href="#cb30-63" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb30-64"><a href="#cb30-64" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb30-65"><a href="#cb30-65" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BSDA)</span>
+<span id="cb30-66"><a href="#cb30-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-67"><a href="#cb30-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-68"><a href="#cb30-68" aria-hidden="true" tabindex="-1"></a><span class="fu">## Importing data</span></span>
+<span id="cb30-69"><a href="#cb30-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-70"><a href="#cb30-70" aria-hidden="true" tabindex="-1"></a>Start by importing the data used in this course (see previous tutorial). Recalculate the difference in coffee productivity between 2020 (<span class="in">`coffee_prod`</span> variable) and 2015 (<span class="in">`coffee_prod_past`</span> variable). Store these values in a new column called <span class="in">`coffee_prod_diff`</span>.</span>
+<span id="cb30-71"><a href="#cb30-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-74"><a href="#cb30-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-75"><a href="#cb30-75" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb30-76"><a href="#cb30-76" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb30-77"><a href="#cb30-77" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb30-78"><a href="#cb30-78" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false  </span></span>
+<span id="cb30-79"><a href="#cb30-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-80"><a href="#cb30-80" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1 (csv file)</span></span>
+<span id="cb30-81"><a href="#cb30-81" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"gss_statistics_master_data_set2.csv"</span>)</span>
+<span id="cb30-82"><a href="#cb30-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-83"><a href="#cb30-83" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 2 (Excel file)</span></span>
+<span id="cb30-84"><a href="#cb30-84" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"gss_statistics_master_data_set2.xlsx"</span>)</span>
+<span id="cb30-85"><a href="#cb30-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-86"><a href="#cb30-86" aria-hidden="true" tabindex="-1"></a><span class="co">#Recalculate difference in coffee productivity between 2020 and 2015</span></span>
+<span id="cb30-87"><a href="#cb30-87" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>coffee_prod_diff <span class="ot">&lt;-</span> data<span class="sc">$</span>coffee_prod <span class="sc">-</span> data<span class="sc">$</span>coffee_prod_past</span>
+<span id="cb30-88"><a href="#cb30-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-89"><a href="#cb30-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-90"><a href="#cb30-90" aria-hidden="true" tabindex="-1"></a><span class="fu">## Non-parametric tests for paired samples</span></span>
+<span id="cb30-91"><a href="#cb30-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-92"><a href="#cb30-92" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reminder: Question and hypotheses</span></span>
+<span id="cb30-93"><a href="#cb30-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-94"><a href="#cb30-94" aria-hidden="true" tabindex="-1"></a>We want to determine whether coffee productivity measured in 2020 (after an intervention from extension services) is higher than that measured in 2015 (before an intervention from extension services). In other words, did the intervention increase coffee productivity on farms?</span>
+<span id="cb30-95"><a href="#cb30-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-96"><a href="#cb30-96" aria-hidden="true" tabindex="-1"></a>In this example, the samples are paired because coffee productivity was measured on the <span class="co">[</span><span class="ot">same farms</span><span class="co">]</span>{.underline} in two different years (before and after an intervention). This comparison also involves two groups: productivity measured in 2015 versus productivity measured in 2020.</span>
+<span id="cb30-97"><a href="#cb30-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-98"><a href="#cb30-98" aria-hidden="true" tabindex="-1"></a>**Null hypothesis**: there is no difference in coffee productivity between 2015 and 2020.</span>
+<span id="cb30-99"><a href="#cb30-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-100"><a href="#cb30-100" aria-hidden="true" tabindex="-1"></a>**Alternative hypothesis**: coffee productivity measured in 2020 <span class="co">[</span><span class="ot">is higher</span><span class="co">]</span>{.underline} than coffee productivity measured in 2025 (which is what we would expect if the intervention had been successful). This is a directed hypothesis.</span>
+<span id="cb30-101"><a href="#cb30-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-102"><a href="#cb30-102" aria-hidden="true" tabindex="-1"></a>In the previous tutorial, we checked whether the difference in coffee productivity between 2015 and 2020 followed a normal distribution before running a paired *t*-test. Both the Shapiro-Wilk's test and the Q-Q plot suggested that the normality assumption was reasonable. But what should we do if this assumption is not met?</span>
+<span id="cb30-103"><a href="#cb30-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-104"><a href="#cb30-104" aria-hidden="true" tabindex="-1"></a>One option is to use a non-parametric test for paired samples. The term *non-parametric* means that the test is based on the ranks of the data values rather than their raw values. In this tutorial, we will introduce two options: the **Wilcoxon signed-rank test** and the **sign test**. The underlying principles of these tests have already been covered in the associated lecture (see lecture slides if you need to refresh your memory).</span>
+<span id="cb30-105"><a href="#cb30-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-106"><a href="#cb30-106" aria-hidden="true" tabindex="-1"></a><span class="fu">### Wilcoxon signed-rank test</span></span>
+<span id="cb30-107"><a href="#cb30-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-108"><a href="#cb30-108" aria-hidden="true" tabindex="-1"></a>The Wilcoxon signed-rank test calculates a test statistic ($V$), which is the sum of the ranks of the positive differences between paired observations (after removing pairs with zero difference). The minimum value of the $V$ statistic is zero and occurs when all differences between paired observations are negative. The maximum value of the $V$ statistic occurs when all differences are positive. In that case, $V$ is simply the sum of the ranks from 1 to $n$, where $n$ is the number of paired (non-zero) observations (@eq-maxV).</span>
+<span id="cb30-109"><a href="#cb30-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-110"><a href="#cb30-110" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb30-111"><a href="#cb30-111" aria-hidden="true" tabindex="-1"></a>V_{\max} = \sum_{i=1}^{n} i = \frac{n(n+1)}{2}</span>
+<span id="cb30-112"><a href="#cb30-112" aria-hidden="true" tabindex="-1"></a>$$ {#eq-maxV}</span>
+<span id="cb30-113"><a href="#cb30-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-114"><a href="#cb30-114" aria-hidden="true" tabindex="-1"></a>In R, you can run a Wilcoxon signed-rank test for paired samples using the <span class="in">`wilcox.test()`</span> function. The arguments taken by this function are similar to those used in the <span class="in">`t.test()`</span> function:</span>
+<span id="cb30-115"><a href="#cb30-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-116"><a href="#cb30-116" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`x`</span> and <span class="in">`y`</span>: the numeric vectors of data to compare (one vector per group)</span>
+<span id="cb30-117"><a href="#cb30-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-118"><a href="#cb30-118" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`paired`</span>: a logical value (<span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>) indicating whether the samples are paired (<span class="in">`TRUE`</span>) or independent (<span class="in">`FALSE`</span>)</span>
+<span id="cb30-119"><a href="#cb30-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-120"><a href="#cb30-120" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`alternative`</span>: specifies the type of test; <span class="in">`"two.sided"`</span> (default, for undirected hypotheses), <span class="in">`"greater"`</span>, or <span class="in">`"less"`</span></span>
+<span id="cb30-121"><a href="#cb30-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-122"><a href="#cb30-122" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`mu`</span>: the expected difference between group means if the null hypothesis is true</span>
+<span id="cb30-123"><a href="#cb30-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-124"><a href="#cb30-124" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`conf.level`</span>: the confidence level for the interval (default is 0.95)</span>
+<span id="cb30-125"><a href="#cb30-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-126"><a href="#cb30-126" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb30-127"><a href="#cb30-127" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 1</span></span>
+<span id="cb30-128"><a href="#cb30-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-129"><a href="#cb30-129" aria-hidden="true" tabindex="-1"></a>Use @eq-maxV to calculate the maximum value of the $V$ statistic for our dataset. Then, use the <span class="in">`wilcox.test()`</span> function to perform a Wilcoxon signed-rank test (assume that the normality assumption is not met). You can ignore the warning messages. They simply indicate the presence of ties in the data, meaning that some differences in coffee productivity between 2015 and 2020 have the same value and were therefore assigned the same rank.</span>
+<span id="cb30-130"><a href="#cb30-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-131"><a href="#cb30-131" aria-hidden="true" tabindex="-1"></a>Examine the output of the test to identify the reported statistics, and use this information to determine whether there is evidence that coffee productivity in 2020 is higher that coffee productivity in 2015.</span>
+<span id="cb30-132"><a href="#cb30-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-133"><a href="#cb30-133" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb30-134"><a href="#cb30-134" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb30-135"><a href="#cb30-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-138"><a href="#cb30-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-139"><a href="#cb30-139" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb30-140"><a href="#cb30-140" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb30-141"><a href="#cb30-141" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb30-142"><a href="#cb30-142" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb30-143"><a href="#cb30-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-144"><a href="#cb30-144" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the number of non-zero differences in coffee productivity</span></span>
+<span id="cb30-145"><a href="#cb30-145" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(data<span class="sc">$</span>coffee_prod_diff[data<span class="sc">$</span>coffee_prod_diff <span class="sc">!=</span> <span class="dv">0</span>])</span>
+<span id="cb30-146"><a href="#cb30-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-147"><a href="#cb30-147" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate Vmax</span></span>
+<span id="cb30-148"><a href="#cb30-148" aria-hidden="true" tabindex="-1"></a>Vmax <span class="ot">&lt;-</span> (n<span class="sc">*</span>(n<span class="sc">+</span><span class="dv">1</span>))<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb30-149"><a href="#cb30-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-150"><a href="#cb30-150" aria-hidden="true" tabindex="-1"></a><span class="co">#Do Wilcoxon signed-rank test</span></span>
+<span id="cb30-151"><a href="#cb30-151" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(<span class="at">x =</span> data<span class="sc">$</span>coffee_prod,</span>
+<span id="cb30-152"><a href="#cb30-152" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> data<span class="sc">$</span>coffee_prod_past,</span>
+<span id="cb30-153"><a href="#cb30-153" aria-hidden="true" tabindex="-1"></a>            <span class="at">paired =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb30-154"><a href="#cb30-154" aria-hidden="true" tabindex="-1"></a>            <span class="at">alternative =</span> <span class="st">"greater"</span>,</span>
+<span id="cb30-155"><a href="#cb30-155" aria-hidden="true" tabindex="-1"></a>            <span class="at">mu =</span> <span class="dv">0</span>)</span>
+<span id="cb30-156"><a href="#cb30-156" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-157"><a href="#cb30-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-158"><a href="#cb30-158" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb30-159"><a href="#cb30-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-160"><a href="#cb30-160" aria-hidden="true" tabindex="-1"></a>The p-value of the test is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020 (or that the distribution of the difference in coffee productivity between 2015 and 2020 is symmetric around zero). We conclude that coffee productivity in 2020 is significantly higher than in 2015.</span>
+<span id="cb30-161"><a href="#cb30-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-162"><a href="#cb30-162" aria-hidden="true" tabindex="-1"></a>Note that the maximum value of the test statistic ($V$) is <span class="in">`{r} Vmax`</span>. The observed value of the $V$ statistic is 573.5, which is fairly close to the maximum value. This tells you that most of the paired differences are positive (which is expected if coffee productivity is higher in 2020 than in 2015).</span>
+<span id="cb30-163"><a href="#cb30-163" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb30-164"><a href="#cb30-164" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb30-165"><a href="#cb30-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-166"><a href="#cb30-166" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sign test for dependent samples</span></span>
+<span id="cb30-167"><a href="#cb30-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-168"><a href="#cb30-168" aria-hidden="true" tabindex="-1"></a>The sign test for dependent samples calculates a test statistic ($S$), which is equal to the number of non-zero paired observations for which the observed difference is positive. The minimum value of the $S$ statistic is zero and occurs when all non-zero differences between paired observations are negative. The maximum value of the $S$ statistic occurs when all differences are positive. In that case, $S$ is equal to the number of paired (non-zero) observations.</span>
+<span id="cb30-169"><a href="#cb30-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-170"><a href="#cb30-170" aria-hidden="true" tabindex="-1"></a>In the sign test for dependent samples, the null hypothesis is that the median of the differences between paired observations is equal to zero. The sign test makes few assumptions about the underlying distribution of the data. However, compared with alternative tests, the sign test typically has lower statistical power.</span>
+<span id="cb30-171"><a href="#cb30-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-172"><a href="#cb30-172" aria-hidden="true" tabindex="-1"></a>In R, you can run a sign test using the <span class="in">`SIGN.test()`</span> function in the *BSDA* R package. Its arguments are similar to those of the <span class="in">`t.test()`</span> function:</span>
+<span id="cb30-173"><a href="#cb30-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-174"><a href="#cb30-174" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`x`</span> and <span class="in">`y`</span>: the numeric vectors of data to compare (one vector per group)</span>
+<span id="cb30-175"><a href="#cb30-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-176"><a href="#cb30-176" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`alternative`</span>: specifies the type of test; <span class="in">`"two.sided"`</span> (default, for undirected hypotheses), <span class="in">`"greater"`</span>, or <span class="in">`"less"`</span></span>
+<span id="cb30-177"><a href="#cb30-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-178"><a href="#cb30-178" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`md`</span>: the expected median difference between groups if the null hypothesis is true</span>
+<span id="cb30-179"><a href="#cb30-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-180"><a href="#cb30-180" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`conf.level`</span>: the confidence level for the interval (default is 0.95)</span>
+<span id="cb30-181"><a href="#cb30-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-182"><a href="#cb30-182" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb30-183"><a href="#cb30-183" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 2</span></span>
+<span id="cb30-184"><a href="#cb30-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-185"><a href="#cb30-185" aria-hidden="true" tabindex="-1"></a>Use the <span class="in">`SIGN.test()`</span> function to perform a sign test for dependent samples (assume that the normality assumption is not met). Examine the output of the test to identify the reported statistics, and use this information to determine whether there is evidence that coffee productivity in 2020 is higher that coffee productivity in 2015.</span>
+<span id="cb30-186"><a href="#cb30-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-187"><a href="#cb30-187" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb30-188"><a href="#cb30-188" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb30-189"><a href="#cb30-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-192"><a href="#cb30-192" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-193"><a href="#cb30-193" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb30-194"><a href="#cb30-194" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb30-195"><a href="#cb30-195" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb30-196"><a href="#cb30-196" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb30-197"><a href="#cb30-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-198"><a href="#cb30-198" aria-hidden="true" tabindex="-1"></a><span class="co">#Do sign test</span></span>
+<span id="cb30-199"><a href="#cb30-199" aria-hidden="true" tabindex="-1"></a><span class="fu">SIGN.test</span>(<span class="at">x =</span> data<span class="sc">$</span>coffee_prod,</span>
+<span id="cb30-200"><a href="#cb30-200" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> data<span class="sc">$</span>coffee_prod_past,</span>
+<span id="cb30-201"><a href="#cb30-201" aria-hidden="true" tabindex="-1"></a>          <span class="at">alternative =</span> <span class="st">"greater"</span>,</span>
+<span id="cb30-202"><a href="#cb30-202" aria-hidden="true" tabindex="-1"></a>          <span class="at">md =</span> <span class="dv">0</span>)</span>
+<span id="cb30-203"><a href="#cb30-203" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-204"><a href="#cb30-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-205"><a href="#cb30-205" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb30-206"><a href="#cb30-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-207"><a href="#cb30-207" aria-hidden="true" tabindex="-1"></a>The p-value of the test is lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that the median difference in coffee productivity between 2015 and 2020 is equal to zero. We conclude that coffee productivity in 2020 is significantly higher than in 2015.</span>
+<span id="cb30-208"><a href="#cb30-208" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb30-209"><a href="#cb30-209" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb30-210"><a href="#cb30-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-211"><a href="#cb30-211" aria-hidden="true" tabindex="-1"></a><span class="fu">## Doing an independent *t*-test</span></span>
+<span id="cb30-212"><a href="#cb30-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-213"><a href="#cb30-213" aria-hidden="true" tabindex="-1"></a><span class="fu">### Question and hypotheses</span></span>
+<span id="cb30-214"><a href="#cb30-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-215"><a href="#cb30-215" aria-hidden="true" tabindex="-1"></a>Before diving into a new type of parametric test to compare two groups (independent *t*-test), let's first introduce new research questions.</span>
+<span id="cb30-216"><a href="#cb30-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-217"><a href="#cb30-217" aria-hidden="true" tabindex="-1"></a>We now want to test whether coffee productivity (<span class="in">`coffee_prod`</span>) and plant diversity (<span class="in">`shannon_PIM`</span>) differ between farms that use pesticides and those that do not. Specifically, we are interested in whether pesticide use is associated with <span class="co">[</span><span class="ot">higher coffee productivity</span><span class="co">]</span>{.underline} but <span class="co">[</span><span class="ot">lower plant diversity</span><span class="co">]</span>{.underline}. In this example, the samples are independent because both response variables were measured on <span class="co">[</span><span class="ot">different farms</span><span class="co">]</span>{.underline} (i.e., observations are not paired). The comparison involves two groups: farms that use pesticides and farms that do not, making an independent *t*-test a good candidate for testing our hypotheses.</span>
+<span id="cb30-218"><a href="#cb30-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-219"><a href="#cb30-219" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb30-220"><a href="#cb30-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 3</span></span>
+<span id="cb30-221"><a href="#cb30-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-222"><a href="#cb30-222" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb30-223"><a href="#cb30-223" aria-hidden="true" tabindex="-1"></a><span class="fu">## Question</span></span>
+<span id="cb30-224"><a href="#cb30-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-225"><a href="#cb30-225" aria-hidden="true" tabindex="-1"></a>Based on the information above, write a null and an alternative hypothesis for each independent *t*-test. Are the hypotheses directed or undirected?</span>
+<span id="cb30-226"><a href="#cb30-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-227"><a href="#cb30-227" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb30-228"><a href="#cb30-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-229"><a href="#cb30-229" aria-hidden="true" tabindex="-1"></a>**Null hypotheses (coffee productivity)**: there is no difference in coffee productivity between farms that use or don't use pesticides.</span>
+<span id="cb30-230"><a href="#cb30-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-231"><a href="#cb30-231" aria-hidden="true" tabindex="-1"></a>**Alternative hypothesis (coffee productivity)**: coffee productivity is higher in farms that use pesticides than in farms that do not. This is a directed hypothesis.</span>
+<span id="cb30-232"><a href="#cb30-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-233"><a href="#cb30-233" aria-hidden="true" tabindex="-1"></a>**Null hypotheses (plant diversity)**: there is no difference in plant diversity between farms that use or don't use pesticides.</span>
+<span id="cb30-234"><a href="#cb30-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-235"><a href="#cb30-235" aria-hidden="true" tabindex="-1"></a>**Alternative hypothesis (plant diversity)**: plant diversity is lower in farms that use pesticides than in farms that do not. This is also a directed hypothesis.</span>
+<span id="cb30-236"><a href="#cb30-236" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb30-237"><a href="#cb30-237" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb30-238"><a href="#cb30-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-239"><a href="#cb30-239" aria-hidden="true" tabindex="-1"></a>Before checking whether the underlying assumptions of an independent *t*-test are met, we first need to create a new logical variable (let's call it `pesticide2`). This variable should be `TRUE` for farms that use pesticides and `FALSE` for farms that do not. In R, new variables can be easily created from existing ones using the `mutate()` function from the *dplyr* package.</span>
+<span id="cb30-240"><a href="#cb30-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-241"><a href="#cb30-241" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb30-242"><a href="#cb30-242" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 4</span></span>
+<span id="cb30-243"><a href="#cb30-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-244"><a href="#cb30-244" aria-hidden="true" tabindex="-1"></a>In <span class="in">`data`</span>, create a new logical variable (<span class="in">`pesticide2`</span>) that is <span class="in">`TRUE`</span> for farms that use pesticides and <span class="in">`FALSE`</span> for farms that do not. Use <span class="in">`dplyr::mutate()`</span> to create this new variable. You will also need to use a relational operator (see first tutorial) to write a condition that will allow R to categorize farms based on pesticide use.</span>
+<span id="cb30-245"><a href="#cb30-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-248"><a href="#cb30-248" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-249"><a href="#cb30-249" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb30-250"><a href="#cb30-250" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb30-251"><a href="#cb30-251" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb30-252"><a href="#cb30-252" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb30-253"><a href="#cb30-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-254"><a href="#cb30-254" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(data, <span class="at">pesticide2 =</span> pesticide <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb30-255"><a href="#cb30-255" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-256"><a href="#cb30-256" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb30-257"><a href="#cb30-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-258"><a href="#cb30-258" aria-hidden="true" tabindex="-1"></a>After inspecting the dataset, we can see that it contains 23 farms that use pesticides (<span class="in">`pesticide2 = TRUE`</span>) and 13 farms that do not (<span class="in">`pesticide2 = FALSE`</span>). This means that the two groups we want to compare do not have the same number of observations. Let’s keep this in mind as we move forward.</span>
+<span id="cb30-259"><a href="#cb30-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-260"><a href="#cb30-260" aria-hidden="true" tabindex="-1"></a><span class="fu">### Check assumptions</span></span>
+<span id="cb30-261"><a href="#cb30-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-262"><a href="#cb30-262" aria-hidden="true" tabindex="-1"></a>Independent *t*-tests rely on three main assumptions. First, the data should be normally distributed within each group (the normality assumption). Second, the groups being compared should have equal variances (the homoscedasticity assumption). Third, the observations must be independent of one another. Let’s now check whether these assumptions are met.</span>
+<span id="cb30-263"><a href="#cb30-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-264"><a href="#cb30-264" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Normality</span></span>
+<span id="cb30-265"><a href="#cb30-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-266"><a href="#cb30-266" aria-hidden="true" tabindex="-1"></a>As discussed in the previous tutorial, the normality assumption can be checked using Shapiro-Wilk's test and Q-Q plots (one test or plot per group). Time to put into practice what you learned in the previous tutorial!</span>
+<span id="cb30-267"><a href="#cb30-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-268"><a href="#cb30-268" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb30-269"><a href="#cb30-269" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 5</span></span>
+<span id="cb30-270"><a href="#cb30-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-271"><a href="#cb30-271" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use the Shapiro-Wilk's test to assess whether the response variables of interest, coffee productivity (<span class="in">`coffee_prod`</span>) and plant diversity (<span class="in">`shannon_PIM`</span>), are normally distributed within each group of farms (those that use pesticides and those that do not).</span>
+<span id="cb30-272"><a href="#cb30-272" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>In addition, create Q–Q plots for both variables to visually evaluate normality within each group.</span>
+<span id="cb30-273"><a href="#cb30-273" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Based on the Shapiro-Wilk test results and the Q-Q plots, assess whether the normality assumption is reasonably met for each response variable and group.</span>
+<span id="cb30-274"><a href="#cb30-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-275"><a href="#cb30-275" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb30-276"><a href="#cb30-276" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb30-277"><a href="#cb30-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-280"><a href="#cb30-280" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-281"><a href="#cb30-281" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb30-282"><a href="#cb30-282" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb30-283"><a href="#cb30-283" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb30-284"><a href="#cb30-284" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb30-285"><a href="#cb30-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-286"><a href="#cb30-286" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for farms that use pesticides</span></span>
+<span id="cb30-287"><a href="#cb30-287" aria-hidden="true" tabindex="-1"></a>data_true <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, pesticide2 <span class="sc">==</span> <span class="cn">TRUE</span>)</span>
+<span id="cb30-288"><a href="#cb30-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-289"><a href="#cb30-289" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for farms that do not use pesticides</span></span>
+<span id="cb30-290"><a href="#cb30-290" aria-hidden="true" tabindex="-1"></a>data_false <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, pesticide2 <span class="sc">==</span> <span class="cn">FALSE</span>)</span>
+<span id="cb30-291"><a href="#cb30-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-292"><a href="#cb30-292" aria-hidden="true" tabindex="-1"></a><span class="co">#Shapiro-Wilk's tests for farms that use pesticides</span></span>
+<span id="cb30-293"><a href="#cb30-293" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb30-294"><a href="#cb30-294" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_true<span class="sc">$</span>shannon_PIM)</span>
+<span id="cb30-295"><a href="#cb30-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-296"><a href="#cb30-296" aria-hidden="true" tabindex="-1"></a><span class="co">#Shapiro-Wilk's tests for farms that do not use pesticides</span></span>
+<span id="cb30-297"><a href="#cb30-297" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_false<span class="sc">$</span>coffee_prod)</span>
+<span id="cb30-298"><a href="#cb30-298" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_false<span class="sc">$</span>shannon_PIM)</span>
+<span id="cb30-299"><a href="#cb30-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-300"><a href="#cb30-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-301"><a href="#cb30-301" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb30-302"><a href="#cb30-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-305"><a href="#cb30-305" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-306"><a href="#cb30-306" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb30-307"><a href="#cb30-307" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb30-308"><a href="#cb30-308" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb30-309"><a href="#cb30-309" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb30-310"><a href="#cb30-310" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb30-311"><a href="#cb30-311" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb30-312"><a href="#cb30-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-313"><a href="#cb30-313" aria-hidden="true" tabindex="-1"></a><span class="co">#Create Q-Q plot for coffee productivity</span></span>
+<span id="cb30-314"><a href="#cb30-314" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">sample =</span> coffee_prod)) <span class="sc">+</span></span>
+<span id="cb30-315"><a href="#cb30-315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb30-316"><a href="#cb30-316" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
+<span id="cb30-317"><a href="#cb30-317" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> pesticide2) <span class="sc">+</span></span>
+<span id="cb30-318"><a href="#cb30-318" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb30-319"><a href="#cb30-319" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Theoretical quantiles"</span>)<span class="sc">+</span></span>
+<span id="cb30-320"><a href="#cb30-320" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)<span class="sc">+</span></span>
+<span id="cb30-321"><a href="#cb30-321" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Coffee productivity"</span>)</span>
+<span id="cb30-322"><a href="#cb30-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-323"><a href="#cb30-323" aria-hidden="true" tabindex="-1"></a><span class="co">#Create Q-Q plot for plant diversity</span></span>
+<span id="cb30-324"><a href="#cb30-324" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">sample =</span> shannon_PIM)) <span class="sc">+</span></span>
+<span id="cb30-325"><a href="#cb30-325" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb30-326"><a href="#cb30-326" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
+<span id="cb30-327"><a href="#cb30-327" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> pesticide2) <span class="sc">+</span></span>
+<span id="cb30-328"><a href="#cb30-328" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb30-329"><a href="#cb30-329" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Theoretical quantiles"</span>)<span class="sc">+</span></span>
+<span id="cb30-330"><a href="#cb30-330" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)<span class="sc">+</span></span>
+<span id="cb30-331"><a href="#cb30-331" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Plant diversity"</span>)</span>
+<span id="cb30-332"><a href="#cb30-332" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-333"><a href="#cb30-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-334"><a href="#cb30-334" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb30-335"><a href="#cb30-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-336"><a href="#cb30-336" aria-hidden="true" tabindex="-1"></a>The <span class="in">`shannon_PIM`</span> variable does not appear to follow a normal distribution in farms that do not use pesticides. This is indicated by the Shapiro-Wilk's test, which yields a p-value below the 0.05 significance threshold, and by the corresponding Q–Q plot, where one observation deviates strongly from the reference line. In contrast, coffee productivity data meet the normality assumption in both farm groups. Overall, plant diversity data meet the normality assumption only in one group (farms that use pesticides). To test our hypothesis that plant diversity is higher in farms that do not use pesticides, we therefore need to use a statistical test that does not assume normality.</span>
+<span id="cb30-337"><a href="#cb30-337" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb30-338"><a href="#cb30-338" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb30-339"><a href="#cb30-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-340"><a href="#cb30-340" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Homoscedasticity</span></span>
+<span id="cb30-341"><a href="#cb30-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-342"><a href="#cb30-342" aria-hidden="true" tabindex="-1"></a>The second assumption we need to check is that the groups being compared have equal variances. This can be assessed using Bartlett’s test (see the previous tutorial).</span>
+<span id="cb30-343"><a href="#cb30-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-344"><a href="#cb30-344" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb30-345"><a href="#cb30-345" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 6</span></span>
+<span id="cb30-346"><a href="#cb30-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-347"><a href="#cb30-347" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use the Bartlett's test to assess whether the response variables of interest, coffee productivity (<span class="in">`coffee_prod`</span>) and plant diversity (<span class="in">`shannon_PIM`</span>), have equal variances in the two farm groups (those that use pesticides and those that do not).</span>
+<span id="cb30-348"><a href="#cb30-348" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What can you conclude from these tests?</span>
+<span id="cb30-349"><a href="#cb30-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-350"><a href="#cb30-350" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb30-351"><a href="#cb30-351" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb30-352"><a href="#cb30-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-355"><a href="#cb30-355" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-356"><a href="#cb30-356" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb30-357"><a href="#cb30-357" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb30-358"><a href="#cb30-358" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb30-359"><a href="#cb30-359" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb30-360"><a href="#cb30-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-361"><a href="#cb30-361" aria-hidden="true" tabindex="-1"></a><span class="co">#Test for coffee productivity</span></span>
+<span id="cb30-362"><a href="#cb30-362" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="at">x =</span> data<span class="sc">$</span>coffee_prod,</span>
+<span id="cb30-363"><a href="#cb30-363" aria-hidden="true" tabindex="-1"></a>              <span class="at">g =</span> data<span class="sc">$</span>pesticide2)</span>
+<span id="cb30-364"><a href="#cb30-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-365"><a href="#cb30-365" aria-hidden="true" tabindex="-1"></a><span class="co">#Test for plant diversity</span></span>
+<span id="cb30-366"><a href="#cb30-366" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="at">x =</span> data<span class="sc">$</span>shannon_PIM,</span>
+<span id="cb30-367"><a href="#cb30-367" aria-hidden="true" tabindex="-1"></a>              <span class="at">g =</span> data<span class="sc">$</span>pesticide2)</span>
+<span id="cb30-368"><a href="#cb30-368" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-369"><a href="#cb30-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-370"><a href="#cb30-370" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb30-371"><a href="#cb30-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-372"><a href="#cb30-372" aria-hidden="true" tabindex="-1"></a>Both tests indicate homoscedasticity (p-value <span class="sc">\&gt;</span> 0.05). We therefore fail to reject the null hypothesis and conclude that the two farm groups have equal variances for both coffee productivity and plant diversity.</span>
+<span id="cb30-373"><a href="#cb30-373" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb30-374"><a href="#cb30-374" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb30-375"><a href="#cb30-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-376"><a href="#cb30-376" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Independence</span></span>
+<span id="cb30-377"><a href="#cb30-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-378"><a href="#cb30-378" aria-hidden="true" tabindex="-1"></a>Independence of observations depends on the sampling design and data collection procedure. In the example used in this tutorial, data were collected from different farms, and we can therefore assume that the independence assumption is met.</span>
+<span id="cb30-379"><a href="#cb30-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-380"><a href="#cb30-380" aria-hidden="true" tabindex="-1"></a><span class="fu">### The slow way</span></span>
+<span id="cb30-381"><a href="#cb30-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-382"><a href="#cb30-382" aria-hidden="true" tabindex="-1"></a>Given that coffee productivity data meet all the assumptions of an independent *t*-test, we will focus on this variable to illustrate how to perform an independent *t*-test in R.</span>
+<span id="cb30-383"><a href="#cb30-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-384"><a href="#cb30-384" aria-hidden="true" tabindex="-1"></a>As in the previous tutorial, let's first do this using the "slow way" by manually computing the test statistic ($t$) and the p-value of the test.</span>
+<span id="cb30-385"><a href="#cb30-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-386"><a href="#cb30-386" aria-hidden="true" tabindex="-1"></a>The $t$ statistic quantifies the difference between the means of two independent groups relative to the variability in the data.</span>
+<span id="cb30-387"><a href="#cb30-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-388"><a href="#cb30-388" aria-hidden="true" tabindex="-1"></a>When equal variances are assumed (which is the case here), the difference between the two sample means is divided by the standard error of the difference calculated using a pooled standard deviation. In this case, the *t* statistic can be calculated using @eq-indttest-equalvar, where $\bar{y}_A$ is the mean of group A, $\bar{y}_B$ is the mean of group B, $n_A$ is the number of observations in group A, $n_B$ is the number of observations in group B, and $s_p$ is the pooled standard deviation. The pooled standard deviation can be calculated using @eq-pooledstandarddeviation, where $s_A^2$ is the variance of group A and $s_B^2$ is the variance of group B.</span>
+<span id="cb30-389"><a href="#cb30-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-390"><a href="#cb30-390" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb30-391"><a href="#cb30-391" aria-hidden="true" tabindex="-1"></a>t = \frac{\bar{y}_A - \bar{y}_B}{s_p \sqrt{\frac{1}{n_A} + \frac{1}{n_B}}}</span>
+<span id="cb30-392"><a href="#cb30-392" aria-hidden="true" tabindex="-1"></a>$$ {#eq-indttest-equalvar}</span>
+<span id="cb30-393"><a href="#cb30-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-394"><a href="#cb30-394" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb30-395"><a href="#cb30-395" aria-hidden="true" tabindex="-1"></a>s_p = \sqrt{\frac{(n_A - 1)s_A^2 + (n_B - 1)s_B^2}{n_A + n_B - 2}}</span>
+<span id="cb30-396"><a href="#cb30-396" aria-hidden="true" tabindex="-1"></a>$$ {#eq-pooledstandarddeviation}</span>
+<span id="cb30-397"><a href="#cb30-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-398"><a href="#cb30-398" aria-hidden="true" tabindex="-1"></a>When equal variances are not assumed (Welch’s *t*-test), the standard error of the difference is calculated using @eq-indttest-unequalvar, without pooling.</span>
+<span id="cb30-399"><a href="#cb30-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-400"><a href="#cb30-400" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb30-401"><a href="#cb30-401" aria-hidden="true" tabindex="-1"></a>t = \frac{\bar{y}_A - \bar{y}_B}{\sqrt{\frac{s_A^2}{n_A} + \frac{s_B^2}{n_B}}}</span>
+<span id="cb30-402"><a href="#cb30-402" aria-hidden="true" tabindex="-1"></a>$$ {#eq-indttest-unequalvar}</span>
+<span id="cb30-403"><a href="#cb30-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-404"><a href="#cb30-404" aria-hidden="true" tabindex="-1"></a>Under the null hypothesis (i.e., if there is no difference in the means of the two populations being compared), the $t$ statistic follows a Student’s *t* distribution with $n_A+n_B-2$ degrees of freedom (@fig-studentdistribution).</span>
+<span id="cb30-405"><a href="#cb30-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-406"><a href="#cb30-406" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb30-407"><a href="#cb30-407" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 7</span></span>
+<span id="cb30-408"><a href="#cb30-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-409"><a href="#cb30-409" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>We want to use an independent *t*-test find out if coffee productivity (<span class="in">`coffee_prod`</span> variable) is higher in farms that use pesticides. You can assume homoscedasticity (groups have equal variances). Calculate the value of the test statistic ($t$) using @eq-indttest-equalvar and @eq-pooledstandarddeviation.</span>
+<span id="cb30-410"><a href="#cb30-410" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Use the table of critical values of Student's *t* distribution available on Brightspace to obtain the critical value of the test.</span>
+<span id="cb30-411"><a href="#cb30-411" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Based on the calculated test statistic and critical value, what can you conclude about the effect of pesticide application on coffee productivity?</span>
+<span id="cb30-412"><a href="#cb30-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-413"><a href="#cb30-413" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb30-414"><a href="#cb30-414" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb30-415"><a href="#cb30-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-418"><a href="#cb30-418" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-419"><a href="#cb30-419" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb30-420"><a href="#cb30-420" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb30-421"><a href="#cb30-421" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb30-422"><a href="#cb30-422" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb30-423"><a href="#cb30-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-424"><a href="#cb30-424" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate group means</span></span>
+<span id="cb30-425"><a href="#cb30-425" aria-hidden="true" tabindex="-1"></a>yA <span class="ot">&lt;-</span> <span class="fu">mean</span>(data_false<span class="sc">$</span>coffee_prod)</span>
+<span id="cb30-426"><a href="#cb30-426" aria-hidden="true" tabindex="-1"></a>yB <span class="ot">&lt;-</span> <span class="fu">mean</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb30-427"><a href="#cb30-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-428"><a href="#cb30-428" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate group variances</span></span>
+<span id="cb30-429"><a href="#cb30-429" aria-hidden="true" tabindex="-1"></a>varA <span class="ot">&lt;-</span> <span class="fu">var</span>(data_false<span class="sc">$</span>coffee_prod)</span>
+<span id="cb30-430"><a href="#cb30-430" aria-hidden="true" tabindex="-1"></a>varB <span class="ot">&lt;-</span> <span class="fu">var</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb30-431"><a href="#cb30-431" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-432"><a href="#cb30-432" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the number of observations in each group</span></span>
+<span id="cb30-433"><a href="#cb30-433" aria-hidden="true" tabindex="-1"></a>nA <span class="ot">&lt;-</span> <span class="fu">length</span>(data_false<span class="sc">$</span>coffee_prod)</span>
+<span id="cb30-434"><a href="#cb30-434" aria-hidden="true" tabindex="-1"></a>nB <span class="ot">&lt;-</span> <span class="fu">length</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb30-435"><a href="#cb30-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-436"><a href="#cb30-436" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the pooled standard deviation</span></span>
+<span id="cb30-437"><a href="#cb30-437" aria-hidden="true" tabindex="-1"></a>sp <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(((nA<span class="dv">-1</span>)<span class="sc">*</span>varA <span class="sc">+</span> (nB<span class="dv">-1</span>)<span class="sc">*</span>varB)<span class="sc">/</span>(nA <span class="sc">+</span> nB <span class="sc">-</span> <span class="dv">2</span>))</span>
+<span id="cb30-438"><a href="#cb30-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-439"><a href="#cb30-439" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the value of the t statistic</span></span>
+<span id="cb30-440"><a href="#cb30-440" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (yA <span class="sc">-</span> yB)<span class="sc">/</span>(sp<span class="sc">*</span><span class="fu">sqrt</span>((<span class="dv">1</span><span class="sc">/</span>nA)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span>nB)))</span>
+<span id="cb30-441"><a href="#cb30-441" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-442"><a href="#cb30-442" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-443"><a href="#cb30-443" aria-hidden="true" tabindex="-1"></a>The value of the test statistic is <span class="in">`{r} round(t, 3)`</span></span>
+<span id="cb30-444"><a href="#cb30-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-445"><a href="#cb30-445" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb30-446"><a href="#cb30-446" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-449"><a href="#cb30-449" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-450"><a href="#cb30-450" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb30-451"><a href="#cb30-451" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb30-452"><a href="#cb30-452" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb30-453"><a href="#cb30-453" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb30-454"><a href="#cb30-454" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-455"><a href="#cb30-455" aria-hidden="true" tabindex="-1"></a><span class="co">#34 degrees of freedom, directed hypothesis (5%)</span></span>
+<span id="cb30-456"><a href="#cb30-456" aria-hidden="true" tabindex="-1"></a><span class="co">#Interpolate value using linear approximation</span></span>
+<span id="cb30-457"><a href="#cb30-457" aria-hidden="true" tabindex="-1"></a>critical_value <span class="ot">&lt;-</span> <span class="fl">1.697</span><span class="sc">+</span>(<span class="fl">1.697-1.684</span>)<span class="sc">/</span>(<span class="dv">30-40</span>)<span class="sc">*</span><span class="dv">4</span></span>
+<span id="cb30-458"><a href="#cb30-458" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-459"><a href="#cb30-459" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-460"><a href="#cb30-460" aria-hidden="true" tabindex="-1"></a>The critical value of the test is <span class="in">`{r} round(critical_value, 3)`</span></span>
+<span id="cb30-461"><a href="#cb30-461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-462"><a href="#cb30-462" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb30-463"><a href="#cb30-463" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-464"><a href="#cb30-464" aria-hidden="true" tabindex="-1"></a>The absolute value of the test statistic is lower than the critical value. Therefore, we fail to reject the null hypothesis that there is no difference in coffee productivity between farms that use or do not use pesticides. We conclude that using pesticides do not lead to an increase in coffee productivity in our example.</span>
+<span id="cb30-465"><a href="#cb30-465" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb30-466"><a href="#cb30-466" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb30-467"><a href="#cb30-467" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-470"><a href="#cb30-470" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-471"><a href="#cb30-471" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb30-472"><a href="#cb30-472" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb30-473"><a href="#cb30-473" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb30-474"><a href="#cb30-474" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb30-475"><a href="#cb30-475" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb30-476"><a href="#cb30-476" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb30-477"><a href="#cb30-477" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb30-478"><a href="#cb30-478" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Student's t distribution with 34 degrees of freedom. The vertical dashed line shows the absolute value of the observed t statistic (independent t-test). The area under the curve highlighted in yellow is the exceedance probability (p-value)."</span></span>
+<span id="cb30-479"><a href="#cb30-479" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-studentdistribution</span></span>
+<span id="cb30-480"><a href="#cb30-480" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-481"><a href="#cb30-481" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">6</span>,<span class="dv">6</span>,<span class="fl">0.01</span>)</span>
+<span id="cb30-482"><a href="#cb30-482" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">dt</span>(ht,<span class="at">df=</span><span class="dv">34</span>)</span>
+<span id="cb30-483"><a href="#cb30-483" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-484"><a href="#cb30-484" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ht,<span class="fu">dt</span>(ht,<span class="at">df=</span><span class="dv">34</span>),<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="st">"black"</span>, <span class="at">ylab=</span><span class="st">"Probability density"</span>, <span class="at">xlab=</span><span class="st">"t statistic"</span>)</span>
+<span id="cb30-485"><a href="#cb30-485" aria-hidden="true" tabindex="-1"></a>xv <span class="ot">&lt;-</span> ht[ht<span class="sc">&gt;=</span><span class="fu">abs</span>(t)]</span>
+<span id="cb30-486"><a href="#cb30-486" aria-hidden="true" tabindex="-1"></a>yv <span class="ot">&lt;-</span> pd[ht<span class="sc">&gt;=</span><span class="fu">abs</span>(t)]</span>
+<span id="cb30-487"><a href="#cb30-487" aria-hidden="true" tabindex="-1"></a>xv <span class="ot">&lt;-</span> <span class="fu">c</span>(xv,<span class="dv">6</span>,<span class="fu">abs</span>(t))</span>
+<span id="cb30-488"><a href="#cb30-488" aria-hidden="true" tabindex="-1"></a>yv <span class="ot">&lt;-</span> <span class="fu">c</span>(yv,<span class="dv">0</span>,<span class="dv">0</span>)</span>
+<span id="cb30-489"><a href="#cb30-489" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(xv,yv,<span class="at">col=</span><span class="st">"#FFCD00"</span>,<span class="at">border=</span><span class="cn">NA</span>)</span>
+<span id="cb30-490"><a href="#cb30-490" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">abs</span>(t), <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb30-491"><a href="#cb30-491" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-492"><a href="#cb30-492" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-493"><a href="#cb30-493" aria-hidden="true" tabindex="-1"></a>We can now calculate the p-value associated with this test. We can do this using the <span class="in">`pt()`</span> function in R.</span>
+<span id="cb30-494"><a href="#cb30-494" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-495"><a href="#cb30-495" aria-hidden="true" tabindex="-1"></a>To calculate this p-value, it is important to remember that we are testing a directed (one-sided) hypothesis, as we expect coffee productivity in farms that use pesticides to be higher than in farms that do not use pesticides. Graphically, this corresponds to calculating the area under the distribution curve to the right of the dashed vertical line shown in @fig-studentdistribution. This area represents the p-value and appears to be quite large.</span>
+<span id="cb30-496"><a href="#cb30-496" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-497"><a href="#cb30-497" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb30-498"><a href="#cb30-498" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 8</span></span>
+<span id="cb30-499"><a href="#cb30-499" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-500"><a href="#cb30-500" aria-hidden="true" tabindex="-1"></a>Calculate the p-value of the independent *t*-test using <span class="in">`pt()`</span>. What can you conclude from this test?</span>
+<span id="cb30-501"><a href="#cb30-501" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-502"><a href="#cb30-502" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb30-503"><a href="#cb30-503" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb30-504"><a href="#cb30-504" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-507"><a href="#cb30-507" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-508"><a href="#cb30-508" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb30-509"><a href="#cb30-509" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb30-510"><a href="#cb30-510" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb30-511"><a href="#cb30-511" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb30-512"><a href="#cb30-512" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-513"><a href="#cb30-513" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1</span></span>
+<span id="cb30-514"><a href="#cb30-514" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pt</span>(t, <span class="at">df=</span>nA<span class="sc">+</span>nB<span class="dv">-2</span>, <span class="at">lower.tail=</span><span class="cn">TRUE</span>)</span>
+<span id="cb30-515"><a href="#cb30-515" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-516"><a href="#cb30-516" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 2</span></span>
+<span id="cb30-517"><a href="#cb30-517" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pt</span>(<span class="fu">abs</span>(t), <span class="at">df=</span>nA<span class="sc">+</span>nB<span class="dv">-2</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
+<span id="cb30-518"><a href="#cb30-518" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-519"><a href="#cb30-519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-520"><a href="#cb30-520" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb30-521"><a href="#cb30-521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-522"><a href="#cb30-522" aria-hidden="true" tabindex="-1"></a>The calculate p-value is <span class="in">`{r} round(p, 4)`</span>, which is greater than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that there is no difference in coffee productivity between farms that use or do not use pesticides. We conclude that using pesticides do not lead to an increase in coffee productivity in our example.</span>
+<span id="cb30-523"><a href="#cb30-523" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb30-524"><a href="#cb30-524" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb30-525"><a href="#cb30-525" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-526"><a href="#cb30-526" aria-hidden="true" tabindex="-1"></a><span class="fu">### The fast way</span></span>
+<span id="cb30-527"><a href="#cb30-527" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-528"><a href="#cb30-528" aria-hidden="true" tabindex="-1"></a>Independent *t*-tests can be easily performed in R using the <span class="in">`t.test()`</span> function. Here is a reminder of the most important arguments of this function:</span>
+<span id="cb30-529"><a href="#cb30-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-530"><a href="#cb30-530" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`x`</span> and <span class="in">`y`</span>: the numeric vectors of data to compare (one vector per group)</span>
+<span id="cb30-531"><a href="#cb30-531" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-532"><a href="#cb30-532" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`paired`</span>: a logical value (<span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>) indicating whether the samples are paired (<span class="in">`TRUE`</span>) or independent (<span class="in">`FALSE`</span>)</span>
+<span id="cb30-533"><a href="#cb30-533" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-534"><a href="#cb30-534" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`alternative`</span>: specifies the type of test; <span class="in">`"two.sided"`</span> (default, for undirected hypotheses), <span class="in">`"greater"`</span>, or <span class="in">`"less"`</span></span>
+<span id="cb30-535"><a href="#cb30-535" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-536"><a href="#cb30-536" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`mu`</span>: the expected difference between group means if the null hypothesis is true</span>
+<span id="cb30-537"><a href="#cb30-537" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-538"><a href="#cb30-538" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`var.equal`</span>: a logical variable indicating whether to treat the two variances as being equal. If <span class="in">`TRUE`</span> then the pooled variance is used to estimate the variance otherwise the Welch (or Satterthwaite) approximation to the degrees of freedom is used.</span>
+<span id="cb30-539"><a href="#cb30-539" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-540"><a href="#cb30-540" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`conf.level`</span>: the confidence level for the interval (default is 0.95)</span>
+<span id="cb30-541"><a href="#cb30-541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-542"><a href="#cb30-542" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb30-543"><a href="#cb30-543" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 9</span></span>
+<span id="cb30-544"><a href="#cb30-544" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-545"><a href="#cb30-545" aria-hidden="true" tabindex="-1"></a>Use the <span class="in">`t.test()`</span> function to perform the statistical test. What information is shown in the R output? What can you conclude from this test? Write a few sentences to report this result, including the test statistic, p-value, sample size (degrees of freedom), and interpretation.</span>
+<span id="cb30-546"><a href="#cb30-546" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-547"><a href="#cb30-547" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb30-548"><a href="#cb30-548" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb30-549"><a href="#cb30-549" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-552"><a href="#cb30-552" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-553"><a href="#cb30-553" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb30-554"><a href="#cb30-554" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb30-555"><a href="#cb30-555" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb30-556"><a href="#cb30-556" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb30-557"><a href="#cb30-557" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-558"><a href="#cb30-558" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x=</span>data_false<span class="sc">$</span>coffee_prod,</span>
+<span id="cb30-559"><a href="#cb30-559" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span>data_true<span class="sc">$</span>coffee_prod,</span>
+<span id="cb30-560"><a href="#cb30-560" aria-hidden="true" tabindex="-1"></a>       <span class="at">paired =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb30-561"><a href="#cb30-561" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"less"</span>, <span class="co">#Expect productivity in farms without pesticides to be lower</span></span>
+<span id="cb30-562"><a href="#cb30-562" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>,</span>
+<span id="cb30-563"><a href="#cb30-563" aria-hidden="true" tabindex="-1"></a>       <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb30-564"><a href="#cb30-564" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-565"><a href="#cb30-565" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-566"><a href="#cb30-566" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb30-567"><a href="#cb30-567" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-568"><a href="#cb30-568" aria-hidden="true" tabindex="-1"></a>We conducted an independent *t*-test to assess whether pesticide application is associated with increased coffee productivity (@fig-coffee-prod). Coffee productivity was measured in farms that apply pesticides (*n* = 23) and in farms that do not apply pesticides (*n* = 13). We found no evidence that coffee productivity was higher in farms using pesticides (*t* = 0.61, p-value = 0.2715). On average, coffee productivity in farms where pesticides were applied was `{r} round(100*(mean(data_true$coffee_prod)-mean(data_false$coffee_prod))/mean(data_false$coffee_prod), 1)`% higher than in farms without pesticide application.</span>
+<span id="cb30-569"><a href="#cb30-569" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-572"><a href="#cb30-572" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-573"><a href="#cb30-573" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb30-574"><a href="#cb30-574" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb30-575"><a href="#cb30-575" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb30-576"><a href="#cb30-576" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb30-577"><a href="#cb30-577" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 4</span></span>
+<span id="cb30-578"><a href="#cb30-578" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4.2</span></span>
+<span id="cb30-579"><a href="#cb30-579" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb30-580"><a href="#cb30-580" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Coffee productivity measured in farms that apply pesticides (TRUE) and in farms that do not apply pesticides (FALSE). Summary statistics shown on the right side of each boxplot show the mean ± 95% CI (n=36)."</span></span>
+<span id="cb30-581"><a href="#cb30-581" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-coffee-prod</span></span>
+<span id="cb30-582"><a href="#cb30-582" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-583"><a href="#cb30-583" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb30-584"><a href="#cb30-584" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-585"><a href="#cb30-585" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(pesticide2), <span class="at">y=</span>coffee_prod))<span class="sc">+</span></span>
+<span id="cb30-586"><a href="#cb30-586" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.4</span>, <span class="at">fill=</span><span class="st">"#FFCD00"</span>)<span class="sc">+</span></span>
+<span id="cb30-587"><a href="#cb30-587" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> <span class="st">"mean_cl_boot"</span>, <span class="at">position=</span><span class="fu">position_nudge</span>(<span class="at">x=</span><span class="fl">0.4</span>))<span class="sc">+</span></span>
+<span id="cb30-588"><a href="#cb30-588" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb30-589"><a href="#cb30-589" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Do farms apply pesticides?"</span>)<span class="sc">+</span></span>
+<span id="cb30-590"><a href="#cb30-590" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Coffee productivity (kg/ha/year)"</span>)<span class="sc">+</span></span>
+<span id="cb30-591"><a href="#cb30-591" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb30-592"><a href="#cb30-592" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>), <span class="at">size=</span><span class="dv">13</span>),</span>
+<span id="cb30-593"><a href="#cb30-593" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>), <span class="at">size=</span><span class="dv">13</span>))</span>
+<span id="cb30-594"><a href="#cb30-594" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-595"><a href="#cb30-595" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb30-596"><a href="#cb30-596" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb30-597"><a href="#cb30-597" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-598"><a href="#cb30-598" aria-hidden="true" tabindex="-1"></a><span class="fu">## Wilcoxon rank-sum test</span></span>
+<span id="cb30-599"><a href="#cb30-599" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-600"><a href="#cb30-600" aria-hidden="true" tabindex="-1"></a>If the normality assumption is not met (as was the case for the <span class="in">`shannon_PIM`</span> variable quantifying plant diversity), it is more appropriate to use a non-parametric test to compare independent groups. One suitable option is the Wilcoxon rank-sum test.</span>
+<span id="cb30-601"><a href="#cb30-601" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-602"><a href="#cb30-602" aria-hidden="true" tabindex="-1"></a>The Wilcoxon rank-sum test (also called the Mann-Whitney test) is a non-parametric test used to compare two independent samples, especially when the assumption of normality may not hold. This test calculates a test statistic ($W$) based on the ranks of the observations in the two groups being compared (but see lecture slides for a step-by-step description of how this test statistic is calculated). The minimum value of $W$ is zero and occurs when all observations in one group are smaller (or larger) than all the observations in the other group. In other words, large differences between groups will translate into a small value of the test statistic $W$ (which is different from what we have seen so far). A large value of the test statistic $W$ suggests little difference between groups.</span>
+<span id="cb30-603"><a href="#cb30-603" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-604"><a href="#cb30-604" aria-hidden="true" tabindex="-1"></a>In R, this test can be performed using the <span class="in">`wilcox.test()`</span> function (see beginning of this tutorial). Because the samples are independent, the argument <span class="in">`paired = FALSE`</span> must be specified.</span>
+<span id="cb30-605"><a href="#cb30-605" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-606"><a href="#cb30-606" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb30-607"><a href="#cb30-607" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 10</span></span>
+<span id="cb30-608"><a href="#cb30-608" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-609"><a href="#cb30-609" aria-hidden="true" tabindex="-1"></a>Use the <span class="in">`wilcox.test()`</span> function to perform a Wilcoxon rank-sum test to test the hypothesis that plant diversity (<span class="in">`shannon_PIM`</span> variable) is greater in farms that do not use pesticides. You can ignore the warning message. It simply indicates the presence of ties in the data.</span>
+<span id="cb30-610"><a href="#cb30-610" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-611"><a href="#cb30-611" aria-hidden="true" tabindex="-1"></a>Examine the output of the test to identify the reported statistics, and use this information to determine whether there is evidence that plant communities are more diverse in farm that do not apply pesticides.</span>
+<span id="cb30-612"><a href="#cb30-612" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-613"><a href="#cb30-613" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb30-614"><a href="#cb30-614" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb30-615"><a href="#cb30-615" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-618"><a href="#cb30-618" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-619"><a href="#cb30-619" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb30-620"><a href="#cb30-620" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb30-621"><a href="#cb30-621" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb30-622"><a href="#cb30-622" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb30-623"><a href="#cb30-623" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-624"><a href="#cb30-624" aria-hidden="true" tabindex="-1"></a><span class="co">#Do Wilcoxon rank-sum test</span></span>
+<span id="cb30-625"><a href="#cb30-625" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(<span class="at">x =</span> data_false<span class="sc">$</span>shannon_PIM,</span>
+<span id="cb30-626"><a href="#cb30-626" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> data_true<span class="sc">$</span>shannon_PIM,</span>
+<span id="cb30-627"><a href="#cb30-627" aria-hidden="true" tabindex="-1"></a>            <span class="at">paired =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb30-628"><a href="#cb30-628" aria-hidden="true" tabindex="-1"></a>            <span class="at">alternative =</span> <span class="st">"greater"</span>,</span>
+<span id="cb30-629"><a href="#cb30-629" aria-hidden="true" tabindex="-1"></a>            <span class="at">mu =</span> <span class="dv">0</span>)</span>
+<span id="cb30-630"><a href="#cb30-630" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-631"><a href="#cb30-631" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-632"><a href="#cb30-632" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb30-633"><a href="#cb30-633" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-634"><a href="#cb30-634" aria-hidden="true" tabindex="-1"></a>Given that the normality assumption was not met, we used a Wilcoxon ran-sum test to test the hypothesis that farms that do not use pesticides have a greater diversity of plant species than farms in which pesticides are applied. We found support for this hypothesis (@fig-plant-diversity, W=263, P<span class="sc">\&lt;</span>0.001). Compared to farms using pesticides, plant diversity (measured using the Shannon index) was <span class="in">`{r} round(100*(mean(data_false$shannon_PIM)-mean(data_true$shannon_PIM))/mean(data_true$shannon_PIM), 1)`</span>% higher in farms that do not apply any pesticides.</span>
+<span id="cb30-635"><a href="#cb30-635" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-638"><a href="#cb30-638" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-639"><a href="#cb30-639" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb30-640"><a href="#cb30-640" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb30-641"><a href="#cb30-641" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb30-642"><a href="#cb30-642" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb30-643"><a href="#cb30-643" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 4</span></span>
+<span id="cb30-644"><a href="#cb30-644" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4.2</span></span>
+<span id="cb30-645"><a href="#cb30-645" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb30-646"><a href="#cb30-646" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Plant diversity (Shannon index) measured in farms that apply pesticides (TRUE) and in farms that do not apply pesticides (FALSE). Summary statistics shown on the right side of each boxplot show the mean ± 95% CI (n=36)."</span></span>
+<span id="cb30-647"><a href="#cb30-647" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-plant-diversity</span></span>
+<span id="cb30-648"><a href="#cb30-648" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-649"><a href="#cb30-649" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb30-650"><a href="#cb30-650" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-651"><a href="#cb30-651" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(pesticide2), <span class="at">y=</span>shannon_PIM))<span class="sc">+</span></span>
+<span id="cb30-652"><a href="#cb30-652" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.4</span>, <span class="at">fill=</span><span class="st">"#FFCD00"</span>)<span class="sc">+</span></span>
+<span id="cb30-653"><a href="#cb30-653" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> <span class="st">"mean_cl_boot"</span>, <span class="at">position=</span><span class="fu">position_nudge</span>(<span class="at">x=</span><span class="fl">0.4</span>))<span class="sc">+</span></span>
+<span id="cb30-654"><a href="#cb30-654" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb30-655"><a href="#cb30-655" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Do farms apply pesticides?"</span>)<span class="sc">+</span></span>
+<span id="cb30-656"><a href="#cb30-656" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Plant diversity"</span>)<span class="sc">+</span></span>
+<span id="cb30-657"><a href="#cb30-657" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb30-658"><a href="#cb30-658" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>), <span class="at">size=</span><span class="dv">13</span>),</span>
+<span id="cb30-659"><a href="#cb30-659" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="at">t=</span><span class="dv">10</span>), <span class="at">size=</span><span class="dv">13</span>))</span>
+<span id="cb30-660"><a href="#cb30-660" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-661"><a href="#cb30-661" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb30-662"><a href="#cb30-662" aria-hidden="true" tabindex="-1"></a>::::</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
