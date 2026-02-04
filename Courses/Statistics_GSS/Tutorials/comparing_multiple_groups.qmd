@@ -440,6 +440,39 @@ The calculated p-value is `{r} p`, which is much lower than the significance thr
 :::
 ::::
 
+Another interesting parameter to calculate is $\eta^2$, which is the proportion of the total variation ($SS_{total}$) that is explained by the variation of the independent (or explanatory) variable ($SS_{factor}$) (@eq-eta2). An adjusted $\eta^2$ can also be calculated using @eq-adjeta2, where $k$ is the number of groups being compared, $F$ is the value of the F statistic, and $N$ is the total number of observations.
+
+$$
+\eta^2=\frac{SS_{factor}}{SS_{total}}=\frac{SS_{factor}}{SS_{factor}+SS_{res}}
+$$ {#eq-eta2}
+
+$$
+adjusted\quad\eta^2=\frac{(k-1)(F-1)}{(k-1)(F-1)+N}
+$$ {#eq-adjeta2}
+
+:::: callout-tip
+## Exercise 7
+
+::: panel-tabset
+## Question
+
+Calculate the percentage of the total variation in soil organic matter content that is explained by farm type ($\eta^2$).
+
+## Answer
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+eta2 <- 100*SSfactor/(SSfactor+SSresidual)
+```
+
+`{r} round(eta2, 1)`% of the total variation in soil organic matter content is explained by differences in farm type.
+:::
+::::
+
 ### The fast way
 
 In R, a one-way ANOVA can be fitted using the `aov()` function. Make sure your response variable (`SOM`) is numeric and your grouping variable (`farm_type`) is a factor. You can make sure of that using the functions `as.numeric()` and `as.factor()`.
@@ -451,7 +484,7 @@ The `aov()` function has two main arguments:
 -   `data`: a data frame in which the variables specified in the formula will be found.
 
 :::: callout-tip
-## Exercise 7
+## Exercise 8
 
 1.  Fit a one-way ANOVA model using the `aov()` function. Use soil organic matter content (`SOM`) as the response variable, and farm type (`farm_type`) as the independent variable (factor). Store the model in an object called `model`.
 2.  Use the `summary()` function on the model object to see the ANOVA table.
@@ -498,7 +531,7 @@ The calculated p-value is much lower than the significance threshold (0.05). The
 After fitting an ANOVA model, you can check whether the normality assumption is met by examining whether the model residuals are approximately normally distributed. This can be done by (1) using the `residuals()` function on the ANOVA `model` object to extract the model residuals (i.e. the differences between observed values and model predictions), (2) applying a Shapiro-Wilk test to the residuals, and (3) creating a Q-Q plot using model residuals. This time, there is no need to run a separate test or create a separate Q-Q plot for each farm type.
 
 :::: callout-tip
-## Exercise 8
+## Exercise 9
 
 1.  Extract model residuals by using the `residuals()` function on the model object. Store these residuals in a new column (`SOM_residuals`) in the `data` object.
 2.  Run a Shapiro-Wilk's test on model residuals.
@@ -565,7 +598,7 @@ Residual plots are used to assess the assumption of homoscedasticity, which mean
 To create a residual plot, we first need to extract model residuals (`residuals()`) and fitted values (`fitted()`). We already extracted the model residuals earlier (`SOM_residuals` column).
 
 :::: callout-tip
-## Exercise 9
+## Exercise 10
 
 1.  Calculate the values fitted by the ANOVA model using the `fitted()` function on the model object. Store these values in a new column (`SOM_fitted`) in the `data` object.
 2.  Create a residual plot (fitted values on the x-axis and residuals on the y-axis)
@@ -626,7 +659,7 @@ The `TukeyHSD()` function has three main arguments:
 -   `conf.level`: the confidence level to use (0.95 by default)
 
 :::: callout-tip
-## Exercise 10
+## Exercise 11
 
 1.  Run a Tukey HSD post hoc test to find out which farm types differ from each other in soil organic matter content.
 2.  What can you conclude from this test? Write a paragraph summarizing the results of the ANOVA and post hoc test.
@@ -659,7 +692,7 @@ If the normality assumption is not met, one alternative is to use the Kruskal-Wa
 In R, you can run a Kruskal-Wallis test using the `kruskal.test()` function from the *stats* package. The R syntax to use this function is very similar to that of a one-way ANOVA (`aov()`). The test will return a test statistic (Kruskal-Wallis chi-squared) and a p-value.
 
 :::: callout-tip
-## Exercise 11
+## Exercise 12
 
 1.  Test if soil organic matter content (`SOM`) differs among farm types (`farm_type`) using a Kruskal-Wallis test.
 2.  What can you conclude from this test?
@@ -696,7 +729,7 @@ In R, a Dunn post hoc test can be done using the `dunn.test()` function in the *
 -   `method`: the method used to adjust p-values for multiple comparisons (use Bonferroni in this tutorial)
 
 :::: callout-tip
-## Exercise 12
+## Exercise 13
 
 1.  Run a Dunn post hoc test to find out which farm types differ from each other in soil organic matter content.
 2.  What can you conclude from this test? Write a paragraph summarizing the results of the Kruskal-Wallis and post hoc tests.
@@ -734,7 +767,7 @@ In R, a Welch's ANOVA can be done using the `oneway.test()` function from the *s
 -   `var.equal`: a logical variable indicating whether to treat the variances in the samples as equal (`TRUE` for yes, `FALSE` for no). Welch's ANOVA is used when `var.equal=FALSE`.
 
 :::: callout-tip
-## Exercise 13
+## Exercise 14
 
 1.  Test if soil organic matter content (`SOM`) differs among farm types (`farm_type`) using a Welch's ANOVA (use `var.equal=FALSE`)
 2.  What can you conclude from this test?
@@ -772,7 +805,7 @@ In R, this test can be performed using the `games_howell_test()` function from t
 -   `conf.level`: the confidence level to use (0.95 by default)
 
 :::: callout-tip
-## Exercise 14
+## Exercise 15
 
 1.  Run a Games-Howell post hoc test to find out which farm types differ from each other in soil organic matter content.
 2.  What can you conclude from this test? Write a paragraph summarizing the results of the Welch's ANOVA and post hoc tests.
@@ -787,8 +820,7 @@ In R, this test can be performed using the `games_howell_test()` function from t
 #| warning: false
 
 games_howell_test(SOM ~ farm_type,
-                  data = data,
-                  conf.level = 0.95)
+                  data = data)
 ```
 
 ## Solution 2
