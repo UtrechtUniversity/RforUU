@@ -689,11 +689,11 @@ Figure&nbsp;1: Theoretical normal distribution of coffee productivity
 </section>
 <section id="calculating-z-scores" class="level3">
 <h3 class="anchored" data-anchor-id="calculating-z-scores">Calculating z-scores</h3>
-<p>A z-score is a standardized measure that indicates how far a specific value or observation (<span class="math inline">\(x\)</span>) is from the mean (<span class="math inline">\(\bar{x}\)</span>) of a dataset, expressed in units of standard deviation (<span class="math inline">\(s\)</span>). A positive z-score means the value is above the mean, while a negative z-score indicates it is below the mean.</p>
+<p>A z-score is a standardized measure that indicates how far a specific value or observation (<span class="math inline">\(y\)</span>) is from the mean (<span class="math inline">\(\bar{y}\)</span>) of a dataset, expressed in units of standard deviation (<span class="math inline">\(s\)</span>). A positive z-score means the value is above the mean, while a negative z-score indicates it is below the mean.</p>
 <p><span id="eq-zscore"><span class="math display">\[
-z = \frac{x - \bar{x}}{s}\
+z = \frac{y - \bar{y}}{s}\
 \tag{1}\]</span></span></p>
-<p>If the original variable (X) follows a normal distribution, the z-scores calculated from this variable will follow a <strong>standard normal distribution</strong> (mean of zero and standard deviation of one) (<a href="#fig-standardnormal" class="quarto-xref">Figure&nbsp;2</a>).</p>
+<p>If the original variable (Y) follows a normal distribution, the z-scores calculated from this variable will follow a <strong>standard normal distribution</strong> (mean of zero and standard deviation of one) (<a href="#fig-standardnormal" class="quarto-xref">Figure&nbsp;2</a>).</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-standardnormal" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -1005,9 +1005,9 @@ Exercise 6
 <h2 class="anchored" data-anchor-id="calculating-95-confidence-intervals">Calculating 95% confidence intervals</h2>
 <p>A 95% confidence interval (95% CI) is a range of values that is intended to contain the true population parameter (such as the mean value of the population) with a specified level of confidence (here: 95%). Its meaning is based on repeated sampling: if we were to take 100 random samples from the same population and compute a 95% confidence interval for each sample, approximately 95 of those intervals would include the true population mean.</p>
 <p>When sample size is small (<span class="math inline">\(n&lt;30\)</span>), confidence intervals are calculated using quantile values (also referred to as critical values) of Student’s <em>t</em> distribution with <span class="math inline">\(n-1\)</span> degrees of freedom (<a href="#eq-confidenceinterval_t" class="quarto-xref">Equation&nbsp;2</a>). As the sample size increases, the <em>t</em> distribution converges to the standard normal distribution. For larger sample sizes (<span class="math inline">\(n&gt;30\)</span>), the critical values from the <em>t</em> distribution are very close to those from the normal distribution, so confidence intervals based on either distribution will be nearly identical.</p>
-<p>Confidence intervals are always two-tailed because our estimate of the population mean (which is the sample mean, <span class="math inline">\(\bar{x}\)</span>) may be larger or smaller than the true population mean (<span class="math inline">\(\mu\)</span>), which is often unknown. To calculate a 95% CI, we therefore need to calculate the quantile value of Student’s <em>t</em> distribution associated with <span class="math inline">\(\alpha=0.05/2=0.025\)</span>. In R, this can be done with the <code>qt()</code> function.</p>
+<p>Confidence intervals are always two-tailed because our estimate of the population mean (which is the sample mean, <span class="math inline">\(\bar{y}\)</span>) may be larger or smaller than the true population mean (<span class="math inline">\(\mu\)</span>), which is often unknown. To calculate a 95% CI, we therefore need to calculate the quantile value of Student’s <em>t</em> distribution associated with <span class="math inline">\(\alpha=0.05/2=0.025\)</span>. In R, this can be done with the <code>qt()</code> function.</p>
 <p><span id="eq-confidenceinterval_t"><span class="math display">\[
-\bar{x} \pm t_{0.975,\,n-1} \cdot \frac{s}{\sqrt{n}}
+\bar{y} \pm t_{0.975,\,n-1} \cdot \frac{s}{\sqrt{n}}
 \tag{2}\]</span></span></p>
 <p>The <code>qt()</code> function takes three main arguments:</p>
 <ul>
@@ -1188,7 +1188,7 @@ W = 0.96273, p-value = 0.2606</code></pre>
 <li><p><code>x</code>: a numeric vector of data values</p></li>
 <li><p><code>g</code>: a vector or factor object giving the group for the corresponding elements of <code>x</code></p></li>
 </ul>
-<p>To run this test, we would therefore need to reorganise the data a bit, so that we can have a data frame with a column for <code>x</code> (the coffee productivity values) and a column for <code>g</code> (the groups: 2015 and 2020).</p>
+<p>To run this test, we would therefore need to reorganize the data a bit, so that we can have a data frame with a column for <code>x</code> (the coffee productivity values) and a column for <code>g</code> (the groups: 2015 and 2020).</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1339,7 +1339,7 @@ Exercise 12
 </div>
 </div>
 <div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
-<p>The calculate p-value is 2.6024076^{-6}, which is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity. On average, coffee productivity in 2020 increased by 263.9 kg/ha/year.</p>
+<p>The calculated p-value is 2.6024076^{-6}, which is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity. On average, coffee productivity in 2020 increased by 263.9 kg/ha/year.</p>
 </div>
 </div>
 </div>
@@ -1992,13 +1992,13 @@ Figure&nbsp;6: Changes in coffee productivity measured in 2015 and 2020 across 3
 <span id="cb27-95"><a href="#cb27-95" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-96"><a href="#cb27-96" aria-hidden="true" tabindex="-1"></a><span class="fu">### Calculating z-scores</span></span>
 <span id="cb27-97"><a href="#cb27-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-98"><a href="#cb27-98" aria-hidden="true" tabindex="-1"></a>A z-score is a standardized measure that indicates how far a specific value or observation ($x$) is from the mean ($\bar{x}$) of a dataset, expressed in units of standard deviation ($s$). A positive z-score means the value is above the mean, while a negative z-score indicates it is below the mean.</span>
+<span id="cb27-98"><a href="#cb27-98" aria-hidden="true" tabindex="-1"></a>A z-score is a standardized measure that indicates how far a specific value or observation ($y$) is from the mean ($\bar{y}$) of a dataset, expressed in units of standard deviation ($s$). A positive z-score means the value is above the mean, while a negative z-score indicates it is below the mean.</span>
 <span id="cb27-99"><a href="#cb27-99" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-100"><a href="#cb27-100" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb27-101"><a href="#cb27-101" aria-hidden="true" tabindex="-1"></a>z = \frac{x - \bar{x}}{s}\</span>
+<span id="cb27-101"><a href="#cb27-101" aria-hidden="true" tabindex="-1"></a>z = \frac{y - \bar{y}}{s}\</span>
 <span id="cb27-102"><a href="#cb27-102" aria-hidden="true" tabindex="-1"></a>$$ {#eq-zscore}</span>
 <span id="cb27-103"><a href="#cb27-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-104"><a href="#cb27-104" aria-hidden="true" tabindex="-1"></a>If the original variable (X) follows a normal distribution, the z-scores calculated from this variable will follow a **standard normal distribution** (mean of zero and standard deviation of one) (@fig-standardnormal).</span>
+<span id="cb27-104"><a href="#cb27-104" aria-hidden="true" tabindex="-1"></a>If the original variable (Y) follows a normal distribution, the z-scores calculated from this variable will follow a **standard normal distribution** (mean of zero and standard deviation of one) (@fig-standardnormal).</span>
 <span id="cb27-105"><a href="#cb27-105" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-108"><a href="#cb27-108" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb27-109"><a href="#cb27-109" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
@@ -2291,10 +2291,10 @@ Figure&nbsp;6: Changes in coffee productivity measured in 2015 and 2020 across 3
 <span id="cb27-416"><a href="#cb27-416" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-417"><a href="#cb27-417" aria-hidden="true" tabindex="-1"></a>When sample size is small ($n&lt;30$), confidence intervals are calculated using quantile values (also referred to as critical values) of Student's *t* distribution with $n-1$ degrees of freedom (@eq-confidenceinterval_t). As the sample size increases, the *t* distribution converges to the standard normal distribution. For larger sample sizes ($n&gt;30$), the critical values from the *t* distribution are very close to those from the normal distribution, so confidence intervals based on either distribution will be nearly identical.</span>
 <span id="cb27-418"><a href="#cb27-418" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-419"><a href="#cb27-419" aria-hidden="true" tabindex="-1"></a>Confidence intervals are always two-tailed because our estimate of the population mean (which is the sample mean, $\bar{x}$) may be larger or smaller than the true population mean ($\mu$), which is often unknown. To calculate a 95% CI, we therefore need to calculate the quantile value of Student's *t* distribution associated with $\alpha=0.05/2=0.025$. In R, this can be done with the <span class="in">`qt()`</span> function.</span>
+<span id="cb27-419"><a href="#cb27-419" aria-hidden="true" tabindex="-1"></a>Confidence intervals are always two-tailed because our estimate of the population mean (which is the sample mean, $\bar{y}$) may be larger or smaller than the true population mean ($\mu$), which is often unknown. To calculate a 95% CI, we therefore need to calculate the quantile value of Student's *t* distribution associated with $\alpha=0.05/2=0.025$. In R, this can be done with the <span class="in">`qt()`</span> function.</span>
 <span id="cb27-420"><a href="#cb27-420" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-421"><a href="#cb27-421" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb27-422"><a href="#cb27-422" aria-hidden="true" tabindex="-1"></a>\bar{x} \pm t_{0.975,\,n-1} \cdot \frac{s}{\sqrt{n}}</span>
+<span id="cb27-422"><a href="#cb27-422" aria-hidden="true" tabindex="-1"></a>\bar{y} \pm t_{0.975,\,n-1} \cdot \frac{s}{\sqrt{n}}</span>
 <span id="cb27-423"><a href="#cb27-423" aria-hidden="true" tabindex="-1"></a>$$ {#eq-confidenceinterval_t}</span>
 <span id="cb27-424"><a href="#cb27-424" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-425"><a href="#cb27-425" aria-hidden="true" tabindex="-1"></a>The <span class="in">`qt()`</span> function takes three main arguments:</span>
@@ -2459,7 +2459,7 @@ Figure&nbsp;6: Changes in coffee productivity measured in 2015 and 2020 across 3
 <span id="cb27-592"><a href="#cb27-592" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-593"><a href="#cb27-593" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`g`</span>: a vector or factor object giving the group for the corresponding elements of <span class="in">`x`</span></span>
 <span id="cb27-594"><a href="#cb27-594" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-595"><a href="#cb27-595" aria-hidden="true" tabindex="-1"></a>To run this test, we would therefore need to reorganise the data a bit, so that we can have a data frame with a column for <span class="in">`x`</span> (the coffee productivity values) and a column for <span class="in">`g`</span> (the groups: 2015 and 2020).</span>
+<span id="cb27-595"><a href="#cb27-595" aria-hidden="true" tabindex="-1"></a>To run this test, we would therefore need to reorganize the data a bit, so that we can have a data frame with a column for <span class="in">`x`</span> (the coffee productivity values) and a column for <span class="in">`g`</span> (the groups: 2015 and 2020).</span>
 <span id="cb27-596"><a href="#cb27-596" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-597"><a href="#cb27-597" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
 <span id="cb27-598"><a href="#cb27-598" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 10</span></span>
@@ -2608,7 +2608,7 @@ Figure&nbsp;6: Changes in coffee productivity measured in 2015 and 2020 across 3
 <span id="cb27-753"><a href="#cb27-753" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-754"><a href="#cb27-754" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
 <span id="cb27-755"><a href="#cb27-755" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-756"><a href="#cb27-756" aria-hidden="true" tabindex="-1"></a>The calculate p-value is <span class="in">`{r} p`</span>, which is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity. On average, coffee productivity in 2020 increased by <span class="in">`{r} round(mean(data$coffee_prod_diff), 1)`</span> kg/ha/year.</span>
+<span id="cb27-756"><a href="#cb27-756" aria-hidden="true" tabindex="-1"></a>The calculated p-value is <span class="in">`{r} p`</span>, which is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity. On average, coffee productivity in 2020 increased by <span class="in">`{r} round(mean(data$coffee_prod_diff), 1)`</span> kg/ha/year.</span>
 <span id="cb27-757"><a href="#cb27-757" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb27-758"><a href="#cb27-758" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb27-759"><a href="#cb27-759" aria-hidden="true" tabindex="-1"></a></span>

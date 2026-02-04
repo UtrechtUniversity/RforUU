@@ -39,7 +39,7 @@ This tutorial will help you master some fundamental skills that you will use rep
 
 ### What is RStudio?
 
-**RStudio** is an [integrated development environment]{.underline} (IDE) for R (and other languages such as Python) developed by [Posit](#0), an open-source data science company. With RStudio, you can easily write your own scripts, run R code, manage your workspace, install and load R packages, view graphical output, and much more! You can download RStudio on the [Posit website](#0).
+**RStudio** is an [integrated development environment]{.underline} (IDE) for R (and other languages such as Python) developed by [Posit](https://posit.co/), an open-source data science company. With RStudio, you can easily write your own scripts, run R code, manage your workspace, install and load R packages, view graphical output, and much more! You can download RStudio on the [Posit website](https://posit.co/).
 
 ::: callout-note
 ## When you work in RStudio, you are still using R!
@@ -115,9 +115,11 @@ Every line that starts with `#` will be ignored by R and will not be executed.
 ```
 
 ::: callout-important
-## Always comment your R script!
+## Always comment and save your R script!
 
 We strongly advise you to add comments to your R code. At the very least, these comments should indicate ***why*** you have written each section of your code. It can also be useful to add information about the ***what*** and ***how***. These comments can save a lot of time if you need to go back over your code after a while or, even more difficult, if someone else needs to go through your code and understand what you've done.
+
+You can save an R script (`.R` file) by opening the File menu and click on "Save as...".
 :::
 
 ## Arithmetic operators
@@ -164,7 +166,7 @@ Logical operators are particularly useful when you need to define conditions to 
 ::: callout-tip
 ## Exercise 1
 
-Do the following calculations in your R console:
+Do the following calculations in R:
 
 1.  Multiply 5 by 3
 2.  Add 10 to the result of step 1
@@ -234,8 +236,8 @@ x*10
 
 A scalar is a quantity that can only hold one value at a time. Here are the most common types of scalars in R:
 
--   *Numeric*: numbers with a decimal value (e.g., 17.8)
--   *Integer*: numbers without a decimal value (e.g., 18)
+-   *Double (numeric)*: numbers with a decimal value (e.g., 17.8)
+-   *Integer (numeric)*: numbers without a decimal value (e.g., 18)
 -   *Character*: a letter or a combination of letters. Character strings must be enclosed by quotes in your R code.
 -   *Factor*: data type used in statistical modelling to specify what are the factors in the model (categorical variables with a defined set of categories, called ‘levels’ in R)
 -   *Logical*: a logical variable can be either `TRUE` or `FALSE`
@@ -602,7 +604,7 @@ generateRPointShapes()
 
 plot(x = x4$Var1,
      y = x4$Var2,
-     type = "l",
+     type = "l", #This is the letter "l" for line.
      xlab = "Variable 1",
      ylab = "Variable 2",
      col = "blue")

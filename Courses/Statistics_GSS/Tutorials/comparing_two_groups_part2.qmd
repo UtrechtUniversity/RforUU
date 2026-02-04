@@ -377,7 +377,7 @@ $$
 s_p = \sqrt{\frac{(n_A - 1)s_A^2 + (n_B - 1)s_B^2}{n_A + n_B - 2}}
 $$ {#eq-pooledstandarddeviation}
 
-When equal variances are not assumed (Welch’s *t*-test), the standard error of the difference is calculated using @eq-indttest-unequalvar, without pooling.
+When equal variances are not assumed (Welch’s *t*-test), the $t$ statistic is calculated using the @eq-indttest-unequalvar (without pooling variances).
 
 $$
 t = \frac{\bar{y}_A - \bar{y}_B}{\sqrt{\frac{s_A^2}{n_A} + \frac{s_B^2}{n_B}}}
@@ -402,8 +402,8 @@ Under the null hypothesis (i.e., if there is no difference in the means of the t
 #| warning: false
 
 #Calculate group means
-yA <- mean(data_false$coffee_prod)
-yB <- mean(data_true$coffee_prod)
+xA <- mean(data_false$coffee_prod)
+xB <- mean(data_true$coffee_prod)
 
 #Calculate group variances
 varA <- var(data_false$coffee_prod)
@@ -417,7 +417,7 @@ nB <- length(data_true$coffee_prod)
 sp <- sqrt(((nA-1)*varA + (nB-1)*varB)/(nA + nB - 2))
 
 #Calculate the value of the t statistic
-t <- (yA - yB)/(sp*sqrt((1/nA)+(1/nB)))
+t <- (xA - xB)/(sp*sqrt((1/nA)+(1/nB)))
 ```
 
 The value of the test statistic is `{r} round(t, 3)`
@@ -493,7 +493,7 @@ p <- pt(abs(t), df=nA+nB-2, lower.tail=FALSE)
 
 ## Answer
 
-The calculate p-value is `{r} round(p, 4)`, which is greater than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that there is no difference in coffee productivity between farms that use or do not use pesticides. We conclude that using pesticides do not lead to an increase in coffee productivity in our example.
+The calculated p-value is `{r} round(p, 4)`, which is greater than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that there is no difference in coffee productivity between farms that use or do not use pesticides. We conclude that using pesticides do not lead to an increase in coffee productivity in our example.
 :::
 ::::
 
@@ -599,7 +599,7 @@ wilcox.test(x = data_false$shannon_PIM,
 
 ## Answer
 
-Given that the normality assumption was not met, we used a Wilcoxon ran-sum test to test the hypothesis that farms that do not use pesticides have a greater diversity of plant species than farms in which pesticides are applied. We found support for this hypothesis (@fig-plant-diversity, W=263, P\<0.001). Compared to farms using pesticides, plant diversity (measured using the Shannon index) was `{r} round(100*(mean(data_false$shannon_PIM)-mean(data_true$shannon_PIM))/mean(data_true$shannon_PIM), 1)`% higher in farms that do not apply any pesticides.
+Given that the normality assumption was not met, we used a Wilcoxon rank-sum test to test the hypothesis that farms that do not use pesticides have a greater diversity of plant species than farms in which pesticides are applied. We found support for this hypothesis (@fig-plant-diversity, W=263, P\<0.001). Compared to farms using pesticides, plant diversity (measured using the Shannon index) was `{r} round(100*(mean(data_false$shannon_PIM)-mean(data_true$shannon_PIM))/mean(data_true$shannon_PIM), 1)`% higher in farms that do not apply any pesticides.
 
 ```{r}
 #| eval: true

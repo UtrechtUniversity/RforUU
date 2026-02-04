@@ -89,13 +89,13 @@ Now, suppose that we are interested in calculating the probability that a random
 
 ### Calculating z-scores
 
-A z-score is a standardized measure that indicates how far a specific value or observation ($x$) is from the mean ($\bar{x}$) of a dataset, expressed in units of standard deviation ($s$). A positive z-score means the value is above the mean, while a negative z-score indicates it is below the mean.
+A z-score is a standardized measure that indicates how far a specific value or observation ($y$) is from the mean ($\bar{y}$) of a dataset, expressed in units of standard deviation ($s$). A positive z-score means the value is above the mean, while a negative z-score indicates it is below the mean.
 
 $$
-z = \frac{x - \bar{x}}{s}\
+z = \frac{y - \bar{y}}{s}\
 $$ {#eq-zscore}
 
-If the original variable (X) follows a normal distribution, the z-scores calculated from this variable will follow a **standard normal distribution** (mean of zero and standard deviation of one) (@fig-standardnormal).
+If the original variable (Y) follows a normal distribution, the z-scores calculated from this variable will follow a **standard normal distribution** (mean of zero and standard deviation of one) (@fig-standardnormal).
 
 ```{r}
 #| eval: true
@@ -388,10 +388,10 @@ A 95% confidence interval (95% CI) is a range of values that is intended to cont
 
 When sample size is small ($n<30$), confidence intervals are calculated using quantile values (also referred to as critical values) of Student's *t* distribution with $n-1$ degrees of freedom (@eq-confidenceinterval_t). As the sample size increases, the *t* distribution converges to the standard normal distribution. For larger sample sizes ($n>30$), the critical values from the *t* distribution are very close to those from the normal distribution, so confidence intervals based on either distribution will be nearly identical.
 
-Confidence intervals are always two-tailed because our estimate of the population mean (which is the sample mean, $\bar{x}$) may be larger or smaller than the true population mean ($\mu$), which is often unknown. To calculate a 95% CI, we therefore need to calculate the quantile value of Student's *t* distribution associated with $\alpha=0.05/2=0.025$. In R, this can be done with the `qt()` function.
+Confidence intervals are always two-tailed because our estimate of the population mean (which is the sample mean, $\bar{y}$) may be larger or smaller than the true population mean ($\mu$), which is often unknown. To calculate a 95% CI, we therefore need to calculate the quantile value of Student's *t* distribution associated with $\alpha=0.05/2=0.025$. In R, this can be done with the `qt()` function.
 
 $$
-\bar{x} \pm t_{0.975,\,n-1} \cdot \frac{s}{\sqrt{n}}
+\bar{y} \pm t_{0.975,\,n-1} \cdot \frac{s}{\sqrt{n}}
 $$ {#eq-confidenceinterval_t}
 
 The `qt()` function takes three main arguments:
@@ -556,7 +556,7 @@ In R, this test can be carried out using the `bartlett.test()` function, which r
 
 -   `g`: a vector or factor object giving the group for the corresponding elements of `x`
 
-To run this test, we would therefore need to reorganise the data a bit, so that we can have a data frame with a column for `x` (the coffee productivity values) and a column for `g` (the groups: 2015 and 2020).
+To run this test, we would therefore need to reorganize the data a bit, so that we can have a data frame with a column for `x` (the coffee productivity values) and a column for `g` (the groups: 2015 and 2020).
 
 :::: callout-tip
 ## Exercise 10
@@ -705,7 +705,7 @@ p <- pt(t, df=nrow(data)-1, lower.tail=FALSE)
 
 ## Answer
 
-The calculate p-value is `{r} p`, which is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity. On average, coffee productivity in 2020 increased by `{r} round(mean(data$coffee_prod_diff), 1)` kg/ha/year.
+The calculated p-value is `{r} p`, which is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity. On average, coffee productivity in 2020 increased by `{r} round(mean(data$coffee_prod_diff), 1)` kg/ha/year.
 :::
 ::::
 

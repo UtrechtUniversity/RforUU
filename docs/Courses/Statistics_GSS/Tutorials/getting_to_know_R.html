@@ -618,7 +618,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="what-is-rstudio" class="level3">
 <h3 class="anchored" data-anchor-id="what-is-rstudio">What is RStudio?</h3>
-<p><strong>RStudio</strong> is an <u>integrated development environment</u> (IDE) for R (and other languages such as Python) developed by <a href="#0">Posit</a>, an open-source data science company. With RStudio, you can easily write your own scripts, run R code, manage your workspace, install and load R packages, view graphical output, and much more! You can download RStudio on the <a href="#0">Posit website</a>.</p>
+<p><strong>RStudio</strong> is an <u>integrated development environment</u> (IDE) for R (and other languages such as Python) developed by <a href="https://posit.co/">Posit</a>, an open-source data science company. With RStudio, you can easily write your own scripts, run R code, manage your workspace, install and load R packages, view graphical output, and much more! You can download RStudio on the <a href="https://posit.co/">Posit website</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -743,11 +743,12 @@ Figure&nbsp;6: The output pane in RStudio
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Always comment your R script!
+Always comment and save your R script!
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>We strongly advise you to add comments to your R code. At the very least, these comments should indicate <strong><em>why</em></strong> you have written each section of your code. It can also be useful to add information about the <strong><em>what</em></strong> and <strong><em>how</em></strong>. These comments can save a lot of time if you need to go back over your code after a while or, even more difficult, if someone else needs to go through your code and understand what you’ve done.</p>
+<p>You can save an R script (<code>.R</code> file) by opening the File menu and click on “Save as…”.</p>
 </div>
 </div>
 </section>
@@ -885,7 +886,7 @@ Exercise 1
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Do the following calculations in your R console:</p>
+<p>Do the following calculations in R:</p>
 <ol type="1">
 <li>Multiply 5 by 3</li>
 <li>Add 10 to the result of step 1</li>
@@ -966,8 +967,8 @@ Exercise 2
 <h3 class="anchored" data-anchor-id="scalars">Scalars</h3>
 <p>A scalar is a quantity that can only hold one value at a time. Here are the most common types of scalars in R:</p>
 <ul>
-<li><em>Numeric</em>: numbers with a decimal value (e.g., 17.8)</li>
-<li><em>Integer</em>: numbers without a decimal value (e.g., 18)</li>
+<li><em>Double (numeric)</em>: numbers with a decimal value (e.g., 17.8)</li>
+<li><em>Integer (numeric)</em>: numbers without a decimal value (e.g., 18)</li>
 <li><em>Character</em>: a letter or a combination of letters. Character strings must be enclosed by quotes in your R code.</li>
 <li><em>Factor</em>: data type used in statistical modelling to specify what are the factors in the model (categorical variables with a defined set of categories, called ‘levels’ in R)</li>
 <li><em>Logical</em>: a logical variable can be either <code>TRUE</code> or <code>FALSE</code></li>
@@ -1387,7 +1388,7 @@ Exercise 13: Let’s create your first plot in R!
 <summary>Show me the code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> x4<span class="sc">$</span>Var1,</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">y =</span> x4<span class="sc">$</span>Var2,</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>, <span class="co">#This is the letter "l" for line.</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Variable 1"</span>,</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Variable 2"</span>,</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"blue"</span>)</span>
@@ -1929,7 +1930,7 @@ Exercise 13: Let’s create your first plot in R!
 <span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a><span class="fu">### What is RStudio?</span></span>
 <span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>**RStudio** is an <span class="co">[</span><span class="ot">integrated development environment</span><span class="co">]</span>{.underline} (IDE) for R (and other languages such as Python) developed by <span class="co">[</span><span class="ot">Posit</span><span class="co">](#0)</span>, an open-source data science company. With RStudio, you can easily write your own scripts, run R code, manage your workspace, install and load R packages, view graphical output, and much more! You can download RStudio on the <span class="co">[</span><span class="ot">Posit website</span><span class="co">](#0)</span>.</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>**RStudio** is an <span class="co">[</span><span class="ot">integrated development environment</span><span class="co">]</span>{.underline} (IDE) for R (and other languages such as Python) developed by <span class="co">[</span><span class="ot">Posit</span><span class="co">](https://posit.co/)</span>, an open-source data science company. With RStudio, you can easily write your own scripts, run R code, manage your workspace, install and load R packages, view graphical output, and much more! You can download RStudio on the <span class="co">[</span><span class="ot">Posit website</span><span class="co">](https://posit.co/)</span>.</span>
 <span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
 <span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a><span class="fu">## When you work in RStudio, you are still using R!</span></span>
@@ -2005,503 +2006,505 @@ Exercise 13: Let’s create your first plot in R!
 <span id="cb16-117"><a href="#cb16-117" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-118"><a href="#cb16-118" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-119"><a href="#cb16-119" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb16-120"><a href="#cb16-120" aria-hidden="true" tabindex="-1"></a><span class="fu">## Always comment your R script!</span></span>
+<span id="cb16-120"><a href="#cb16-120" aria-hidden="true" tabindex="-1"></a><span class="fu">## Always comment and save your R script!</span></span>
 <span id="cb16-121"><a href="#cb16-121" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-122"><a href="#cb16-122" aria-hidden="true" tabindex="-1"></a>We strongly advise you to add comments to your R code. At the very least, these comments should indicate ***why*** you have written each section of your code. It can also be useful to add information about the ***what*** and ***how***. These comments can save a lot of time if you need to go back over your code after a while or, even more difficult, if someone else needs to go through your code and understand what you've done.</span>
-<span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a><span class="fu">## Arithmetic operators</span></span>
+<span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a>You can save an R script (<span class="in">`.R`</span> file) by opening the File menu and click on "Save as...".</span>
+<span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a>Arithmetic operators are used to perform calculations in R. The five main arithmetic operators are summarized in @tbl-arithmeticoperators. These operators work on single values as well as on vectors.</span>
+<span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a><span class="fu">## Arithmetic operators</span></span>
 <span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Operator <span class="pp">|</span> Description    <span class="pp">|</span></span>
-<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|----------------|</span></span>
-<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\+</span>       <span class="pp">|</span> Addition       <span class="pp">|</span></span>
-<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\-</span>       <span class="pp">|</span> Subtraction    <span class="pp">|</span></span>
-<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\*</span>       <span class="pp">|</span> Multiplication <span class="pp">|</span></span>
-<span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> /        <span class="pp">|</span> Division       <span class="pp">|</span></span>
-<span id="cb16-135"><a href="#cb16-135" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> \^       <span class="pp">|</span> Exponential    <span class="pp">|</span></span>
-<span id="cb16-136"><a href="#cb16-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a>: Arithmetic operators in R {#tbl-arithmeticoperators}</span>
+<span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a>Arithmetic operators are used to perform calculations in R. The five main arithmetic operators are summarized in @tbl-arithmeticoperators. These operators work on single values as well as on vectors.</span>
+<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Operator <span class="pp">|</span> Description    <span class="pp">|</span></span>
+<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|----------------|</span></span>
+<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\+</span>       <span class="pp">|</span> Addition       <span class="pp">|</span></span>
+<span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\-</span>       <span class="pp">|</span> Subtraction    <span class="pp">|</span></span>
+<span id="cb16-135"><a href="#cb16-135" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\*</span>       <span class="pp">|</span> Multiplication <span class="pp">|</span></span>
+<span id="cb16-136"><a href="#cb16-136" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> /        <span class="pp">|</span> Division       <span class="pp">|</span></span>
+<span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> \^       <span class="pp">|</span> Exponential    <span class="pp">|</span></span>
 <span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a><span class="fu">## Relational operators</span></span>
+<span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a>: Arithmetic operators in R {#tbl-arithmeticoperators}</span>
 <span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a>Relational operators are used to compare values. They return logical values: <span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>. The main relational operators are summarized in @tbl-relationaloperators. These operators are fundamental for filtering data or writing conditions to use in R programs.</span>
+<span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a><span class="fu">## Relational operators</span></span>
 <span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Operator <span class="pp">|</span> Description              <span class="pp">|</span></span>
-<span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|--------------------------|</span></span>
-<span id="cb16-145"><a href="#cb16-145" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\&gt;</span>       <span class="pp">|</span> Greater than             <span class="pp">|</span></span>
-<span id="cb16-146"><a href="#cb16-146" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\&lt;</span>       <span class="pp">|</span> Lower than               <span class="pp">|</span></span>
-<span id="cb16-147"><a href="#cb16-147" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\&gt;</span>=      <span class="pp">|</span> Greater than or equal to <span class="pp">|</span></span>
-<span id="cb16-148"><a href="#cb16-148" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\&lt;</span>=      <span class="pp">|</span> Lower than or equal to   <span class="pp">|</span></span>
-<span id="cb16-149"><a href="#cb16-149" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ==       <span class="pp">|</span> Equal to                 <span class="pp">|</span></span>
-<span id="cb16-150"><a href="#cb16-150" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> !=       <span class="pp">|</span> Not equal to             <span class="pp">|</span></span>
-<span id="cb16-151"><a href="#cb16-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-152"><a href="#cb16-152" aria-hidden="true" tabindex="-1"></a>: Relational operators in R {#tbl-relationaloperators}</span>
+<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a>Relational operators are used to compare values. They return logical values: <span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>. The main relational operators are summarized in @tbl-relationaloperators. These operators are fundamental for filtering data or writing conditions to use in R programs.</span>
+<span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-145"><a href="#cb16-145" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Operator <span class="pp">|</span> Description              <span class="pp">|</span></span>
+<span id="cb16-146"><a href="#cb16-146" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|--------------------------|</span></span>
+<span id="cb16-147"><a href="#cb16-147" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\&gt;</span>       <span class="pp">|</span> Greater than             <span class="pp">|</span></span>
+<span id="cb16-148"><a href="#cb16-148" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\&lt;</span>       <span class="pp">|</span> Lower than               <span class="pp">|</span></span>
+<span id="cb16-149"><a href="#cb16-149" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\&gt;</span>=      <span class="pp">|</span> Greater than or equal to <span class="pp">|</span></span>
+<span id="cb16-150"><a href="#cb16-150" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\&lt;</span>=      <span class="pp">|</span> Lower than or equal to   <span class="pp">|</span></span>
+<span id="cb16-151"><a href="#cb16-151" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ==       <span class="pp">|</span> Equal to                 <span class="pp">|</span></span>
+<span id="cb16-152"><a href="#cb16-152" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> !=       <span class="pp">|</span> Not equal to             <span class="pp">|</span></span>
 <span id="cb16-153"><a href="#cb16-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a><span class="fu">## Logical operators</span></span>
+<span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a>: Relational operators in R {#tbl-relationaloperators}</span>
 <span id="cb16-155"><a href="#cb16-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-156"><a href="#cb16-156" aria-hidden="true" tabindex="-1"></a>Logical operators are particularly useful when you need to define conditions to filter your data, for example. This happens very frequently when working with data. The main logical operators are summarized in @tbl-logicaloperators.</span>
+<span id="cb16-156"><a href="#cb16-156" aria-hidden="true" tabindex="-1"></a><span class="fu">## Logical operators</span></span>
 <span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Operator <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb16-159"><a href="#cb16-159" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb16-160"><a href="#cb16-160" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> &amp;        <span class="pp">|</span> AND         <span class="pp">|</span></span>
-<span id="cb16-161"><a href="#cb16-161" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\|</span>       <span class="pp">|</span> OR          <span class="pp">|</span></span>
-<span id="cb16-162"><a href="#cb16-162" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> !        <span class="pp">|</span> NOT         <span class="pp">|</span></span>
-<span id="cb16-163"><a href="#cb16-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-164"><a href="#cb16-164" aria-hidden="true" tabindex="-1"></a>: Logical operators in R {#tbl-logicaloperators}</span>
+<span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a>Logical operators are particularly useful when you need to define conditions to filter your data, for example. This happens very frequently when working with data. The main logical operators are summarized in @tbl-logicaloperators.</span>
+<span id="cb16-159"><a href="#cb16-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-160"><a href="#cb16-160" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Operator <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb16-161"><a href="#cb16-161" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
+<span id="cb16-162"><a href="#cb16-162" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> &amp;        <span class="pp">|</span> AND         <span class="pp">|</span></span>
+<span id="cb16-163"><a href="#cb16-163" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="sc">\|</span>       <span class="pp">|</span> OR          <span class="pp">|</span></span>
+<span id="cb16-164"><a href="#cb16-164" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> !        <span class="pp">|</span> NOT         <span class="pp">|</span></span>
 <span id="cb16-165"><a href="#cb16-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-166"><a href="#cb16-166" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb16-167"><a href="#cb16-167" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 1</span></span>
-<span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a>Do the following calculations in your R console:</span>
+<span id="cb16-166"><a href="#cb16-166" aria-hidden="true" tabindex="-1"></a>: Logical operators in R {#tbl-logicaloperators}</span>
+<span id="cb16-167"><a href="#cb16-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 1</span></span>
 <span id="cb16-170"><a href="#cb16-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Multiply 5 by 3</span>
-<span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Add 10 to the result of step 1</span>
-<span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Raise the result of step 2 to the power 3</span>
-<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Check if the result of step 3 is lower or equal to 16000 (use a relational operator to do this)</span>
-<span id="cb16-175"><a href="#cb16-175" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>Check if the result of step 3 is equal to 15625 (use a relational operator to do this)</span>
-<span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb16-182"><a href="#cb16-182" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb16-183"><a href="#cb16-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a><span class="co">#Step 1</span></span>
-<span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span><span class="sc">*</span><span class="dv">3</span></span>
-<span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a><span class="co">#Step 2</span></span>
-<span id="cb16-188"><a href="#cb16-188" aria-hidden="true" tabindex="-1"></a>(<span class="dv">5</span><span class="sc">*</span><span class="dv">3</span>)<span class="sc">+</span><span class="dv">10</span></span>
-<span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a><span class="co">#Step 3</span></span>
-<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a>((<span class="dv">5</span><span class="sc">*</span><span class="dv">3</span>)<span class="sc">+</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">3</span></span>
-<span id="cb16-192"><a href="#cb16-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-193"><a href="#cb16-193" aria-hidden="true" tabindex="-1"></a><span class="co">#Step 4</span></span>
-<span id="cb16-194"><a href="#cb16-194" aria-hidden="true" tabindex="-1"></a>((<span class="dv">5</span><span class="sc">*</span><span class="dv">3</span>)<span class="sc">+</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">3</span> <span class="sc">&lt;=</span> <span class="dv">16000</span></span>
-<span id="cb16-195"><a href="#cb16-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-196"><a href="#cb16-196" aria-hidden="true" tabindex="-1"></a><span class="co">#Step 5</span></span>
-<span id="cb16-197"><a href="#cb16-197" aria-hidden="true" tabindex="-1"></a>((<span class="dv">5</span><span class="sc">*</span><span class="dv">3</span>)<span class="sc">+</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">3</span> <span class="sc">==</span> <span class="dv">15625</span></span>
-<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating R objects</span></span>
+<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a>Do the following calculations in R:</span>
+<span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Multiply 5 by 3</span>
+<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Add 10 to the result of step 1</span>
+<span id="cb16-175"><a href="#cb16-175" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Raise the result of step 2 to the power 3</span>
+<span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Check if the result of step 3 is lower or equal to 16000 (use a relational operator to do this)</span>
+<span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>Check if the result of step 3 is equal to 15625 (use a relational operator to do this)</span>
+<span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-182"><a href="#cb16-182" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb16-183"><a href="#cb16-183" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a><span class="co">#Step 1</span></span>
+<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span><span class="sc">*</span><span class="dv">3</span></span>
+<span id="cb16-188"><a href="#cb16-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a><span class="co">#Step 2</span></span>
+<span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a>(<span class="dv">5</span><span class="sc">*</span><span class="dv">3</span>)<span class="sc">+</span><span class="dv">10</span></span>
+<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-192"><a href="#cb16-192" aria-hidden="true" tabindex="-1"></a><span class="co">#Step 3</span></span>
+<span id="cb16-193"><a href="#cb16-193" aria-hidden="true" tabindex="-1"></a>((<span class="dv">5</span><span class="sc">*</span><span class="dv">3</span>)<span class="sc">+</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">3</span></span>
+<span id="cb16-194"><a href="#cb16-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-195"><a href="#cb16-195" aria-hidden="true" tabindex="-1"></a><span class="co">#Step 4</span></span>
+<span id="cb16-196"><a href="#cb16-196" aria-hidden="true" tabindex="-1"></a>((<span class="dv">5</span><span class="sc">*</span><span class="dv">3</span>)<span class="sc">+</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">3</span> <span class="sc">&lt;=</span> <span class="dv">16000</span></span>
+<span id="cb16-197"><a href="#cb16-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a><span class="co">#Step 5</span></span>
+<span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a>((<span class="dv">5</span><span class="sc">*</span><span class="dv">3</span>)<span class="sc">+</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">3</span> <span class="sc">==</span> <span class="dv">15625</span></span>
+<span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-202"><a href="#cb16-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-203"><a href="#cb16-203" aria-hidden="true" tabindex="-1"></a>New R objects are created using the assigment operator: <span class="in">`&lt;-`</span></span>
+<span id="cb16-203"><a href="#cb16-203" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating R objects</span></span>
 <span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a>Press <span class="in">`Alt + minus`</span> (Windows) or <span class="in">`Option + minus`</span> (macOS) to quickly write the assignment operator.</span>
+<span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a>New R objects are created using the assigment operator: <span class="in">`&lt;-`</span></span>
 <span id="cb16-206"><a href="#cb16-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-207"><a href="#cb16-207" aria-hidden="true" tabindex="-1"></a>You can think of this assignment operator as an arrow that puts what's on its right side into an R object located on its left side.</span>
+<span id="cb16-207"><a href="#cb16-207" aria-hidden="true" tabindex="-1"></a>Press <span class="in">`Alt + minus`</span> (Windows) or <span class="in">`Option + minus`</span> (macOS) to quickly write the assignment operator.</span>
 <span id="cb16-208"><a href="#cb16-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-209"><a href="#cb16-209" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb16-210"><a href="#cb16-210" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two important things to keep in mind when naming R objects</span></span>
-<span id="cb16-211"><a href="#cb16-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-212"><a href="#cb16-212" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>R is case-sensitive! If R returns an error, check for typos!</span>
-<span id="cb16-213"><a href="#cb16-213" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Do not use spaces in object names.</span>
-<span id="cb16-214"><a href="#cb16-214" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-215"><a href="#cb16-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-216"><a href="#cb16-216" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb16-217"><a href="#cb16-217" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 2</span></span>
-<span id="cb16-218"><a href="#cb16-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-219"><a href="#cb16-219" aria-hidden="true" tabindex="-1"></a>Create an object called <span class="in">`x`</span> that contains the value 2. Then, multiply it by 10.</span>
+<span id="cb16-209"><a href="#cb16-209" aria-hidden="true" tabindex="-1"></a>You can think of this assignment operator as an arrow that puts what's on its right side into an R object located on its left side.</span>
+<span id="cb16-210"><a href="#cb16-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-211"><a href="#cb16-211" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb16-212"><a href="#cb16-212" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two important things to keep in mind when naming R objects</span></span>
+<span id="cb16-213"><a href="#cb16-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-214"><a href="#cb16-214" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>R is case-sensitive! If R returns an error, check for typos!</span>
+<span id="cb16-215"><a href="#cb16-215" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Do not use spaces in object names.</span>
+<span id="cb16-216"><a href="#cb16-216" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-217"><a href="#cb16-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-218"><a href="#cb16-218" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb16-219"><a href="#cb16-219" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 2</span></span>
 <span id="cb16-220"><a href="#cb16-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-223"><a href="#cb16-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-224"><a href="#cb16-224" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb16-225"><a href="#cb16-225" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb16-226"><a href="#cb16-226" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a><span class="co">#Create object</span></span>
-<span id="cb16-229"><a href="#cb16-229" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb16-230"><a href="#cb16-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a><span class="co">#Show content of R object</span></span>
-<span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a>x</span>
-<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a><span class="co">#Multiply x by 10</span></span>
-<span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a>x<span class="sc">*</span><span class="dv">10</span></span>
-<span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-237"><a href="#cb16-237" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a><span class="fu">### Scalars</span></span>
+<span id="cb16-221"><a href="#cb16-221" aria-hidden="true" tabindex="-1"></a>Create an object called <span class="in">`x`</span> that contains the value 2. Then, multiply it by 10.</span>
+<span id="cb16-222"><a href="#cb16-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-225"><a href="#cb16-225" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-226"><a href="#cb16-226" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb16-229"><a href="#cb16-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-230"><a href="#cb16-230" aria-hidden="true" tabindex="-1"></a><span class="co">#Create object</span></span>
+<span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a><span class="co">#Show content of R object</span></span>
+<span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a><span class="co">#Multiply x by 10</span></span>
+<span id="cb16-237"><a href="#cb16-237" aria-hidden="true" tabindex="-1"></a>x<span class="sc">*</span><span class="dv">10</span></span>
+<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a>A scalar is a quantity that can only hold one value at a time. Here are the most common types of scalars in R:</span>
+<span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a><span class="fu">### Scalars</span></span>
 <span id="cb16-242"><a href="#cb16-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>*Numeric*: numbers with a decimal value (e.g., 17.8)</span>
-<span id="cb16-244"><a href="#cb16-244" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>*Integer*: numbers without a decimal value (e.g., 18)</span>
-<span id="cb16-245"><a href="#cb16-245" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>*Character*: a letter or a combination of letters. Character strings must be enclosed by quotes in your R code.</span>
-<span id="cb16-246"><a href="#cb16-246" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>*Factor*: data type used in statistical modelling to specify what are the factors in the model (categorical variables with a defined set of categories, called ‘levels’ in R)</span>
-<span id="cb16-247"><a href="#cb16-247" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>*Logical*: a logical variable can be either <span class="in">`TRUE`</span> or <span class="in">`FALSE`</span></span>
-<span id="cb16-248"><a href="#cb16-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-249"><a href="#cb16-249" aria-hidden="true" tabindex="-1"></a>You can check the data type of an R object using the <span class="in">`class()`</span> function.</span>
+<span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a>A scalar is a quantity that can only hold one value at a time. Here are the most common types of scalars in R:</span>
+<span id="cb16-244"><a href="#cb16-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-245"><a href="#cb16-245" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>*Double (numeric)*: numbers with a decimal value (e.g., 17.8)</span>
+<span id="cb16-246"><a href="#cb16-246" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>*Integer (numeric)*: numbers without a decimal value (e.g., 18)</span>
+<span id="cb16-247"><a href="#cb16-247" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>*Character*: a letter or a combination of letters. Character strings must be enclosed by quotes in your R code.</span>
+<span id="cb16-248"><a href="#cb16-248" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>*Factor*: data type used in statistical modelling to specify what are the factors in the model (categorical variables with a defined set of categories, called ‘levels’ in R)</span>
+<span id="cb16-249"><a href="#cb16-249" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>*Logical*: a logical variable can be either <span class="in">`TRUE`</span> or <span class="in">`FALSE`</span></span>
 <span id="cb16-250"><a href="#cb16-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-251"><a href="#cb16-251" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb16-252"><a href="#cb16-252" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 3</span></span>
-<span id="cb16-253"><a href="#cb16-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-254"><a href="#cb16-254" aria-hidden="true" tabindex="-1"></a>Check the data type of the R object (<span class="in">`x`</span>) you created in Exercise 2.</span>
+<span id="cb16-251"><a href="#cb16-251" aria-hidden="true" tabindex="-1"></a>You can check the data type of an R object using the <span class="in">`class()`</span> function.</span>
+<span id="cb16-252"><a href="#cb16-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-253"><a href="#cb16-253" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb16-254"><a href="#cb16-254" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 3</span></span>
 <span id="cb16-255"><a href="#cb16-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-258"><a href="#cb16-258" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-259"><a href="#cb16-259" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb16-260"><a href="#cb16-260" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb16-261"><a href="#cb16-261" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb16-262"><a href="#cb16-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-263"><a href="#cb16-263" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x)</span>
-<span id="cb16-264"><a href="#cb16-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-265"><a href="#cb16-265" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-266"><a href="#cb16-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-267"><a href="#cb16-267" aria-hidden="true" tabindex="-1"></a><span class="fu">### Vectors</span></span>
+<span id="cb16-256"><a href="#cb16-256" aria-hidden="true" tabindex="-1"></a>Check the data type of the R object (<span class="in">`x`</span>) you created in Exercise 2.</span>
+<span id="cb16-257"><a href="#cb16-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-260"><a href="#cb16-260" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-261"><a href="#cb16-261" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb16-262"><a href="#cb16-262" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb16-263"><a href="#cb16-263" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb16-264"><a href="#cb16-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-265"><a href="#cb16-265" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x)</span>
+<span id="cb16-266"><a href="#cb16-266" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-267"><a href="#cb16-267" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-268"><a href="#cb16-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-269"><a href="#cb16-269" aria-hidden="true" tabindex="-1"></a>A vector is a sequence of data elements of the same type. Vectors can be created using the <span class="in">`c()`</span> function. The letter "c" stands for "concatenate". When using this function, each element of your vector must be separated by a comma. More generally, this is a standard rule in R: **arguments passed to a function are always separated by commas**. The general syntax of an R function call is:</span>
+<span id="cb16-269"><a href="#cb16-269" aria-hidden="true" tabindex="-1"></a><span class="fu">### Vectors</span></span>
 <span id="cb16-270"><a href="#cb16-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-271"><a href="#cb16-271" aria-hidden="true" tabindex="-1"></a><span class="in">`function(argument1 = value1, argument2 = value2, argument3 = value3)`</span></span>
+<span id="cb16-271"><a href="#cb16-271" aria-hidden="true" tabindex="-1"></a>A vector is a sequence of data elements of the same type. Vectors can be created using the <span class="in">`c()`</span> function. The letter "c" stands for "concatenate". When using this function, each element of your vector must be separated by a comma. More generally, this is a standard rule in R: **arguments passed to a function are always separated by commas**. The general syntax of an R function call is:</span>
 <span id="cb16-272"><a href="#cb16-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-273"><a href="#cb16-273" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb16-274"><a href="#cb16-274" aria-hidden="true" tabindex="-1"></a><span class="fu">## When should I (not) use quotation marks when writing R code?</span></span>
-<span id="cb16-275"><a href="#cb16-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-276"><a href="#cb16-276" aria-hidden="true" tabindex="-1"></a>In R, **text must be placed between quotation marks when it is meant to be treated as a character string**, such as labels, titles, file names, or values of character variables (for example <span class="in">`"control"`</span> or <span class="in">`"treatment"`</span>). Quotation marks tell R to interpret the text literally rather than as the name of an object.</span>
+<span id="cb16-273"><a href="#cb16-273" aria-hidden="true" tabindex="-1"></a><span class="in">`function(argument1 = value1, argument2 = value2, argument3 = value3)`</span></span>
+<span id="cb16-274"><a href="#cb16-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-275"><a href="#cb16-275" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb16-276"><a href="#cb16-276" aria-hidden="true" tabindex="-1"></a><span class="fu">## When should I (not) use quotation marks when writing R code?</span></span>
 <span id="cb16-277"><a href="#cb16-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-278"><a href="#cb16-278" aria-hidden="true" tabindex="-1"></a>By contrast, **you should not use quotation marks when referring to existing objects, functions, or variables in your workspace**, such as <span class="in">`plot`</span>, <span class="in">`data`</span>, or <span class="in">`x`</span>, because R will then look for those objects and use their values.</span>
-<span id="cb16-279"><a href="#cb16-279" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-280"><a href="#cb16-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-281"><a href="#cb16-281" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb16-282"><a href="#cb16-282" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 4</span></span>
-<span id="cb16-283"><a href="#cb16-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-284"><a href="#cb16-284" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Create a numeric vector called <span class="in">`x1`</span> that contains all integer values from 1 to 5.</span>
-<span id="cb16-285"><a href="#cb16-285" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Create a character vector called <span class="in">`x2`</span> containing the strings "control" and "treatment".</span>
-<span id="cb16-286"><a href="#cb16-286" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Check how many elements are in <span class="in">`x1`</span> and <span class="in">`x2`</span>. You can check how many elements there are in a vector using the <span class="in">`length()`</span> function.</span>
-<span id="cb16-287"><a href="#cb16-287" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Multiply <span class="in">`x1`</span> by 10 and look at the results. What do you notice?</span>
-<span id="cb16-288"><a href="#cb16-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-291"><a href="#cb16-291" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-292"><a href="#cb16-292" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb16-293"><a href="#cb16-293" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb16-294"><a href="#cb16-294" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb16-295"><a href="#cb16-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-296"><a href="#cb16-296" aria-hidden="true" tabindex="-1"></a><span class="co">#Numeric vector (x1)</span></span>
-<span id="cb16-297"><a href="#cb16-297" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
-<span id="cb16-298"><a href="#cb16-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-299"><a href="#cb16-299" aria-hidden="true" tabindex="-1"></a><span class="co">#Note: this is another option to create x1</span></span>
-<span id="cb16-300"><a href="#cb16-300" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span>
-<span id="cb16-301"><a href="#cb16-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-302"><a href="#cb16-302" aria-hidden="true" tabindex="-1"></a><span class="co">#Character vector (x2)</span></span>
-<span id="cb16-303"><a href="#cb16-303" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"treatment"</span>)</span>
-<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-305"><a href="#cb16-305" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the number of elements in x1 and x2</span></span>
-<span id="cb16-306"><a href="#cb16-306" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x1)</span>
-<span id="cb16-307"><a href="#cb16-307" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x2)</span>
-<span id="cb16-308"><a href="#cb16-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-309"><a href="#cb16-309" aria-hidden="true" tabindex="-1"></a><span class="co">#Multiply x1 by 10</span></span>
-<span id="cb16-310"><a href="#cb16-310" aria-hidden="true" tabindex="-1"></a><span class="co">#All elements in x1 have been multiplied by 10 (vectorized operation)</span></span>
-<span id="cb16-311"><a href="#cb16-311" aria-hidden="true" tabindex="-1"></a>x1<span class="sc">*</span><span class="dv">10</span></span>
-<span id="cb16-312"><a href="#cb16-312" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-314"><a href="#cb16-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a><span class="fu">### Matrices</span></span>
+<span id="cb16-278"><a href="#cb16-278" aria-hidden="true" tabindex="-1"></a>In R, **text must be placed between quotation marks when it is meant to be treated as a character string**, such as labels, titles, file names, or values of character variables (for example <span class="in">`"control"`</span> or <span class="in">`"treatment"`</span>). Quotation marks tell R to interpret the text literally rather than as the name of an object.</span>
+<span id="cb16-279"><a href="#cb16-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-280"><a href="#cb16-280" aria-hidden="true" tabindex="-1"></a>By contrast, **you should not use quotation marks when referring to existing objects, functions, or variables in your workspace**, such as <span class="in">`plot`</span>, <span class="in">`data`</span>, or <span class="in">`x`</span>, because R will then look for those objects and use their values.</span>
+<span id="cb16-281"><a href="#cb16-281" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-282"><a href="#cb16-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-283"><a href="#cb16-283" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb16-284"><a href="#cb16-284" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 4</span></span>
+<span id="cb16-285"><a href="#cb16-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-286"><a href="#cb16-286" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Create a numeric vector called <span class="in">`x1`</span> that contains all integer values from 1 to 5.</span>
+<span id="cb16-287"><a href="#cb16-287" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Create a character vector called <span class="in">`x2`</span> containing the strings "control" and "treatment".</span>
+<span id="cb16-288"><a href="#cb16-288" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Check how many elements are in <span class="in">`x1`</span> and <span class="in">`x2`</span>. You can check how many elements there are in a vector using the <span class="in">`length()`</span> function.</span>
+<span id="cb16-289"><a href="#cb16-289" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Multiply <span class="in">`x1`</span> by 10 and look at the results. What do you notice?</span>
+<span id="cb16-290"><a href="#cb16-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-293"><a href="#cb16-293" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-294"><a href="#cb16-294" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb16-295"><a href="#cb16-295" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb16-296"><a href="#cb16-296" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb16-297"><a href="#cb16-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-298"><a href="#cb16-298" aria-hidden="true" tabindex="-1"></a><span class="co">#Numeric vector (x1)</span></span>
+<span id="cb16-299"><a href="#cb16-299" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb16-300"><a href="#cb16-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-301"><a href="#cb16-301" aria-hidden="true" tabindex="-1"></a><span class="co">#Note: this is another option to create x1</span></span>
+<span id="cb16-302"><a href="#cb16-302" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span>
+<span id="cb16-303"><a href="#cb16-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a><span class="co">#Character vector (x2)</span></span>
+<span id="cb16-305"><a href="#cb16-305" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"treatment"</span>)</span>
+<span id="cb16-306"><a href="#cb16-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-307"><a href="#cb16-307" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the number of elements in x1 and x2</span></span>
+<span id="cb16-308"><a href="#cb16-308" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x1)</span>
+<span id="cb16-309"><a href="#cb16-309" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x2)</span>
+<span id="cb16-310"><a href="#cb16-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-311"><a href="#cb16-311" aria-hidden="true" tabindex="-1"></a><span class="co">#Multiply x1 by 10</span></span>
+<span id="cb16-312"><a href="#cb16-312" aria-hidden="true" tabindex="-1"></a><span class="co">#All elements in x1 have been multiplied by 10 (vectorized operation)</span></span>
+<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a>x1<span class="sc">*</span><span class="dv">10</span></span>
+<span id="cb16-314"><a href="#cb16-314" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-316"><a href="#cb16-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a>A matrix is an ensemble of data elements of the same type arranged in a 2D layout (i.e., like a table). Matrices can be created using the <span class="in">`matrix()`</span> function.</span>
+<span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a><span class="fu">### Matrices</span></span>
 <span id="cb16-318"><a href="#cb16-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-319"><a href="#cb16-319" aria-hidden="true" tabindex="-1"></a>You can check the size of a matrix using the <span class="in">`dim()`</span> function. The first element of the output is the number of rows. The second element of the output is the number of columns. You can also extract the number of rows and columns using <span class="in">`nrow()`</span> and <span class="in">`ncol()`</span>, respectively.</span>
+<span id="cb16-319"><a href="#cb16-319" aria-hidden="true" tabindex="-1"></a>A matrix is an ensemble of data elements of the same type arranged in a 2D layout (i.e., like a table). Matrices can be created using the <span class="in">`matrix()`</span> function.</span>
 <span id="cb16-320"><a href="#cb16-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-321"><a href="#cb16-321" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb16-322"><a href="#cb16-322" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 5</span></span>
-<span id="cb16-323"><a href="#cb16-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-324"><a href="#cb16-324" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Create a matrix called <span class="in">`x3`</span> that contains all integer values from 1 to 30 arranged in a 5 by 6 layout (5 rows and 6 columns). See the help page for the <span class="in">`matrix()`</span> function in the help pane to find out which arguments must be provided to perform this operation. You can easily do this by running <span class="in">`?matrix`</span> in your R console.</span>
-<span id="cb16-325"><a href="#cb16-325" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Check the size of <span class="in">`x3`</span> using <span class="in">`dim()`</span>, <span class="in">`ncol()`</span>, and <span class="in">`nrow()`</span>.</span>
-<span id="cb16-326"><a href="#cb16-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-329"><a href="#cb16-329" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-330"><a href="#cb16-330" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb16-331"><a href="#cb16-331" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb16-332"><a href="#cb16-332" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb16-333"><a href="#cb16-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-334"><a href="#cb16-334" aria-hidden="true" tabindex="-1"></a><span class="co">#Create matrix</span></span>
-<span id="cb16-335"><a href="#cb16-335" aria-hidden="true" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,</span>
-<span id="cb16-336"><a href="#cb16-336" aria-hidden="true" tabindex="-1"></a>             <span class="at">ncol =</span> <span class="dv">6</span>,</span>
-<span id="cb16-337"><a href="#cb16-337" aria-hidden="true" tabindex="-1"></a>             <span class="at">nrow =</span> <span class="dv">5</span>)</span>
-<span id="cb16-338"><a href="#cb16-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-339"><a href="#cb16-339" aria-hidden="true" tabindex="-1"></a><span class="co">#View matrix</span></span>
-<span id="cb16-340"><a href="#cb16-340" aria-hidden="true" tabindex="-1"></a>x3</span>
-<span id="cb16-341"><a href="#cb16-341" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-342"><a href="#cb16-342" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the size of x3</span></span>
-<span id="cb16-343"><a href="#cb16-343" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(x3)</span>
-<span id="cb16-344"><a href="#cb16-344" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(x3)</span>
-<span id="cb16-345"><a href="#cb16-345" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(x3)</span>
-<span id="cb16-346"><a href="#cb16-346" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-347"><a href="#cb16-347" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-348"><a href="#cb16-348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-349"><a href="#cb16-349" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data frames</span></span>
+<span id="cb16-321"><a href="#cb16-321" aria-hidden="true" tabindex="-1"></a>You can check the size of a matrix using the <span class="in">`dim()`</span> function. The first element of the output is the number of rows. The second element of the output is the number of columns. You can also extract the number of rows and columns using <span class="in">`nrow()`</span> and <span class="in">`ncol()`</span>, respectively.</span>
+<span id="cb16-322"><a href="#cb16-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-323"><a href="#cb16-323" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb16-324"><a href="#cb16-324" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 5</span></span>
+<span id="cb16-325"><a href="#cb16-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-326"><a href="#cb16-326" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Create a matrix called <span class="in">`x3`</span> that contains all integer values from 1 to 30 arranged in a 5 by 6 layout (5 rows and 6 columns). See the help page for the <span class="in">`matrix()`</span> function in the help pane to find out which arguments must be provided to perform this operation. You can easily do this by running <span class="in">`?matrix`</span> in your R console.</span>
+<span id="cb16-327"><a href="#cb16-327" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Check the size of <span class="in">`x3`</span> using <span class="in">`dim()`</span>, <span class="in">`ncol()`</span>, and <span class="in">`nrow()`</span>.</span>
+<span id="cb16-328"><a href="#cb16-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-331"><a href="#cb16-331" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-332"><a href="#cb16-332" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb16-333"><a href="#cb16-333" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb16-334"><a href="#cb16-334" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb16-335"><a href="#cb16-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-336"><a href="#cb16-336" aria-hidden="true" tabindex="-1"></a><span class="co">#Create matrix</span></span>
+<span id="cb16-337"><a href="#cb16-337" aria-hidden="true" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,</span>
+<span id="cb16-338"><a href="#cb16-338" aria-hidden="true" tabindex="-1"></a>             <span class="at">ncol =</span> <span class="dv">6</span>,</span>
+<span id="cb16-339"><a href="#cb16-339" aria-hidden="true" tabindex="-1"></a>             <span class="at">nrow =</span> <span class="dv">5</span>)</span>
+<span id="cb16-340"><a href="#cb16-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-341"><a href="#cb16-341" aria-hidden="true" tabindex="-1"></a><span class="co">#View matrix</span></span>
+<span id="cb16-342"><a href="#cb16-342" aria-hidden="true" tabindex="-1"></a>x3</span>
+<span id="cb16-343"><a href="#cb16-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-344"><a href="#cb16-344" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the size of x3</span></span>
+<span id="cb16-345"><a href="#cb16-345" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(x3)</span>
+<span id="cb16-346"><a href="#cb16-346" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(x3)</span>
+<span id="cb16-347"><a href="#cb16-347" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(x3)</span>
+<span id="cb16-348"><a href="#cb16-348" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-349"><a href="#cb16-349" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-350"><a href="#cb16-350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-351"><a href="#cb16-351" aria-hidden="true" tabindex="-1"></a>A data frame is an ensemble of data elements arranged in a 2D layout (i.e., like a table). Different columns of a data frame can contain different types of data (character, logical, numeric, etc.). It is probably the most common data structure used when analysing ecological data. Data frames can be created using the <span class="in">`data.frame()`</span> function. The functions <span class="in">`dim()`</span>, <span class="in">`ncol()`</span>, and <span class="in">`nrow()`</span> can also be used on data frames.</span>
+<span id="cb16-351"><a href="#cb16-351" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data frames</span></span>
 <span id="cb16-352"><a href="#cb16-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-353"><a href="#cb16-353" aria-hidden="true" tabindex="-1"></a>Note that in this course, we will be working with data stored in tidy data frames.</span>
+<span id="cb16-353"><a href="#cb16-353" aria-hidden="true" tabindex="-1"></a>A data frame is an ensemble of data elements arranged in a 2D layout (i.e., like a table). Different columns of a data frame can contain different types of data (character, logical, numeric, etc.). It is probably the most common data structure used when analysing ecological data. Data frames can be created using the <span class="in">`data.frame()`</span> function. The functions <span class="in">`dim()`</span>, <span class="in">`ncol()`</span>, and <span class="in">`nrow()`</span> can also be used on data frames.</span>
 <span id="cb16-354"><a href="#cb16-354" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-355"><a href="#cb16-355" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb16-356"><a href="#cb16-356" aria-hidden="true" tabindex="-1"></a><span class="fu">## What's make a dataset tidy?</span></span>
-<span id="cb16-357"><a href="#cb16-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-358"><a href="#cb16-358" aria-hidden="true" tabindex="-1"></a>A **tidy dataset** follows these <span class="co">[</span><span class="ot">three rules</span><span class="co">]</span>{.underline}:</span>
+<span id="cb16-355"><a href="#cb16-355" aria-hidden="true" tabindex="-1"></a>Note that in this course, we will be working with data stored in tidy data frames.</span>
+<span id="cb16-356"><a href="#cb16-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-357"><a href="#cb16-357" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
+<span id="cb16-358"><a href="#cb16-358" aria-hidden="true" tabindex="-1"></a><span class="fu">## What's make a dataset tidy?</span></span>
 <span id="cb16-359"><a href="#cb16-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-360"><a href="#cb16-360" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Each variable is a column and each column is a variable</span>
-<span id="cb16-361"><a href="#cb16-361" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Each observation is a row and each row is an observation</span>
-<span id="cb16-362"><a href="#cb16-362" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Each value is a cell and each cell is a single value</span>
-<span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 6</span></span>
-<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-368"><a href="#cb16-368" aria-hidden="true" tabindex="-1"></a>Create a data frame with three variables:</span>
+<span id="cb16-360"><a href="#cb16-360" aria-hidden="true" tabindex="-1"></a>A **tidy dataset** follows these <span class="co">[</span><span class="ot">three rules</span><span class="co">]</span>{.underline}:</span>
+<span id="cb16-361"><a href="#cb16-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-362"><a href="#cb16-362" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Each variable is a column and each column is a variable</span>
+<span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Each observation is a row and each row is an observation</span>
+<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Each value is a cell and each cell is a single value</span>
+<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb16-368"><a href="#cb16-368" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 6</span></span>
 <span id="cb16-369"><a href="#cb16-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Var1 (all integer values from 1 to 10)</span>
+<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a>Create a data frame with three variables:</span>
 <span id="cb16-371"><a href="#cb16-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-372"><a href="#cb16-372" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Var2 (values in Var1 multiplied by 2)</span>
+<span id="cb16-372"><a href="#cb16-372" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Var1 (all integer values from 1 to 10)</span>
 <span id="cb16-373"><a href="#cb16-373" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-374"><a href="#cb16-374" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Var3 (5 times "control" and 5 times "treatment")</span>
+<span id="cb16-374"><a href="#cb16-374" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Var2 (values in Var1 multiplied by 2)</span>
 <span id="cb16-375"><a href="#cb16-375" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-376"><a href="#cb16-376" aria-hidden="true" tabindex="-1"></a>Check the help page of the <span class="in">`data.frame()`</span> function to figure out how to use it (<span class="in">`?data.frame`</span>).</span>
+<span id="cb16-376"><a href="#cb16-376" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Var3 (5 times "control" and 5 times "treatment")</span>
 <span id="cb16-377"><a href="#cb16-377" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-378"><a href="#cb16-378" aria-hidden="true" tabindex="-1"></a>Note: when you have to repeat an element multiple times in a vector, you can use the function <span class="in">`rep()`</span> to shorten your code. See example in the solution below.</span>
+<span id="cb16-378"><a href="#cb16-378" aria-hidden="true" tabindex="-1"></a>Check the help page of the <span class="in">`data.frame()`</span> function to figure out how to use it (<span class="in">`?data.frame`</span>).</span>
 <span id="cb16-379"><a href="#cb16-379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-382"><a href="#cb16-382" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-383"><a href="#cb16-383" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb16-385"><a href="#cb16-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-386"><a href="#cb16-386" aria-hidden="true" tabindex="-1"></a><span class="co">#Create data frame</span></span>
-<span id="cb16-387"><a href="#cb16-387" aria-hidden="true" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb16-388"><a href="#cb16-388" aria-hidden="true" tabindex="-1"></a>  <span class="at">Var1 =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
-<span id="cb16-389"><a href="#cb16-389" aria-hidden="true" tabindex="-1"></a>  <span class="at">Var2 =</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
-<span id="cb16-390"><a href="#cb16-390" aria-hidden="true" tabindex="-1"></a>  <span class="at">Var3 =</span> <span class="fu">c</span>(<span class="st">"control"</span>,<span class="st">"control"</span>,<span class="st">"control"</span>,<span class="st">"control"</span>,<span class="st">"control"</span>,</span>
-<span id="cb16-391"><a href="#cb16-391" aria-hidden="true" tabindex="-1"></a>           <span class="st">"treatment"</span>,<span class="st">"treatment"</span>,<span class="st">"treatment"</span>,<span class="st">"treatment"</span>,<span class="st">"treatment"</span>))</span>
-<span id="cb16-392"><a href="#cb16-392" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-393"><a href="#cb16-393" aria-hidden="true" tabindex="-1"></a><span class="co">#This does exactly the same, but is shorter to write</span></span>
-<span id="cb16-394"><a href="#cb16-394" aria-hidden="true" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb16-395"><a href="#cb16-395" aria-hidden="true" tabindex="-1"></a>  <span class="at">Var1 =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
-<span id="cb16-396"><a href="#cb16-396" aria-hidden="true" tabindex="-1"></a>  <span class="at">Var2 =</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
-<span id="cb16-397"><a href="#cb16-397" aria-hidden="true" tabindex="-1"></a>  <span class="at">Var3 =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"control"</span>, <span class="dv">5</span>),</span>
-<span id="cb16-398"><a href="#cb16-398" aria-hidden="true" tabindex="-1"></a>           <span class="fu">rep</span>(<span class="st">"treatment"</span>, <span class="dv">5</span>)))</span>
-<span id="cb16-399"><a href="#cb16-399" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-400"><a href="#cb16-400" aria-hidden="true" tabindex="-1"></a><span class="co">#View data frame</span></span>
-<span id="cb16-401"><a href="#cb16-401" aria-hidden="true" tabindex="-1"></a>x4</span>
-<span id="cb16-402"><a href="#cb16-402" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-403"><a href="#cb16-403" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-404"><a href="#cb16-404" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-405"><a href="#cb16-405" aria-hidden="true" tabindex="-1"></a><span class="fu">### Lists</span></span>
+<span id="cb16-380"><a href="#cb16-380" aria-hidden="true" tabindex="-1"></a>Note: when you have to repeat an element multiple times in a vector, you can use the function <span class="in">`rep()`</span> to shorten your code. See example in the solution below.</span>
+<span id="cb16-381"><a href="#cb16-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-385"><a href="#cb16-385" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb16-386"><a href="#cb16-386" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb16-387"><a href="#cb16-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-388"><a href="#cb16-388" aria-hidden="true" tabindex="-1"></a><span class="co">#Create data frame</span></span>
+<span id="cb16-389"><a href="#cb16-389" aria-hidden="true" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb16-390"><a href="#cb16-390" aria-hidden="true" tabindex="-1"></a>  <span class="at">Var1 =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
+<span id="cb16-391"><a href="#cb16-391" aria-hidden="true" tabindex="-1"></a>  <span class="at">Var2 =</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
+<span id="cb16-392"><a href="#cb16-392" aria-hidden="true" tabindex="-1"></a>  <span class="at">Var3 =</span> <span class="fu">c</span>(<span class="st">"control"</span>,<span class="st">"control"</span>,<span class="st">"control"</span>,<span class="st">"control"</span>,<span class="st">"control"</span>,</span>
+<span id="cb16-393"><a href="#cb16-393" aria-hidden="true" tabindex="-1"></a>           <span class="st">"treatment"</span>,<span class="st">"treatment"</span>,<span class="st">"treatment"</span>,<span class="st">"treatment"</span>,<span class="st">"treatment"</span>))</span>
+<span id="cb16-394"><a href="#cb16-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-395"><a href="#cb16-395" aria-hidden="true" tabindex="-1"></a><span class="co">#This does exactly the same, but is shorter to write</span></span>
+<span id="cb16-396"><a href="#cb16-396" aria-hidden="true" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb16-397"><a href="#cb16-397" aria-hidden="true" tabindex="-1"></a>  <span class="at">Var1 =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
+<span id="cb16-398"><a href="#cb16-398" aria-hidden="true" tabindex="-1"></a>  <span class="at">Var2 =</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
+<span id="cb16-399"><a href="#cb16-399" aria-hidden="true" tabindex="-1"></a>  <span class="at">Var3 =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"control"</span>, <span class="dv">5</span>),</span>
+<span id="cb16-400"><a href="#cb16-400" aria-hidden="true" tabindex="-1"></a>           <span class="fu">rep</span>(<span class="st">"treatment"</span>, <span class="dv">5</span>)))</span>
+<span id="cb16-401"><a href="#cb16-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-402"><a href="#cb16-402" aria-hidden="true" tabindex="-1"></a><span class="co">#View data frame</span></span>
+<span id="cb16-403"><a href="#cb16-403" aria-hidden="true" tabindex="-1"></a>x4</span>
+<span id="cb16-404"><a href="#cb16-404" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-405"><a href="#cb16-405" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-406"><a href="#cb16-406" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-407"><a href="#cb16-407" aria-hidden="true" tabindex="-1"></a>A list is a vector containing other objects (vectors, matrices, data frames, other lists, etc.). It can contain elements of various data types. Lists can be created using the <span class="in">`list()`</span> function. The <span class="in">`length()`</span> function can be used to check how many data elements there are in a list.</span>
+<span id="cb16-407"><a href="#cb16-407" aria-hidden="true" tabindex="-1"></a><span class="fu">### Lists</span></span>
 <span id="cb16-408"><a href="#cb16-408" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-409"><a href="#cb16-409" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb16-410"><a href="#cb16-410" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 7</span></span>
-<span id="cb16-411"><a href="#cb16-411" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-412"><a href="#cb16-412" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Create a list (<span class="in">`x5`</span>) containing the objects <span class="in">`x1`</span>, <span class="in">`x2`</span>, <span class="in">`x3`</span> and <span class="in">`x4`</span> created earlier.</span>
-<span id="cb16-413"><a href="#cb16-413" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Check how many elements are in this list using <span class="in">`length()`</span>.</span>
-<span id="cb16-414"><a href="#cb16-414" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-417"><a href="#cb16-417" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-418"><a href="#cb16-418" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb16-419"><a href="#cb16-419" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb16-420"><a href="#cb16-420" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb16-421"><a href="#cb16-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-422"><a href="#cb16-422" aria-hidden="true" tabindex="-1"></a><span class="co">#Create list</span></span>
-<span id="cb16-423"><a href="#cb16-423" aria-hidden="true" tabindex="-1"></a>x5 <span class="ot">&lt;-</span> <span class="fu">list</span>(x1, x2, x3, x4)</span>
-<span id="cb16-424"><a href="#cb16-424" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-425"><a href="#cb16-425" aria-hidden="true" tabindex="-1"></a><span class="co">#View list</span></span>
-<span id="cb16-426"><a href="#cb16-426" aria-hidden="true" tabindex="-1"></a>x5</span>
-<span id="cb16-427"><a href="#cb16-427" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-428"><a href="#cb16-428" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the number of elements in the list</span></span>
-<span id="cb16-429"><a href="#cb16-429" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x5)</span>
-<span id="cb16-430"><a href="#cb16-430" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-431"><a href="#cb16-431" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-432"><a href="#cb16-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-433"><a href="#cb16-433" aria-hidden="true" tabindex="-1"></a><span class="fu">## Indexing</span></span>
+<span id="cb16-409"><a href="#cb16-409" aria-hidden="true" tabindex="-1"></a>A list is a vector containing other objects (vectors, matrices, data frames, other lists, etc.). It can contain elements of various data types. Lists can be created using the <span class="in">`list()`</span> function. The <span class="in">`length()`</span> function can be used to check how many data elements there are in a list.</span>
+<span id="cb16-410"><a href="#cb16-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-411"><a href="#cb16-411" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb16-412"><a href="#cb16-412" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 7</span></span>
+<span id="cb16-413"><a href="#cb16-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-414"><a href="#cb16-414" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Create a list (<span class="in">`x5`</span>) containing the objects <span class="in">`x1`</span>, <span class="in">`x2`</span>, <span class="in">`x3`</span> and <span class="in">`x4`</span> created earlier.</span>
+<span id="cb16-415"><a href="#cb16-415" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Check how many elements are in this list using <span class="in">`length()`</span>.</span>
+<span id="cb16-416"><a href="#cb16-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-419"><a href="#cb16-419" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-420"><a href="#cb16-420" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb16-421"><a href="#cb16-421" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb16-422"><a href="#cb16-422" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb16-423"><a href="#cb16-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-424"><a href="#cb16-424" aria-hidden="true" tabindex="-1"></a><span class="co">#Create list</span></span>
+<span id="cb16-425"><a href="#cb16-425" aria-hidden="true" tabindex="-1"></a>x5 <span class="ot">&lt;-</span> <span class="fu">list</span>(x1, x2, x3, x4)</span>
+<span id="cb16-426"><a href="#cb16-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-427"><a href="#cb16-427" aria-hidden="true" tabindex="-1"></a><span class="co">#View list</span></span>
+<span id="cb16-428"><a href="#cb16-428" aria-hidden="true" tabindex="-1"></a>x5</span>
+<span id="cb16-429"><a href="#cb16-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-430"><a href="#cb16-430" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the number of elements in the list</span></span>
+<span id="cb16-431"><a href="#cb16-431" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x5)</span>
+<span id="cb16-432"><a href="#cb16-432" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-433"><a href="#cb16-433" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-434"><a href="#cb16-434" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-435"><a href="#cb16-435" aria-hidden="true" tabindex="-1"></a>One of the main advantages of R is that it is very easy to extract any given value from a data set. This is called indexing. Let's have a look at a few examples.</span>
+<span id="cb16-435"><a href="#cb16-435" aria-hidden="true" tabindex="-1"></a><span class="fu">## Indexing</span></span>
 <span id="cb16-436"><a href="#cb16-436" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-437"><a href="#cb16-437" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb16-438"><a href="#cb16-438" aria-hidden="true" tabindex="-1"></a><span class="fu">## Indexing works differently in R and Python</span></span>
-<span id="cb16-439"><a href="#cb16-439" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-440"><a href="#cb16-440" aria-hidden="true" tabindex="-1"></a>R starts counting at 1 rather than 0. For example, the first element of an object is accessed with index <span class="in">`1`</span>. This differs from Python, which starts counting at zero.</span>
-<span id="cb16-441"><a href="#cb16-441" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-442"><a href="#cb16-442" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-443"><a href="#cb16-443" aria-hidden="true" tabindex="-1"></a><span class="fu">### Vectors</span></span>
+<span id="cb16-437"><a href="#cb16-437" aria-hidden="true" tabindex="-1"></a>One of the main advantages of R is that it is very easy to extract any given value from a data set. This is called indexing. Let's have a look at a few examples.</span>
+<span id="cb16-438"><a href="#cb16-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-439"><a href="#cb16-439" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
+<span id="cb16-440"><a href="#cb16-440" aria-hidden="true" tabindex="-1"></a><span class="fu">## Indexing works differently in R and Python</span></span>
+<span id="cb16-441"><a href="#cb16-441" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-442"><a href="#cb16-442" aria-hidden="true" tabindex="-1"></a>R starts counting at 1 rather than 0. For example, the first element of an object is accessed with index <span class="in">`1`</span>. This differs from Python, which starts counting at zero.</span>
+<span id="cb16-443"><a href="#cb16-443" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-444"><a href="#cb16-444" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-445"><a href="#cb16-445" aria-hidden="true" tabindex="-1"></a>To extract the *i^th^* value of a vector object called <span class="in">`x`</span>, you should write <span class="in">`x[i]`</span>.</span>
+<span id="cb16-445"><a href="#cb16-445" aria-hidden="true" tabindex="-1"></a><span class="fu">### Vectors</span></span>
 <span id="cb16-446"><a href="#cb16-446" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-447"><a href="#cb16-447" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb16-448"><a href="#cb16-448" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 8</span></span>
-<span id="cb16-449"><a href="#cb16-449" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-450"><a href="#cb16-450" aria-hidden="true" tabindex="-1"></a>Extract the third value of the <span class="in">`x1`</span> object (numeric vector) created in Exercise 4.</span>
+<span id="cb16-447"><a href="#cb16-447" aria-hidden="true" tabindex="-1"></a>To extract the *i^th^* value of a vector object called <span class="in">`x`</span>, you should write <span class="in">`x[i]`</span>.</span>
+<span id="cb16-448"><a href="#cb16-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-449"><a href="#cb16-449" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb16-450"><a href="#cb16-450" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 8</span></span>
 <span id="cb16-451"><a href="#cb16-451" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-454"><a href="#cb16-454" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-455"><a href="#cb16-455" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb16-456"><a href="#cb16-456" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb16-457"><a href="#cb16-457" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb16-458"><a href="#cb16-458" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-459"><a href="#cb16-459" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the third value of the x1 object</span></span>
-<span id="cb16-460"><a href="#cb16-460" aria-hidden="true" tabindex="-1"></a><span class="co">#x1 is a vector</span></span>
-<span id="cb16-461"><a href="#cb16-461" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-462"><a href="#cb16-462" aria-hidden="true" tabindex="-1"></a>x1[<span class="dv">3</span>]</span>
-<span id="cb16-463"><a href="#cb16-463" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-464"><a href="#cb16-464" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-465"><a href="#cb16-465" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-466"><a href="#cb16-466" aria-hidden="true" tabindex="-1"></a><span class="fu">### Matrices and data frames</span></span>
+<span id="cb16-452"><a href="#cb16-452" aria-hidden="true" tabindex="-1"></a>Extract the third value of the <span class="in">`x1`</span> object (numeric vector) created in Exercise 4.</span>
+<span id="cb16-453"><a href="#cb16-453" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-456"><a href="#cb16-456" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-457"><a href="#cb16-457" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb16-458"><a href="#cb16-458" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb16-459"><a href="#cb16-459" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb16-460"><a href="#cb16-460" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-461"><a href="#cb16-461" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the third value of the x1 object</span></span>
+<span id="cb16-462"><a href="#cb16-462" aria-hidden="true" tabindex="-1"></a><span class="co">#x1 is a vector</span></span>
+<span id="cb16-463"><a href="#cb16-463" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-464"><a href="#cb16-464" aria-hidden="true" tabindex="-1"></a>x1[<span class="dv">3</span>]</span>
+<span id="cb16-465"><a href="#cb16-465" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-466"><a href="#cb16-466" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-467"><a href="#cb16-467" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-468"><a href="#cb16-468" aria-hidden="true" tabindex="-1"></a>To extract the value located at the intersection between the *i^th^* row and *j^th^* column of a matrix or a data frame object called <span class="in">`x`</span>, you should write <span class="in">`x[i,j]`</span>.</span>
+<span id="cb16-468"><a href="#cb16-468" aria-hidden="true" tabindex="-1"></a><span class="fu">### Matrices and data frames</span></span>
 <span id="cb16-469"><a href="#cb16-469" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-470"><a href="#cb16-470" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb16-471"><a href="#cb16-471" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 9</span></span>
-<span id="cb16-472"><a href="#cb16-472" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-473"><a href="#cb16-473" aria-hidden="true" tabindex="-1"></a>Extract the value at the intersection of row 2 and column 3 in the <span class="in">`x3`</span> object (matrix) created in Exercise 5.</span>
+<span id="cb16-470"><a href="#cb16-470" aria-hidden="true" tabindex="-1"></a>To extract the value located at the intersection between the *i^th^* row and *j^th^* column of a matrix or a data frame object called <span class="in">`x`</span>, you should write <span class="in">`x[i,j]`</span>.</span>
+<span id="cb16-471"><a href="#cb16-471" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-472"><a href="#cb16-472" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb16-473"><a href="#cb16-473" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 9</span></span>
 <span id="cb16-474"><a href="#cb16-474" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-477"><a href="#cb16-477" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-478"><a href="#cb16-478" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb16-479"><a href="#cb16-479" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb16-480"><a href="#cb16-480" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb16-481"><a href="#cb16-481" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-482"><a href="#cb16-482" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the value at the intersection of row 2 and column 3 in the x3 object</span></span>
-<span id="cb16-483"><a href="#cb16-483" aria-hidden="true" tabindex="-1"></a><span class="co">#x3 is a matrix</span></span>
-<span id="cb16-484"><a href="#cb16-484" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-485"><a href="#cb16-485" aria-hidden="true" tabindex="-1"></a>x3[<span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb16-486"><a href="#cb16-486" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-487"><a href="#cb16-487" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-488"><a href="#cb16-488" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-489"><a href="#cb16-489" aria-hidden="true" tabindex="-1"></a>With a data frame, there are a couple of other options to extract data from specific columns. One option is to use the dollar symbol (<span class="in">`$`</span>) followed by the column name. Another option to extract all the values from a specific column is to use square brakets (<span class="in">`[]`</span>) after the object name (as in Exercise 9) and simply leave the square brackets empty before the comma. It is important to specify the name of the column (in quotes), otherwise you will simply extract all the values from your data frame.</span>
+<span id="cb16-475"><a href="#cb16-475" aria-hidden="true" tabindex="-1"></a>Extract the value at the intersection of row 2 and column 3 in the <span class="in">`x3`</span> object (matrix) created in Exercise 5.</span>
+<span id="cb16-476"><a href="#cb16-476" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-479"><a href="#cb16-479" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-480"><a href="#cb16-480" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb16-481"><a href="#cb16-481" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb16-482"><a href="#cb16-482" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb16-483"><a href="#cb16-483" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-484"><a href="#cb16-484" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the value at the intersection of row 2 and column 3 in the x3 object</span></span>
+<span id="cb16-485"><a href="#cb16-485" aria-hidden="true" tabindex="-1"></a><span class="co">#x3 is a matrix</span></span>
+<span id="cb16-486"><a href="#cb16-486" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-487"><a href="#cb16-487" aria-hidden="true" tabindex="-1"></a>x3[<span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb16-488"><a href="#cb16-488" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-489"><a href="#cb16-489" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-490"><a href="#cb16-490" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-491"><a href="#cb16-491" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb16-492"><a href="#cb16-492" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 10</span></span>
-<span id="cb16-493"><a href="#cb16-493" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-494"><a href="#cb16-494" aria-hidden="true" tabindex="-1"></a>Extract all the values stored in the second column (Var2) of the <span class="in">`x4`</span> object (data frame) created in Exercise 6. Use both options explained above.</span>
+<span id="cb16-491"><a href="#cb16-491" aria-hidden="true" tabindex="-1"></a>With a data frame, there are a couple of other options to extract data from specific columns. One option is to use the dollar symbol (<span class="in">`$`</span>) followed by the column name. Another option to extract all the values from a specific column is to use square brakets (<span class="in">`[]`</span>) after the object name (as in Exercise 9) and simply leave the square brackets empty before the comma. It is important to specify the name of the column (in quotes), otherwise you will simply extract all the values from your data frame.</span>
+<span id="cb16-492"><a href="#cb16-492" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-493"><a href="#cb16-493" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb16-494"><a href="#cb16-494" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 10</span></span>
 <span id="cb16-495"><a href="#cb16-495" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-498"><a href="#cb16-498" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-499"><a href="#cb16-499" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb16-500"><a href="#cb16-500" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb16-501"><a href="#cb16-501" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb16-502"><a href="#cb16-502" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-503"><a href="#cb16-503" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract all the values stored in the second column of the x4 object</span></span>
-<span id="cb16-504"><a href="#cb16-504" aria-hidden="true" tabindex="-1"></a><span class="co">#x4 is a data frame</span></span>
-<span id="cb16-505"><a href="#cb16-505" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-506"><a href="#cb16-506" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1</span></span>
-<span id="cb16-507"><a href="#cb16-507" aria-hidden="true" tabindex="-1"></a>x4<span class="sc">$</span>Var2</span>
-<span id="cb16-508"><a href="#cb16-508" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-509"><a href="#cb16-509" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 2</span></span>
-<span id="cb16-510"><a href="#cb16-510" aria-hidden="true" tabindex="-1"></a>x4[, <span class="st">"Var2"</span>]</span>
-<span id="cb16-511"><a href="#cb16-511" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-512"><a href="#cb16-512" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-513"><a href="#cb16-513" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-514"><a href="#cb16-514" aria-hidden="true" tabindex="-1"></a>If you want to subset a matrix or a data frame called <span class="in">`x`</span> (i.e., selecting only specifics rows and columns), you should write:</span>
+<span id="cb16-496"><a href="#cb16-496" aria-hidden="true" tabindex="-1"></a>Extract all the values stored in the second column (Var2) of the <span class="in">`x4`</span> object (data frame) created in Exercise 6. Use both options explained above.</span>
+<span id="cb16-497"><a href="#cb16-497" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-500"><a href="#cb16-500" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-501"><a href="#cb16-501" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb16-502"><a href="#cb16-502" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb16-503"><a href="#cb16-503" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb16-504"><a href="#cb16-504" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-505"><a href="#cb16-505" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract all the values stored in the second column of the x4 object</span></span>
+<span id="cb16-506"><a href="#cb16-506" aria-hidden="true" tabindex="-1"></a><span class="co">#x4 is a data frame</span></span>
+<span id="cb16-507"><a href="#cb16-507" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-508"><a href="#cb16-508" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1</span></span>
+<span id="cb16-509"><a href="#cb16-509" aria-hidden="true" tabindex="-1"></a>x4<span class="sc">$</span>Var2</span>
+<span id="cb16-510"><a href="#cb16-510" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-511"><a href="#cb16-511" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 2</span></span>
+<span id="cb16-512"><a href="#cb16-512" aria-hidden="true" tabindex="-1"></a>x4[, <span class="st">"Var2"</span>]</span>
+<span id="cb16-513"><a href="#cb16-513" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-514"><a href="#cb16-514" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-515"><a href="#cb16-515" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-516"><a href="#cb16-516" aria-hidden="true" tabindex="-1"></a><span class="in">`x[rows to select, columns to select]`</span></span>
+<span id="cb16-516"><a href="#cb16-516" aria-hidden="true" tabindex="-1"></a>If you want to subset a matrix or a data frame called <span class="in">`x`</span> (i.e., selecting only specifics rows and columns), you should write:</span>
 <span id="cb16-517"><a href="#cb16-517" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-518"><a href="#cb16-518" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb16-519"><a href="#cb16-519" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 11</span></span>
-<span id="cb16-520"><a href="#cb16-520" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-521"><a href="#cb16-521" aria-hidden="true" tabindex="-1"></a>Extract only the values located between rows 2 and 4 in the second column of the <span class="in">`x4`</span> object (data frame) created in Exercise 6. Note that writing <span class="in">`2:4`</span> means "from index 2 to index 4". It is exactly the same as writing <span class="in">`c(2,3,4)`</span>.</span>
+<span id="cb16-518"><a href="#cb16-518" aria-hidden="true" tabindex="-1"></a><span class="in">`x[rows to select, columns to select]`</span></span>
+<span id="cb16-519"><a href="#cb16-519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-520"><a href="#cb16-520" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb16-521"><a href="#cb16-521" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 11</span></span>
 <span id="cb16-522"><a href="#cb16-522" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-525"><a href="#cb16-525" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-526"><a href="#cb16-526" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb16-527"><a href="#cb16-527" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb16-528"><a href="#cb16-528" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb16-529"><a href="#cb16-529" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-530"><a href="#cb16-530" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract only the values located between rows 2 and 4</span></span>
-<span id="cb16-531"><a href="#cb16-531" aria-hidden="true" tabindex="-1"></a><span class="co">#in the second column of the x4 object</span></span>
-<span id="cb16-532"><a href="#cb16-532" aria-hidden="true" tabindex="-1"></a><span class="co">#x4 is a data frame</span></span>
-<span id="cb16-533"><a href="#cb16-533" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-534"><a href="#cb16-534" aria-hidden="true" tabindex="-1"></a>x4[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>]</span>
-<span id="cb16-535"><a href="#cb16-535" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-536"><a href="#cb16-536" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-537"><a href="#cb16-537" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-538"><a href="#cb16-538" aria-hidden="true" tabindex="-1"></a><span class="fu">### Lists</span></span>
+<span id="cb16-523"><a href="#cb16-523" aria-hidden="true" tabindex="-1"></a>Extract only the values located between rows 2 and 4 in the second column of the <span class="in">`x4`</span> object (data frame) created in Exercise 6. Note that writing <span class="in">`2:4`</span> means "from index 2 to index 4". It is exactly the same as writing <span class="in">`c(2,3,4)`</span>.</span>
+<span id="cb16-524"><a href="#cb16-524" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-527"><a href="#cb16-527" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-528"><a href="#cb16-528" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb16-529"><a href="#cb16-529" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb16-530"><a href="#cb16-530" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb16-531"><a href="#cb16-531" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-532"><a href="#cb16-532" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract only the values located between rows 2 and 4</span></span>
+<span id="cb16-533"><a href="#cb16-533" aria-hidden="true" tabindex="-1"></a><span class="co">#in the second column of the x4 object</span></span>
+<span id="cb16-534"><a href="#cb16-534" aria-hidden="true" tabindex="-1"></a><span class="co">#x4 is a data frame</span></span>
+<span id="cb16-535"><a href="#cb16-535" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-536"><a href="#cb16-536" aria-hidden="true" tabindex="-1"></a>x4[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>]</span>
+<span id="cb16-537"><a href="#cb16-537" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-538"><a href="#cb16-538" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-539"><a href="#cb16-539" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-540"><a href="#cb16-540" aria-hidden="true" tabindex="-1"></a>To extract the *i^th^* element of a list object called <span class="in">`x`</span>, you should write <span class="in">`x[[i]]`</span>.</span>
+<span id="cb16-540"><a href="#cb16-540" aria-hidden="true" tabindex="-1"></a><span class="fu">### Lists</span></span>
 <span id="cb16-541"><a href="#cb16-541" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-542"><a href="#cb16-542" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb16-543"><a href="#cb16-543" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 12</span></span>
-<span id="cb16-544"><a href="#cb16-544" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-545"><a href="#cb16-545" aria-hidden="true" tabindex="-1"></a>Extract the second element of the <span class="in">`x5`</span> object (list) created in Exercise 7.</span>
+<span id="cb16-542"><a href="#cb16-542" aria-hidden="true" tabindex="-1"></a>To extract the *i^th^* element of a list object called <span class="in">`x`</span>, you should write <span class="in">`x[[i]]`</span>.</span>
+<span id="cb16-543"><a href="#cb16-543" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-544"><a href="#cb16-544" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb16-545"><a href="#cb16-545" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 12</span></span>
 <span id="cb16-546"><a href="#cb16-546" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-549"><a href="#cb16-549" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-550"><a href="#cb16-550" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb16-551"><a href="#cb16-551" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb16-552"><a href="#cb16-552" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb16-553"><a href="#cb16-553" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-554"><a href="#cb16-554" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the second element of the x5 object</span></span>
-<span id="cb16-555"><a href="#cb16-555" aria-hidden="true" tabindex="-1"></a><span class="co">#x5 is a list</span></span>
-<span id="cb16-556"><a href="#cb16-556" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-557"><a href="#cb16-557" aria-hidden="true" tabindex="-1"></a>x5[[<span class="dv">2</span>]]</span>
-<span id="cb16-558"><a href="#cb16-558" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-559"><a href="#cb16-559" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-560"><a href="#cb16-560" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-561"><a href="#cb16-561" aria-hidden="true" tabindex="-1"></a><span class="fu">## Create your first R plot</span></span>
+<span id="cb16-547"><a href="#cb16-547" aria-hidden="true" tabindex="-1"></a>Extract the second element of the <span class="in">`x5`</span> object (list) created in Exercise 7.</span>
+<span id="cb16-548"><a href="#cb16-548" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-551"><a href="#cb16-551" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-552"><a href="#cb16-552" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb16-553"><a href="#cb16-553" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb16-554"><a href="#cb16-554" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb16-555"><a href="#cb16-555" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-556"><a href="#cb16-556" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the second element of the x5 object</span></span>
+<span id="cb16-557"><a href="#cb16-557" aria-hidden="true" tabindex="-1"></a><span class="co">#x5 is a list</span></span>
+<span id="cb16-558"><a href="#cb16-558" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-559"><a href="#cb16-559" aria-hidden="true" tabindex="-1"></a>x5[[<span class="dv">2</span>]]</span>
+<span id="cb16-560"><a href="#cb16-560" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-561"><a href="#cb16-561" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-562"><a href="#cb16-562" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-563"><a href="#cb16-563" aria-hidden="true" tabindex="-1"></a>In base R, you can create your first plot using built-in functions that are available as soon as R starts, without installing any additional packages.</span>
+<span id="cb16-563"><a href="#cb16-563" aria-hidden="true" tabindex="-1"></a><span class="fu">## Create your first R plot</span></span>
 <span id="cb16-564"><a href="#cb16-564" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-565"><a href="#cb16-565" aria-hidden="true" tabindex="-1"></a>The most commonly used function is <span class="in">`plot()`</span>, which can produce scatter plots. You can then improve your plot by choosing the type of plot (<span class="in">`type`</span> argument) or adding axis labels (<span class="in">`xlab`</span> and <span class="in">`ylab`</span> arguments), a title (<span class="in">`main`</span> argument), and colors (<span class="in">`col`</span> argument). You can also add new elements to your plots with functions like <span class="in">`points()`</span>, <span class="in">`lines()`</span>, and <span class="in">`abline()`</span>.</span>
+<span id="cb16-565"><a href="#cb16-565" aria-hidden="true" tabindex="-1"></a>In base R, you can create your first plot using built-in functions that are available as soon as R starts, without installing any additional packages.</span>
 <span id="cb16-566"><a href="#cb16-566" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-567"><a href="#cb16-567" aria-hidden="true" tabindex="-1"></a>These base R plotting functions are a simple and effective way to explore data and understand the relationship between variables before moving on to more advanced graphics systems such as the *ggplot2* R package (which will be used later in this course).</span>
+<span id="cb16-567"><a href="#cb16-567" aria-hidden="true" tabindex="-1"></a>The most commonly used function is <span class="in">`plot()`</span>, which can produce scatter plots. You can then improve your plot by choosing the type of plot (<span class="in">`type`</span> argument) or adding axis labels (<span class="in">`xlab`</span> and <span class="in">`ylab`</span> arguments), a title (<span class="in">`main`</span> argument), and colors (<span class="in">`col`</span> argument). You can also add new elements to your plots with functions like <span class="in">`points()`</span>, <span class="in">`lines()`</span>, and <span class="in">`abline()`</span>.</span>
 <span id="cb16-568"><a href="#cb16-568" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-569"><a href="#cb16-569" aria-hidden="true" tabindex="-1"></a>Before moving on to an exercise, take a moment to consult the help page for the <span class="in">`plot()`</span> function and read through the descriptions of the arguments you can use to create and customize your plot. At this stage, it is also useful to explore the graphical parameters that control the appearance of plots more generally. You can view these by running <span class="in">`?par`</span> in your R console.</span>
+<span id="cb16-569"><a href="#cb16-569" aria-hidden="true" tabindex="-1"></a>These base R plotting functions are a simple and effective way to explore data and understand the relationship between variables before moving on to more advanced graphics systems such as the *ggplot2* R package (which will be used later in this course).</span>
 <span id="cb16-570"><a href="#cb16-570" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-571"><a href="#cb16-571" aria-hidden="true" tabindex="-1"></a>Some arguments controlling graphical parameters are used very often, such as <span class="in">`pch`</span> to choose the symbol used to represent points in a plot, <span class="in">`cex`</span> to control the size of plotting elements, <span class="in">`lty`</span> to specify the line type (solid, dashed, dotted, etc.), or <span class="in">`lwd`</span> to set the line width.</span>
+<span id="cb16-571"><a href="#cb16-571" aria-hidden="true" tabindex="-1"></a>Before moving on to an exercise, take a moment to consult the help page for the <span class="in">`plot()`</span> function and read through the descriptions of the arguments you can use to create and customize your plot. At this stage, it is also useful to explore the graphical parameters that control the appearance of plots more generally. You can view these by running <span class="in">`?par`</span> in your R console.</span>
 <span id="cb16-572"><a href="#cb16-572" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-573"><a href="#cb16-573" aria-hidden="true" tabindex="-1"></a>There are many ways to personalize your plot to make it clear, informative, and visually appealing. Don’t hesitate to explore the available options and experiment with different settings to see how they affect the result.</span>
+<span id="cb16-573"><a href="#cb16-573" aria-hidden="true" tabindex="-1"></a>Some arguments controlling graphical parameters are used very often, such as <span class="in">`pch`</span> to choose the symbol used to represent points in a plot, <span class="in">`cex`</span> to control the size of plotting elements, <span class="in">`lty`</span> to specify the line type (solid, dashed, dotted, etc.), or <span class="in">`lwd`</span> to set the line width.</span>
 <span id="cb16-574"><a href="#cb16-574" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-575"><a href="#cb16-575" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
-<span id="cb16-576"><a href="#cb16-576" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 13: Let's create your first plot in R!</span></span>
-<span id="cb16-577"><a href="#cb16-577" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-578"><a href="#cb16-578" aria-hidden="true" tabindex="-1"></a>Use the <span class="in">`plot()`</span> function to create a scatter plot displaying the relationship between <span class="in">`Var1`</span> (X variable) and <span class="in">`Var2`</span> (Y variable) stored in the <span class="in">`x4`</span> object (data frame) created in Exercise 6. Create a plot with the following characteristics:</span>
+<span id="cb16-575"><a href="#cb16-575" aria-hidden="true" tabindex="-1"></a>There are many ways to personalize your plot to make it clear, informative, and visually appealing. Don’t hesitate to explore the available options and experiment with different settings to see how they affect the result.</span>
+<span id="cb16-576"><a href="#cb16-576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-577"><a href="#cb16-577" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb16-578"><a href="#cb16-578" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 13: Let's create your first plot in R!</span></span>
 <span id="cb16-579"><a href="#cb16-579" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-580"><a href="#cb16-580" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Create a line graph using the <span class="in">`type`</span> argument</span>
+<span id="cb16-580"><a href="#cb16-580" aria-hidden="true" tabindex="-1"></a>Use the <span class="in">`plot()`</span> function to create a scatter plot displaying the relationship between <span class="in">`Var1`</span> (X variable) and <span class="in">`Var2`</span> (Y variable) stored in the <span class="in">`x4`</span> object (data frame) created in Exercise 6. Create a plot with the following characteristics:</span>
 <span id="cb16-581"><a href="#cb16-581" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-582"><a href="#cb16-582" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Name the horizontal (X) axis "Variable 1" (<span class="in">`xlab`</span> argument)</span>
+<span id="cb16-582"><a href="#cb16-582" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Create a line graph using the <span class="in">`type`</span> argument</span>
 <span id="cb16-583"><a href="#cb16-583" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-584"><a href="#cb16-584" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Name the vertical (Y) axis "Variable 2" (<span class="in">`ylab`</span> argument)</span>
+<span id="cb16-584"><a href="#cb16-584" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Name the horizontal (X) axis "Variable 1" (<span class="in">`xlab`</span> argument)</span>
 <span id="cb16-585"><a href="#cb16-585" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-586"><a href="#cb16-586" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Set the color of the line to blue (<span class="in">`col`</span> argument). Check <span class="co">[</span><span class="ot">R charts</span><span class="co">](https://r-charts.com/colors/)</span> for an overview of colors available in R.</span>
+<span id="cb16-586"><a href="#cb16-586" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Name the vertical (Y) axis "Variable 2" (<span class="in">`ylab`</span> argument)</span>
 <span id="cb16-587"><a href="#cb16-587" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-588"><a href="#cb16-588" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Use <span class="in">`points()`</span> to add individual points to display the original data. Use the <span class="in">`pch`</span> argument to select a point shape (see options below).</span>
+<span id="cb16-588"><a href="#cb16-588" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Set the color of the line to blue (<span class="in">`col`</span> argument). Check <span class="co">[</span><span class="ot">R charts</span><span class="co">](https://r-charts.com/colors/)</span> for an overview of colors available in R.</span>
 <span id="cb16-589"><a href="#cb16-589" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-592"><a href="#cb16-592" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-593"><a href="#cb16-593" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb16-594"><a href="#cb16-594" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb16-595"><a href="#cb16-595" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb16-596"><a href="#cb16-596" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb16-597"><a href="#cb16-597" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 3.5</span></span>
-<span id="cb16-598"><a href="#cb16-598" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.5</span></span>
-<span id="cb16-599"><a href="#cb16-599" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
-<span id="cb16-600"><a href="#cb16-600" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-601"><a href="#cb16-601" aria-hidden="true" tabindex="-1"></a>generateRPointShapes <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb16-602"><a href="#cb16-602" aria-hidden="true" tabindex="-1"></a>  oldPar <span class="ot">&lt;-</span> <span class="fu">par</span>()</span>
-<span id="cb16-603"><a href="#cb16-603" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">font =</span> <span class="dv">2</span>, <span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
-<span id="cb16-604"><a href="#cb16-604" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">=</span> <span class="fu">rev</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">6</span>), <span class="fu">rep</span>(<span class="dv">2</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">3</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">4</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">5</span>, <span class="dv">5</span>)))</span>
-<span id="cb16-605"><a href="#cb16-605" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">5</span>), <span class="dv">6</span>)</span>
-<span id="cb16-606"><a href="#cb16-606" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(</span>
-<span id="cb16-607"><a href="#cb16-607" aria-hidden="true" tabindex="-1"></a>    x,</span>
-<span id="cb16-608"><a href="#cb16-608" aria-hidden="true" tabindex="-1"></a>    y,</span>
-<span id="cb16-609"><a href="#cb16-609" aria-hidden="true" tabindex="-1"></a>    <span class="at">pch =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">25</span>,</span>
-<span id="cb16-610"><a href="#cb16-610" aria-hidden="true" tabindex="-1"></a>    <span class="at">cex =</span> <span class="fl">1.5</span>,</span>
-<span id="cb16-611"><a href="#cb16-611" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">5.5</span>),</span>
-<span id="cb16-612"><a href="#cb16-612" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">6.5</span>),</span>
-<span id="cb16-613"><a href="#cb16-613" aria-hidden="true" tabindex="-1"></a>    <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb16-614"><a href="#cb16-614" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">""</span>,</span>
-<span id="cb16-615"><a href="#cb16-615" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">""</span>,</span>
-<span id="cb16-616"><a href="#cb16-616" aria-hidden="true" tabindex="-1"></a>    <span class="at">bg =</span> <span class="st">"#FFCD00"</span></span>
-<span id="cb16-617"><a href="#cb16-617" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb16-618"><a href="#cb16-618" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(x, y, <span class="at">labels =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">25</span>, <span class="at">pos =</span> <span class="dv">3</span>)</span>
-<span id="cb16-619"><a href="#cb16-619" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mar =</span> oldPar<span class="sc">$</span>mar, <span class="at">font =</span> oldPar<span class="sc">$</span>font)</span>
-<span id="cb16-620"><a href="#cb16-620" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-621"><a href="#cb16-621" aria-hidden="true" tabindex="-1"></a><span class="fu">generateRPointShapes</span>()</span>
-<span id="cb16-622"><a href="#cb16-622" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-623"><a href="#cb16-623" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-626"><a href="#cb16-626" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-627"><a href="#cb16-627" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb16-628"><a href="#cb16-628" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb16-629"><a href="#cb16-629" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb16-630"><a href="#cb16-630" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
-<span id="cb16-631"><a href="#cb16-631" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
-<span id="cb16-632"><a href="#cb16-632" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-633"><a href="#cb16-633" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> x4<span class="sc">$</span>Var1,</span>
-<span id="cb16-634"><a href="#cb16-634" aria-hidden="true" tabindex="-1"></a>     <span class="at">y =</span> x4<span class="sc">$</span>Var2,</span>
-<span id="cb16-635"><a href="#cb16-635" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>,</span>
-<span id="cb16-636"><a href="#cb16-636" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Variable 1"</span>,</span>
-<span id="cb16-637"><a href="#cb16-637" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Variable 2"</span>,</span>
-<span id="cb16-638"><a href="#cb16-638" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"blue"</span>)</span>
-<span id="cb16-639"><a href="#cb16-639" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-640"><a href="#cb16-640" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">x =</span> x4<span class="sc">$</span>Var1,</span>
-<span id="cb16-641"><a href="#cb16-641" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> x4<span class="sc">$</span>Var2,</span>
-<span id="cb16-642"><a href="#cb16-642" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">16</span>)</span>
-<span id="cb16-643"><a href="#cb16-643" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-644"><a href="#cb16-644" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-590"><a href="#cb16-590" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Use <span class="in">`points()`</span> to add individual points to display the original data. Use the <span class="in">`pch`</span> argument to select a point shape (see options below).</span>
+<span id="cb16-591"><a href="#cb16-591" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-594"><a href="#cb16-594" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-595"><a href="#cb16-595" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb16-596"><a href="#cb16-596" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb16-597"><a href="#cb16-597" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb16-598"><a href="#cb16-598" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb16-599"><a href="#cb16-599" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 3.5</span></span>
+<span id="cb16-600"><a href="#cb16-600" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.5</span></span>
+<span id="cb16-601"><a href="#cb16-601" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb16-602"><a href="#cb16-602" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-603"><a href="#cb16-603" aria-hidden="true" tabindex="-1"></a>generateRPointShapes <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb16-604"><a href="#cb16-604" aria-hidden="true" tabindex="-1"></a>  oldPar <span class="ot">&lt;-</span> <span class="fu">par</span>()</span>
+<span id="cb16-605"><a href="#cb16-605" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">font =</span> <span class="dv">2</span>, <span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb16-606"><a href="#cb16-606" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">=</span> <span class="fu">rev</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">6</span>), <span class="fu">rep</span>(<span class="dv">2</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">3</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">4</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">5</span>, <span class="dv">5</span>)))</span>
+<span id="cb16-607"><a href="#cb16-607" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">5</span>), <span class="dv">6</span>)</span>
+<span id="cb16-608"><a href="#cb16-608" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(</span>
+<span id="cb16-609"><a href="#cb16-609" aria-hidden="true" tabindex="-1"></a>    x,</span>
+<span id="cb16-610"><a href="#cb16-610" aria-hidden="true" tabindex="-1"></a>    y,</span>
+<span id="cb16-611"><a href="#cb16-611" aria-hidden="true" tabindex="-1"></a>    <span class="at">pch =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">25</span>,</span>
+<span id="cb16-612"><a href="#cb16-612" aria-hidden="true" tabindex="-1"></a>    <span class="at">cex =</span> <span class="fl">1.5</span>,</span>
+<span id="cb16-613"><a href="#cb16-613" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">5.5</span>),</span>
+<span id="cb16-614"><a href="#cb16-614" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">6.5</span>),</span>
+<span id="cb16-615"><a href="#cb16-615" aria-hidden="true" tabindex="-1"></a>    <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb16-616"><a href="#cb16-616" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb16-617"><a href="#cb16-617" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">""</span>,</span>
+<span id="cb16-618"><a href="#cb16-618" aria-hidden="true" tabindex="-1"></a>    <span class="at">bg =</span> <span class="st">"#FFCD00"</span></span>
+<span id="cb16-619"><a href="#cb16-619" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-620"><a href="#cb16-620" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(x, y, <span class="at">labels =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">25</span>, <span class="at">pos =</span> <span class="dv">3</span>)</span>
+<span id="cb16-621"><a href="#cb16-621" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mar =</span> oldPar<span class="sc">$</span>mar, <span class="at">font =</span> oldPar<span class="sc">$</span>font)</span>
+<span id="cb16-622"><a href="#cb16-622" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-623"><a href="#cb16-623" aria-hidden="true" tabindex="-1"></a><span class="fu">generateRPointShapes</span>()</span>
+<span id="cb16-624"><a href="#cb16-624" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-625"><a href="#cb16-625" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-628"><a href="#cb16-628" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-629"><a href="#cb16-629" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb16-630"><a href="#cb16-630" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb16-631"><a href="#cb16-631" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb16-632"><a href="#cb16-632" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb16-633"><a href="#cb16-633" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb16-634"><a href="#cb16-634" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-635"><a href="#cb16-635" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> x4<span class="sc">$</span>Var1,</span>
+<span id="cb16-636"><a href="#cb16-636" aria-hidden="true" tabindex="-1"></a>     <span class="at">y =</span> x4<span class="sc">$</span>Var2,</span>
+<span id="cb16-637"><a href="#cb16-637" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>, <span class="co">#This is the letter "l" for line.</span></span>
+<span id="cb16-638"><a href="#cb16-638" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Variable 1"</span>,</span>
+<span id="cb16-639"><a href="#cb16-639" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Variable 2"</span>,</span>
+<span id="cb16-640"><a href="#cb16-640" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb16-641"><a href="#cb16-641" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-642"><a href="#cb16-642" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">x =</span> x4<span class="sc">$</span>Var1,</span>
+<span id="cb16-643"><a href="#cb16-643" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> x4<span class="sc">$</span>Var2,</span>
+<span id="cb16-644"><a href="#cb16-644" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">16</span>)</span>
+<span id="cb16-645"><a href="#cb16-645" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-646"><a href="#cb16-646" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -1077,7 +1077,7 @@ t = \frac{\bar{y}_A - \bar{y}_B}{s_p \sqrt{\frac{1}{n_A} + \frac{1}{n_B}}}
 <p><span id="eq-pooledstandarddeviation"><span class="math display">\[
 s_p = \sqrt{\frac{(n_A - 1)s_A^2 + (n_B - 1)s_B^2}{n_A + n_B - 2}}
 \tag{3}\]</span></span></p>
-<p>When equal variances are not assumed (Welch’s <em>t</em>-test), the standard error of the difference is calculated using <a href="#eq-indttest-unequalvar" class="quarto-xref">Equation&nbsp;4</a>, without pooling.</p>
+<p>When equal variances are not assumed (Welch’s <em>t</em>-test), the <span class="math inline">\(t\)</span> statistic is calculated using the <a href="#eq-indttest-unequalvar" class="quarto-xref">Equation&nbsp;4</a> (without pooling variances).</p>
 <p><span id="eq-indttest-unequalvar"><span class="math display">\[
 t = \frac{\bar{y}_A - \bar{y}_B}{\sqrt{\frac{s_A^2}{n_A} + \frac{s_B^2}{n_B}}}
 \tag{4}\]</span></span></p>
@@ -1105,8 +1105,8 @@ Exercise 7
 <details class="code-fold">
 <summary>Show me the code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate group means</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>yA <span class="ot">&lt;-</span> <span class="fu">mean</span>(data_false<span class="sc">$</span>coffee_prod)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>yB <span class="ot">&lt;-</span> <span class="fu">mean</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>xA <span class="ot">&lt;-</span> <span class="fu">mean</span>(data_false<span class="sc">$</span>coffee_prod)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>xB <span class="ot">&lt;-</span> <span class="fu">mean</span>(data_true<span class="sc">$</span>coffee_prod)</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate group variances</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>varA <span class="ot">&lt;-</span> <span class="fu">var</span>(data_false<span class="sc">$</span>coffee_prod)</span>
@@ -1120,7 +1120,7 @@ Exercise 7
 <span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>sp <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(((nA<span class="dv">-1</span>)<span class="sc">*</span>varA <span class="sc">+</span> (nB<span class="dv">-1</span>)<span class="sc">*</span>varB)<span class="sc">/</span>(nA <span class="sc">+</span> nB <span class="sc">-</span> <span class="dv">2</span>))</span>
 <span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the value of the t statistic</span></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (yA <span class="sc">-</span> yB)<span class="sc">/</span>(sp<span class="sc">*</span><span class="fu">sqrt</span>((<span class="dv">1</span><span class="sc">/</span>nA)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span>nB)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (xA <span class="sc">-</span> xB)<span class="sc">/</span>(sp<span class="sc">*</span><span class="fu">sqrt</span>((<span class="dv">1</span><span class="sc">/</span>nA)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span>nB)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>The value of the test statistic is -0.614</p>
@@ -1186,7 +1186,7 @@ Exercise 8
 </div>
 </div>
 <div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
-<p>The calculate p-value is 0.2715, which is greater than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that there is no difference in coffee productivity between farms that use or do not use pesticides. We conclude that using pesticides do not lead to an increase in coffee productivity in our example.</p>
+<p>The calculated p-value is 0.2715, which is greater than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that there is no difference in coffee productivity between farms that use or do not use pesticides. We conclude that using pesticides do not lead to an increase in coffee productivity in our example.</p>
 </div>
 </div>
 </div>
@@ -1309,7 +1309,7 @@ alternative hypothesis: true location shift is greater than 0</code></pre>
 </div>
 </div>
 <div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
-<p>Given that the normality assumption was not met, we used a Wilcoxon ran-sum test to test the hypothesis that farms that do not use pesticides have a greater diversity of plant species than farms in which pesticides are applied. We found support for this hypothesis (<a href="#fig-plant-diversity" class="quarto-xref">Figure&nbsp;3</a>, W=263, P&lt;0.001). Compared to farms using pesticides, plant diversity (measured using the Shannon index) was 82.9% higher in farms that do not apply any pesticides.</p>
+<p>Given that the normality assumption was not met, we used a Wilcoxon rank-sum test to test the hypothesis that farms that do not use pesticides have a greater diversity of plant species than farms in which pesticides are applied. We found support for this hypothesis (<a href="#fig-plant-diversity" class="quarto-xref">Figure&nbsp;3</a>, W=263, P&lt;0.001). Compared to farms using pesticides, plant diversity (measured using the Shannon index) was 82.9% higher in farms that do not apply any pesticides.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-plant-diversity" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -2190,7 +2190,7 @@ Figure&nbsp;3: Plant diversity (Shannon index) measured in farms that apply pest
 <span id="cb30-395"><a href="#cb30-395" aria-hidden="true" tabindex="-1"></a>s_p = \sqrt{\frac{(n_A - 1)s_A^2 + (n_B - 1)s_B^2}{n_A + n_B - 2}}</span>
 <span id="cb30-396"><a href="#cb30-396" aria-hidden="true" tabindex="-1"></a>$$ {#eq-pooledstandarddeviation}</span>
 <span id="cb30-397"><a href="#cb30-397" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-398"><a href="#cb30-398" aria-hidden="true" tabindex="-1"></a>When equal variances are not assumed (Welch’s *t*-test), the standard error of the difference is calculated using @eq-indttest-unequalvar, without pooling.</span>
+<span id="cb30-398"><a href="#cb30-398" aria-hidden="true" tabindex="-1"></a>When equal variances are not assumed (Welch’s *t*-test), the $t$ statistic is calculated using the @eq-indttest-unequalvar (without pooling variances).</span>
 <span id="cb30-399"><a href="#cb30-399" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-400"><a href="#cb30-400" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb30-401"><a href="#cb30-401" aria-hidden="true" tabindex="-1"></a>t = \frac{\bar{y}_A - \bar{y}_B}{\sqrt{\frac{s_A^2}{n_A} + \frac{s_B^2}{n_B}}}</span>
@@ -2215,8 +2215,8 @@ Figure&nbsp;3: Plant diversity (Shannon index) measured in farms that apply pest
 <span id="cb30-422"><a href="#cb30-422" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb30-423"><a href="#cb30-423" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-424"><a href="#cb30-424" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate group means</span></span>
-<span id="cb30-425"><a href="#cb30-425" aria-hidden="true" tabindex="-1"></a>yA <span class="ot">&lt;-</span> <span class="fu">mean</span>(data_false<span class="sc">$</span>coffee_prod)</span>
-<span id="cb30-426"><a href="#cb30-426" aria-hidden="true" tabindex="-1"></a>yB <span class="ot">&lt;-</span> <span class="fu">mean</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb30-425"><a href="#cb30-425" aria-hidden="true" tabindex="-1"></a>xA <span class="ot">&lt;-</span> <span class="fu">mean</span>(data_false<span class="sc">$</span>coffee_prod)</span>
+<span id="cb30-426"><a href="#cb30-426" aria-hidden="true" tabindex="-1"></a>xB <span class="ot">&lt;-</span> <span class="fu">mean</span>(data_true<span class="sc">$</span>coffee_prod)</span>
 <span id="cb30-427"><a href="#cb30-427" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-428"><a href="#cb30-428" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate group variances</span></span>
 <span id="cb30-429"><a href="#cb30-429" aria-hidden="true" tabindex="-1"></a>varA <span class="ot">&lt;-</span> <span class="fu">var</span>(data_false<span class="sc">$</span>coffee_prod)</span>
@@ -2230,7 +2230,7 @@ Figure&nbsp;3: Plant diversity (Shannon index) measured in farms that apply pest
 <span id="cb30-437"><a href="#cb30-437" aria-hidden="true" tabindex="-1"></a>sp <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(((nA<span class="dv">-1</span>)<span class="sc">*</span>varA <span class="sc">+</span> (nB<span class="dv">-1</span>)<span class="sc">*</span>varB)<span class="sc">/</span>(nA <span class="sc">+</span> nB <span class="sc">-</span> <span class="dv">2</span>))</span>
 <span id="cb30-438"><a href="#cb30-438" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-439"><a href="#cb30-439" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the value of the t statistic</span></span>
-<span id="cb30-440"><a href="#cb30-440" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (yA <span class="sc">-</span> yB)<span class="sc">/</span>(sp<span class="sc">*</span><span class="fu">sqrt</span>((<span class="dv">1</span><span class="sc">/</span>nA)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span>nB)))</span>
+<span id="cb30-440"><a href="#cb30-440" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> (xA <span class="sc">-</span> xB)<span class="sc">/</span>(sp<span class="sc">*</span><span class="fu">sqrt</span>((<span class="dv">1</span><span class="sc">/</span>nA)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span>nB)))</span>
 <span id="cb30-441"><a href="#cb30-441" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb30-442"><a href="#cb30-442" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-443"><a href="#cb30-443" aria-hidden="true" tabindex="-1"></a>The value of the test statistic is <span class="in">`{r} round(t, 3)`</span></span>
@@ -2306,7 +2306,7 @@ Figure&nbsp;3: Plant diversity (Shannon index) measured in farms that apply pest
 <span id="cb30-519"><a href="#cb30-519" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-520"><a href="#cb30-520" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
 <span id="cb30-521"><a href="#cb30-521" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-522"><a href="#cb30-522" aria-hidden="true" tabindex="-1"></a>The calculate p-value is <span class="in">`{r} round(p, 4)`</span>, which is greater than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that there is no difference in coffee productivity between farms that use or do not use pesticides. We conclude that using pesticides do not lead to an increase in coffee productivity in our example.</span>
+<span id="cb30-522"><a href="#cb30-522" aria-hidden="true" tabindex="-1"></a>The calculated p-value is <span class="in">`{r} round(p, 4)`</span>, which is greater than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that there is no difference in coffee productivity between farms that use or do not use pesticides. We conclude that using pesticides do not lead to an increase in coffee productivity in our example.</span>
 <span id="cb30-523"><a href="#cb30-523" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb30-524"><a href="#cb30-524" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb30-525"><a href="#cb30-525" aria-hidden="true" tabindex="-1"></a></span>
@@ -2412,7 +2412,7 @@ Figure&nbsp;3: Plant diversity (Shannon index) measured in farms that apply pest
 <span id="cb30-631"><a href="#cb30-631" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-632"><a href="#cb30-632" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
 <span id="cb30-633"><a href="#cb30-633" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-634"><a href="#cb30-634" aria-hidden="true" tabindex="-1"></a>Given that the normality assumption was not met, we used a Wilcoxon ran-sum test to test the hypothesis that farms that do not use pesticides have a greater diversity of plant species than farms in which pesticides are applied. We found support for this hypothesis (@fig-plant-diversity, W=263, P<span class="sc">\&lt;</span>0.001). Compared to farms using pesticides, plant diversity (measured using the Shannon index) was <span class="in">`{r} round(100*(mean(data_false$shannon_PIM)-mean(data_true$shannon_PIM))/mean(data_true$shannon_PIM), 1)`</span>% higher in farms that do not apply any pesticides.</span>
+<span id="cb30-634"><a href="#cb30-634" aria-hidden="true" tabindex="-1"></a>Given that the normality assumption was not met, we used a Wilcoxon rank-sum test to test the hypothesis that farms that do not use pesticides have a greater diversity of plant species than farms in which pesticides are applied. We found support for this hypothesis (@fig-plant-diversity, W=263, P<span class="sc">\&lt;</span>0.001). Compared to farms using pesticides, plant diversity (measured using the Shannon index) was <span class="in">`{r} round(100*(mean(data_false$shannon_PIM)-mean(data_true$shannon_PIM))/mean(data_true$shannon_PIM), 1)`</span>% higher in farms that do not apply any pesticides.</span>
 <span id="cb30-635"><a href="#cb30-635" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-638"><a href="#cb30-638" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb30-639"><a href="#cb30-639" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
