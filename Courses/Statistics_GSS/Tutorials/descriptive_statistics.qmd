@@ -53,6 +53,15 @@ On **macOS**, open *Finder* and navigate to the folder. Right-click (or Control-
 ## Exercise 1
 
 Set a working directory using `setwd()`. Choose the folder in which you saved the data files that you downloaded from Brightspace.
+
+```{r}
+#| eval: false
+#| echo: true
+#| message: false
+#| warning: false
+
+setwd("PATH_TO_FOLDER")
+```
 :::
 
 ## Installing R packages
@@ -251,7 +260,7 @@ Take a good look at the dataset (`data`) and answer the questions below.
 3.  Calculate the standard deviation of `tree_density` using two different approaches. Remember that the general formula to calculate a standard deviation is:
 
     $$
-    s = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} \left(x_i - \bar{x}\right)^2}
+    s = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} \left(y_i - \bar{y}\right)^2}
     $$
 
     -   [Approach 1]{.underline}: Use the `sum()` and `length()` functions to write a formula to calculate the standard deviation

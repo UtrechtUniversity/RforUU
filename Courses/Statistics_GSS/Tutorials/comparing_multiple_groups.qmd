@@ -200,7 +200,7 @@ We will check the homoscedasticity assumption using the Bartlett test.
 :::: callout-tip
 ## Exercise 4
 
-1.  Use the Bartlett's test to assess whether soil organic matter content (`SOM`) has equal variances in the three types of farm.
+1.  Use the Bartlett's test to assess whether soil organic matter content (`SOM`) has equal variances in the three types of farm (`farm_type`).
 2.  What can you conclude from this test?
 
 ::: panel-tabset
