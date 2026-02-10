@@ -333,7 +333,7 @@ shapiro.test(data_large$coffee_prod)
 
 ## Conclusion from tests
 
-For all tests, the calculated p-value is much greater than 0.05. Therefore, we accept the null hypothesis that coffee production data follow a normal distribution within each farm type.
+For all tests, the calculated p-value is much greater than 0.05. Therefore, we fail to reject the null hypothesis that coffee production data follow a normal distribution within each farm type.
 :::
 ::::
 
@@ -592,7 +592,7 @@ bartlett.test(x = data_bartlett$x,
 
 ## Solution 3
 
-The p-value of Bartlett's test is larger than the significance threshold (0.05). Therefore, we accept the null hypothesis that coffee productivity data measured in 2015 and 2020 have equal variances.
+The p-value of Bartlett's test is larger than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that coffee productivity data measured in 2015 and 2020 have equal variances.
 :::
 ::::
 
@@ -640,6 +640,7 @@ The value of the test statistic is `{r} round(t, 3)`
 #| warning: false
 
 #35 degrees of freedom, directed hypothesis (5%)
+#Equivalent to doing a linear interpolation
 critical_value <- (1.697+1.684)/2
 ```
 

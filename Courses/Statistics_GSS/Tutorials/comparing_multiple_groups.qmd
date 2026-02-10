@@ -242,7 +242,7 @@ This total variation is then split into two quantities:
 -   **Factor** (or between-group) sum of squares ($SS_{factor}$), which quantifies how much of the variation in SOM is explained by differences between farm types (@eq-SSfactor). In @eq-SSfactor, $\bar{y}_i$ is the average soil organic matter content measured in group (or farm type) *i*.
 
 $$
-SS_{factor} = \sum_{i=1}^k\sum_{j=1}^{n_i} (\bar{y}_{i} - \bar{y})^2
+SS_{factor} = \sum_{i=1}^k\sum_{j=1}^{n_i} (\bar{y}_{i} - \bar{y})^2 = \sum_{i=1}^{k} n_i(\bar{y}_i - \bar{y})^2
 $$ {#eq-SSfactor}
 
 -   **Residual** (or within-group) sum of squares ($SS_{res}$), which represents variation in SOM that is not explained by differences between farm types (@eq-SSres).
@@ -272,9 +272,9 @@ The results of an ANOVA are typically presented in an **ANOVA table**, which sum
 | Sources of variation | Sum of squares | Degrees of freedom | Mean squares | F statistic |
 |---------------|---------------|---------------|---------------|---------------|
 | Factor | $SS_{factor}$ | $k-1$ | $MS_{factor}=\frac{SS_{factor}}{k-1}$ | $\frac{MS_{factor}}{MS_{res}}$ |
-| Residuals | $SS_{res}$ | $(n-1)k$ | $MS_{res}=\frac{SS_{res}}{(n-1)k}$ |  |
+| Residuals | $SS_{res}$ | $\sum_{i=1}^k(n_i-1)$ | $MS_{res}=\frac{SS_{res}}{\sum_{i=1}^k(n_i-1)}$ |  |
 
-: Structure of a one-way ANOVA table. *n* is the number of observations per group, while *k* is the number of groups being compared. {#tbl-anovatable}
+: Structure of a one-way ANOVA table. $n_i$ is the number of observations per group, while $k$ is the number of groups being compared. {#tbl-anovatable}
 
 :::: callout-tip
 ## Exercise 5
@@ -658,6 +658,8 @@ The `TukeyHSD()` function has three main arguments:
 
 -   `conf.level`: the confidence level to use (0.95 by default)
 
+Post hoc test results are often shown graphically by placing letters above each group. Groups that share one or more letters do not differ significantly from each other, whereas groups that do not share any letters are significantly different.
+
 :::: callout-tip
 ## Exercise 11
 
@@ -680,6 +682,42 @@ TukeyHSD(x = model,
 ## Solution 2
 
 We found that soil organic matter content differed among farm types (ANOVA: F(2, 33) = 15.02, p \< 0.001). According to the Tukey post hoc test, agroecological farms have a higher soil organic matter content than conventional (p \< 0.001) and large-scale farms (p \< 0.001). No significant differences could be detected between conventional and large-scale farms (p = 0.976).
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4.2
+#| fig-align: center
+#| fig-cap: "Differences in soil organic matter content measured agroecological (eco), conventional (con), and large-scale farms (large). Summary statistics shown on the right side of each boxplot show the mean ± 95% CI (n=36). Groups with the same letter are not significantly different (p > 0.05)."
+#| label: fig-SOM
+
+library(Hmisc)
+
+set.seed(123)
+
+data_text <- data.frame(SOM=c(4.9, 7.5, 5.5),
+                        farm_type = c("con", "eco", "large"),
+                        label=c("a", "b", "a"))
+
+ggplot(data, aes(x=farm_type, y=SOM))+
+    geom_boxplot(width=0.4, fill="#FFCD00")+
+    stat_summary(fun.data = "mean_cl_boot", position=position_nudge(x=0.4))+
+    geom_text(data = data_text,
+              mapping = aes(x=farm_type,
+                            y=SOM,
+                            label = label),
+              inherit.aes = FALSE,
+              position=position_nudge(x=0.4),
+              size=6)+
+    theme_bw()+
+    xlab("")+
+    ylab("Soil organic matter content (%)")+
+    theme(axis.text = element_text(color="black", size=12),
+          axis.title.y = element_text(margin=margin(r=10), size=13))
+```
 :::
 ::::
 

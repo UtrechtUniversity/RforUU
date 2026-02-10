@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,18 +72,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../Courses/Statistics_GSS/Tutorials/descriptive_statistics.html" rel="prev">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-0baed5308951d5b711f6b54a8bc1edc0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-ebfd38308f83d174cdd168eba2faef44.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../../site_libs/bootstrap/bootstrap-0baed5308951d5b711f6b54a8bc1edc0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-0d26f0a4a29ec1d3ea99b64edf6dfaea.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-15d6fd7d8cfea2a142b05677da548de5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-0d26f0a4a29ec1d3ea99b64edf6dfaea.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -126,7 +127,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -315,7 +316,8 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../../Images/logo_website.png" alt="Website logo" class="navbar-logo">
+    <img src="../../../Images/logo_website.png" alt="Website logo" class="navbar-logo light-content">
+    <img src="../../../Images/logo_website.png" alt="Website logo" class="navbar-logo dark-content">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -647,8 +649,8 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -658,11 +660,11 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1 (csv file)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1 (csv file)</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"gss_statistics_master_data_set2.csv"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 2 (Excel file)</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"gss_statistics_master_data_set2.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"gss_statistics_master_data_set2.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -714,7 +716,7 @@ Figure&nbsp;2: Standard normal distribution
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 1
+<span class="screen-reader-only">Tip</span>Exercise 1
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -722,7 +724,7 @@ Exercise 1
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>zscores <span class="ot">&lt;-</span> (data<span class="sc">$</span>coffee_prod <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod))<span class="sc">/</span><span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>zscores <span class="ot">&lt;-</span> (data<span class="sc">$</span>coffee_prod <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod))<span class="sc">/</span><span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -737,7 +739,7 @@ Exercise 1
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 2
+<span class="screen-reader-only">Tip</span>Exercise 2
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -745,7 +747,7 @@ Exercise 2
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>zscore <span class="ot">&lt;-</span> (<span class="dv">2500</span> <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod))<span class="sc">/</span><span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>zscore <span class="ot">&lt;-</span> (<span class="dv">2500</span> <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod))<span class="sc">/</span><span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -778,23 +780,23 @@ Figure&nbsp;3: Standard normal distribution. The area under the curve highlighte
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 3
+<span class="screen-reader-only">Tip</span>Exercise 3
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Calculate the probability that a randomly selected farm has a coffee productivity greater than 2500 kg/ha/year. Do this using <code>pnorm()</code> and the table of z values provided on Brightspace.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Answer</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Answer</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(zscore, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 2</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(zscore, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(zscore, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -814,7 +816,7 @@ Exercise 3
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 4
+<span class="screen-reader-only">Tip</span>Exercise 4
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -834,13 +836,13 @@ Figure&nbsp;4: Theoretical normal distribution of coffee productivity. The area 
 </div>
 </div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Answer</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Answer</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate z-scores</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate z-scores</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>low_z <span class="ot">&lt;-</span> (<span class="dv">800</span> <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod))<span class="sc">/</span><span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>high_z <span class="ot">&lt;-</span> (<span class="dv">1200</span> <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod))<span class="sc">/</span><span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -849,7 +851,7 @@ Figure&nbsp;4: Theoretical normal distribution of coffee productivity. The area 
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>p_high_z <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(high_z, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the probability that a randomly selected farm has a coffee productivity comprised between 800 and 1200 kg/ha/year</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>p_high_z <span class="sc">-</span> p_low_z</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>p_high_z <span class="sc">-</span> p_low_z</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -876,23 +878,23 @@ Figure&nbsp;4: Theoretical normal distribution of coffee productivity. The area 
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 5
+<span class="screen-reader-only">Tip</span>Exercise 5
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Use the Shapiro-Wilk’s test to check that coffee productivity data (<code>coffee_prod</code> variable) is normally distributed within each farm type (<code>farm_type</code> variable). What can you conclude from these tests?</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Con farms</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Eco farms</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Large farms</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false">Conclusion from tests</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Con farms</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Eco farms</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Large farms</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false" href="">Conclusion from tests</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for con farms</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for con farms</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>data_con <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"con"</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Shapiro-Wilk's test</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_con<span class="sc">$</span>coffee_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_con<span class="sc">$</span>coffee_prod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -907,11 +909,11 @@ W = 0.9058, p-value = 0.1884</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for eco farms</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for eco farms</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>data_eco <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"eco"</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Shapiro-Wilk's test</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_eco<span class="sc">$</span>coffee_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_eco<span class="sc">$</span>coffee_prod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -926,11 +928,11 @@ W = 0.93314, p-value = 0.4145</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for con farms</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for con farms</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>data_large <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"large"</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Shapiro-Wilk's test</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_large<span class="sc">$</span>coffee_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_large<span class="sc">$</span>coffee_prod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -942,7 +944,7 @@ W = 0.93119, p-value = 0.3929</code></pre>
 </div>
 </div>
 <div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
-<p>For all tests, the calculated p-value is much greater than 0.05. Therefore, we accept the null hypothesis that coffee production data follow a normal distribution within each farm type.</p>
+<p>For all tests, the calculated p-value is much greater than 0.05. Therefore, we fail to reject the null hypothesis that coffee production data follow a normal distribution within each farm type.</p>
 </div>
 </div>
 </div>
@@ -963,25 +965,25 @@ W = 0.93119, p-value = 0.3929</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 6
+<span class="screen-reader-only">Tip</span>Exercise 6
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Create Q-Q plots to check that coffee productivity data (<code>coffee_prod</code> variable) is normally distributed within each farm type (<code>farm_type</code> variable). What can you conclude from these graphs?</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Answer</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Answer</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">sample =</span> coffee_prod)) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">sample =</span> coffee_prod)) <span class="sc">+</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> farm_type) <span class="sc">+</span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Theoretical quantiles"</span>)<span class="sc">+</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1021,19 +1023,19 @@ Exercise 6
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 7
+<span class="screen-reader-only">Tip</span>Exercise 7
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Calculate the 95% confidence interval for coffee productivity (<code>coffee_prod</code> variable) for each farm type. Do this both manually (using the table of critical values of Student’s <em>t</em> distribution available on Brightspace) as well as using the <code>qt()</code> function in R. <u><strong>Make sure you are able to use both methods for the exam</strong></u>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Answer</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Answer</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the number of observations for each farm type</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the number of observations for each farm type</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>n_con <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"con"</span>))</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>n_eco <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"eco"</span>))</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>n_large <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"large"</span>))</span>
@@ -1056,7 +1058,7 @@ Exercise 7
 <span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate upper limits of 95% CI for each farm type</span></span>
 <span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>up_CI_con <span class="ot">&lt;-</span> mean_con <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_con<span class="dv">-1</span>)<span class="sc">*</span>sd_con<span class="sc">/</span><span class="fu">sqrt</span>(n_con)</span>
 <span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>up_CI_eco <span class="ot">&lt;-</span> mean_eco <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_eco<span class="dv">-1</span>)<span class="sc">*</span>sd_eco<span class="sc">/</span><span class="fu">sqrt</span>(n_eco)</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>up_CI_large <span class="ot">&lt;-</span> mean_large <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_large<span class="dv">-1</span>)<span class="sc">*</span>sd_large<span class="sc">/</span><span class="fu">sqrt</span>(n_large)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>up_CI_large <span class="ot">&lt;-</span> mean_large <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_large<span class="dv">-1</span>)<span class="sc">*</span>sd_large<span class="sc">/</span><span class="fu">sqrt</span>(n_large)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1082,12 +1084,12 @@ Exercise 7
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 8
+<span class="screen-reader-only">Tip</span>Exercise 8
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Question</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Answer</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Question</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Answer</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <p>Based on the information above, write a null and an alternative hypothesis for the paired <em>t</em>-test. Is the hypothesis directed or undirected?</p>
@@ -1115,7 +1117,7 @@ Exercise 8
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 9
+<span class="screen-reader-only">Tip</span>Exercise 9
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1126,13 +1128,13 @@ Exercise 9
 <li>What can you conclude from the Shapiro-Wilk’s test and the Q-Q plot?</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false">Solution 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-4" role="tab" aria-controls="tabset-7-4" aria-selected="false">Solution 4</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false" href="">Solution 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-4" role="tab" aria-controls="tabset-7-4" aria-selected="false" href="">Solution 4</a></li></ul>
 <div class="tab-content">
 <div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>coffee_prod_diff <span class="ot">&lt;-</span> data<span class="sc">$</span>coffee_prod <span class="sc">-</span> data<span class="sc">$</span>coffee_prod_past</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>coffee_prod_diff <span class="ot">&lt;-</span> data<span class="sc">$</span>coffee_prod <span class="sc">-</span> data<span class="sc">$</span>coffee_prod_past</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1140,7 +1142,7 @@ Exercise 9
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data<span class="sc">$</span>coffee_prod_diff)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data<span class="sc">$</span>coffee_prod_diff)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1155,12 +1157,12 @@ W = 0.96273, p-value = 0.2606</code></pre>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">sample =</span> coffee_prod_diff)) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">sample =</span> coffee_prod_diff)) <span class="sc">+</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Theoretical quantiles"</span>)<span class="sc">+</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1195,7 +1197,7 @@ W = 0.96273, p-value = 0.2606</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 10
+<span class="screen-reader-only">Tip</span>Exercise 10
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1205,14 +1207,14 @@ Exercise 10
 <li>What can you conclude from this test?</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-3" role="tab" aria-controls="tabset-8-3" aria-selected="false">Solution 3</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-3" role="tab" aria-controls="tabset-8-3" aria-selected="false" href="">Solution 3</a></li></ul>
 <div class="tab-content">
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>data_bartlett <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(data<span class="sc">$</span>coffee_prod_past, data<span class="sc">$</span>coffee_prod),</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">g =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">2015</span>, <span class="dv">2020</span>), <span class="at">each=</span><span class="fu">nrow</span>(data)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>data_bartlett <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(data<span class="sc">$</span>coffee_prod_past, data<span class="sc">$</span>coffee_prod),</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">g =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">2015</span>, <span class="dv">2020</span>), <span class="at">each=</span><span class="fu">nrow</span>(data)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1220,8 +1222,8 @@ Exercise 10
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="at">x =</span> data_bartlett<span class="sc">$</span>x,</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">g =</span> data_bartlett<span class="sc">$</span>g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="at">x =</span> data_bartlett<span class="sc">$</span>x,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">g =</span> data_bartlett<span class="sc">$</span>g)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1233,7 +1235,7 @@ Bartlett's K-squared = 1.2009, df = 1, p-value = 0.2731</code></pre>
 </div>
 </div>
 <div id="tabset-8-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-3-tab">
-<p>The p-value of Bartlett’s test is larger than the significance threshold (0.05). Therefore, we accept the null hypothesis that coffee productivity data measured in 2015 and 2020 have equal variances.</p>
+<p>The p-value of Bartlett’s test is larger than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that coffee productivity data measured in 2015 and 2020 have equal variances.</p>
 </div>
 </div>
 </div>
@@ -1256,7 +1258,7 @@ t = \frac{\bar{v}}{s_v / \sqrt{n}}
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 11
+<span class="screen-reader-only">Tip</span>Exercise 11
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1266,13 +1268,13 @@ Exercise 11
 <li>Based on the calculated test statistic and critical value, what can you conclude about the effect of the intervention on coffee productivity?</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-3" role="tab" aria-controls="tabset-9-3" aria-selected="false">Solution 3</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-3" role="tab" aria-controls="tabset-9-3" aria-selected="false" href="">Solution 3</a></li></ul>
 <div class="tab-content">
 <div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod_diff)<span class="sc">/</span>(<span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod_diff)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">nrow</span>(data)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod_diff)<span class="sc">/</span>(<span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod_diff)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">nrow</span>(data)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>The value of the test statistic is 5.372</p>
@@ -1281,8 +1283,9 @@ Exercise 11
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#35 degrees of freedom, directed hypothesis (5%)</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>critical_value <span class="ot">&lt;-</span> (<span class="fl">1.697+1.684</span>)<span class="sc">/</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#35 degrees of freedom, directed hypothesis (5%)</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Equivalent to doing a linear interpolation</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>critical_value <span class="ot">&lt;-</span> (<span class="fl">1.697+1.684</span>)<span class="sc">/</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>The critical value of the test is 1.691</p>
@@ -1322,19 +1325,19 @@ Figure&nbsp;5: Student’s t distribution with 35 degrees of freedom. The vertic
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 12
+<span class="screen-reader-only">Tip</span>Exercise 12
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Calculate the p-value of the paired <em>t</em>-test using <code>pt()</code>. What can you conclude from this test?</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false">Answer</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true" href="">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false" href="">Answer</a></li></ul>
 <div class="tab-content">
 <div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pt</span>(t, <span class="at">df=</span><span class="fu">nrow</span>(data)<span class="sc">-</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pt</span>(t, <span class="at">df=</span><span class="fu">nrow</span>(data)<span class="sc">-</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1363,24 +1366,24 @@ Exercise 12
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 13
+<span class="screen-reader-only">Tip</span>Exercise 13
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Use the <code>t.test()</code> function to perform the statistical test. What information is shown in the R output? What can you conclude from this test? Write a few sentences to report this result, including the test statistic, p-value, sample size (degrees of freedom), and interpretation.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false">Answer</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true" href="">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false" href="">Answer</a></li></ul>
 <div class="tab-content">
 <div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x =</span> data<span class="sc">$</span>coffee_prod,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x =</span> data<span class="sc">$</span>coffee_prod,</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> data<span class="sc">$</span>coffee_prod_past,</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">paired =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"greater"</span>,</span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>,</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1490,13 +1493,14 @@ Figure&nbsp;6: Changes in coffee productivity measured in 2015 and 2020 across 3
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1901,7 +1905,7 @@ Figure&nbsp;6: Changes in coffee productivity measured in 2015 and 2020 across 3
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb27" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Tutorial 3: Comparing two groups (part 1)"</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Benjamin Delory</span></span>
@@ -2236,7 +2240,7 @@ Figure&nbsp;6: Changes in coffee productivity measured in 2015 and 2020 across 3
 <span id="cb27-359"><a href="#cb27-359" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-360"><a href="#cb27-360" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion from tests</span></span>
 <span id="cb27-361"><a href="#cb27-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-362"><a href="#cb27-362" aria-hidden="true" tabindex="-1"></a>For all tests, the calculated p-value is much greater than 0.05. Therefore, we accept the null hypothesis that coffee production data follow a normal distribution within each farm type.</span>
+<span id="cb27-362"><a href="#cb27-362" aria-hidden="true" tabindex="-1"></a>For all tests, the calculated p-value is much greater than 0.05. Therefore, we fail to reject the null hypothesis that coffee production data follow a normal distribution within each farm type.</span>
 <span id="cb27-363"><a href="#cb27-363" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb27-364"><a href="#cb27-364" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb27-365"><a href="#cb27-365" aria-hidden="true" tabindex="-1"></a></span>
@@ -2495,7 +2499,7 @@ Figure&nbsp;6: Changes in coffee productivity measured in 2015 and 2020 across 3
 <span id="cb27-632"><a href="#cb27-632" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-633"><a href="#cb27-633" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
 <span id="cb27-634"><a href="#cb27-634" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-635"><a href="#cb27-635" aria-hidden="true" tabindex="-1"></a>The p-value of Bartlett's test is larger than the significance threshold (0.05). Therefore, we accept the null hypothesis that coffee productivity data measured in 2015 and 2020 have equal variances.</span>
+<span id="cb27-635"><a href="#cb27-635" aria-hidden="true" tabindex="-1"></a>The p-value of Bartlett's test is larger than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that coffee productivity data measured in 2015 and 2020 have equal variances.</span>
 <span id="cb27-636"><a href="#cb27-636" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb27-637"><a href="#cb27-637" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb27-638"><a href="#cb27-638" aria-hidden="true" tabindex="-1"></a></span>
@@ -2543,142 +2547,143 @@ Figure&nbsp;6: Changes in coffee productivity measured in 2015 and 2020 across 3
 <span id="cb27-684"><a href="#cb27-684" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb27-685"><a href="#cb27-685" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-686"><a href="#cb27-686" aria-hidden="true" tabindex="-1"></a><span class="co">#35 degrees of freedom, directed hypothesis (5%)</span></span>
-<span id="cb27-687"><a href="#cb27-687" aria-hidden="true" tabindex="-1"></a>critical_value <span class="ot">&lt;-</span> (<span class="fl">1.697+1.684</span>)<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb27-688"><a href="#cb27-688" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-689"><a href="#cb27-689" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-690"><a href="#cb27-690" aria-hidden="true" tabindex="-1"></a>The critical value of the test is <span class="in">`{r} round(critical_value, 3)`</span></span>
-<span id="cb27-691"><a href="#cb27-691" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-692"><a href="#cb27-692" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
-<span id="cb27-693"><a href="#cb27-693" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-694"><a href="#cb27-694" aria-hidden="true" tabindex="-1"></a>The absolute value of the calculated test statistic ($t$) is greater than the critical value. Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity.</span>
-<span id="cb27-695"><a href="#cb27-695" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-696"><a href="#cb27-696" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb27-697"><a href="#cb27-697" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-700"><a href="#cb27-700" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-701"><a href="#cb27-701" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-702"><a href="#cb27-702" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb27-703"><a href="#cb27-703" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-704"><a href="#cb27-704" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-705"><a href="#cb27-705" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
-<span id="cb27-706"><a href="#cb27-706" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb27-707"><a href="#cb27-707" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
-<span id="cb27-708"><a href="#cb27-708" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Student's t distribution with 35 degrees of freedom. The vertical dashed line shows the value of the observed t statistic (paired t-test)."</span></span>
-<span id="cb27-709"><a href="#cb27-709" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-studentdistribution</span></span>
-<span id="cb27-710"><a href="#cb27-710" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-711"><a href="#cb27-711" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">6</span>,<span class="dv">6</span>,<span class="fl">0.01</span>)</span>
-<span id="cb27-712"><a href="#cb27-712" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">dt</span>(ht,<span class="at">df=</span><span class="dv">35</span>)</span>
-<span id="cb27-713"><a href="#cb27-713" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-714"><a href="#cb27-714" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ht,<span class="fu">dt</span>(ht,<span class="at">df=</span><span class="dv">35</span>),<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="st">"black"</span>, <span class="at">ylab=</span><span class="st">"Probability density"</span>, <span class="at">xlab=</span><span class="st">"t statistic"</span>)</span>
-<span id="cb27-715"><a href="#cb27-715" aria-hidden="true" tabindex="-1"></a>xv <span class="ot">&lt;-</span> ht[ht<span class="sc">&gt;=</span>t]</span>
-<span id="cb27-716"><a href="#cb27-716" aria-hidden="true" tabindex="-1"></a>yv <span class="ot">&lt;-</span> pd[ht<span class="sc">&gt;=</span>t]</span>
-<span id="cb27-717"><a href="#cb27-717" aria-hidden="true" tabindex="-1"></a>xv <span class="ot">&lt;-</span> <span class="fu">c</span>(xv,<span class="dv">6</span>,t)</span>
-<span id="cb27-718"><a href="#cb27-718" aria-hidden="true" tabindex="-1"></a>yv <span class="ot">&lt;-</span> <span class="fu">c</span>(yv,<span class="dv">0</span>,<span class="dv">0</span>)</span>
-<span id="cb27-719"><a href="#cb27-719" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(xv,yv,<span class="at">col=</span><span class="st">"#FFCD00"</span>,<span class="at">border=</span><span class="cn">NA</span>)</span>
-<span id="cb27-720"><a href="#cb27-720" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>t, <span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb27-721"><a href="#cb27-721" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-722"><a href="#cb27-722" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-723"><a href="#cb27-723" aria-hidden="true" tabindex="-1"></a>We can now calculate the p-value associated with this test. We can do this using the <span class="in">`pt()`</span> function in R.</span>
-<span id="cb27-724"><a href="#cb27-724" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-725"><a href="#cb27-725" aria-hidden="true" tabindex="-1"></a>To calculate this p-value, it is important to remember that we are testing a directed (one-sided) hypothesis, as we expect coffee productivity in 2020 to be higher than in 2015. Graphically, this corresponds to calculating the area under the distribution curve to the right of the dashed vertical line shown in @fig-studentdistribution. This area represents the p-value and appears to be very small.</span>
-<span id="cb27-726"><a href="#cb27-726" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-727"><a href="#cb27-727" aria-hidden="true" tabindex="-1"></a>In R, this probability can be calculated using the function <span class="in">`pt()`</span>, which takes three main arguments:</span>
-<span id="cb27-728"><a href="#cb27-728" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-729"><a href="#cb27-729" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`q`</span>: a vector of quantiles (in this example, it is the value of the observed *t* statistic)</span>
-<span id="cb27-730"><a href="#cb27-730" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-731"><a href="#cb27-731" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`df`</span>: the number of degrees of freedom ($n-1$)</span>
-<span id="cb27-732"><a href="#cb27-732" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-733"><a href="#cb27-733" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`lower.tail`</span>: a logical argument (can be either <span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>). If set to <span class="in">`TRUE`</span>, probabilities are $P(X \le x)$. If set to <span class="in">`FALSE`</span>, probabilities are $P(X &gt; x)$</span>
-<span id="cb27-734"><a href="#cb27-734" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-735"><a href="#cb27-735" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb27-736"><a href="#cb27-736" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 12</span></span>
-<span id="cb27-737"><a href="#cb27-737" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-738"><a href="#cb27-738" aria-hidden="true" tabindex="-1"></a>Calculate the p-value of the paired *t*-test using <span class="in">`pt()`</span>. What can you conclude from this test?</span>
-<span id="cb27-739"><a href="#cb27-739" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-740"><a href="#cb27-740" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb27-741"><a href="#cb27-741" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
-<span id="cb27-742"><a href="#cb27-742" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-745"><a href="#cb27-745" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-746"><a href="#cb27-746" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-747"><a href="#cb27-747" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-748"><a href="#cb27-748" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-749"><a href="#cb27-749" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-750"><a href="#cb27-750" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-751"><a href="#cb27-751" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pt</span>(t, <span class="at">df=</span><span class="fu">nrow</span>(data)<span class="sc">-</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
-<span id="cb27-752"><a href="#cb27-752" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-753"><a href="#cb27-753" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-754"><a href="#cb27-754" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
-<span id="cb27-755"><a href="#cb27-755" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-756"><a href="#cb27-756" aria-hidden="true" tabindex="-1"></a>The calculated p-value is <span class="in">`{r} p`</span>, which is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity. On average, coffee productivity in 2020 increased by <span class="in">`{r} round(mean(data$coffee_prod_diff), 1)`</span> kg/ha/year.</span>
-<span id="cb27-757"><a href="#cb27-757" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-758"><a href="#cb27-758" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb27-759"><a href="#cb27-759" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-760"><a href="#cb27-760" aria-hidden="true" tabindex="-1"></a><span class="fu">### The fast way</span></span>
-<span id="cb27-761"><a href="#cb27-761" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-762"><a href="#cb27-762" aria-hidden="true" tabindex="-1"></a>Of course, *t*-tests can be easily performed in R using the <span class="in">`t.test()`</span> function. Here are the most important arguments of this function:</span>
-<span id="cb27-763"><a href="#cb27-763" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-764"><a href="#cb27-764" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`x`</span> and <span class="in">`y`</span>: the numeric vectors of data to compare (one vector per group)</span>
-<span id="cb27-765"><a href="#cb27-765" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-766"><a href="#cb27-766" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`paired`</span>: a logical value (<span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>) indicating whether the samples are paired (<span class="in">`TRUE`</span>) or independent (<span class="in">`FALSE`</span>)</span>
-<span id="cb27-767"><a href="#cb27-767" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-768"><a href="#cb27-768" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`alternative`</span>: specifies the type of test; <span class="in">`"two.sided"`</span> (default, for undirected hypotheses), <span class="in">`"greater"`</span>, or <span class="in">`"less"`</span></span>
-<span id="cb27-769"><a href="#cb27-769" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-770"><a href="#cb27-770" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`mu`</span>: the expected difference between group means if the null hypothesis is true</span>
-<span id="cb27-771"><a href="#cb27-771" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-772"><a href="#cb27-772" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`var.equal`</span>: a logical variable indicating whether to treat the two variances as being equal. If <span class="in">`TRUE`</span> then the pooled variance is used to estimate the variance otherwise the Welch (or Satterthwaite) approximation to the degrees of freedom is used.</span>
-<span id="cb27-773"><a href="#cb27-773" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-774"><a href="#cb27-774" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`conf.level`</span>: the confidence level for the interval (default is 0.95)</span>
-<span id="cb27-775"><a href="#cb27-775" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-776"><a href="#cb27-776" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb27-777"><a href="#cb27-777" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 13</span></span>
-<span id="cb27-778"><a href="#cb27-778" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-779"><a href="#cb27-779" aria-hidden="true" tabindex="-1"></a>Use the <span class="in">`t.test()`</span> function to perform the statistical test. What information is shown in the R output? What can you conclude from this test? Write a few sentences to report this result, including the test statistic, p-value, sample size (degrees of freedom), and interpretation.</span>
-<span id="cb27-780"><a href="#cb27-780" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-781"><a href="#cb27-781" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb27-782"><a href="#cb27-782" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
-<span id="cb27-783"><a href="#cb27-783" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-786"><a href="#cb27-786" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-787"><a href="#cb27-787" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-788"><a href="#cb27-788" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-789"><a href="#cb27-789" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-790"><a href="#cb27-790" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-791"><a href="#cb27-791" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-792"><a href="#cb27-792" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x =</span> data<span class="sc">$</span>coffee_prod,</span>
-<span id="cb27-793"><a href="#cb27-793" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> data<span class="sc">$</span>coffee_prod_past,</span>
-<span id="cb27-794"><a href="#cb27-794" aria-hidden="true" tabindex="-1"></a>       <span class="at">paired =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb27-795"><a href="#cb27-795" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"greater"</span>,</span>
-<span id="cb27-796"><a href="#cb27-796" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>,</span>
-<span id="cb27-797"><a href="#cb27-797" aria-hidden="true" tabindex="-1"></a>       <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-798"><a href="#cb27-798" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-799"><a href="#cb27-799" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-800"><a href="#cb27-800" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
-<span id="cb27-801"><a href="#cb27-801" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-802"><a href="#cb27-802" aria-hidden="true" tabindex="-1"></a>We conducted a paired *t*-test to assess if an intervention from extension services resulted in increased coffee productivity (@fig-coffee-prod). Therefore, coffee productivity was measured in the same farms before and after the intervention (n=36 farms).&nbsp;The difference between coffee productivity before and after the intervention was significant (t= 5.37; p-value \&lt; 0.001) indicating that the intervention had a positive effect. On average, coffee productivity in 2020 was `{r} round(100*(mean(data$coffee_prod)-mean(data$coffee_prod_past))/mean(data$coffee_prod_past), 1)`% greater than in 2015.</span>
-<span id="cb27-803"><a href="#cb27-803" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-806"><a href="#cb27-806" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-807"><a href="#cb27-807" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-808"><a href="#cb27-808" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb27-809"><a href="#cb27-809" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-810"><a href="#cb27-810" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-811"><a href="#cb27-811" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 4</span></span>
-<span id="cb27-812"><a href="#cb27-812" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4.2</span></span>
-<span id="cb27-813"><a href="#cb27-813" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
-<span id="cb27-814"><a href="#cb27-814" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Changes in coffee productivity measured in 2015 and 2020 across 36 farms. Summary statistics shown on the right side of each boxplot show the mean ± 95% CI (n=36)."</span></span>
-<span id="cb27-815"><a href="#cb27-815" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-coffee-prod</span></span>
-<span id="cb27-816"><a href="#cb27-816" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-817"><a href="#cb27-817" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
-<span id="cb27-818"><a href="#cb27-818" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-819"><a href="#cb27-819" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_bartlett, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(g), <span class="at">y=</span>x))<span class="sc">+</span></span>
-<span id="cb27-820"><a href="#cb27-820" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.4</span>, <span class="at">fill=</span><span class="st">"#FFCD00"</span>)<span class="sc">+</span></span>
-<span id="cb27-821"><a href="#cb27-821" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> <span class="st">"mean_cl_boot"</span>, <span class="at">position=</span><span class="fu">position_nudge</span>(<span class="at">x=</span><span class="fl">0.4</span>))<span class="sc">+</span></span>
-<span id="cb27-822"><a href="#cb27-822" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
-<span id="cb27-823"><a href="#cb27-823" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
-<span id="cb27-824"><a href="#cb27-824" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Coffee productivity (kg/ha/year)"</span>)<span class="sc">+</span></span>
-<span id="cb27-825"><a href="#cb27-825" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size=</span><span class="dv">12</span>),</span>
-<span id="cb27-826"><a href="#cb27-826" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>), <span class="at">size=</span><span class="dv">13</span>))</span>
-<span id="cb27-827"><a href="#cb27-827" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-828"><a href="#cb27-828" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-829"><a href="#cb27-829" aria-hidden="true" tabindex="-1"></a>::::</span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb27-687"><a href="#cb27-687" aria-hidden="true" tabindex="-1"></a><span class="co">#Equivalent to doing a linear interpolation</span></span>
+<span id="cb27-688"><a href="#cb27-688" aria-hidden="true" tabindex="-1"></a>critical_value <span class="ot">&lt;-</span> (<span class="fl">1.697+1.684</span>)<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb27-689"><a href="#cb27-689" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-690"><a href="#cb27-690" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-691"><a href="#cb27-691" aria-hidden="true" tabindex="-1"></a>The critical value of the test is <span class="in">`{r} round(critical_value, 3)`</span></span>
+<span id="cb27-692"><a href="#cb27-692" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-693"><a href="#cb27-693" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb27-694"><a href="#cb27-694" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-695"><a href="#cb27-695" aria-hidden="true" tabindex="-1"></a>The absolute value of the calculated test statistic ($t$) is greater than the critical value. Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity.</span>
+<span id="cb27-696"><a href="#cb27-696" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-697"><a href="#cb27-697" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb27-698"><a href="#cb27-698" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-701"><a href="#cb27-701" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-702"><a href="#cb27-702" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-703"><a href="#cb27-703" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb27-704"><a href="#cb27-704" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-705"><a href="#cb27-705" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-706"><a href="#cb27-706" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb27-707"><a href="#cb27-707" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb27-708"><a href="#cb27-708" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb27-709"><a href="#cb27-709" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Student's t distribution with 35 degrees of freedom. The vertical dashed line shows the value of the observed t statistic (paired t-test)."</span></span>
+<span id="cb27-710"><a href="#cb27-710" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-studentdistribution</span></span>
+<span id="cb27-711"><a href="#cb27-711" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-712"><a href="#cb27-712" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">6</span>,<span class="dv">6</span>,<span class="fl">0.01</span>)</span>
+<span id="cb27-713"><a href="#cb27-713" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">dt</span>(ht,<span class="at">df=</span><span class="dv">35</span>)</span>
+<span id="cb27-714"><a href="#cb27-714" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-715"><a href="#cb27-715" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ht,<span class="fu">dt</span>(ht,<span class="at">df=</span><span class="dv">35</span>),<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="st">"black"</span>, <span class="at">ylab=</span><span class="st">"Probability density"</span>, <span class="at">xlab=</span><span class="st">"t statistic"</span>)</span>
+<span id="cb27-716"><a href="#cb27-716" aria-hidden="true" tabindex="-1"></a>xv <span class="ot">&lt;-</span> ht[ht<span class="sc">&gt;=</span>t]</span>
+<span id="cb27-717"><a href="#cb27-717" aria-hidden="true" tabindex="-1"></a>yv <span class="ot">&lt;-</span> pd[ht<span class="sc">&gt;=</span>t]</span>
+<span id="cb27-718"><a href="#cb27-718" aria-hidden="true" tabindex="-1"></a>xv <span class="ot">&lt;-</span> <span class="fu">c</span>(xv,<span class="dv">6</span>,t)</span>
+<span id="cb27-719"><a href="#cb27-719" aria-hidden="true" tabindex="-1"></a>yv <span class="ot">&lt;-</span> <span class="fu">c</span>(yv,<span class="dv">0</span>,<span class="dv">0</span>)</span>
+<span id="cb27-720"><a href="#cb27-720" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(xv,yv,<span class="at">col=</span><span class="st">"#FFCD00"</span>,<span class="at">border=</span><span class="cn">NA</span>)</span>
+<span id="cb27-721"><a href="#cb27-721" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>t, <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb27-722"><a href="#cb27-722" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-723"><a href="#cb27-723" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-724"><a href="#cb27-724" aria-hidden="true" tabindex="-1"></a>We can now calculate the p-value associated with this test. We can do this using the <span class="in">`pt()`</span> function in R.</span>
+<span id="cb27-725"><a href="#cb27-725" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-726"><a href="#cb27-726" aria-hidden="true" tabindex="-1"></a>To calculate this p-value, it is important to remember that we are testing a directed (one-sided) hypothesis, as we expect coffee productivity in 2020 to be higher than in 2015. Graphically, this corresponds to calculating the area under the distribution curve to the right of the dashed vertical line shown in @fig-studentdistribution. This area represents the p-value and appears to be very small.</span>
+<span id="cb27-727"><a href="#cb27-727" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-728"><a href="#cb27-728" aria-hidden="true" tabindex="-1"></a>In R, this probability can be calculated using the function <span class="in">`pt()`</span>, which takes three main arguments:</span>
+<span id="cb27-729"><a href="#cb27-729" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-730"><a href="#cb27-730" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`q`</span>: a vector of quantiles (in this example, it is the value of the observed *t* statistic)</span>
+<span id="cb27-731"><a href="#cb27-731" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-732"><a href="#cb27-732" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`df`</span>: the number of degrees of freedom ($n-1$)</span>
+<span id="cb27-733"><a href="#cb27-733" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-734"><a href="#cb27-734" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`lower.tail`</span>: a logical argument (can be either <span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>). If set to <span class="in">`TRUE`</span>, probabilities are $P(X \le x)$. If set to <span class="in">`FALSE`</span>, probabilities are $P(X &gt; x)$</span>
+<span id="cb27-735"><a href="#cb27-735" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-736"><a href="#cb27-736" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb27-737"><a href="#cb27-737" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 12</span></span>
+<span id="cb27-738"><a href="#cb27-738" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-739"><a href="#cb27-739" aria-hidden="true" tabindex="-1"></a>Calculate the p-value of the paired *t*-test using <span class="in">`pt()`</span>. What can you conclude from this test?</span>
+<span id="cb27-740"><a href="#cb27-740" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-741"><a href="#cb27-741" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb27-742"><a href="#cb27-742" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb27-743"><a href="#cb27-743" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-746"><a href="#cb27-746" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-747"><a href="#cb27-747" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-748"><a href="#cb27-748" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-749"><a href="#cb27-749" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-750"><a href="#cb27-750" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-751"><a href="#cb27-751" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-752"><a href="#cb27-752" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pt</span>(t, <span class="at">df=</span><span class="fu">nrow</span>(data)<span class="sc">-</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
+<span id="cb27-753"><a href="#cb27-753" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-754"><a href="#cb27-754" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-755"><a href="#cb27-755" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb27-756"><a href="#cb27-756" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-757"><a href="#cb27-757" aria-hidden="true" tabindex="-1"></a>The calculated p-value is <span class="in">`{r} p`</span>, which is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity. On average, coffee productivity in 2020 increased by <span class="in">`{r} round(mean(data$coffee_prod_diff), 1)`</span> kg/ha/year.</span>
+<span id="cb27-758"><a href="#cb27-758" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-759"><a href="#cb27-759" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb27-760"><a href="#cb27-760" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-761"><a href="#cb27-761" aria-hidden="true" tabindex="-1"></a><span class="fu">### The fast way</span></span>
+<span id="cb27-762"><a href="#cb27-762" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-763"><a href="#cb27-763" aria-hidden="true" tabindex="-1"></a>Of course, *t*-tests can be easily performed in R using the <span class="in">`t.test()`</span> function. Here are the most important arguments of this function:</span>
+<span id="cb27-764"><a href="#cb27-764" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-765"><a href="#cb27-765" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`x`</span> and <span class="in">`y`</span>: the numeric vectors of data to compare (one vector per group)</span>
+<span id="cb27-766"><a href="#cb27-766" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-767"><a href="#cb27-767" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`paired`</span>: a logical value (<span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>) indicating whether the samples are paired (<span class="in">`TRUE`</span>) or independent (<span class="in">`FALSE`</span>)</span>
+<span id="cb27-768"><a href="#cb27-768" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-769"><a href="#cb27-769" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`alternative`</span>: specifies the type of test; <span class="in">`"two.sided"`</span> (default, for undirected hypotheses), <span class="in">`"greater"`</span>, or <span class="in">`"less"`</span></span>
+<span id="cb27-770"><a href="#cb27-770" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-771"><a href="#cb27-771" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`mu`</span>: the expected difference between group means if the null hypothesis is true</span>
+<span id="cb27-772"><a href="#cb27-772" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-773"><a href="#cb27-773" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`var.equal`</span>: a logical variable indicating whether to treat the two variances as being equal. If <span class="in">`TRUE`</span> then the pooled variance is used to estimate the variance otherwise the Welch (or Satterthwaite) approximation to the degrees of freedom is used.</span>
+<span id="cb27-774"><a href="#cb27-774" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-775"><a href="#cb27-775" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`conf.level`</span>: the confidence level for the interval (default is 0.95)</span>
+<span id="cb27-776"><a href="#cb27-776" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-777"><a href="#cb27-777" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb27-778"><a href="#cb27-778" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 13</span></span>
+<span id="cb27-779"><a href="#cb27-779" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-780"><a href="#cb27-780" aria-hidden="true" tabindex="-1"></a>Use the <span class="in">`t.test()`</span> function to perform the statistical test. What information is shown in the R output? What can you conclude from this test? Write a few sentences to report this result, including the test statistic, p-value, sample size (degrees of freedom), and interpretation.</span>
+<span id="cb27-781"><a href="#cb27-781" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-782"><a href="#cb27-782" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb27-783"><a href="#cb27-783" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb27-784"><a href="#cb27-784" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-787"><a href="#cb27-787" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-788"><a href="#cb27-788" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-789"><a href="#cb27-789" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-790"><a href="#cb27-790" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-791"><a href="#cb27-791" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-792"><a href="#cb27-792" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-793"><a href="#cb27-793" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x =</span> data<span class="sc">$</span>coffee_prod,</span>
+<span id="cb27-794"><a href="#cb27-794" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> data<span class="sc">$</span>coffee_prod_past,</span>
+<span id="cb27-795"><a href="#cb27-795" aria-hidden="true" tabindex="-1"></a>       <span class="at">paired =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb27-796"><a href="#cb27-796" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"greater"</span>,</span>
+<span id="cb27-797"><a href="#cb27-797" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>,</span>
+<span id="cb27-798"><a href="#cb27-798" aria-hidden="true" tabindex="-1"></a>       <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-799"><a href="#cb27-799" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-800"><a href="#cb27-800" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-801"><a href="#cb27-801" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb27-802"><a href="#cb27-802" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-803"><a href="#cb27-803" aria-hidden="true" tabindex="-1"></a>We conducted a paired *t*-test to assess if an intervention from extension services resulted in increased coffee productivity (@fig-coffee-prod). Therefore, coffee productivity was measured in the same farms before and after the intervention (n=36 farms).&nbsp;The difference between coffee productivity before and after the intervention was significant (t= 5.37; p-value \&lt; 0.001) indicating that the intervention had a positive effect. On average, coffee productivity in 2020 was `{r} round(100*(mean(data$coffee_prod)-mean(data$coffee_prod_past))/mean(data$coffee_prod_past), 1)`% greater than in 2015.</span>
+<span id="cb27-804"><a href="#cb27-804" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-807"><a href="#cb27-807" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-808"><a href="#cb27-808" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-809"><a href="#cb27-809" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb27-810"><a href="#cb27-810" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-811"><a href="#cb27-811" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-812"><a href="#cb27-812" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 4</span></span>
+<span id="cb27-813"><a href="#cb27-813" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4.2</span></span>
+<span id="cb27-814"><a href="#cb27-814" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb27-815"><a href="#cb27-815" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Changes in coffee productivity measured in 2015 and 2020 across 36 farms. Summary statistics shown on the right side of each boxplot show the mean ± 95% CI (n=36)."</span></span>
+<span id="cb27-816"><a href="#cb27-816" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-coffee-prod</span></span>
+<span id="cb27-817"><a href="#cb27-817" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-818"><a href="#cb27-818" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb27-819"><a href="#cb27-819" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-820"><a href="#cb27-820" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_bartlett, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(g), <span class="at">y=</span>x))<span class="sc">+</span></span>
+<span id="cb27-821"><a href="#cb27-821" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.4</span>, <span class="at">fill=</span><span class="st">"#FFCD00"</span>)<span class="sc">+</span></span>
+<span id="cb27-822"><a href="#cb27-822" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> <span class="st">"mean_cl_boot"</span>, <span class="at">position=</span><span class="fu">position_nudge</span>(<span class="at">x=</span><span class="fl">0.4</span>))<span class="sc">+</span></span>
+<span id="cb27-823"><a href="#cb27-823" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb27-824"><a href="#cb27-824" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb27-825"><a href="#cb27-825" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Coffee productivity (kg/ha/year)"</span>)<span class="sc">+</span></span>
+<span id="cb27-826"><a href="#cb27-826" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb27-827"><a href="#cb27-827" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>), <span class="at">size=</span><span class="dv">13</span>))</span>
+<span id="cb27-828"><a href="#cb27-828" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-829"><a href="#cb27-829" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-830"><a href="#cb27-830" aria-hidden="true" tabindex="-1"></a>::::</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

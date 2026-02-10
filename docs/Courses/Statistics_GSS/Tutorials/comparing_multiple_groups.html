@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,18 +72,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../Courses/Statistics_GSS/Tutorials/comparing_two_groups_part2.html" rel="prev">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-0baed5308951d5b711f6b54a8bc1edc0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-ebfd38308f83d174cdd168eba2faef44.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../../site_libs/bootstrap/bootstrap-0baed5308951d5b711f6b54a8bc1edc0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-0d26f0a4a29ec1d3ea99b64edf6dfaea.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-15d6fd7d8cfea2a142b05677da548de5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-0d26f0a4a29ec1d3ea99b64edf6dfaea.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -126,7 +127,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -315,7 +316,8 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../../Images/logo_website.png" alt="Website logo" class="navbar-logo">
+    <img src="../../../Images/logo_website.png" alt="Website logo" class="navbar-logo light-content">
+    <img src="../../../Images/logo_website.png" alt="Website logo" class="navbar-logo dark-content">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -650,8 +652,8 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dunn.test"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rstatix"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dunn.test"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rstatix"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -661,10 +663,10 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dunn.test)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -674,11 +676,11 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1 (csv file)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1 (csv file)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"gss_statistics_master_data_set2.csv"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 2 (Excel file)</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"gss_statistics_master_data_set2.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"gss_statistics_master_data_set2.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -693,12 +695,12 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 1
+<span class="screen-reader-only">Tip</span>Exercise 1
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Question</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Answer</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Question</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Answer</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <p>Based on the research question above, formulate a null and an alternative hypothesis for the one-way ANOVA test.</p>
@@ -721,7 +723,7 @@ Exercise 1
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 2
+<span class="screen-reader-only">Tip</span>Exercise 2
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -729,12 +731,12 @@ Exercise 2
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> farm_type, <span class="at">y =</span> SOM)) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> farm_type, <span class="at">y =</span> SOM)) <span class="sc">+</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.4</span>,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">"#FFCD00"</span>)<span class="sc">+</span> <span class="co">#Create a box plot</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Farm type"</span>)<span class="sc">+</span> <span class="co">#Change name of x axis</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Soil organic matter content (%)"</span>)<span class="sc">+</span> <span class="co">#Change name of y axis</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="co">#This creates a black/white plot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="co">#This creates a black/white plot</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -759,7 +761,7 @@ Exercise 2
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 3
+<span class="screen-reader-only">Tip</span>Exercise 3
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -769,19 +771,19 @@ Exercise 3
 <li>Based on the Shapiro-Wilk test results and the Q-Q plots, assess whether the normality assumption is reasonably met.</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Solution 3</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Solution 3</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for each farm type</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for each farm type</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>data_con <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"con"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>data_eco <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"eco"</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>data_large <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"large"</span>)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Shapiro-Wilk's tests</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_con<span class="sc">$</span>SOM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_con<span class="sc">$</span>SOM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -792,7 +794,7 @@ W = 0.88605, p-value = 0.1048</code></pre>
 </div>
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_eco<span class="sc">$</span>SOM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_eco<span class="sc">$</span>SOM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -803,7 +805,7 @@ W = 0.77585, p-value = 0.005043</code></pre>
 </div>
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_large<span class="sc">$</span>SOM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_large<span class="sc">$</span>SOM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -818,7 +820,7 @@ W = 0.96065, p-value = 0.7931</code></pre>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create Q-Q plot for soil organic matter content</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create Q-Q plot for soil organic matter content</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">sample =</span> SOM)) <span class="sc">+</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
@@ -826,7 +828,7 @@ W = 0.96065, p-value = 0.7931</code></pre>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Theoretical quantiles"</span>)<span class="sc">+</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)<span class="sc">+</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Soil organic matter content"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Soil organic matter content"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -854,7 +856,7 @@ W = 0.96065, p-value = 0.7931</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 4
+<span class="screen-reader-only">Tip</span>Exercise 4
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -863,15 +865,15 @@ Exercise 4
 <li>What can you conclude from this test?</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Solution 2</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Solution 2</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Test for soil organic matter content</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Test for soil organic matter content</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="at">x =</span> data<span class="sc">$</span>SOM,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">g =</span> data<span class="sc">$</span>farm_type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">g =</span> data<span class="sc">$</span>farm_type)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -906,7 +908,7 @@ SS_{total} = \sum_{i=1}^k\sum_{j=1}^{n_i} (y_{ij} - \bar{y})^2
 <li><strong>Factor</strong> (or between-group) sum of squares (<span class="math inline">\(SS_{factor}\)</span>), which quantifies how much of the variation in SOM is explained by differences between farm types (<a href="#eq-SSfactor" class="quarto-xref">Equation&nbsp;2</a>). In <a href="#eq-SSfactor" class="quarto-xref">Equation&nbsp;2</a>, <span class="math inline">\(\bar{y}_i\)</span> is the average soil organic matter content measured in group (or farm type) <em>i</em>.</li>
 </ul>
 <p><span id="eq-SSfactor"><span class="math display">\[
-SS_{factor} = \sum_{i=1}^k\sum_{j=1}^{n_i} (\bar{y}_{i} - \bar{y})^2
+SS_{factor} = \sum_{i=1}^k\sum_{j=1}^{n_i} (\bar{y}_{i} - \bar{y})^2 = \sum_{i=1}^{k} n_i(\bar{y}_i - \bar{y})^2
 \tag{2}\]</span></span></p>
 <ul>
 <li><strong>Residual</strong> (or within-group) sum of squares (<span class="math inline">\(SS_{res}\)</span>), which represents variation in SOM that is not explained by differences between farm types (<a href="#eq-SSres" class="quarto-xref">Equation&nbsp;3</a>).</li>
@@ -924,7 +926,7 @@ SS_{total} = SS_{factor} + SS_{res}
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-The concept of residuals
+<span class="screen-reader-only">Important</span>The concept of residuals
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -937,7 +939,7 @@ The concept of residuals
 <div id="tbl-anovatable" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-anovatable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;1: Structure of a one-way ANOVA table. <em>n</em> is the number of observations per group, while <em>k</em> is the number of groups being compared.
+Table&nbsp;1: Structure of a one-way ANOVA table. <span class="math inline">\(n_i\)</span> is the number of observations per group, while <span class="math inline">\(k\)</span> is the number of groups being compared.
 </figcaption>
 <div aria-describedby="tbl-anovatable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -968,8 +970,8 @@ Table&nbsp;1: Structure of a one-way ANOVA table. <em>n</em> is the number of ob
 <tr class="even">
 <td>Residuals</td>
 <td><span class="math inline">\(SS_{res}\)</span></td>
-<td><span class="math inline">\((n-1)k\)</span></td>
-<td><span class="math inline">\(MS_{res}=\frac{SS_{res}}{(n-1)k}\)</span></td>
+<td><span class="math inline">\(\sum_{i=1}^k(n_i-1)\)</span></td>
+<td><span class="math inline">\(MS_{res}=\frac{SS_{res}}{\sum_{i=1}^k(n_i-1)}\)</span></td>
 <td></td>
 </tr>
 </tbody>
@@ -983,7 +985,7 @@ Table&nbsp;1: Structure of a one-way ANOVA table. <em>n</em> is the number of ob
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 5
+<span class="screen-reader-only">Tip</span>Exercise 5
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1023,19 +1025,19 @@ Exercise 5
 </tbody>
 </table>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Solution 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false">Solution 4</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-5" role="tab" aria-controls="tabset-4-5" aria-selected="false">Solution 5</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-6" role="tab" aria-controls="tabset-4-6" aria-selected="false">Solution 6</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-7" role="tab" aria-controls="tabset-4-7" aria-selected="false">Solution 7</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-8-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-8" role="tab" aria-controls="tabset-4-8" aria-selected="false">Filled table</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Solution 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false" href="">Solution 4</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-5" role="tab" aria-controls="tabset-4-5" aria-selected="false" href="">Solution 5</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-6" role="tab" aria-controls="tabset-4-6" aria-selected="false" href="">Solution 6</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-7" role="tab" aria-controls="tabset-4-7" aria-selected="false" href="">Solution 7</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-8-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-8" role="tab" aria-controls="tabset-4-8" aria-selected="false" href="">Filled table</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate number of observations in each farm</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate number of observations in each farm</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>n_eco <span class="ot">&lt;-</span> <span class="fu">nrow</span>(data_eco)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>n_con <span class="ot">&lt;-</span> <span class="fu">nrow</span>(data_con)</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>n_large <span class="ot">&lt;-</span> <span class="fu">nrow</span>(data_large)</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate factor sum of squares</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>SSfactor <span class="ot">&lt;-</span> n_eco<span class="sc">*</span>(<span class="fu">mean</span>(data_eco<span class="sc">$</span>SOM)<span class="sc">-</span><span class="fu">mean</span>(data<span class="sc">$</span>SOM))<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>n_con<span class="sc">*</span>(<span class="fu">mean</span>(data_con<span class="sc">$</span>SOM)<span class="sc">-</span><span class="fu">mean</span>(data<span class="sc">$</span>SOM))<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>n_large<span class="sc">*</span>(<span class="fu">mean</span>(data_large<span class="sc">$</span>SOM)<span class="sc">-</span><span class="fu">mean</span>(data<span class="sc">$</span>SOM))<span class="sc">^</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>SSfactor <span class="ot">&lt;-</span> n_eco<span class="sc">*</span>(<span class="fu">mean</span>(data_eco<span class="sc">$</span>SOM)<span class="sc">-</span><span class="fu">mean</span>(data<span class="sc">$</span>SOM))<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>n_con<span class="sc">*</span>(<span class="fu">mean</span>(data_con<span class="sc">$</span>SOM)<span class="sc">-</span><span class="fu">mean</span>(data<span class="sc">$</span>SOM))<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>n_large<span class="sc">*</span>(<span class="fu">mean</span>(data_large<span class="sc">$</span>SOM)<span class="sc">-</span><span class="fu">mean</span>(data<span class="sc">$</span>SOM))<span class="sc">^</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1043,8 +1045,8 @@ Exercise 5
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate residual sum of squares</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>SSresidual <span class="ot">&lt;-</span> <span class="fu">sum</span>((data_eco<span class="sc">$</span>SOM<span class="sc">-</span><span class="fu">mean</span>(data_eco<span class="sc">$</span>SOM))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">sum</span>((data_con<span class="sc">$</span>SOM<span class="sc">-</span><span class="fu">mean</span>(data_con<span class="sc">$</span>SOM))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">sum</span>((data_large<span class="sc">$</span>SOM<span class="sc">-</span><span class="fu">mean</span>(data_large<span class="sc">$</span>SOM))<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate residual sum of squares</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>SSresidual <span class="ot">&lt;-</span> <span class="fu">sum</span>((data_eco<span class="sc">$</span>SOM<span class="sc">-</span><span class="fu">mean</span>(data_eco<span class="sc">$</span>SOM))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">sum</span>((data_con<span class="sc">$</span>SOM<span class="sc">-</span><span class="fu">mean</span>(data_con<span class="sc">$</span>SOM))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">sum</span>((data_large<span class="sc">$</span>SOM<span class="sc">-</span><span class="fu">mean</span>(data_large<span class="sc">$</span>SOM))<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1052,8 +1054,8 @@ Exercise 5
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate factor degrees of freedom</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df_factor <span class="ot">&lt;-</span> <span class="dv">3-1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate factor degrees of freedom</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df_factor <span class="ot">&lt;-</span> <span class="dv">3-1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1061,8 +1063,8 @@ Exercise 5
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate residual degrees of freedom</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df_residual <span class="ot">&lt;-</span> (n_eco<span class="dv">-1</span>) <span class="sc">+</span> (n_con<span class="dv">-1</span>) <span class="sc">+</span> (n_large<span class="dv">-1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate residual degrees of freedom</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df_residual <span class="ot">&lt;-</span> (n_eco<span class="dv">-1</span>) <span class="sc">+</span> (n_con<span class="dv">-1</span>) <span class="sc">+</span> (n_large<span class="dv">-1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1070,8 +1072,8 @@ Exercise 5
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate factor mean squares</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>MSfactor <span class="ot">&lt;-</span> SSfactor<span class="sc">/</span>df_factor</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate factor mean squares</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>MSfactor <span class="ot">&lt;-</span> SSfactor<span class="sc">/</span>df_factor</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1079,8 +1081,8 @@ Exercise 5
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate residual mean squares</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>MSresidual <span class="ot">&lt;-</span> SSresidual<span class="sc">/</span>df_residual</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate residual mean squares</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>MSresidual <span class="ot">&lt;-</span> SSresidual<span class="sc">/</span>df_residual</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1088,8 +1090,8 @@ Exercise 5
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate residual mean squares</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>F <span class="ot">&lt;-</span> MSfactor<span class="sc">/</span>MSresidual</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate residual mean squares</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>F <span class="ot">&lt;-</span> MSfactor<span class="sc">/</span>MSresidual</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1162,19 +1164,19 @@ Figure&nbsp;1: F distribution with df1=2 and df2=33 degrees of freedom. The vert
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 6
+<span class="screen-reader-only">Tip</span>Exercise 6
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Calculate the p-value of the one-way ANOVA using <code>pf()</code>. What can you conclude from this test?</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Answer</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Code</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Answer</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pf</span>(F, <span class="at">df1=</span>df_factor, <span class="at">df2=</span>df_residual, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pf</span>(F, <span class="at">df1=</span>df_factor, <span class="at">df2=</span>df_residual, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1198,12 +1200,12 @@ adjusted\quad\eta^2=\frac{(k-1)(F-1)}{(k-1)(F-1)+N}
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 7
+<span class="screen-reader-only">Tip</span>Exercise 7
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Question</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Answer</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Question</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Answer</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <p>Calculate the percentage of the total variation in soil organic matter content that is explained by farm type (<span class="math inline">\(\eta^2\)</span>).</p>
@@ -1212,7 +1214,7 @@ Exercise 7
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>eta2 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>SSfactor<span class="sc">/</span>(SSfactor<span class="sc">+</span>SSresidual)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>eta2 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>SSfactor<span class="sc">/</span>(SSfactor<span class="sc">+</span>SSresidual)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>47.6% of the total variation in soil organic matter content is explained by differences in farm type.</p>
@@ -1236,7 +1238,7 @@ Exercise 7
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 8
+<span class="screen-reader-only">Tip</span>Exercise 8
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1246,18 +1248,18 @@ Exercise 8
 <li>What can you conclude from this test?</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false">Solution 3</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false" href="">Solution 3</a></li></ul>
 <div class="tab-content">
 <div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Make sure that farm type is a factor</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Make sure that farm type is a factor</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>farm_type <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>farm_type)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Fit ANOVA model</span></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">aov</span>(SOM <span class="sc">~</span> farm_type,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1265,7 +1267,7 @@ Exercise 8
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
@@ -1296,7 +1298,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 9
+<span class="screen-reader-only">Tip</span>Exercise 9
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1307,13 +1309,13 @@ Exercise 9
 <li>What can you conclude from these tests?</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-3" role="tab" aria-controls="tabset-8-3" aria-selected="false">Solution 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-4" role="tab" aria-controls="tabset-8-4" aria-selected="false">Solution 4</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-3" role="tab" aria-controls="tabset-8-3" aria-selected="false" href="">Solution 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-4" role="tab" aria-controls="tabset-8-4" aria-selected="false" href="">Solution 4</a></li></ul>
 <div class="tab-content">
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>SOM_residuals <span class="ot">&lt;-</span> <span class="fu">residuals</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>SOM_residuals <span class="ot">&lt;-</span> <span class="fu">residuals</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1321,7 +1323,7 @@ Exercise 9
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data<span class="sc">$</span>SOM_residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data<span class="sc">$</span>SOM_residuals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1336,13 +1338,13 @@ W = 0.96004, p-value = 0.2156</code></pre>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">sample =</span> SOM_residuals)) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">sample =</span> SOM_residuals)) <span class="sc">+</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Theoretical quantiles"</span>)<span class="sc">+</span></span>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)<span class="sc">+</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Model residuals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Model residuals"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1373,7 +1375,7 @@ W = 0.96004, p-value = 0.2156</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 10
+<span class="screen-reader-only">Tip</span>Exercise 10
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1383,13 +1385,13 @@ Exercise 10
 <li>What can you conclude from this residual plot?</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-3" role="tab" aria-controls="tabset-9-3" aria-selected="false">Solution 3</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-3" role="tab" aria-controls="tabset-9-3" aria-selected="false" href="">Solution 3</a></li></ul>
 <div class="tab-content">
 <div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>SOM_fitted <span class="ot">&lt;-</span> <span class="fu">fitted</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>SOM_fitted <span class="ot">&lt;-</span> <span class="fu">fitted</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1397,7 +1399,7 @@ Exercise 10
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> SOM_fitted,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> SOM_fitted,</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> SOM_residuals)) <span class="sc">+</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co">#Add points to the plot</span></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>,</span>
@@ -1405,7 +1407,7 @@ Exercise 10
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Fitted values"</span>)<span class="sc">+</span></span>
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Residuals"</span>)<span class="sc">+</span></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Residual plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Residual plot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1435,13 +1437,14 @@ Exercise 10
 <li><p><code>which</code>: the name(s) of the factor(s) for which pairwise comparisons should be performed</p></li>
 <li><p><code>conf.level</code>: the confidence level to use (0.95 by default)</p></li>
 </ul>
+<p>Post hoc test results are often shown graphically by placing letters above each group. Groups that share one or more letters do not differ significantly from each other, whereas groups that do not share any letters are significantly different.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 11
+<span class="screen-reader-only">Tip</span>Exercise 11
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1450,14 +1453,14 @@ Exercise 11
 <li>What can you conclude from this test? Write a paragraph summarizing the results of the ANOVA and post hoc test.</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false">Solution 2</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false" href="">Solution 2</a></li></ul>
 <div class="tab-content">
 <div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(<span class="at">x =</span> model,</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">which =</span> <span class="st">"farm_type"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(<span class="at">x =</span> model,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">which =</span> <span class="st">"farm_type"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
@@ -1475,6 +1478,20 @@ large-eco -2.106667 -3.221781 -0.9915521 0.0001556</code></pre>
 </div>
 <div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
 <p>We found that soil organic matter content differed among farm types (ANOVA: F(2, 33) = 15.02, p &lt; 0.001). According to the Tukey post hoc test, agroecological farms have a higher soil organic matter content than conventional (p &lt; 0.001) and large-scale farms (p &lt; 0.001). No significant differences could be detected between conventional and large-scale farms (p = 0.976).</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-SOM" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-SOM-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="comparing_multiple_groups_files/figure-html/fig-SOM-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-SOM-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Differences in soil organic matter content measured agroecological (eco), conventional (con), and large-scale farms (large). Summary statistics shown on the right side of each boxplot show the mean ± 95% CI (n=36). Groups with the same letter are not significantly different (p &gt; 0.05).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1493,7 +1510,7 @@ large-eco -2.106667 -3.221781 -0.9915521 0.0001556</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 12
+<span class="screen-reader-only">Tip</span>Exercise 12
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1502,14 +1519,14 @@ Exercise 12
 <li>What can you conclude from this test?</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false">Solution 2</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false" href="">Solution 2</a></li></ul>
 <div class="tab-content">
 <div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(SOM <span class="sc">~</span> farm_type,</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(SOM <span class="sc">~</span> farm_type,</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1543,7 +1560,7 @@ Kruskal-Wallis chi-squared = 18.993, df = 2, p-value = 7.513e-05</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 13
+<span class="screen-reader-only">Tip</span>Exercise 13
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1552,15 +1569,15 @@ Exercise 13
 <li>What can you conclude from this test? Write a paragraph summarizing the results of the Kruskal-Wallis and post hoc tests.</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false">Solution 2</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false" href="">Solution 2</a></li></ul>
 <div class="tab-content">
 <div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dunn.test</span>(<span class="at">x =</span> data<span class="sc">$</span>SOM,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dunn.test</span>(<span class="at">x =</span> data<span class="sc">$</span>SOM,</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">g =</span> data<span class="sc">$</span>farm_type,</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">method =</span> <span class="st">"bonferroni"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">method =</span> <span class="st">"bonferroni"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Kruskal-Wallis rank sum test
@@ -1607,7 +1624,7 @@ Reject Ho if p &lt;= alpha/2</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 14
+<span class="screen-reader-only">Tip</span>Exercise 14
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1616,15 +1633,15 @@ Exercise 14
 <li>What can you conclude from this test?</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-2" role="tab" aria-controls="tabset-13-2" aria-selected="false">Solution 2</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-2" role="tab" aria-controls="tabset-13-2" aria-selected="false" href="">Solution 2</a></li></ul>
 <div class="tab-content">
 <div id="tabset-13-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-13-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(SOM <span class="sc">~</span> farm_type,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(SOM <span class="sc">~</span> farm_type,</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> data,</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1658,7 +1675,7 @@ F = 15.011, num df = 2.0, denom df = 19.4, p-value = 0.000115</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 15
+<span class="screen-reader-only">Tip</span>Exercise 15
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1667,14 +1684,14 @@ Exercise 15
 <li>What can you conclude from this test? Write a paragraph summarizing the results of the Welch’s ANOVA and post hoc tests.</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-2" role="tab" aria-controls="tabset-14-2" aria-selected="false">Solution 2</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-2" role="tab" aria-controls="tabset-14-2" aria-selected="false" href="">Solution 2</a></li></ul>
 <div class="tab-content">
 <div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">games_howell_test</span>(SOM <span class="sc">~</span> farm_type,</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">games_howell_test</span>(SOM <span class="sc">~</span> farm_type,</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 8
@@ -1769,13 +1786,14 @@ Exercise 15
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -2180,7 +2198,7 @@ Exercise 15
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb42" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Tutorial 5: Comparing multiple groups"</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Benjamin Delory</span></span>
@@ -2424,7 +2442,7 @@ Exercise 15
 <span id="cb42-256"><a href="#cb42-256" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Factor** (or between-group) sum of squares ($SS_{factor}$), which quantifies how much of the variation in SOM is explained by differences between farm types (@eq-SSfactor). In @eq-SSfactor, $\bar{y}_i$ is the average soil organic matter content measured in group (or farm type) *i*.</span>
 <span id="cb42-257"><a href="#cb42-257" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-258"><a href="#cb42-258" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb42-259"><a href="#cb42-259" aria-hidden="true" tabindex="-1"></a>SS_{factor} = \sum_{i=1}^k\sum_{j=1}^{n_i} (\bar{y}_{i} - \bar{y})^2</span>
+<span id="cb42-259"><a href="#cb42-259" aria-hidden="true" tabindex="-1"></a>SS_{factor} = \sum_{i=1}^k\sum_{j=1}^{n_i} (\bar{y}_{i} - \bar{y})^2 = \sum_{i=1}^{k} n_i(\bar{y}_i - \bar{y})^2</span>
 <span id="cb42-260"><a href="#cb42-260" aria-hidden="true" tabindex="-1"></a>$$ {#eq-SSfactor}</span>
 <span id="cb42-261"><a href="#cb42-261" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-262"><a href="#cb42-262" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Residual** (or within-group) sum of squares ($SS_{res}$), which represents variation in SOM that is not explained by differences between farm types (@eq-SSres).</span>
@@ -2454,9 +2472,9 @@ Exercise 15
 <span id="cb42-286"><a href="#cb42-286" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Sources of variation <span class="pp">|</span> Sum of squares <span class="pp">|</span> Degrees of freedom <span class="pp">|</span> Mean squares <span class="pp">|</span> F statistic <span class="pp">|</span></span>
 <span id="cb42-287"><a href="#cb42-287" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------------|---------------|---------------|---------------|---------------|</span></span>
 <span id="cb42-288"><a href="#cb42-288" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Factor <span class="pp">|</span> $SS_{factor}$ <span class="pp">|</span> $k-1$ <span class="pp">|</span> $MS_{factor}=\frac{SS_{factor}}{k-1}$ <span class="pp">|</span> $\frac{MS_{factor}}{MS_{res}}$ <span class="pp">|</span></span>
-<span id="cb42-289"><a href="#cb42-289" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Residuals <span class="pp">|</span> $SS_{res}$ <span class="pp">|</span> $(n-1)k$ <span class="pp">|</span> $MS_{res}=\frac{SS_{res}}{(n-1)k}$ <span class="pp">|</span>  <span class="pp">|</span></span>
+<span id="cb42-289"><a href="#cb42-289" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Residuals <span class="pp">|</span> $SS_{res}$ <span class="pp">|</span> $\sum_{i=1}^k(n_i-1)$ <span class="pp">|</span> $MS_{res}=\frac{SS_{res}}{\sum_{i=1}^k(n_i-1)}$ <span class="pp">|</span>  <span class="pp">|</span></span>
 <span id="cb42-290"><a href="#cb42-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-291"><a href="#cb42-291" aria-hidden="true" tabindex="-1"></a>: Structure of a one-way ANOVA table. *n* is the number of observations per group, while *k* is the number of groups being compared. {#tbl-anovatable}</span>
+<span id="cb42-291"><a href="#cb42-291" aria-hidden="true" tabindex="-1"></a>: Structure of a one-way ANOVA table. $n_i$ is the number of observations per group, while $k$ is the number of groups being compared. {#tbl-anovatable}</span>
 <span id="cb42-292"><a href="#cb42-292" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-293"><a href="#cb42-293" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
 <span id="cb42-294"><a href="#cb42-294" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 5</span></span>
@@ -2840,119 +2858,119 @@ Exercise 15
 <span id="cb42-706"><a href="#cb42-706" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-707"><a href="#cb42-707" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`conf.level`</span>: the confidence level to use (0.95 by default)</span>
 <span id="cb42-708"><a href="#cb42-708" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-709"><a href="#cb42-709" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb42-710"><a href="#cb42-710" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 11</span></span>
-<span id="cb42-711"><a href="#cb42-711" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-712"><a href="#cb42-712" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Run a Tukey HSD post hoc test to find out which farm types differ from each other in soil organic matter content.</span>
-<span id="cb42-713"><a href="#cb42-713" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What can you conclude from this test? Write a paragraph summarizing the results of the ANOVA and post hoc test.</span>
-<span id="cb42-714"><a href="#cb42-714" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-715"><a href="#cb42-715" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb42-716"><a href="#cb42-716" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
-<span id="cb42-717"><a href="#cb42-717" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-720"><a href="#cb42-720" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-721"><a href="#cb42-721" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb42-722"><a href="#cb42-722" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb42-723"><a href="#cb42-723" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb42-724"><a href="#cb42-724" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb42-725"><a href="#cb42-725" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-726"><a href="#cb42-726" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(<span class="at">x =</span> model,</span>
-<span id="cb42-727"><a href="#cb42-727" aria-hidden="true" tabindex="-1"></a>         <span class="at">which =</span> <span class="st">"farm_type"</span>)</span>
-<span id="cb42-728"><a href="#cb42-728" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-729"><a href="#cb42-729" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-730"><a href="#cb42-730" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb42-709"><a href="#cb42-709" aria-hidden="true" tabindex="-1"></a>Post hoc test results are often shown graphically by placing letters above each group. Groups that share one or more letters do not differ significantly from each other, whereas groups that do not share any letters are significantly different.</span>
+<span id="cb42-710"><a href="#cb42-710" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-711"><a href="#cb42-711" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb42-712"><a href="#cb42-712" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 11</span></span>
+<span id="cb42-713"><a href="#cb42-713" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-714"><a href="#cb42-714" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Run a Tukey HSD post hoc test to find out which farm types differ from each other in soil organic matter content.</span>
+<span id="cb42-715"><a href="#cb42-715" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What can you conclude from this test? Write a paragraph summarizing the results of the ANOVA and post hoc test.</span>
+<span id="cb42-716"><a href="#cb42-716" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-717"><a href="#cb42-717" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb42-718"><a href="#cb42-718" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb42-719"><a href="#cb42-719" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-722"><a href="#cb42-722" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-723"><a href="#cb42-723" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb42-724"><a href="#cb42-724" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb42-725"><a href="#cb42-725" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb42-726"><a href="#cb42-726" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb42-727"><a href="#cb42-727" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-728"><a href="#cb42-728" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(<span class="at">x =</span> model,</span>
+<span id="cb42-729"><a href="#cb42-729" aria-hidden="true" tabindex="-1"></a>         <span class="at">which =</span> <span class="st">"farm_type"</span>)</span>
+<span id="cb42-730"><a href="#cb42-730" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb42-731"><a href="#cb42-731" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-732"><a href="#cb42-732" aria-hidden="true" tabindex="-1"></a>We found that soil organic matter content differed among farm types (ANOVA: F(2, 33) = 15.02, p <span class="sc">\&lt;</span> 0.001). According to the Tukey post hoc test, agroecological farms have a higher soil organic matter content than conventional (p <span class="sc">\&lt;</span> 0.001) and large-scale farms (p <span class="sc">\&lt;</span> 0.001). No significant differences could be detected between conventional and large-scale farms (p = 0.976).</span>
-<span id="cb42-733"><a href="#cb42-733" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb42-734"><a href="#cb42-734" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb42-732"><a href="#cb42-732" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb42-733"><a href="#cb42-733" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-734"><a href="#cb42-734" aria-hidden="true" tabindex="-1"></a>We found that soil organic matter content differed among farm types (ANOVA: F(2, 33) = 15.02, p <span class="sc">\&lt;</span> 0.001). According to the Tukey post hoc test, agroecological farms have a higher soil organic matter content than conventional (p <span class="sc">\&lt;</span> 0.001) and large-scale farms (p <span class="sc">\&lt;</span> 0.001). No significant differences could be detected between conventional and large-scale farms (p = 0.976).</span>
 <span id="cb42-735"><a href="#cb42-735" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-736"><a href="#cb42-736" aria-hidden="true" tabindex="-1"></a><span class="fu">## ANOVA alternatives if assumptions are not met</span></span>
-<span id="cb42-737"><a href="#cb42-737" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-738"><a href="#cb42-738" aria-hidden="true" tabindex="-1"></a><span class="fu">### Kruskal-Wallis test</span></span>
-<span id="cb42-739"><a href="#cb42-739" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-740"><a href="#cb42-740" aria-hidden="true" tabindex="-1"></a>If the normality assumption is not met, one alternative is to use the Kruskal-Wallis test to compare multiple groups. Like most non-parametric tests, the Kruskal-Wallis test is based on ranks rather than the raw data. Specifically, all observations are converted to ranks across the entire dataset, and the test evaluates whether the distributions of ranks differ among groups.</span>
-<span id="cb42-741"><a href="#cb42-741" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-742"><a href="#cb42-742" aria-hidden="true" tabindex="-1"></a>In R, you can run a Kruskal-Wallis test using the <span class="in">`kruskal.test()`</span> function from the *stats* package. The R syntax to use this function is very similar to that of a one-way ANOVA (<span class="in">`aov()`</span>). The test will return a test statistic (Kruskal-Wallis chi-squared) and a p-value.</span>
-<span id="cb42-743"><a href="#cb42-743" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-744"><a href="#cb42-744" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb42-745"><a href="#cb42-745" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 12</span></span>
-<span id="cb42-746"><a href="#cb42-746" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-747"><a href="#cb42-747" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Test if soil organic matter content (<span class="in">`SOM`</span>) differs among farm types (<span class="in">`farm_type`</span>) using a Kruskal-Wallis test.</span>
-<span id="cb42-748"><a href="#cb42-748" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What can you conclude from this test?</span>
-<span id="cb42-749"><a href="#cb42-749" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-750"><a href="#cb42-750" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb42-751"><a href="#cb42-751" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb42-738"><a href="#cb42-738" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-739"><a href="#cb42-739" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb42-740"><a href="#cb42-740" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb42-741"><a href="#cb42-741" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb42-742"><a href="#cb42-742" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb42-743"><a href="#cb42-743" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 4</span></span>
+<span id="cb42-744"><a href="#cb42-744" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4.2</span></span>
+<span id="cb42-745"><a href="#cb42-745" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb42-746"><a href="#cb42-746" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Differences in soil organic matter content measured agroecological (eco), conventional (con), and large-scale farms (large). Summary statistics shown on the right side of each boxplot show the mean ± 95% CI (n=36). Groups with the same letter are not significantly different (p &gt; 0.05)."</span></span>
+<span id="cb42-747"><a href="#cb42-747" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-SOM</span></span>
+<span id="cb42-748"><a href="#cb42-748" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-749"><a href="#cb42-749" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb42-750"><a href="#cb42-750" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-751"><a href="#cb42-751" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb42-752"><a href="#cb42-752" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-755"><a href="#cb42-755" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-756"><a href="#cb42-756" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb42-757"><a href="#cb42-757" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb42-758"><a href="#cb42-758" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb42-759"><a href="#cb42-759" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb42-760"><a href="#cb42-760" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-761"><a href="#cb42-761" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(SOM <span class="sc">~</span> farm_type,</span>
-<span id="cb42-762"><a href="#cb42-762" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> data)</span>
-<span id="cb42-763"><a href="#cb42-763" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-764"><a href="#cb42-764" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-765"><a href="#cb42-765" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
-<span id="cb42-766"><a href="#cb42-766" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-767"><a href="#cb42-767" aria-hidden="true" tabindex="-1"></a>We found that soil organic matter content differed among farm types (Kruskal-Wallis chi-squared: 18.99, p <span class="sc">\&lt;</span> 0.001).</span>
-<span id="cb42-768"><a href="#cb42-768" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb42-769"><a href="#cb42-769" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb42-770"><a href="#cb42-770" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-771"><a href="#cb42-771" aria-hidden="true" tabindex="-1"></a><span class="fu">### Dunn post hoc test</span></span>
-<span id="cb42-772"><a href="#cb42-772" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-773"><a href="#cb42-773" aria-hidden="true" tabindex="-1"></a>When a Kruskal-Wallis test indicates significant differences among groups, a post hoc test such as Dunn’s test can be used to identify which groups differ from each other. Because multiple pairwise comparisons are performed, p-values are typically adjusted (e.g. using Bonferroni correction) to control for the increased risk of Type I error.</span>
-<span id="cb42-774"><a href="#cb42-774" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-775"><a href="#cb42-775" aria-hidden="true" tabindex="-1"></a>In R, a Dunn post hoc test can be done using the <span class="in">`dunn.test()`</span> function in the *dunn.test* package. There are three main arguments to consider:</span>
-<span id="cb42-776"><a href="#cb42-776" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-777"><a href="#cb42-777" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`x`</span>: a numeric vector containing values of your response variable of interest (<span class="in">`SOM`</span> in our case)</span>
-<span id="cb42-778"><a href="#cb42-778" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-779"><a href="#cb42-779" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`g`</span>: a factor or character vector indicating the groups (<span class="in">`farm_type`</span> in our case)</span>
-<span id="cb42-780"><a href="#cb42-780" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-781"><a href="#cb42-781" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`method`</span>: the method used to adjust p-values for multiple comparisons (use Bonferroni in this tutorial)</span>
-<span id="cb42-782"><a href="#cb42-782" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-783"><a href="#cb42-783" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb42-784"><a href="#cb42-784" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 13</span></span>
-<span id="cb42-785"><a href="#cb42-785" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-786"><a href="#cb42-786" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Run a Dunn post hoc test to find out which farm types differ from each other in soil organic matter content.</span>
-<span id="cb42-787"><a href="#cb42-787" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What can you conclude from this test? Write a paragraph summarizing the results of the Kruskal-Wallis and post hoc tests.</span>
-<span id="cb42-788"><a href="#cb42-788" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-789"><a href="#cb42-789" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb42-790"><a href="#cb42-790" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
-<span id="cb42-791"><a href="#cb42-791" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-794"><a href="#cb42-794" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb42-795"><a href="#cb42-795" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb42-796"><a href="#cb42-796" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb42-797"><a href="#cb42-797" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb42-798"><a href="#cb42-798" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb42-799"><a href="#cb42-799" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-800"><a href="#cb42-800" aria-hidden="true" tabindex="-1"></a><span class="fu">dunn.test</span>(<span class="at">x =</span> data<span class="sc">$</span>SOM,</span>
-<span id="cb42-801"><a href="#cb42-801" aria-hidden="true" tabindex="-1"></a>          <span class="at">g =</span> data<span class="sc">$</span>farm_type,</span>
-<span id="cb42-802"><a href="#cb42-802" aria-hidden="true" tabindex="-1"></a>          <span class="at">method =</span> <span class="st">"bonferroni"</span>)</span>
+<span id="cb42-753"><a href="#cb42-753" aria-hidden="true" tabindex="-1"></a>data_text <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">SOM=</span><span class="fu">c</span>(<span class="fl">4.9</span>, <span class="fl">7.5</span>, <span class="fl">5.5</span>),</span>
+<span id="cb42-754"><a href="#cb42-754" aria-hidden="true" tabindex="-1"></a>                        <span class="at">farm_type =</span> <span class="fu">c</span>(<span class="st">"con"</span>, <span class="st">"eco"</span>, <span class="st">"large"</span>),</span>
+<span id="cb42-755"><a href="#cb42-755" aria-hidden="true" tabindex="-1"></a>                        <span class="at">label=</span><span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"a"</span>))</span>
+<span id="cb42-756"><a href="#cb42-756" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-757"><a href="#cb42-757" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x=</span>farm_type, <span class="at">y=</span>SOM))<span class="sc">+</span></span>
+<span id="cb42-758"><a href="#cb42-758" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.4</span>, <span class="at">fill=</span><span class="st">"#FFCD00"</span>)<span class="sc">+</span></span>
+<span id="cb42-759"><a href="#cb42-759" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> <span class="st">"mean_cl_boot"</span>, <span class="at">position=</span><span class="fu">position_nudge</span>(<span class="at">x=</span><span class="fl">0.4</span>))<span class="sc">+</span></span>
+<span id="cb42-760"><a href="#cb42-760" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> data_text,</span>
+<span id="cb42-761"><a href="#cb42-761" aria-hidden="true" tabindex="-1"></a>              <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span>farm_type,</span>
+<span id="cb42-762"><a href="#cb42-762" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y=</span>SOM,</span>
+<span id="cb42-763"><a href="#cb42-763" aria-hidden="true" tabindex="-1"></a>                            <span class="at">label =</span> label),</span>
+<span id="cb42-764"><a href="#cb42-764" aria-hidden="true" tabindex="-1"></a>              <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb42-765"><a href="#cb42-765" aria-hidden="true" tabindex="-1"></a>              <span class="at">position=</span><span class="fu">position_nudge</span>(<span class="at">x=</span><span class="fl">0.4</span>),</span>
+<span id="cb42-766"><a href="#cb42-766" aria-hidden="true" tabindex="-1"></a>              <span class="at">size=</span><span class="dv">6</span>)<span class="sc">+</span></span>
+<span id="cb42-767"><a href="#cb42-767" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb42-768"><a href="#cb42-768" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb42-769"><a href="#cb42-769" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Soil organic matter content (%)"</span>)<span class="sc">+</span></span>
+<span id="cb42-770"><a href="#cb42-770" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb42-771"><a href="#cb42-771" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>), <span class="at">size=</span><span class="dv">13</span>))</span>
+<span id="cb42-772"><a href="#cb42-772" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-773"><a href="#cb42-773" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb42-774"><a href="#cb42-774" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb42-775"><a href="#cb42-775" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-776"><a href="#cb42-776" aria-hidden="true" tabindex="-1"></a><span class="fu">## ANOVA alternatives if assumptions are not met</span></span>
+<span id="cb42-777"><a href="#cb42-777" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-778"><a href="#cb42-778" aria-hidden="true" tabindex="-1"></a><span class="fu">### Kruskal-Wallis test</span></span>
+<span id="cb42-779"><a href="#cb42-779" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-780"><a href="#cb42-780" aria-hidden="true" tabindex="-1"></a>If the normality assumption is not met, one alternative is to use the Kruskal-Wallis test to compare multiple groups. Like most non-parametric tests, the Kruskal-Wallis test is based on ranks rather than the raw data. Specifically, all observations are converted to ranks across the entire dataset, and the test evaluates whether the distributions of ranks differ among groups.</span>
+<span id="cb42-781"><a href="#cb42-781" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-782"><a href="#cb42-782" aria-hidden="true" tabindex="-1"></a>In R, you can run a Kruskal-Wallis test using the <span class="in">`kruskal.test()`</span> function from the *stats* package. The R syntax to use this function is very similar to that of a one-way ANOVA (<span class="in">`aov()`</span>). The test will return a test statistic (Kruskal-Wallis chi-squared) and a p-value.</span>
+<span id="cb42-783"><a href="#cb42-783" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-784"><a href="#cb42-784" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb42-785"><a href="#cb42-785" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 12</span></span>
+<span id="cb42-786"><a href="#cb42-786" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-787"><a href="#cb42-787" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Test if soil organic matter content (<span class="in">`SOM`</span>) differs among farm types (<span class="in">`farm_type`</span>) using a Kruskal-Wallis test.</span>
+<span id="cb42-788"><a href="#cb42-788" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What can you conclude from this test?</span>
+<span id="cb42-789"><a href="#cb42-789" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-790"><a href="#cb42-790" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb42-791"><a href="#cb42-791" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb42-792"><a href="#cb42-792" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-795"><a href="#cb42-795" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-796"><a href="#cb42-796" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb42-797"><a href="#cb42-797" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb42-798"><a href="#cb42-798" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb42-799"><a href="#cb42-799" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb42-800"><a href="#cb42-800" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-801"><a href="#cb42-801" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(SOM <span class="sc">~</span> farm_type,</span>
+<span id="cb42-802"><a href="#cb42-802" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> data)</span>
 <span id="cb42-803"><a href="#cb42-803" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb42-804"><a href="#cb42-804" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-805"><a href="#cb42-805" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
 <span id="cb42-806"><a href="#cb42-806" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-807"><a href="#cb42-807" aria-hidden="true" tabindex="-1"></a>We found that soil organic matter content differed among farm types (Kruskal-Wallis: chi-squared = 18.99, p <span class="sc">\&lt;</span> 0.001). According to Dunn's post hoc test, agroecological farms have a higher soil organic matter content than conventional (p = 0.0001) and large-scale farms (p = 0.0005). No significant differences could be detected between conventional and large-scale farms (p = 1.0).</span>
+<span id="cb42-807"><a href="#cb42-807" aria-hidden="true" tabindex="-1"></a>We found that soil organic matter content differed among farm types (Kruskal-Wallis chi-squared: 18.99, p <span class="sc">\&lt;</span> 0.001).</span>
 <span id="cb42-808"><a href="#cb42-808" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb42-809"><a href="#cb42-809" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb42-810"><a href="#cb42-810" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-811"><a href="#cb42-811" aria-hidden="true" tabindex="-1"></a><span class="fu">### Welch's ANOVA</span></span>
+<span id="cb42-811"><a href="#cb42-811" aria-hidden="true" tabindex="-1"></a><span class="fu">### Dunn post hoc test</span></span>
 <span id="cb42-812"><a href="#cb42-812" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-813"><a href="#cb42-813" aria-hidden="true" tabindex="-1"></a>If the assumption of equal variances is violated, Welch’s ANOVA can be used as an alternative to the traditional ANOVA.</span>
+<span id="cb42-813"><a href="#cb42-813" aria-hidden="true" tabindex="-1"></a>When a Kruskal-Wallis test indicates significant differences among groups, a post hoc test such as Dunn’s test can be used to identify which groups differ from each other. Because multiple pairwise comparisons are performed, p-values are typically adjusted (e.g. using Bonferroni correction) to control for the increased risk of Type I error.</span>
 <span id="cb42-814"><a href="#cb42-814" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-815"><a href="#cb42-815" aria-hidden="true" tabindex="-1"></a>In R, a Welch's ANOVA can be done using the <span class="in">`oneway.test()`</span> function from the *stats* package. This function has three main arguments to consider in this tutorial:</span>
+<span id="cb42-815"><a href="#cb42-815" aria-hidden="true" tabindex="-1"></a>In R, a Dunn post hoc test can be done using the <span class="in">`dunn.test()`</span> function in the *dunn.test* package. There are three main arguments to consider:</span>
 <span id="cb42-816"><a href="#cb42-816" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-817"><a href="#cb42-817" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`formula`</span>: a formula specifying the model. The formula must have the following form: <span class="in">`response ~ factor`</span>.</span>
+<span id="cb42-817"><a href="#cb42-817" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`x`</span>: a numeric vector containing values of your response variable of interest (<span class="in">`SOM`</span> in our case)</span>
 <span id="cb42-818"><a href="#cb42-818" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-819"><a href="#cb42-819" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`data`</span>: a data frame in which the variables specified in the formula will be found.</span>
+<span id="cb42-819"><a href="#cb42-819" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`g`</span>: a factor or character vector indicating the groups (<span class="in">`farm_type`</span> in our case)</span>
 <span id="cb42-820"><a href="#cb42-820" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-821"><a href="#cb42-821" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`var.equal`</span>: a logical variable indicating whether to treat the variances in the samples as equal (<span class="in">`TRUE`</span> for yes, <span class="in">`FALSE`</span> for no). Welch's ANOVA is used when <span class="in">`var.equal=FALSE`</span>.</span>
+<span id="cb42-821"><a href="#cb42-821" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`method`</span>: the method used to adjust p-values for multiple comparisons (use Bonferroni in this tutorial)</span>
 <span id="cb42-822"><a href="#cb42-822" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-823"><a href="#cb42-823" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb42-824"><a href="#cb42-824" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 14</span></span>
+<span id="cb42-824"><a href="#cb42-824" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 13</span></span>
 <span id="cb42-825"><a href="#cb42-825" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-826"><a href="#cb42-826" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Test if soil organic matter content (<span class="in">`SOM`</span>) differs among farm types (<span class="in">`farm_type`</span>) using a Welch's ANOVA (use <span class="in">`var.equal=FALSE`</span>)</span>
-<span id="cb42-827"><a href="#cb42-827" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What can you conclude from this test?</span>
+<span id="cb42-826"><a href="#cb42-826" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Run a Dunn post hoc test to find out which farm types differ from each other in soil organic matter content.</span>
+<span id="cb42-827"><a href="#cb42-827" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What can you conclude from this test? Write a paragraph summarizing the results of the Kruskal-Wallis and post hoc tests.</span>
 <span id="cb42-828"><a href="#cb42-828" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-829"><a href="#cb42-829" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
 <span id="cb42-830"><a href="#cb42-830" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
@@ -2963,34 +2981,34 @@ Exercise 15
 <span id="cb42-837"><a href="#cb42-837" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
 <span id="cb42-838"><a href="#cb42-838" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb42-839"><a href="#cb42-839" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-840"><a href="#cb42-840" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(SOM <span class="sc">~</span> farm_type,</span>
-<span id="cb42-841"><a href="#cb42-841" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> data,</span>
-<span id="cb42-842"><a href="#cb42-842" aria-hidden="true" tabindex="-1"></a>            <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb42-840"><a href="#cb42-840" aria-hidden="true" tabindex="-1"></a><span class="fu">dunn.test</span>(<span class="at">x =</span> data<span class="sc">$</span>SOM,</span>
+<span id="cb42-841"><a href="#cb42-841" aria-hidden="true" tabindex="-1"></a>          <span class="at">g =</span> data<span class="sc">$</span>farm_type,</span>
+<span id="cb42-842"><a href="#cb42-842" aria-hidden="true" tabindex="-1"></a>          <span class="at">method =</span> <span class="st">"bonferroni"</span>)</span>
 <span id="cb42-843"><a href="#cb42-843" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb42-844"><a href="#cb42-844" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-845"><a href="#cb42-845" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
 <span id="cb42-846"><a href="#cb42-846" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-847"><a href="#cb42-847" aria-hidden="true" tabindex="-1"></a>We found that soil organic matter content differed among farm types (Welch's ANOVA: F(2, 19.4) = 15.01, p <span class="sc">\&lt;</span> 0.001).</span>
+<span id="cb42-847"><a href="#cb42-847" aria-hidden="true" tabindex="-1"></a>We found that soil organic matter content differed among farm types (Kruskal-Wallis: chi-squared = 18.99, p <span class="sc">\&lt;</span> 0.001). According to Dunn's post hoc test, agroecological farms have a higher soil organic matter content than conventional (p = 0.0001) and large-scale farms (p = 0.0005). No significant differences could be detected between conventional and large-scale farms (p = 1.0).</span>
 <span id="cb42-848"><a href="#cb42-848" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb42-849"><a href="#cb42-849" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb42-850"><a href="#cb42-850" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-851"><a href="#cb42-851" aria-hidden="true" tabindex="-1"></a><span class="fu">### Games-Howell post hoc test</span></span>
+<span id="cb42-851"><a href="#cb42-851" aria-hidden="true" tabindex="-1"></a><span class="fu">### Welch's ANOVA</span></span>
 <span id="cb42-852"><a href="#cb42-852" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-853"><a href="#cb42-853" aria-hidden="true" tabindex="-1"></a>If Welch’s ANOVA is used because the assumption of equal variances is not met, a different post hoc test is also required. An appropriate choice is the Games-Howell test.</span>
+<span id="cb42-853"><a href="#cb42-853" aria-hidden="true" tabindex="-1"></a>If the assumption of equal variances is violated, Welch’s ANOVA can be used as an alternative to the traditional ANOVA.</span>
 <span id="cb42-854"><a href="#cb42-854" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-855"><a href="#cb42-855" aria-hidden="true" tabindex="-1"></a>In R, this test can be performed using the <span class="in">`games_howell_test()`</span> function from the *rstatix* package. This function has three main arguments:</span>
+<span id="cb42-855"><a href="#cb42-855" aria-hidden="true" tabindex="-1"></a>In R, a Welch's ANOVA can be done using the <span class="in">`oneway.test()`</span> function from the *stats* package. This function has three main arguments to consider in this tutorial:</span>
 <span id="cb42-856"><a href="#cb42-856" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-857"><a href="#cb42-857" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`formula`</span>: a formula specifying the model. The formula must have the following form: <span class="in">`response ~ factor`</span>.</span>
 <span id="cb42-858"><a href="#cb42-858" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-859"><a href="#cb42-859" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`data`</span>: a data frame in which the variables specified in the formula will be found.</span>
 <span id="cb42-860"><a href="#cb42-860" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-861"><a href="#cb42-861" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`conf.level`</span>: the confidence level to use (0.95 by default)</span>
+<span id="cb42-861"><a href="#cb42-861" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`var.equal`</span>: a logical variable indicating whether to treat the variances in the samples as equal (<span class="in">`TRUE`</span> for yes, <span class="in">`FALSE`</span> for no). Welch's ANOVA is used when <span class="in">`var.equal=FALSE`</span>.</span>
 <span id="cb42-862"><a href="#cb42-862" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-863"><a href="#cb42-863" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb42-864"><a href="#cb42-864" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 15</span></span>
+<span id="cb42-864"><a href="#cb42-864" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 14</span></span>
 <span id="cb42-865"><a href="#cb42-865" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-866"><a href="#cb42-866" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Run a Games-Howell post hoc test to find out which farm types differ from each other in soil organic matter content.</span>
-<span id="cb42-867"><a href="#cb42-867" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What can you conclude from this test? Write a paragraph summarizing the results of the Welch's ANOVA and post hoc tests.</span>
+<span id="cb42-866"><a href="#cb42-866" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Test if soil organic matter content (<span class="in">`SOM`</span>) differs among farm types (<span class="in">`farm_type`</span>) using a Welch's ANOVA (use <span class="in">`var.equal=FALSE`</span>)</span>
+<span id="cb42-867"><a href="#cb42-867" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What can you conclude from this test?</span>
 <span id="cb42-868"><a href="#cb42-868" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-869"><a href="#cb42-869" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
 <span id="cb42-870"><a href="#cb42-870" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
@@ -3001,20 +3019,58 @@ Exercise 15
 <span id="cb42-877"><a href="#cb42-877" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
 <span id="cb42-878"><a href="#cb42-878" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb42-879"><a href="#cb42-879" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-880"><a href="#cb42-880" aria-hidden="true" tabindex="-1"></a><span class="fu">games_howell_test</span>(SOM <span class="sc">~</span> farm_type,</span>
-<span id="cb42-881"><a href="#cb42-881" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> data)</span>
-<span id="cb42-882"><a href="#cb42-882" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb42-883"><a href="#cb42-883" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-884"><a href="#cb42-884" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
-<span id="cb42-885"><a href="#cb42-885" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-886"><a href="#cb42-886" aria-hidden="true" tabindex="-1"></a>We found that soil organic matter content differed among farm types (Welch's ANOVA: F(2, 19.4) = 15.01, p <span class="sc">\&lt;</span> 0.001). According to Games-Howell's post hoc test, agroecological farms have a higher soil organic matter content than conventional (p <span class="sc">\&lt;</span> 0.001) and large-scale farms (p = 0.002). No significant differences could be detected between conventional and large-scale farms (p = 0.973).</span>
-<span id="cb42-887"><a href="#cb42-887" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb42-888"><a href="#cb42-888" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb42-889"><a href="#cb42-889" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-890"><a href="#cb42-890" aria-hidden="true" tabindex="-1"></a><span class="fu">## Want a challenge?</span></span>
-<span id="cb42-891"><a href="#cb42-891" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-892"><a href="#cb42-892" aria-hidden="true" tabindex="-1"></a>Feel free to explore differences among farm types using other response variables available in the dataset. For example, which statistical tests would be most appropriate to assess differences in the number of agroecological practices (<span class="in">`n_practices`</span>), Shannon diversity (<span class="in">`shannon_PIM`</span>), and mowing intensity (<span class="in">`mowing`</span>) among farm types? Justify your choice of tests based on the data and their assumptions, and clearly state the conclusions drawn from each analysis.</span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb42-880"><a href="#cb42-880" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(SOM <span class="sc">~</span> farm_type,</span>
+<span id="cb42-881"><a href="#cb42-881" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> data,</span>
+<span id="cb42-882"><a href="#cb42-882" aria-hidden="true" tabindex="-1"></a>            <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb42-883"><a href="#cb42-883" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-884"><a href="#cb42-884" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-885"><a href="#cb42-885" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb42-886"><a href="#cb42-886" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-887"><a href="#cb42-887" aria-hidden="true" tabindex="-1"></a>We found that soil organic matter content differed among farm types (Welch's ANOVA: F(2, 19.4) = 15.01, p <span class="sc">\&lt;</span> 0.001).</span>
+<span id="cb42-888"><a href="#cb42-888" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb42-889"><a href="#cb42-889" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb42-890"><a href="#cb42-890" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-891"><a href="#cb42-891" aria-hidden="true" tabindex="-1"></a><span class="fu">### Games-Howell post hoc test</span></span>
+<span id="cb42-892"><a href="#cb42-892" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-893"><a href="#cb42-893" aria-hidden="true" tabindex="-1"></a>If Welch’s ANOVA is used because the assumption of equal variances is not met, a different post hoc test is also required. An appropriate choice is the Games-Howell test.</span>
+<span id="cb42-894"><a href="#cb42-894" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-895"><a href="#cb42-895" aria-hidden="true" tabindex="-1"></a>In R, this test can be performed using the <span class="in">`games_howell_test()`</span> function from the *rstatix* package. This function has three main arguments:</span>
+<span id="cb42-896"><a href="#cb42-896" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-897"><a href="#cb42-897" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`formula`</span>: a formula specifying the model. The formula must have the following form: <span class="in">`response ~ factor`</span>.</span>
+<span id="cb42-898"><a href="#cb42-898" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-899"><a href="#cb42-899" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`data`</span>: a data frame in which the variables specified in the formula will be found.</span>
+<span id="cb42-900"><a href="#cb42-900" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-901"><a href="#cb42-901" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`conf.level`</span>: the confidence level to use (0.95 by default)</span>
+<span id="cb42-902"><a href="#cb42-902" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-903"><a href="#cb42-903" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb42-904"><a href="#cb42-904" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 15</span></span>
+<span id="cb42-905"><a href="#cb42-905" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-906"><a href="#cb42-906" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Run a Games-Howell post hoc test to find out which farm types differ from each other in soil organic matter content.</span>
+<span id="cb42-907"><a href="#cb42-907" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What can you conclude from this test? Write a paragraph summarizing the results of the Welch's ANOVA and post hoc tests.</span>
+<span id="cb42-908"><a href="#cb42-908" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-909"><a href="#cb42-909" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb42-910"><a href="#cb42-910" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb42-911"><a href="#cb42-911" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-914"><a href="#cb42-914" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb42-915"><a href="#cb42-915" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb42-916"><a href="#cb42-916" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb42-917"><a href="#cb42-917" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb42-918"><a href="#cb42-918" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb42-919"><a href="#cb42-919" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-920"><a href="#cb42-920" aria-hidden="true" tabindex="-1"></a><span class="fu">games_howell_test</span>(SOM <span class="sc">~</span> farm_type,</span>
+<span id="cb42-921"><a href="#cb42-921" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> data)</span>
+<span id="cb42-922"><a href="#cb42-922" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb42-923"><a href="#cb42-923" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-924"><a href="#cb42-924" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb42-925"><a href="#cb42-925" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-926"><a href="#cb42-926" aria-hidden="true" tabindex="-1"></a>We found that soil organic matter content differed among farm types (Welch's ANOVA: F(2, 19.4) = 15.01, p <span class="sc">\&lt;</span> 0.001). According to Games-Howell's post hoc test, agroecological farms have a higher soil organic matter content than conventional (p <span class="sc">\&lt;</span> 0.001) and large-scale farms (p = 0.002). No significant differences could be detected between conventional and large-scale farms (p = 0.973).</span>
+<span id="cb42-927"><a href="#cb42-927" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb42-928"><a href="#cb42-928" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb42-929"><a href="#cb42-929" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-930"><a href="#cb42-930" aria-hidden="true" tabindex="-1"></a><span class="fu">## Want a challenge?</span></span>
+<span id="cb42-931"><a href="#cb42-931" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-932"><a href="#cb42-932" aria-hidden="true" tabindex="-1"></a>Feel free to explore differences among farm types using other response variables available in the dataset. For example, which statistical tests would be most appropriate to assess differences in the number of agroecological practices (<span class="in">`n_practices`</span>), Shannon diversity (<span class="in">`shannon_PIM`</span>), and mowing intensity (<span class="in">`mowing`</span>) among farm types? Justify your choice of tests based on the data and their assumptions, and clearly state the conclusions drawn from each analysis.</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

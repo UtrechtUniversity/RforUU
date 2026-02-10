@@ -210,7 +210,7 @@ If you have a large dataset, you may want to subset your data and only keep the 
 ::: callout-tip
 ## Exercise 6
 
-Create a new data frame called `subset3` that only contains information about the farm type and soil characteristics. Make sure to use the `select()` function in the *dplyr* package using `dplyr::select()`.
+Create a new data frame called `subset3` that only contains information about the farm type and soil characteristics (). Make sure to use the `select()` function in the *dplyr* package using `dplyr::select()`.
 
 ```{r}
 #| eval: true
