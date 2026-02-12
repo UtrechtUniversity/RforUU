@@ -23,4 +23,372 @@ editor_options:
 image: /Images/Rlogo.png
 ---
 
-Add text
+## About this tutorial
+
+In this tutorial, you will learn how to use contrasts to examine differences among groups based on specific, hypothesis-driven comparisons. Instead of relying on post hoc tests that evaluate all possible pairwise differences, you will learn how to formulate and test targeted contrasts that address particular research questions. You will also explore polynomial contrasts to detect patterns and trends in the data, such as linear or quadratic relationships. In addition, you will extend your understanding of ANOVA by learning how to analyze experiments with two independent variables using two-way ANOVA. You will interpret main effects and interactions, and understand how multiple factors jointly influence a response variable.
+
+Let's get started!
+
+## Where are we in the course?
+
+![](/Images/Where_are_we_tutorial_6.png){fig-align="center"}
+
+## Load R packages
+
+To work on this tutorial, you will need to load the *readxl* and *tidyverse* packages.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false  
+
+library(readxl) 
+library(tidyverse)
+```
+
+## Importing data
+
+Start by importing the data used in this course (see previous tutorials).
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false  
+
+#Option 1 (csv file) 
+data <- read_csv("gss_statistics_master_data_set2.csv")  
+
+#Option 2 (Excel file) 
+data <- read_excel("gss_statistics_master_data_set2.xlsx")
+```
+
+## Contrasts
+
+Contrasts are used to test specific, hypothesis-driven differences among group means. Rather than comparing all possible pairs of groups (like in a post hoc test), contrasts allow us to compare one mean to another mean, or one group of means to another group of means, based on a clearly defined research question.
+
+### Question and hypotheses
+
+To illustrate how contrasts work, let's focus on the same research question as in the previous tutorial:
+
+**Is soil organic matter content different among agroecological, conventional, and large-scale farms?**
+
+This time, let's be more specific about the hypotheses we want to test and comparisons we want to make:
+
+-   **Hypothesis 1**: We expect soil organic matter content to be higher in agroecological farms than in conventional and large-scale farms.
+
+-   **Hypothesis 2**: We expect soil organic matter content to be higher in large-scale farms than in conventional farms.
+
+:::: callout-tip
+## Exercise 1
+
+::: panel-tabset
+## Question
+
+For each research hypothesis (1 and 2), formulate a null hypothesis.
+
+## Answer
+
+**Null hypothesis 1**: there is no difference in soil organic matter content between agroecological farms and other farms (conventional and large-scale farms).
+
+**Null hypothesis 2**: there is no difference in soil organic matter content between large-scale and conventional farms.
+:::
+::::
+
+### Rules to set contrast coefficients
+
+In R, contrasts are specified using contrast coefficients that define how group means are compared. When setting up contrast coefficients for a particular comparison, four key rules should be followed:
+
+-   Treatments that are grouped together receive the same sign (either positive or negative).
+
+-   Groups of means that are being contrasted against each other receive opposite signs.
+
+-   Factor levels that are not included in the comparison are assigned a coefficient of zero.
+
+-   The sum of all contrast coefficients must equal zero.
+
+### Set contrast coefficients
+
+Our dataset contains data for three types of farm: agroecological (`eco`), conventional (`con`), and large-scale (`large`). The farm_type variable is a factor with three levels.
+
+:::: callout-tip
+## Exercise 2
+
+::: panel-tabset
+## Question
+
+Choose contrast coefficients to test the hypothesis that soil organic matter content is higher in agroecological farms than in conventional and large-scale farms. Here, we want to compare `eco` farms against the combined mean of `con` and `large` farms.
+
+| Eco | Con | Large |
+|-----|-----|-------|
+| ?   | ?   | ?     |
+
+## One possible answer
+
+According to the rules for setting contrast coefficients, the two farm types that are lumped together (`con` and `large`) must receive the same sign, while the group they are contrasted with (`eco`) must receive the opposite sign. Because all three farm types are included in this comparison, none of them receive a coefficient of zero. Finally, the coefficients must sum to zero. A suitable set of contrast coefficients is therefore `eco` = +2, `con` = –1, and `large` = –1. `Eco` receives the opposite sign from the other two farm types, `con` and `large` share the same sign because they are grouped together, and the coefficients sum to zero (2 – 1 – 1 = 0). [Note that this is only one option among many.]{.underline}
+
+| Eco | Con | Large |
+|-----|-----|-------|
+| +2  | -1  | -1    |
+:::
+::::
+
+:::: callout-tip
+## Exercise 3
+
+::: panel-tabset
+## Question
+
+Choose contrast coefficients to test the hypothesis that soil organic matter content is higher in large-scale farms than in conventional farms. Here, we want to compare `large` farms against `con` farms. `eco` farms are not considered here.
+
+| Eco | Con | Large |
+|-----|-----|-------|
+| ?   | ?   | ?     |
+
+## Answer
+
+Following the rules to set contrast coefficients, the two farm types being contrasted (`large` and `con`) must receive opposite signs, and the excluded group (`eco`) must receive a coefficient of zero. The coefficients must again sum to zero. A suitable set of contrast coefficients is `eco` = 0, `con` = –1, and `large` = +1. `eco` is excluded from the comparison, `large` and `con` receive opposite signs, and the coefficients sum to zero (0 – 1 + 1 = 0). [Note that this is only one option among many.]{.underline}
+
+| Eco | Con | Large |
+|-----|-----|-------|
+| 0   | -1  | +1    |
+:::
+::::
+
+### Using contrasts to test hypotheses
+
+Now that we have defined the contrast coefficients for each hypothesis, we can combine them into a contrast matrix and rerun the one-way ANOVA to examine how farm type affects soil organic matter content under these specified comparisons.
+
+:::: callout-tip
+## Exercise 4
+
+1.  Convert the `farm_type` variable into a factor using `as.factor()`.
+2.  Display the levels of the `farm_type` factor using the function `levels()`.
+3.  Create two vectors, `c1` and `c2`, which contain contrast coefficients for hypotheses 1 and 2, respectively. Make sure to enter the contrast coefficients in the alphabetical order of the three factor levels, that is, `con` first, followed by `eco`, and then `large`.
+4.  Combine `c1` and `c2` into a contrast matrix called `contrast.matrix` using `cbind(c1, c2)`, where each column represents one contrast.
+5.  Tell R to use these custom contrasts when analyzing the factor `farm_type` by assigning this matrix to `contrasts(data$farm_type)`.
+6.  Fit a one-way ANOVA model to test the effect of farm type (`farm_type`) on soil organic matter content (`SOM`). See Exercise 8 of the previous tutorial if you do not remember how to do this. Show the ANOVA table using `summary()`.
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+data$farm_type <- as.factor(data$farm_type)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+levels(data$farm_type)
+```
+
+## Solution 3
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+#For hypothesis 1
+c1 <- c(-1, 2, -1)
+
+#For hypothesis 2
+c2 <- c(-1, 0, 1)
+```
+
+## Solution 4
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+contrast.matrix <- cbind(c1, c2)
+```
+
+## Solution 5
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+contrasts(data$farm_type) <- contrast.matrix
+```
+
+## Solution 6
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+#Fit ANOVA model
+model <- aov(SOM ~ farm_type,
+             data = data)
+
+#Show ANOVA table
+summary(model)
+```
+:::
+::::
+
+To break down the effect of the factor farm_type into the individual contrasts that we previously defined, we need to use the `split` argument in the `summary()` function used to display the ANOVA table. This would look like this:
+
+`summary(model, split=list(farm_type=list("Eco vs. Con and Large"=1, "Con vs. Large" = 2)))`
+
+Using the `split` argument, we specify that the factor `farm_type` should be divided into two components. The first contrast (column 1 of the contrast matrix) is labeled `"Eco vs. Con and Large"`, and the second contrast (column 2) is labeled `"Con vs. Large"`. The numbers 1 and 2 refer to the first and second contrast columns in the contrast matrix.
+
+:::: callout-tip
+## Exercise 5
+
+1.  Run the `summary()` function on the ANOVA object using the `split` argument (see above for R code).
+2.  Based on the summary table, what can you conclude about the two hypotheses we were interested in testing?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+summary(model, 
+        split=list(farm_type=list("Eco vs. Con and Large"=1, 
+                                  "Con vs. Large" = 2)))
+```
+
+## Solution 2
+
+**Hypothesis 1**: The p-value (4.56e-06) is much lower then the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no difference in soil organic matter content between agroecological farms and other farms (conventional and large-scale farms). We conclude that soil organic matter content in agroecological farms is significantly different from that in conventional and large-scale farms.
+
+**Hypothesis 2**: The p-value (0.836) is much larger than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that there is no difference in soil organic matter content between large-scale and conventional farms. We conclude that soil organic matter contents in conventional and large-scale farms are not significantly different from each other.
+:::
+::::
+
+### Polynomial contrasts
+
+Polynomial contrasts are used to test for specific trends or patterns in a response variable across ordered levels of a factor. They are particularly useful when the predictor is an ordinal variable. For example, they can examine whether a response increases or decreases linearly, or whether it follows a more complex, curved (quadratic or cubic) pattern.
+
+To illustrate polynomial contrasts, let's focus on the relationship between soil organic matter content (`SOM`) and the number of projects accessed (`n_ext_projects` variable). The `n_ext_projects` variable is a discrete variable going from 0 to 4.
+
+:::: callout-tip
+## Exercise 6
+
+1.  Convert the `n_ext_projects` variable to a factor using `as.factor()`.
+2.  Get contrast coefficients using `contr.poly()`. To use this function, you just need to specify the number of levels (`n`) that your factor has (in our case, `n_ext_projects` has 5 levels). Store the contract coefficients into an object called `contrast.matrix.poly`. The contrast coefficients created by `contr.poly()` are designed to test linear, quadratic, and higher-order trends.
+3.  Tell R to use these custom contrasts when analyzing the factor `n_ext_projects` by assigning this matrix to `contrasts(data$n_ext_projects)`.
+4.  Fit a one-way ANOVA model to test the effect of farm type (`n_ext_projects`) on soil organic matter content (`SOM`). Show the ANOVA table using `summary()`.
+5.  Run the `summary()` function on the ANOVA object using the `split` argument. We are only interested in examining the results for the first two trend components (linear and quadratic). Linear contrasts are stored in the first column of `contrast.matrix.poly`, while quadratic contrasts are stored in the second column.
+6.  Based on the summary table, what can you conclude about the relationship between soil organic matter content and the number of projects accessed?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+data$n_ext_projects <- as.factor(data$n_ext_projects)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+contrast.matrix.poly <- contr.poly(n=5)
+```
+
+## Solution 3
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+contrasts(data$n_ext_projects) <- contrast.matrix.poly
+```
+
+## Solution 4
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+#Fit ANOVA model
+model <- aov(SOM ~ n_ext_projects,
+             data = data)
+
+#Show ANOVA table
+summary(model)
+```
+
+## Solution 5
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+summary(model, 
+        split=list(n_ext_projects=list("Linear"=1, 
+                                       "Quadratic" = 2)))
+```
+
+## Solution 6
+
+There is a significant linear trend between the number of extension projects and soil organic matter content (F(1,31)=12.124; p-value = 0.0015). The quadratic trend, however, is not significant (F(1,31)=1.403; p-value = 0.2452).
+
+```{r}
+#| eval: true
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 5
+#| fig-height: 4.5
+#| fig-align: center
+#| fig-cap: "Relationship between the number of extension projects and soil organic matter content. Summary statistics shown on the right side of each boxplot show the mean ± 95% CI."
+#| label: fig-SOMprojects
+
+ggplot(data, aes(x=n_ext_projects, y=SOM))+
+    geom_boxplot(width=0.4, fill="#FFCD00")+
+    stat_summary(fun.data = "mean_cl_boot", position=position_nudge(x=0.3))+
+    theme_bw()+
+    xlab("Number of extension projects")+
+    ylab("Soil organic matter content (%)")+
+    theme(axis.text = element_text(color="black", size=12),
+          axis.title.y = element_text(margin=margin(r=10), size=13),
+          axis.title.x = element_text(margin=margin(t=10), size=13))
+```
+:::
+::::
+
+## Doing a two-way ANOVA
+
+Question and hypotheses

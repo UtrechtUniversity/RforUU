@@ -402,8 +402,8 @@ Under the null hypothesis (i.e., if there is no difference in the means of the t
 #| warning: false
 
 #Calculate group means
-xA <- mean(data_false$coffee_prod)
-xB <- mean(data_true$coffee_prod)
+yA <- mean(data_true$coffee_prod)
+yB <- mean(data_false$coffee_prod)
 
 #Calculate group variances
 varA <- var(data_false$coffee_prod)
@@ -417,7 +417,7 @@ nB <- length(data_true$coffee_prod)
 sp <- sqrt(((nA-1)*varA + (nB-1)*varB)/(nA + nB - 2))
 
 #Calculate the value of the t statistic
-t <- (xA - xB)/(sp*sqrt((1/nA)+(1/nB)))
+t <- (yA - yB)/(sp*sqrt((1/nA)+(1/nB)))
 ```
 
 The value of the test statistic is `{r} round(t, 3)`
@@ -484,11 +484,7 @@ Calculate the p-value of the independent *t*-test using `pt()`. What can you con
 #| message: false
 #| warning: false
 
-#Option 1
-p <- pt(t, df=nA+nB-2, lower.tail=TRUE)
-
-#Option 2
-p <- pt(abs(t), df=nA+nB-2, lower.tail=FALSE)
+p <- pt(t, df=nA+nB-2, lower.tail=FALSE)
 ```
 
 ## Answer
@@ -527,10 +523,10 @@ Use the `t.test()` function to perform the statistical test. What information is
 #| message: false
 #| warning: false
 
-t.test(x=data_false$coffee_prod,
-       y=data_true$coffee_prod,
+t.test(x=data_true$coffee_prod,
+       y=data_false$coffee_prod,
        paired = FALSE,
-       alternative = "less", #Expect productivity in farms without pesticides to be lower
+       alternative = "greater", #Expect productivity in farms with pesticides to be greater
        mu = 0,
        var.equal = TRUE)
 ```
