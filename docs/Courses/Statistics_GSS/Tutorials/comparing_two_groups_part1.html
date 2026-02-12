@@ -772,8 +772,18 @@ Figure&nbsp;3: Standard normal distribution. The area under the curve highlighte
 <li><p><code>q</code>: a z-score value (in our case: 1.002)</p></li>
 <li><p><code>mean</code>: the mean value of the normal distribution (should be zero for the standard normal, which is the default value)</p></li>
 <li><p><code>sd</code>: the standard deviation of the normal distribution (should be one for the standard normal, which is the default value)</p></li>
-<li><p><code>lower.tail</code>: a logical argument (can be either <code>TRUE</code> or <code>FALSE</code>). If set to <code>TRUE</code>, probabilities are <span class="math inline">\(P(X \le x)\)</span>. If set to <code>FALSE</code>, probabilities are <span class="math inline">\(P(X &gt; x)\)</span></p></li>
+<li><p><code>lower.tail</code>: a logical argument (can be either <code>TRUE</code> or <code>FALSE</code>). If set to <code>TRUE</code>, probabilities are <span class="math inline">\(P(X \le x)\)</span>. If set to <code>FALSE</code>, probabilities are <span class="math inline">\(P(X &gt; x)\)</span> (<a href="#fig-lowertail" class="quarto-xref">Figure&nbsp;4</a>)</p></li>
 </ul>
+<div id="fig-lowertail" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lowertail-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../../..\Images/lower_tail.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lowertail-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Illustration of how the <code>lower.tail</code> argument works. The yellow area represents the probability that will be returned by <code>pnorm()</code> if <code>lower.tail</code> is set to <code>TRUE</code> (left scenario) or <code>FALSE</code> (right scenario).
+</figcaption>
+</figure>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -820,7 +830,7 @@ Figure&nbsp;3: Standard normal distribution. The area under the curve highlighte
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Calculate the probability that a randomly selected farm has a coffee productivity comprised between 800 and 1200 kg/ha/year. Graphically, this means that you need to calculate the area under the curve highlighted in yellow in <a href="#fig-theoreticalnormalwitharea1" class="quarto-xref">Figure&nbsp;4</a>. Do this using <code>pnorm()</code> and the table of z values provided on Brightspace.</p>
+<p>Calculate the probability that a randomly selected farm has a coffee productivity comprised between 800 and 1200 kg/ha/year. Graphically, this means that you need to calculate the area under the curve highlighted in yellow in <a href="#fig-theoreticalnormalwitharea1" class="quarto-xref">Figure&nbsp;5</a>. Do this using <code>pnorm()</code> and the table of z values provided on Brightspace.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-theoreticalnormalwitharea1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -829,7 +839,7 @@ Figure&nbsp;3: Standard normal distribution. The area under the curve highlighte
 <img src="comparing_two_groups_part1_files/figure-html/fig-theoreticalnormalwitharea1-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-theoreticalnormalwitharea1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Theoretical normal distribution of coffee productivity. The area under the curve highlighted in yellow is the probability that a randomly selected farm has a coffee productivity comprised between 800 and 1200 kg/ha/year.
+Figure&nbsp;5: Theoretical normal distribution of coffee productivity. The area under the curve highlighted in yellow is the probability that a randomly selected farm has a coffee productivity comprised between 800 and 1200 kg/ha/year.
 </figcaption>
 </figure>
 </div>
@@ -1251,7 +1261,7 @@ Bartlett's K-squared = 1.2009, df = 1, p-value = 0.2731</code></pre>
 <p><span id="eq-pairedttest"><span class="math display">\[
 t = \frac{\bar{v}}{s_v / \sqrt{n}}
 \tag{3}\]</span></span></p>
-<p>Under the null hypothesis (i.e., if there is no difference in the means of the two populations being compared), the <span class="math inline">\(t\)</span> statistic follows a Student’s <em>t</em> distribution with <span class="math inline">\(n-1\)</span> degrees of freedom, where <span class="math inline">\(n\)</span> is the number of paired observations (<a href="#fig-studentdistribution" class="quarto-xref">Figure&nbsp;5</a>).</p>
+<p>Under the null hypothesis (i.e., if there is no difference in the means of the two populations being compared), the <span class="math inline">\(t\)</span> statistic follows a Student’s <em>t</em> distribution with <span class="math inline">\(n-1\)</span> degrees of freedom, where <span class="math inline">\(n\)</span> is the number of paired observations (<a href="#fig-studentdistribution" class="quarto-xref">Figure&nbsp;6</a>).</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1305,14 +1315,14 @@ t = \frac{\bar{v}}{s_v / \sqrt{n}}
 <img src="comparing_two_groups_part1_files/figure-html/fig-studentdistribution-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-studentdistribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Student’s t distribution with 35 degrees of freedom. The vertical dashed line shows the value of the observed t statistic (paired t-test).
+Figure&nbsp;6: Student’s t distribution with 35 degrees of freedom. The vertical dashed line shows the value of the observed t statistic (paired t-test).
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>We can now calculate the p-value associated with this test. We can do this using the <code>pt()</code> function in R.</p>
-<p>To calculate this p-value, it is important to remember that we are testing a directed (one-sided) hypothesis, as we expect coffee productivity in 2020 to be higher than in 2015. Graphically, this corresponds to calculating the area under the distribution curve to the right of the dashed vertical line shown in <a href="#fig-studentdistribution" class="quarto-xref">Figure&nbsp;5</a>. This area represents the p-value and appears to be very small.</p>
+<p>To calculate this p-value, it is important to remember that we are testing a directed (one-sided) hypothesis, as we expect coffee productivity in 2020 to be higher than in 2015. Graphically, this corresponds to calculating the area under the distribution curve to the right of the dashed vertical line shown in <a href="#fig-studentdistribution" class="quarto-xref">Figure&nbsp;6</a>. This area represents the p-value and appears to be very small.</p>
 <p>In R, this probability can be calculated using the function <code>pt()</code>, which takes three main arguments:</p>
 <ul>
 <li><p><code>q</code>: a vector of quantiles (in this example, it is the value of the observed <em>t</em> statistic)</p></li>
@@ -1401,7 +1411,7 @@ mean difference
 </div>
 </div>
 <div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
-<p>We conducted a paired <em>t</em>-test to assess if an intervention from extension services resulted in increased coffee productivity (<a href="#fig-coffee-prod" class="quarto-xref">Figure&nbsp;6</a>). Therefore, coffee productivity was measured in the same farms before and after the intervention (n=36 farms).&nbsp;The difference between coffee productivity before and after the intervention was significant (t= 5.37; p-value &lt; 0.001) indicating that the intervention had a positive effect. On average, coffee productivity in 2020 was 15.7% greater than in 2015.</p>
+<p>We conducted a paired <em>t</em>-test to assess if an intervention from extension services resulted in increased coffee productivity (<a href="#fig-coffee-prod" class="quarto-xref">Figure&nbsp;7</a>). Therefore, coffee productivity was measured in the same farms before and after the intervention (n=36 farms).&nbsp;The difference between coffee productivity before and after the intervention was significant (t= 5.37; p-value &lt; 0.001) indicating that the intervention had a positive effect. On average, coffee productivity in 2020 was 15.7% greater than in 2015.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-coffee-prod" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -1410,7 +1420,7 @@ mean difference
 <img src="comparing_two_groups_part1_files/figure-html/fig-coffee-prod-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coffee-prod-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Changes in coffee productivity measured in 2015 and 2020 across 36 farms. Summary statistics shown on the right side of each boxplot show the mean ± 95% CI (n=36).
+Figure&nbsp;7: Changes in coffee productivity measured in 2015 and 2020 across 36 farms. Summary statistics shown on the right side of each boxplot show the mean ± 95% CI (n=36).
 </figcaption>
 </figure>
 </div>
@@ -2085,604 +2095,606 @@ Figure&nbsp;6: Changes in coffee productivity measured in 2015 and 2020 across 3
 <span id="cb27-192"><a href="#cb27-192" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-193"><a href="#cb27-193" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`sd`</span>: the standard deviation of the normal distribution (should be one for the standard normal, which is the default value)</span>
 <span id="cb27-194"><a href="#cb27-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-195"><a href="#cb27-195" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`lower.tail`</span>: a logical argument (can be either <span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>). If set to <span class="in">`TRUE`</span>, probabilities are $P(X \le x)$. If set to <span class="in">`FALSE`</span>, probabilities are $P(X &gt; x)$</span>
+<span id="cb27-195"><a href="#cb27-195" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`lower.tail`</span>: a logical argument (can be either <span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>). If set to <span class="in">`TRUE`</span>, probabilities are $P(X \le x)$. If set to <span class="in">`FALSE`</span>, probabilities are $P(X &gt; x)$ (@fig-lowertail)</span>
 <span id="cb27-196"><a href="#cb27-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-197"><a href="#cb27-197" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb27-198"><a href="#cb27-198" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 3</span></span>
-<span id="cb27-199"><a href="#cb27-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-200"><a href="#cb27-200" aria-hidden="true" tabindex="-1"></a>Calculate the probability that a randomly selected farm has a coffee productivity greater than 2500 kg/ha/year. Do this using <span class="in">`pnorm()`</span> and the table of z values provided on Brightspace.</span>
+<span id="cb27-197"><a href="#cb27-197" aria-hidden="true" tabindex="-1"></a><span class="al">![Illustration of how the `lower.tail` argument works. The yellow area represents the probability that will be returned by `pnorm()` if `lower.tail` is set to `TRUE` (left scenario) or `FALSE` (right scenario).](/Images/lower_tail.png)</span>{#fig-lowertail fig-align="center"}</span>
+<span id="cb27-198"><a href="#cb27-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-199"><a href="#cb27-199" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb27-200"><a href="#cb27-200" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 3</span></span>
 <span id="cb27-201"><a href="#cb27-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-202"><a href="#cb27-202" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb27-203"><a href="#cb27-203" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
-<span id="cb27-204"><a href="#cb27-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-207"><a href="#cb27-207" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-208"><a href="#cb27-208" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-209"><a href="#cb27-209" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-210"><a href="#cb27-210" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-211"><a href="#cb27-211" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-212"><a href="#cb27-212" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb27-213"><a href="#cb27-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-214"><a href="#cb27-214" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1</span></span>
-<span id="cb27-215"><a href="#cb27-215" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(zscore, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb27-216"><a href="#cb27-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-217"><a href="#cb27-217" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 2</span></span>
-<span id="cb27-218"><a href="#cb27-218" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(zscore, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-219"><a href="#cb27-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-220"><a href="#cb27-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-221"><a href="#cb27-221" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb27-202"><a href="#cb27-202" aria-hidden="true" tabindex="-1"></a>Calculate the probability that a randomly selected farm has a coffee productivity greater than 2500 kg/ha/year. Do this using <span class="in">`pnorm()`</span> and the table of z values provided on Brightspace.</span>
+<span id="cb27-203"><a href="#cb27-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-204"><a href="#cb27-204" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb27-205"><a href="#cb27-205" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb27-206"><a href="#cb27-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-209"><a href="#cb27-209" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-210"><a href="#cb27-210" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-211"><a href="#cb27-211" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-212"><a href="#cb27-212" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-213"><a href="#cb27-213" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-214"><a href="#cb27-214" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb27-215"><a href="#cb27-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-216"><a href="#cb27-216" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1</span></span>
+<span id="cb27-217"><a href="#cb27-217" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(zscore, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb27-218"><a href="#cb27-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-219"><a href="#cb27-219" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 2</span></span>
+<span id="cb27-220"><a href="#cb27-220" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(zscore, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-221"><a href="#cb27-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-222"><a href="#cb27-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-223"><a href="#cb27-223" aria-hidden="true" tabindex="-1"></a>The probability that a randomly selected farm has a coffee productivity greater than 2500 kg/ha/year is <span class="in">`{r} round(100*pnorm(zscore, lower.tail = FALSE), 1)`</span>%.</span>
-<span id="cb27-224"><a href="#cb27-224" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-225"><a href="#cb27-225" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb27-226"><a href="#cb27-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-227"><a href="#cb27-227" aria-hidden="true" tabindex="-1"></a><span class="fu">### Challenge to do at home</span></span>
+<span id="cb27-223"><a href="#cb27-223" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb27-224"><a href="#cb27-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-225"><a href="#cb27-225" aria-hidden="true" tabindex="-1"></a>The probability that a randomly selected farm has a coffee productivity greater than 2500 kg/ha/year is <span class="in">`{r} round(100*pnorm(zscore, lower.tail = FALSE), 1)`</span>%.</span>
+<span id="cb27-226"><a href="#cb27-226" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-227"><a href="#cb27-227" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb27-228"><a href="#cb27-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-229"><a href="#cb27-229" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb27-230"><a href="#cb27-230" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 4</span></span>
-<span id="cb27-231"><a href="#cb27-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-232"><a href="#cb27-232" aria-hidden="true" tabindex="-1"></a>Calculate the probability that a randomly selected farm has a coffee productivity comprised between 800 and 1200 kg/ha/year. Graphically, this means that you need to calculate the area under the curve highlighted in yellow in @fig-theoreticalnormalwitharea1. Do this using <span class="in">`pnorm()`</span> and the table of z values provided on Brightspace.</span>
+<span id="cb27-229"><a href="#cb27-229" aria-hidden="true" tabindex="-1"></a><span class="fu">### Challenge to do at home</span></span>
+<span id="cb27-230"><a href="#cb27-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-231"><a href="#cb27-231" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb27-232"><a href="#cb27-232" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 4</span></span>
 <span id="cb27-233"><a href="#cb27-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-236"><a href="#cb27-236" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-237"><a href="#cb27-237" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-238"><a href="#cb27-238" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb27-239"><a href="#cb27-239" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-240"><a href="#cb27-240" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-241"><a href="#cb27-241" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
-<span id="cb27-242"><a href="#cb27-242" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb27-243"><a href="#cb27-243" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
-<span id="cb27-244"><a href="#cb27-244" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Theoretical normal distribution of coffee productivity. The area under the curve highlighted in yellow is the probability that a randomly selected farm has a coffee productivity comprised between 800 and 1200 kg/ha/year."</span></span>
-<span id="cb27-245"><a href="#cb27-245" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-theoreticalnormalwitharea1</span></span>
-<span id="cb27-246"><a href="#cb27-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-247"><a href="#cb27-247" aria-hidden="true" tabindex="-1"></a>low_z <span class="ot">&lt;-</span> (<span class="dv">800</span> <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod))<span class="sc">/</span><span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)</span>
-<span id="cb27-248"><a href="#cb27-248" aria-hidden="true" tabindex="-1"></a>high_z <span class="ot">&lt;-</span> (<span class="dv">1200</span> <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod))<span class="sc">/</span><span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)</span>
-<span id="cb27-249"><a href="#cb27-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-250"><a href="#cb27-250" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">500</span>,<span class="dv">3500</span>,<span class="dv">1</span>)</span>
-<span id="cb27-251"><a href="#cb27-251" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(ht,<span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod),<span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod))</span>
-<span id="cb27-252"><a href="#cb27-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-253"><a href="#cb27-253" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ht,<span class="fu">dnorm</span>(ht,<span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod),<span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)),<span class="at">type=</span><span class="st">"l"</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">ylab=</span><span class="st">"Probability density"</span>, <span class="at">xlab=</span><span class="st">"Coffee productivity (kg/ha/year)"</span>, <span class="at">main=</span><span class="st">"Theoretical normal distribution of coffee productivity"</span>)</span>
-<span id="cb27-254"><a href="#cb27-254" aria-hidden="true" tabindex="-1"></a>xv <span class="ot">&lt;-</span> ht[ht<span class="sc">&gt;=</span><span class="dv">800</span> <span class="sc">&amp;</span> ht <span class="sc">&lt;=</span> <span class="dv">1200</span>]</span>
-<span id="cb27-255"><a href="#cb27-255" aria-hidden="true" tabindex="-1"></a>yv <span class="ot">&lt;-</span> pd[ht<span class="sc">&gt;=</span><span class="dv">800</span> <span class="sc">&amp;</span> ht <span class="sc">&lt;=</span> <span class="dv">1200</span>]</span>
-<span id="cb27-256"><a href="#cb27-256" aria-hidden="true" tabindex="-1"></a>xv <span class="ot">&lt;-</span> <span class="fu">c</span>(xv,<span class="dv">1200</span>,<span class="dv">800</span>)</span>
-<span id="cb27-257"><a href="#cb27-257" aria-hidden="true" tabindex="-1"></a>yv <span class="ot">&lt;-</span> <span class="fu">c</span>(yv,<span class="dv">0</span>,<span class="dv">0</span>)</span>
-<span id="cb27-258"><a href="#cb27-258" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(xv,yv,<span class="at">col=</span><span class="st">"#FFCD00"</span>,<span class="at">border=</span><span class="cn">NA</span>)</span>
-<span id="cb27-259"><a href="#cb27-259" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-260"><a href="#cb27-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-261"><a href="#cb27-261" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb27-262"><a href="#cb27-262" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
-<span id="cb27-263"><a href="#cb27-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-266"><a href="#cb27-266" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-267"><a href="#cb27-267" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-268"><a href="#cb27-268" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-269"><a href="#cb27-269" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-270"><a href="#cb27-270" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-271"><a href="#cb27-271" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb27-272"><a href="#cb27-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-273"><a href="#cb27-273" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate z-scores</span></span>
-<span id="cb27-274"><a href="#cb27-274" aria-hidden="true" tabindex="-1"></a>low_z <span class="ot">&lt;-</span> (<span class="dv">800</span> <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod))<span class="sc">/</span><span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)</span>
-<span id="cb27-275"><a href="#cb27-275" aria-hidden="true" tabindex="-1"></a>high_z <span class="ot">&lt;-</span> (<span class="dv">1200</span> <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod))<span class="sc">/</span><span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)</span>
-<span id="cb27-276"><a href="#cb27-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-277"><a href="#cb27-277" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate tail probabilities</span></span>
-<span id="cb27-278"><a href="#cb27-278" aria-hidden="true" tabindex="-1"></a>p_low_z <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(low_z, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-279"><a href="#cb27-279" aria-hidden="true" tabindex="-1"></a>p_high_z <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(high_z, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-280"><a href="#cb27-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-281"><a href="#cb27-281" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the probability that a randomly selected farm has a coffee productivity comprised between 800 and 1200 kg/ha/year</span></span>
-<span id="cb27-282"><a href="#cb27-282" aria-hidden="true" tabindex="-1"></a>p_high_z <span class="sc">-</span> p_low_z</span>
-<span id="cb27-283"><a href="#cb27-283" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-284"><a href="#cb27-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-285"><a href="#cb27-285" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb27-234"><a href="#cb27-234" aria-hidden="true" tabindex="-1"></a>Calculate the probability that a randomly selected farm has a coffee productivity comprised between 800 and 1200 kg/ha/year. Graphically, this means that you need to calculate the area under the curve highlighted in yellow in @fig-theoreticalnormalwitharea1. Do this using <span class="in">`pnorm()`</span> and the table of z values provided on Brightspace.</span>
+<span id="cb27-235"><a href="#cb27-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-238"><a href="#cb27-238" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-239"><a href="#cb27-239" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-240"><a href="#cb27-240" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb27-241"><a href="#cb27-241" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-242"><a href="#cb27-242" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-243"><a href="#cb27-243" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb27-244"><a href="#cb27-244" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb27-245"><a href="#cb27-245" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb27-246"><a href="#cb27-246" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Theoretical normal distribution of coffee productivity. The area under the curve highlighted in yellow is the probability that a randomly selected farm has a coffee productivity comprised between 800 and 1200 kg/ha/year."</span></span>
+<span id="cb27-247"><a href="#cb27-247" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-theoreticalnormalwitharea1</span></span>
+<span id="cb27-248"><a href="#cb27-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-249"><a href="#cb27-249" aria-hidden="true" tabindex="-1"></a>low_z <span class="ot">&lt;-</span> (<span class="dv">800</span> <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod))<span class="sc">/</span><span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)</span>
+<span id="cb27-250"><a href="#cb27-250" aria-hidden="true" tabindex="-1"></a>high_z <span class="ot">&lt;-</span> (<span class="dv">1200</span> <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod))<span class="sc">/</span><span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)</span>
+<span id="cb27-251"><a href="#cb27-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-252"><a href="#cb27-252" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">500</span>,<span class="dv">3500</span>,<span class="dv">1</span>)</span>
+<span id="cb27-253"><a href="#cb27-253" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(ht,<span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod),<span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod))</span>
+<span id="cb27-254"><a href="#cb27-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-255"><a href="#cb27-255" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ht,<span class="fu">dnorm</span>(ht,<span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod),<span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)),<span class="at">type=</span><span class="st">"l"</span>, <span class="at">col=</span><span class="st">"black"</span>, <span class="at">ylab=</span><span class="st">"Probability density"</span>, <span class="at">xlab=</span><span class="st">"Coffee productivity (kg/ha/year)"</span>, <span class="at">main=</span><span class="st">"Theoretical normal distribution of coffee productivity"</span>)</span>
+<span id="cb27-256"><a href="#cb27-256" aria-hidden="true" tabindex="-1"></a>xv <span class="ot">&lt;-</span> ht[ht<span class="sc">&gt;=</span><span class="dv">800</span> <span class="sc">&amp;</span> ht <span class="sc">&lt;=</span> <span class="dv">1200</span>]</span>
+<span id="cb27-257"><a href="#cb27-257" aria-hidden="true" tabindex="-1"></a>yv <span class="ot">&lt;-</span> pd[ht<span class="sc">&gt;=</span><span class="dv">800</span> <span class="sc">&amp;</span> ht <span class="sc">&lt;=</span> <span class="dv">1200</span>]</span>
+<span id="cb27-258"><a href="#cb27-258" aria-hidden="true" tabindex="-1"></a>xv <span class="ot">&lt;-</span> <span class="fu">c</span>(xv,<span class="dv">1200</span>,<span class="dv">800</span>)</span>
+<span id="cb27-259"><a href="#cb27-259" aria-hidden="true" tabindex="-1"></a>yv <span class="ot">&lt;-</span> <span class="fu">c</span>(yv,<span class="dv">0</span>,<span class="dv">0</span>)</span>
+<span id="cb27-260"><a href="#cb27-260" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(xv,yv,<span class="at">col=</span><span class="st">"#FFCD00"</span>,<span class="at">border=</span><span class="cn">NA</span>)</span>
+<span id="cb27-261"><a href="#cb27-261" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-262"><a href="#cb27-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-263"><a href="#cb27-263" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb27-264"><a href="#cb27-264" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb27-265"><a href="#cb27-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-268"><a href="#cb27-268" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-269"><a href="#cb27-269" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-270"><a href="#cb27-270" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-271"><a href="#cb27-271" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-272"><a href="#cb27-272" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-273"><a href="#cb27-273" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb27-274"><a href="#cb27-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-275"><a href="#cb27-275" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate z-scores</span></span>
+<span id="cb27-276"><a href="#cb27-276" aria-hidden="true" tabindex="-1"></a>low_z <span class="ot">&lt;-</span> (<span class="dv">800</span> <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod))<span class="sc">/</span><span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)</span>
+<span id="cb27-277"><a href="#cb27-277" aria-hidden="true" tabindex="-1"></a>high_z <span class="ot">&lt;-</span> (<span class="dv">1200</span> <span class="sc">-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod))<span class="sc">/</span><span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod)</span>
+<span id="cb27-278"><a href="#cb27-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-279"><a href="#cb27-279" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate tail probabilities</span></span>
+<span id="cb27-280"><a href="#cb27-280" aria-hidden="true" tabindex="-1"></a>p_low_z <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(low_z, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-281"><a href="#cb27-281" aria-hidden="true" tabindex="-1"></a>p_high_z <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(high_z, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-282"><a href="#cb27-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-283"><a href="#cb27-283" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the probability that a randomly selected farm has a coffee productivity comprised between 800 and 1200 kg/ha/year</span></span>
+<span id="cb27-284"><a href="#cb27-284" aria-hidden="true" tabindex="-1"></a>p_high_z <span class="sc">-</span> p_low_z</span>
+<span id="cb27-285"><a href="#cb27-285" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-286"><a href="#cb27-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-287"><a href="#cb27-287" aria-hidden="true" tabindex="-1"></a>The probability that a randomly selected farm has a coffee productivity comprised between 800 and 1200 kg/ha/year is <span class="in">`{r} round(100*(p_high_z - p_low_z), 1)`</span>%.</span>
-<span id="cb27-288"><a href="#cb27-288" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-289"><a href="#cb27-289" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb27-290"><a href="#cb27-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-291"><a href="#cb27-291" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checking for data normality</span></span>
+<span id="cb27-287"><a href="#cb27-287" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb27-288"><a href="#cb27-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-289"><a href="#cb27-289" aria-hidden="true" tabindex="-1"></a>The probability that a randomly selected farm has a coffee productivity comprised between 800 and 1200 kg/ha/year is <span class="in">`{r} round(100*(p_high_z - p_low_z), 1)`</span>%.</span>
+<span id="cb27-290"><a href="#cb27-290" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-291"><a href="#cb27-291" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb27-292"><a href="#cb27-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-293"><a href="#cb27-293" aria-hidden="true" tabindex="-1"></a>Many statistical tests, including *t*-tests, assume that the data are normally distributed within each group being compared. It is therefore important to check this assumption before conducting a statistical test. If your data do not follow a normal distribution, there are several approaches you can take. One option is to use a non-parametric test or model that does not assume normality (this will be discussed later in this course). Another option is to transform the data to make it more normally distributed, for example, using a log, or square root transformation, before applying a parametric test.</span>
+<span id="cb27-293"><a href="#cb27-293" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checking for data normality</span></span>
 <span id="cb27-294"><a href="#cb27-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-295"><a href="#cb27-295" aria-hidden="true" tabindex="-1"></a>Normality can be assessed using both formal statistical tests, such as the Shapiro-Wilk test, and graphical tools, such as histograms and Q–Q plots. It is often best to use them in combination because the outcome of Shapiro-Wilk's test is sensitive to sample size. With small sample sizes, the test has low statistical power, meaning it may fail to detect departures from normality even when the data are not necessarily normal. With large sample sizes, the test becomes extremely sensitive, so even very small deviations from normality can lead to a significant result.</span>
+<span id="cb27-295"><a href="#cb27-295" aria-hidden="true" tabindex="-1"></a>Many statistical tests, including *t*-tests, assume that the data are normally distributed within each group being compared. It is therefore important to check this assumption before conducting a statistical test. If your data do not follow a normal distribution, there are several approaches you can take. One option is to use a non-parametric test or model that does not assume normality (this will be discussed later in this course). Another option is to transform the data to make it more normally distributed, for example, using a log, or square root transformation, before applying a parametric test.</span>
 <span id="cb27-296"><a href="#cb27-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-297"><a href="#cb27-297" aria-hidden="true" tabindex="-1"></a><span class="fu">### Shapiro-Wilk's test</span></span>
+<span id="cb27-297"><a href="#cb27-297" aria-hidden="true" tabindex="-1"></a>Normality can be assessed using both formal statistical tests, such as the Shapiro-Wilk test, and graphical tools, such as histograms and Q–Q plots. It is often best to use them in combination because the outcome of Shapiro-Wilk's test is sensitive to sample size. With small sample sizes, the test has low statistical power, meaning it may fail to detect departures from normality even when the data are not necessarily normal. With large sample sizes, the test becomes extremely sensitive, so even very small deviations from normality can lead to a significant result.</span>
 <span id="cb27-298"><a href="#cb27-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-299"><a href="#cb27-299" aria-hidden="true" tabindex="-1"></a>In the Shapiro-Wilk's test, the null hypothesis is that the data follow a normal distribution, while the alternative hypothesis is that they do not. Note that this test requires a sufficient sample size to be reliable (20-30 observations).</span>
+<span id="cb27-299"><a href="#cb27-299" aria-hidden="true" tabindex="-1"></a><span class="fu">### Shapiro-Wilk's test</span></span>
 <span id="cb27-300"><a href="#cb27-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-301"><a href="#cb27-301" aria-hidden="true" tabindex="-1"></a>In R, a Shapiro-Wilk's normality test can be carried out using <span class="in">`shapiro.test()`</span>. The only argument to provide is a vector of data values (which may contain missing values).</span>
+<span id="cb27-301"><a href="#cb27-301" aria-hidden="true" tabindex="-1"></a>In the Shapiro-Wilk's test, the null hypothesis is that the data follow a normal distribution, while the alternative hypothesis is that they do not. Note that this test requires a sufficient sample size to be reliable (20-30 observations).</span>
 <span id="cb27-302"><a href="#cb27-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-303"><a href="#cb27-303" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb27-304"><a href="#cb27-304" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 5</span></span>
-<span id="cb27-305"><a href="#cb27-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-306"><a href="#cb27-306" aria-hidden="true" tabindex="-1"></a>Use the Shapiro-Wilk's test to check that coffee productivity data (<span class="in">`coffee_prod`</span> variable) is normally distributed within each farm type (<span class="in">`farm_type`</span> variable). What can you conclude from these tests?</span>
+<span id="cb27-303"><a href="#cb27-303" aria-hidden="true" tabindex="-1"></a>In R, a Shapiro-Wilk's normality test can be carried out using <span class="in">`shapiro.test()`</span>. The only argument to provide is a vector of data values (which may contain missing values).</span>
+<span id="cb27-304"><a href="#cb27-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-305"><a href="#cb27-305" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb27-306"><a href="#cb27-306" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 5</span></span>
 <span id="cb27-307"><a href="#cb27-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-308"><a href="#cb27-308" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb27-309"><a href="#cb27-309" aria-hidden="true" tabindex="-1"></a><span class="fu">## Con farms</span></span>
-<span id="cb27-310"><a href="#cb27-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-313"><a href="#cb27-313" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-314"><a href="#cb27-314" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-315"><a href="#cb27-315" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-316"><a href="#cb27-316" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-317"><a href="#cb27-317" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-318"><a href="#cb27-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-319"><a href="#cb27-319" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for con farms</span></span>
-<span id="cb27-320"><a href="#cb27-320" aria-hidden="true" tabindex="-1"></a>data_con <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"con"</span>)</span>
-<span id="cb27-321"><a href="#cb27-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-322"><a href="#cb27-322" aria-hidden="true" tabindex="-1"></a><span class="co">#Shapiro-Wilk's test</span></span>
-<span id="cb27-323"><a href="#cb27-323" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_con<span class="sc">$</span>coffee_prod)</span>
-<span id="cb27-324"><a href="#cb27-324" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-325"><a href="#cb27-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-326"><a href="#cb27-326" aria-hidden="true" tabindex="-1"></a><span class="fu">## Eco farms</span></span>
+<span id="cb27-308"><a href="#cb27-308" aria-hidden="true" tabindex="-1"></a>Use the Shapiro-Wilk's test to check that coffee productivity data (<span class="in">`coffee_prod`</span> variable) is normally distributed within each farm type (<span class="in">`farm_type`</span> variable). What can you conclude from these tests?</span>
+<span id="cb27-309"><a href="#cb27-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-310"><a href="#cb27-310" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb27-311"><a href="#cb27-311" aria-hidden="true" tabindex="-1"></a><span class="fu">## Con farms</span></span>
+<span id="cb27-312"><a href="#cb27-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-315"><a href="#cb27-315" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-316"><a href="#cb27-316" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-317"><a href="#cb27-317" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-318"><a href="#cb27-318" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-319"><a href="#cb27-319" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-320"><a href="#cb27-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-321"><a href="#cb27-321" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for con farms</span></span>
+<span id="cb27-322"><a href="#cb27-322" aria-hidden="true" tabindex="-1"></a>data_con <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"con"</span>)</span>
+<span id="cb27-323"><a href="#cb27-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-324"><a href="#cb27-324" aria-hidden="true" tabindex="-1"></a><span class="co">#Shapiro-Wilk's test</span></span>
+<span id="cb27-325"><a href="#cb27-325" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_con<span class="sc">$</span>coffee_prod)</span>
+<span id="cb27-326"><a href="#cb27-326" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-327"><a href="#cb27-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-330"><a href="#cb27-330" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-331"><a href="#cb27-331" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-332"><a href="#cb27-332" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-333"><a href="#cb27-333" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-334"><a href="#cb27-334" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-335"><a href="#cb27-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-336"><a href="#cb27-336" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for eco farms</span></span>
-<span id="cb27-337"><a href="#cb27-337" aria-hidden="true" tabindex="-1"></a>data_eco <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"eco"</span>)</span>
-<span id="cb27-338"><a href="#cb27-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-339"><a href="#cb27-339" aria-hidden="true" tabindex="-1"></a><span class="co">#Shapiro-Wilk's test</span></span>
-<span id="cb27-340"><a href="#cb27-340" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_eco<span class="sc">$</span>coffee_prod)</span>
-<span id="cb27-341"><a href="#cb27-341" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-342"><a href="#cb27-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-343"><a href="#cb27-343" aria-hidden="true" tabindex="-1"></a><span class="fu">## Large farms</span></span>
+<span id="cb27-328"><a href="#cb27-328" aria-hidden="true" tabindex="-1"></a><span class="fu">## Eco farms</span></span>
+<span id="cb27-329"><a href="#cb27-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-332"><a href="#cb27-332" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-333"><a href="#cb27-333" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-334"><a href="#cb27-334" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-335"><a href="#cb27-335" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-336"><a href="#cb27-336" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-337"><a href="#cb27-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-338"><a href="#cb27-338" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for eco farms</span></span>
+<span id="cb27-339"><a href="#cb27-339" aria-hidden="true" tabindex="-1"></a>data_eco <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"eco"</span>)</span>
+<span id="cb27-340"><a href="#cb27-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-341"><a href="#cb27-341" aria-hidden="true" tabindex="-1"></a><span class="co">#Shapiro-Wilk's test</span></span>
+<span id="cb27-342"><a href="#cb27-342" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_eco<span class="sc">$</span>coffee_prod)</span>
+<span id="cb27-343"><a href="#cb27-343" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-344"><a href="#cb27-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-347"><a href="#cb27-347" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-348"><a href="#cb27-348" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-349"><a href="#cb27-349" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-350"><a href="#cb27-350" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-351"><a href="#cb27-351" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-352"><a href="#cb27-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-353"><a href="#cb27-353" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for con farms</span></span>
-<span id="cb27-354"><a href="#cb27-354" aria-hidden="true" tabindex="-1"></a>data_large <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"large"</span>)</span>
-<span id="cb27-355"><a href="#cb27-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-356"><a href="#cb27-356" aria-hidden="true" tabindex="-1"></a><span class="co">#Shapiro-Wilk's test</span></span>
-<span id="cb27-357"><a href="#cb27-357" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_large<span class="sc">$</span>coffee_prod)</span>
-<span id="cb27-358"><a href="#cb27-358" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-359"><a href="#cb27-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-360"><a href="#cb27-360" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion from tests</span></span>
+<span id="cb27-345"><a href="#cb27-345" aria-hidden="true" tabindex="-1"></a><span class="fu">## Large farms</span></span>
+<span id="cb27-346"><a href="#cb27-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-349"><a href="#cb27-349" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-350"><a href="#cb27-350" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-351"><a href="#cb27-351" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-352"><a href="#cb27-352" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-353"><a href="#cb27-353" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-354"><a href="#cb27-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-355"><a href="#cb27-355" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter data for con farms</span></span>
+<span id="cb27-356"><a href="#cb27-356" aria-hidden="true" tabindex="-1"></a>data_large <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"large"</span>)</span>
+<span id="cb27-357"><a href="#cb27-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-358"><a href="#cb27-358" aria-hidden="true" tabindex="-1"></a><span class="co">#Shapiro-Wilk's test</span></span>
+<span id="cb27-359"><a href="#cb27-359" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data_large<span class="sc">$</span>coffee_prod)</span>
+<span id="cb27-360"><a href="#cb27-360" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-361"><a href="#cb27-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-362"><a href="#cb27-362" aria-hidden="true" tabindex="-1"></a>For all tests, the calculated p-value is much greater than 0.05. Therefore, we fail to reject the null hypothesis that coffee production data follow a normal distribution within each farm type.</span>
-<span id="cb27-363"><a href="#cb27-363" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-364"><a href="#cb27-364" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb27-365"><a href="#cb27-365" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-366"><a href="#cb27-366" aria-hidden="true" tabindex="-1"></a><span class="fu">### Q-Q plots</span></span>
+<span id="cb27-362"><a href="#cb27-362" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conclusion from tests</span></span>
+<span id="cb27-363"><a href="#cb27-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-364"><a href="#cb27-364" aria-hidden="true" tabindex="-1"></a>For all tests, the calculated p-value is much greater than 0.05. Therefore, we fail to reject the null hypothesis that coffee production data follow a normal distribution within each farm type.</span>
+<span id="cb27-365"><a href="#cb27-365" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-366"><a href="#cb27-366" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb27-367"><a href="#cb27-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-368"><a href="#cb27-368" aria-hidden="true" tabindex="-1"></a>Given the small number of coffee productivity observations available for each farm type in our dataset, creating histograms (one per farm type) is not very informative at this stage. <span class="co">[</span><span class="ot">**Make sure you understand how these graphs are constructed and how to interpret them using the content of the lectures**</span><span class="co">]</span>{.underline}. We will revisit histograms later in the course, once we are more familiar with the concept of residuals.</span>
+<span id="cb27-368"><a href="#cb27-368" aria-hidden="true" tabindex="-1"></a><span class="fu">### Q-Q plots</span></span>
 <span id="cb27-369"><a href="#cb27-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-370"><a href="#cb27-370" aria-hidden="true" tabindex="-1"></a>Another important graphical tool to assess whether data follow a normal distribution is the Q-Q plot, short for Quantile-Quantile plot. A Q-Q plot compares the quantiles of the observed data to the quantiles expected under a normal distribution. If the data are approximately normally distributed, the points in the plot will lie close to a straight diagonal line. Systematic deviations from this line, such as curvature or extreme points at the ends, would indicate departures from normality.</span>
+<span id="cb27-370"><a href="#cb27-370" aria-hidden="true" tabindex="-1"></a>Given the small number of coffee productivity observations available for each farm type in our dataset, creating histograms (one per farm type) is not very informative at this stage. <span class="co">[</span><span class="ot">**Make sure you understand how these graphs are constructed and how to interpret them using the content of the lectures**</span><span class="co">]</span>{.underline}. We will revisit histograms later in the course, once we are more familiar with the concept of residuals.</span>
 <span id="cb27-371"><a href="#cb27-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-372"><a href="#cb27-372" aria-hidden="true" tabindex="-1"></a>In base R, you can create Q-Q plots by combining the functions <span class="in">`qqnorm()`</span> and <span class="in">`qqline()`</span>. However, since we need to create a Q-Q plot separately for each farm type, it is easier and faster to use *ggplot2* functions to do this. In *ggplot2*, Q-Q plots are created using <span class="in">`stat_qq()`</span> to plot the sample quantiles against the theoretical quantiles of a normal distribution, and <span class="in">`stat_qq_line()`</span> to add a reference line. The function <span class="in">`stat_qq()`</span> requires the <span class="in">`sample`</span> argument, which specifies the variable for which the quantiles are to be computed and compared to the theoretical distribution (in our case: <span class="in">`coffee_prod`</span>).</span>
+<span id="cb27-372"><a href="#cb27-372" aria-hidden="true" tabindex="-1"></a>Another important graphical tool to assess whether data follow a normal distribution is the Q-Q plot, short for Quantile-Quantile plot. A Q-Q plot compares the quantiles of the observed data to the quantiles expected under a normal distribution. If the data are approximately normally distributed, the points in the plot will lie close to a straight diagonal line. Systematic deviations from this line, such as curvature or extreme points at the ends, would indicate departures from normality.</span>
 <span id="cb27-373"><a href="#cb27-373" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-374"><a href="#cb27-374" aria-hidden="true" tabindex="-1"></a>In our example, where we compare coffee productivity among farms, *ggplot2* makes it easy to create a separate Q-Q plot for each farm type using faceting, without writing much additional code. Faceting can be done with <span class="in">`facet_wrap()`</span> or <span class="in">`facet_grid()`</span>, allowing you to visualize a Q-Q plot for each farm type side by side.</span>
+<span id="cb27-374"><a href="#cb27-374" aria-hidden="true" tabindex="-1"></a>In base R, you can create Q-Q plots by combining the functions <span class="in">`qqnorm()`</span> and <span class="in">`qqline()`</span>. However, since we need to create a Q-Q plot separately for each farm type, it is easier and faster to use *ggplot2* functions to do this. In *ggplot2*, Q-Q plots are created using <span class="in">`stat_qq()`</span> to plot the sample quantiles against the theoretical quantiles of a normal distribution, and <span class="in">`stat_qq_line()`</span> to add a reference line. The function <span class="in">`stat_qq()`</span> requires the <span class="in">`sample`</span> argument, which specifies the variable for which the quantiles are to be computed and compared to the theoretical distribution (in our case: <span class="in">`coffee_prod`</span>).</span>
 <span id="cb27-375"><a href="#cb27-375" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-376"><a href="#cb27-376" aria-hidden="true" tabindex="-1"></a><span class="in">`facet_grid()`</span> forms a matrix of panels defined by row and column variables. It is particularly useful when you have two discrete variables and all variable combinations exist in the data.</span>
+<span id="cb27-376"><a href="#cb27-376" aria-hidden="true" tabindex="-1"></a>In our example, where we compare coffee productivity among farms, *ggplot2* makes it easy to create a separate Q-Q plot for each farm type using faceting, without writing much additional code. Faceting can be done with <span class="in">`facet_wrap()`</span> or <span class="in">`facet_grid()`</span>, allowing you to visualize a Q-Q plot for each farm type side by side.</span>
 <span id="cb27-377"><a href="#cb27-377" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-378"><a href="#cb27-378" aria-hidden="true" tabindex="-1"></a><span class="in">`facet_wrap()`</span> is generally used when you want to create figure panels based on a single discrete variable (which is the case in this example).</span>
+<span id="cb27-378"><a href="#cb27-378" aria-hidden="true" tabindex="-1"></a><span class="in">`facet_grid()`</span> forms a matrix of panels defined by row and column variables. It is particularly useful when you have two discrete variables and all variable combinations exist in the data.</span>
 <span id="cb27-379"><a href="#cb27-379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-380"><a href="#cb27-380" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb27-381"><a href="#cb27-381" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 6</span></span>
-<span id="cb27-382"><a href="#cb27-382" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-383"><a href="#cb27-383" aria-hidden="true" tabindex="-1"></a>Create Q-Q plots to check that coffee productivity data (<span class="in">`coffee_prod`</span> variable) is normally distributed within each farm type (<span class="in">`farm_type`</span> variable). What can you conclude from these graphs?</span>
+<span id="cb27-380"><a href="#cb27-380" aria-hidden="true" tabindex="-1"></a><span class="in">`facet_wrap()`</span> is generally used when you want to create figure panels based on a single discrete variable (which is the case in this example).</span>
+<span id="cb27-381"><a href="#cb27-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-382"><a href="#cb27-382" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb27-383"><a href="#cb27-383" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 6</span></span>
 <span id="cb27-384"><a href="#cb27-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-385"><a href="#cb27-385" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb27-386"><a href="#cb27-386" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
-<span id="cb27-387"><a href="#cb27-387" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-390"><a href="#cb27-390" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-391"><a href="#cb27-391" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-392"><a href="#cb27-392" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-393"><a href="#cb27-393" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-394"><a href="#cb27-394" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-395"><a href="#cb27-395" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
-<span id="cb27-396"><a href="#cb27-396" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
-<span id="cb27-397"><a href="#cb27-397" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-398"><a href="#cb27-398" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">sample =</span> coffee_prod)) <span class="sc">+</span></span>
-<span id="cb27-399"><a href="#cb27-399" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
-<span id="cb27-400"><a href="#cb27-400" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
-<span id="cb27-401"><a href="#cb27-401" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> farm_type) <span class="sc">+</span></span>
-<span id="cb27-402"><a href="#cb27-402" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb27-403"><a href="#cb27-403" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Theoretical quantiles"</span>)<span class="sc">+</span></span>
-<span id="cb27-404"><a href="#cb27-404" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)</span>
-<span id="cb27-405"><a href="#cb27-405" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-406"><a href="#cb27-406" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-407"><a href="#cb27-407" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb27-385"><a href="#cb27-385" aria-hidden="true" tabindex="-1"></a>Create Q-Q plots to check that coffee productivity data (<span class="in">`coffee_prod`</span> variable) is normally distributed within each farm type (<span class="in">`farm_type`</span> variable). What can you conclude from these graphs?</span>
+<span id="cb27-386"><a href="#cb27-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-387"><a href="#cb27-387" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb27-388"><a href="#cb27-388" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb27-389"><a href="#cb27-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-392"><a href="#cb27-392" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-393"><a href="#cb27-393" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-394"><a href="#cb27-394" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-395"><a href="#cb27-395" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-396"><a href="#cb27-396" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-397"><a href="#cb27-397" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb27-398"><a href="#cb27-398" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb27-399"><a href="#cb27-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-400"><a href="#cb27-400" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">sample =</span> coffee_prod)) <span class="sc">+</span></span>
+<span id="cb27-401"><a href="#cb27-401" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb27-402"><a href="#cb27-402" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
+<span id="cb27-403"><a href="#cb27-403" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> farm_type) <span class="sc">+</span></span>
+<span id="cb27-404"><a href="#cb27-404" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb27-405"><a href="#cb27-405" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Theoretical quantiles"</span>)<span class="sc">+</span></span>
+<span id="cb27-406"><a href="#cb27-406" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)</span>
+<span id="cb27-407"><a href="#cb27-407" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-408"><a href="#cb27-408" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-409"><a href="#cb27-409" aria-hidden="true" tabindex="-1"></a>For Eco and Large farms, the points lie closer to the reference line than for Con farms (with a few exceptions), indicating that coffee productivity data from Con farms may deviate more from normality than data from the other farm types. However, these patterns should be interpreted with caution, as the sample size is small (12 observations per farm).</span>
-<span id="cb27-410"><a href="#cb27-410" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-411"><a href="#cb27-411" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb27-412"><a href="#cb27-412" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-413"><a href="#cb27-413" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calculating 95% confidence intervals</span></span>
+<span id="cb27-409"><a href="#cb27-409" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb27-410"><a href="#cb27-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-411"><a href="#cb27-411" aria-hidden="true" tabindex="-1"></a>For Eco and Large farms, the points lie closer to the reference line than for Con farms (with a few exceptions), indicating that coffee productivity data from Con farms may deviate more from normality than data from the other farm types. However, these patterns should be interpreted with caution, as the sample size is small (12 observations per farm).</span>
+<span id="cb27-412"><a href="#cb27-412" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-413"><a href="#cb27-413" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb27-414"><a href="#cb27-414" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-415"><a href="#cb27-415" aria-hidden="true" tabindex="-1"></a>A 95% confidence interval (95% CI) is a range of values that is intended to contain the true population parameter (such as the mean value of the population) with a specified level of confidence (here: 95%). Its meaning is based on repeated sampling: if we were to take 100 random samples from the same population and compute a 95% confidence interval for each sample, approximately 95 of those intervals would include the true population mean.</span>
+<span id="cb27-415"><a href="#cb27-415" aria-hidden="true" tabindex="-1"></a><span class="fu">## Calculating 95% confidence intervals</span></span>
 <span id="cb27-416"><a href="#cb27-416" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-417"><a href="#cb27-417" aria-hidden="true" tabindex="-1"></a>When sample size is small ($n&lt;30$), confidence intervals are calculated using quantile values (also referred to as critical values) of Student's *t* distribution with $n-1$ degrees of freedom (@eq-confidenceinterval_t). As the sample size increases, the *t* distribution converges to the standard normal distribution. For larger sample sizes ($n&gt;30$), the critical values from the *t* distribution are very close to those from the normal distribution, so confidence intervals based on either distribution will be nearly identical.</span>
+<span id="cb27-417"><a href="#cb27-417" aria-hidden="true" tabindex="-1"></a>A 95% confidence interval (95% CI) is a range of values that is intended to contain the true population parameter (such as the mean value of the population) with a specified level of confidence (here: 95%). Its meaning is based on repeated sampling: if we were to take 100 random samples from the same population and compute a 95% confidence interval for each sample, approximately 95 of those intervals would include the true population mean.</span>
 <span id="cb27-418"><a href="#cb27-418" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-419"><a href="#cb27-419" aria-hidden="true" tabindex="-1"></a>Confidence intervals are always two-tailed because our estimate of the population mean (which is the sample mean, $\bar{y}$) may be larger or smaller than the true population mean ($\mu$), which is often unknown. To calculate a 95% CI, we therefore need to calculate the quantile value of Student's *t* distribution associated with $\alpha=0.05/2=0.025$. In R, this can be done with the <span class="in">`qt()`</span> function.</span>
+<span id="cb27-419"><a href="#cb27-419" aria-hidden="true" tabindex="-1"></a>When sample size is small ($n&lt;30$), confidence intervals are calculated using quantile values (also referred to as critical values) of Student's *t* distribution with $n-1$ degrees of freedom (@eq-confidenceinterval_t). As the sample size increases, the *t* distribution converges to the standard normal distribution. For larger sample sizes ($n&gt;30$), the critical values from the *t* distribution are very close to those from the normal distribution, so confidence intervals based on either distribution will be nearly identical.</span>
 <span id="cb27-420"><a href="#cb27-420" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-421"><a href="#cb27-421" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb27-422"><a href="#cb27-422" aria-hidden="true" tabindex="-1"></a>\bar{y} \pm t_{0.975,\,n-1} \cdot \frac{s}{\sqrt{n}}</span>
-<span id="cb27-423"><a href="#cb27-423" aria-hidden="true" tabindex="-1"></a>$$ {#eq-confidenceinterval_t}</span>
-<span id="cb27-424"><a href="#cb27-424" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-425"><a href="#cb27-425" aria-hidden="true" tabindex="-1"></a>The <span class="in">`qt()`</span> function takes three main arguments:</span>
+<span id="cb27-421"><a href="#cb27-421" aria-hidden="true" tabindex="-1"></a>Confidence intervals are always two-tailed because our estimate of the population mean (which is the sample mean, $\bar{y}$) may be larger or smaller than the true population mean ($\mu$), which is often unknown. To calculate a 95% CI, we therefore need to calculate the quantile value of Student's *t* distribution associated with $\alpha=0.05/2=0.025$. In R, this can be done with the <span class="in">`qt()`</span> function.</span>
+<span id="cb27-422"><a href="#cb27-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-423"><a href="#cb27-423" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb27-424"><a href="#cb27-424" aria-hidden="true" tabindex="-1"></a>\bar{y} \pm t_{0.975,\,n-1} \cdot \frac{s}{\sqrt{n}}</span>
+<span id="cb27-425"><a href="#cb27-425" aria-hidden="true" tabindex="-1"></a>$$ {#eq-confidenceinterval_t}</span>
 <span id="cb27-426"><a href="#cb27-426" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-427"><a href="#cb27-427" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`p`</span>: a vector of probabilities (for a 95% CI, it will be 0.975)</span>
+<span id="cb27-427"><a href="#cb27-427" aria-hidden="true" tabindex="-1"></a>The <span class="in">`qt()`</span> function takes three main arguments:</span>
 <span id="cb27-428"><a href="#cb27-428" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-429"><a href="#cb27-429" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`df`</span>: the number of degrees of freedom (for a 95% CI, it will be $n-1$)</span>
+<span id="cb27-429"><a href="#cb27-429" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`p`</span>: a vector of probabilities (for a 95% CI, it will be 0.975)</span>
 <span id="cb27-430"><a href="#cb27-430" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-431"><a href="#cb27-431" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`lower.tail`</span>: a logical argument (can be either <span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>). If set to <span class="in">`TRUE`</span>, probabilities are $P(X \le x)$. If set to <span class="in">`FALSE`</span>, probabilities are $P(X &gt; x)$</span>
+<span id="cb27-431"><a href="#cb27-431" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`df`</span>: the number of degrees of freedom (for a 95% CI, it will be $n-1$)</span>
 <span id="cb27-432"><a href="#cb27-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-433"><a href="#cb27-433" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb27-434"><a href="#cb27-434" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 7</span></span>
-<span id="cb27-435"><a href="#cb27-435" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-436"><a href="#cb27-436" aria-hidden="true" tabindex="-1"></a>Calculate the 95% confidence interval for coffee productivity (<span class="in">`coffee_prod`</span> variable) for each farm type. Do this both manually (using the table of critical values of Student's *t* distribution available on Brightspace) as well as using the `qt()` function in R. [**Make sure you are able to use both methods for the exam**]{.underline}.</span>
+<span id="cb27-433"><a href="#cb27-433" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`lower.tail`</span>: a logical argument (can be either <span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>). If set to <span class="in">`TRUE`</span>, probabilities are $P(X \le x)$. If set to <span class="in">`FALSE`</span>, probabilities are $P(X &gt; x)$</span>
+<span id="cb27-434"><a href="#cb27-434" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-435"><a href="#cb27-435" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb27-436"><a href="#cb27-436" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 7</span></span>
 <span id="cb27-437"><a href="#cb27-437" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-438"><a href="#cb27-438" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb27-439"><a href="#cb27-439" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
-<span id="cb27-440"><a href="#cb27-440" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-443"><a href="#cb27-443" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-444"><a href="#cb27-444" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-445"><a href="#cb27-445" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-446"><a href="#cb27-446" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-447"><a href="#cb27-447" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-448"><a href="#cb27-448" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-449"><a href="#cb27-449" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the number of observations for each farm type</span></span>
-<span id="cb27-450"><a href="#cb27-450" aria-hidden="true" tabindex="-1"></a>n_con <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"con"</span>))</span>
-<span id="cb27-451"><a href="#cb27-451" aria-hidden="true" tabindex="-1"></a>n_eco <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"eco"</span>))</span>
-<span id="cb27-452"><a href="#cb27-452" aria-hidden="true" tabindex="-1"></a>n_large <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"large"</span>))</span>
-<span id="cb27-453"><a href="#cb27-453" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-454"><a href="#cb27-454" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the mean value of coffee productivity in each farm type</span></span>
-<span id="cb27-455"><a href="#cb27-455" aria-hidden="true" tabindex="-1"></a>mean_con <span class="ot">&lt;-</span> <span class="fu">mean</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"con"</span>)<span class="sc">$</span>coffee_prod)</span>
-<span id="cb27-456"><a href="#cb27-456" aria-hidden="true" tabindex="-1"></a>mean_eco <span class="ot">&lt;-</span> <span class="fu">mean</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"eco"</span>)<span class="sc">$</span>coffee_prod)</span>
-<span id="cb27-457"><a href="#cb27-457" aria-hidden="true" tabindex="-1"></a>mean_large <span class="ot">&lt;-</span> <span class="fu">mean</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"large"</span>)<span class="sc">$</span>coffee_prod)</span>
-<span id="cb27-458"><a href="#cb27-458" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-459"><a href="#cb27-459" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the standard deviation value of coffee productivity in each farm type</span></span>
-<span id="cb27-460"><a href="#cb27-460" aria-hidden="true" tabindex="-1"></a>sd_con <span class="ot">&lt;-</span> <span class="fu">sd</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"con"</span>)<span class="sc">$</span>coffee_prod)</span>
-<span id="cb27-461"><a href="#cb27-461" aria-hidden="true" tabindex="-1"></a>sd_eco <span class="ot">&lt;-</span> <span class="fu">sd</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"eco"</span>)<span class="sc">$</span>coffee_prod)</span>
-<span id="cb27-462"><a href="#cb27-462" aria-hidden="true" tabindex="-1"></a>sd_large <span class="ot">&lt;-</span> <span class="fu">sd</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"large"</span>)<span class="sc">$</span>coffee_prod)</span>
-<span id="cb27-463"><a href="#cb27-463" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-464"><a href="#cb27-464" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate lower limits of 95% CI for each farm type</span></span>
-<span id="cb27-465"><a href="#cb27-465" aria-hidden="true" tabindex="-1"></a>low_CI_con <span class="ot">&lt;-</span> mean_con <span class="sc">-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_con<span class="dv">-1</span>)<span class="sc">*</span>sd_con<span class="sc">/</span><span class="fu">sqrt</span>(n_con)</span>
-<span id="cb27-466"><a href="#cb27-466" aria-hidden="true" tabindex="-1"></a>low_CI_eco <span class="ot">&lt;-</span> mean_eco <span class="sc">-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_eco<span class="dv">-1</span>)<span class="sc">*</span>sd_eco<span class="sc">/</span><span class="fu">sqrt</span>(n_eco)</span>
-<span id="cb27-467"><a href="#cb27-467" aria-hidden="true" tabindex="-1"></a>low_CI_large <span class="ot">&lt;-</span> mean_large <span class="sc">-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_large<span class="dv">-1</span>)<span class="sc">*</span>sd_large<span class="sc">/</span><span class="fu">sqrt</span>(n_large)</span>
-<span id="cb27-468"><a href="#cb27-468" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-469"><a href="#cb27-469" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate upper limits of 95% CI for each farm type</span></span>
-<span id="cb27-470"><a href="#cb27-470" aria-hidden="true" tabindex="-1"></a>up_CI_con <span class="ot">&lt;-</span> mean_con <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_con<span class="dv">-1</span>)<span class="sc">*</span>sd_con<span class="sc">/</span><span class="fu">sqrt</span>(n_con)</span>
-<span id="cb27-471"><a href="#cb27-471" aria-hidden="true" tabindex="-1"></a>up_CI_eco <span class="ot">&lt;-</span> mean_eco <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_eco<span class="dv">-1</span>)<span class="sc">*</span>sd_eco<span class="sc">/</span><span class="fu">sqrt</span>(n_eco)</span>
-<span id="cb27-472"><a href="#cb27-472" aria-hidden="true" tabindex="-1"></a>up_CI_large <span class="ot">&lt;-</span> mean_large <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_large<span class="dv">-1</span>)<span class="sc">*</span>sd_large<span class="sc">/</span><span class="fu">sqrt</span>(n_large)</span>
-<span id="cb27-473"><a href="#cb27-473" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-474"><a href="#cb27-474" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-475"><a href="#cb27-475" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb27-438"><a href="#cb27-438" aria-hidden="true" tabindex="-1"></a>Calculate the 95% confidence interval for coffee productivity (<span class="in">`coffee_prod`</span> variable) for each farm type. Do this both manually (using the table of critical values of Student's *t* distribution available on Brightspace) as well as using the `qt()` function in R. [**Make sure you are able to use both methods for the exam**]{.underline}.</span>
+<span id="cb27-439"><a href="#cb27-439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-440"><a href="#cb27-440" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb27-441"><a href="#cb27-441" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb27-442"><a href="#cb27-442" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-445"><a href="#cb27-445" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-446"><a href="#cb27-446" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-447"><a href="#cb27-447" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-448"><a href="#cb27-448" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-449"><a href="#cb27-449" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-450"><a href="#cb27-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-451"><a href="#cb27-451" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the number of observations for each farm type</span></span>
+<span id="cb27-452"><a href="#cb27-452" aria-hidden="true" tabindex="-1"></a>n_con <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"con"</span>))</span>
+<span id="cb27-453"><a href="#cb27-453" aria-hidden="true" tabindex="-1"></a>n_eco <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"eco"</span>))</span>
+<span id="cb27-454"><a href="#cb27-454" aria-hidden="true" tabindex="-1"></a>n_large <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"large"</span>))</span>
+<span id="cb27-455"><a href="#cb27-455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-456"><a href="#cb27-456" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the mean value of coffee productivity in each farm type</span></span>
+<span id="cb27-457"><a href="#cb27-457" aria-hidden="true" tabindex="-1"></a>mean_con <span class="ot">&lt;-</span> <span class="fu">mean</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"con"</span>)<span class="sc">$</span>coffee_prod)</span>
+<span id="cb27-458"><a href="#cb27-458" aria-hidden="true" tabindex="-1"></a>mean_eco <span class="ot">&lt;-</span> <span class="fu">mean</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"eco"</span>)<span class="sc">$</span>coffee_prod)</span>
+<span id="cb27-459"><a href="#cb27-459" aria-hidden="true" tabindex="-1"></a>mean_large <span class="ot">&lt;-</span> <span class="fu">mean</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"large"</span>)<span class="sc">$</span>coffee_prod)</span>
+<span id="cb27-460"><a href="#cb27-460" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-461"><a href="#cb27-461" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the standard deviation value of coffee productivity in each farm type</span></span>
+<span id="cb27-462"><a href="#cb27-462" aria-hidden="true" tabindex="-1"></a>sd_con <span class="ot">&lt;-</span> <span class="fu">sd</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"con"</span>)<span class="sc">$</span>coffee_prod)</span>
+<span id="cb27-463"><a href="#cb27-463" aria-hidden="true" tabindex="-1"></a>sd_eco <span class="ot">&lt;-</span> <span class="fu">sd</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"eco"</span>)<span class="sc">$</span>coffee_prod)</span>
+<span id="cb27-464"><a href="#cb27-464" aria-hidden="true" tabindex="-1"></a>sd_large <span class="ot">&lt;-</span> <span class="fu">sd</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(data, farm_type <span class="sc">==</span> <span class="st">"large"</span>)<span class="sc">$</span>coffee_prod)</span>
+<span id="cb27-465"><a href="#cb27-465" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-466"><a href="#cb27-466" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate lower limits of 95% CI for each farm type</span></span>
+<span id="cb27-467"><a href="#cb27-467" aria-hidden="true" tabindex="-1"></a>low_CI_con <span class="ot">&lt;-</span> mean_con <span class="sc">-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_con<span class="dv">-1</span>)<span class="sc">*</span>sd_con<span class="sc">/</span><span class="fu">sqrt</span>(n_con)</span>
+<span id="cb27-468"><a href="#cb27-468" aria-hidden="true" tabindex="-1"></a>low_CI_eco <span class="ot">&lt;-</span> mean_eco <span class="sc">-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_eco<span class="dv">-1</span>)<span class="sc">*</span>sd_eco<span class="sc">/</span><span class="fu">sqrt</span>(n_eco)</span>
+<span id="cb27-469"><a href="#cb27-469" aria-hidden="true" tabindex="-1"></a>low_CI_large <span class="ot">&lt;-</span> mean_large <span class="sc">-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_large<span class="dv">-1</span>)<span class="sc">*</span>sd_large<span class="sc">/</span><span class="fu">sqrt</span>(n_large)</span>
+<span id="cb27-470"><a href="#cb27-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-471"><a href="#cb27-471" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate upper limits of 95% CI for each farm type</span></span>
+<span id="cb27-472"><a href="#cb27-472" aria-hidden="true" tabindex="-1"></a>up_CI_con <span class="ot">&lt;-</span> mean_con <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_con<span class="dv">-1</span>)<span class="sc">*</span>sd_con<span class="sc">/</span><span class="fu">sqrt</span>(n_con)</span>
+<span id="cb27-473"><a href="#cb27-473" aria-hidden="true" tabindex="-1"></a>up_CI_eco <span class="ot">&lt;-</span> mean_eco <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_eco<span class="dv">-1</span>)<span class="sc">*</span>sd_eco<span class="sc">/</span><span class="fu">sqrt</span>(n_eco)</span>
+<span id="cb27-474"><a href="#cb27-474" aria-hidden="true" tabindex="-1"></a>up_CI_large <span class="ot">&lt;-</span> mean_large <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n_large<span class="dv">-1</span>)<span class="sc">*</span>sd_large<span class="sc">/</span><span class="fu">sqrt</span>(n_large)</span>
+<span id="cb27-475"><a href="#cb27-475" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-476"><a href="#cb27-476" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-477"><a href="#cb27-477" aria-hidden="true" tabindex="-1"></a>95% confidence interval for Con farms: <span class="sc">\[</span><span class="in">`{r} round(low_CI_con, 1)`</span>-<span class="in">`{r} round(up_CI_con, 1)`</span><span class="sc">\]</span> kg/ha/year</span>
+<span id="cb27-477"><a href="#cb27-477" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
 <span id="cb27-478"><a href="#cb27-478" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-479"><a href="#cb27-479" aria-hidden="true" tabindex="-1"></a>95% confidence interval for Eco farms: <span class="sc">\[</span><span class="in">`{r} round(low_CI_eco, 1)`</span>-<span class="in">`{r} round(up_CI_eco, 1)`</span><span class="sc">\]</span> kg/ha/year</span>
+<span id="cb27-479"><a href="#cb27-479" aria-hidden="true" tabindex="-1"></a>95% confidence interval for Con farms: <span class="sc">\[</span><span class="in">`{r} round(low_CI_con, 1)`</span>-<span class="in">`{r} round(up_CI_con, 1)`</span><span class="sc">\]</span> kg/ha/year</span>
 <span id="cb27-480"><a href="#cb27-480" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-481"><a href="#cb27-481" aria-hidden="true" tabindex="-1"></a>95% confidence interval for Large farms: <span class="sc">\[</span><span class="in">`{r} round(low_CI_large, 1)`</span>-<span class="in">`{r} round(up_CI_large, 1)`</span><span class="sc">\]</span> kg/ha/year</span>
-<span id="cb27-482"><a href="#cb27-482" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-483"><a href="#cb27-483" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb27-484"><a href="#cb27-484" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-485"><a href="#cb27-485" aria-hidden="true" tabindex="-1"></a><span class="fu">## Doing a paired *t*-test</span></span>
+<span id="cb27-481"><a href="#cb27-481" aria-hidden="true" tabindex="-1"></a>95% confidence interval for Eco farms: <span class="sc">\[</span><span class="in">`{r} round(low_CI_eco, 1)`</span>-<span class="in">`{r} round(up_CI_eco, 1)`</span><span class="sc">\]</span> kg/ha/year</span>
+<span id="cb27-482"><a href="#cb27-482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-483"><a href="#cb27-483" aria-hidden="true" tabindex="-1"></a>95% confidence interval for Large farms: <span class="sc">\[</span><span class="in">`{r} round(low_CI_large, 1)`</span>-<span class="in">`{r} round(up_CI_large, 1)`</span><span class="sc">\]</span> kg/ha/year</span>
+<span id="cb27-484"><a href="#cb27-484" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-485"><a href="#cb27-485" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb27-486"><a href="#cb27-486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-487"><a href="#cb27-487" aria-hidden="true" tabindex="-1"></a><span class="fu">### Question and hypotheses</span></span>
+<span id="cb27-487"><a href="#cb27-487" aria-hidden="true" tabindex="-1"></a><span class="fu">## Doing a paired *t*-test</span></span>
 <span id="cb27-488"><a href="#cb27-488" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-489"><a href="#cb27-489" aria-hidden="true" tabindex="-1"></a>We want to determine whether coffee productivity measured in 2020 (after an intervention from extension services) is higher than that measured in 2015 (before an intervention from extension services). In other words, did the intervention increase coffee productivity on farms?</span>
+<span id="cb27-489"><a href="#cb27-489" aria-hidden="true" tabindex="-1"></a><span class="fu">### Question and hypotheses</span></span>
 <span id="cb27-490"><a href="#cb27-490" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-491"><a href="#cb27-491" aria-hidden="true" tabindex="-1"></a>In this example, the samples are paired because coffee productivity was measured on the <span class="co">[</span><span class="ot">same farms</span><span class="co">]</span>{.underline} in two different years (before and after an intervention). This comparison also involves two groups: productivity measured in 2015 versus productivity measured in 2020. To answer our research question, a paired *t*-test seems appropriate.</span>
+<span id="cb27-491"><a href="#cb27-491" aria-hidden="true" tabindex="-1"></a>We want to determine whether coffee productivity measured in 2020 (after an intervention from extension services) is higher than that measured in 2015 (before an intervention from extension services). In other words, did the intervention increase coffee productivity on farms?</span>
 <span id="cb27-492"><a href="#cb27-492" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-493"><a href="#cb27-493" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb27-494"><a href="#cb27-494" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 8</span></span>
-<span id="cb27-495"><a href="#cb27-495" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-496"><a href="#cb27-496" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb27-497"><a href="#cb27-497" aria-hidden="true" tabindex="-1"></a><span class="fu">## Question</span></span>
-<span id="cb27-498"><a href="#cb27-498" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-499"><a href="#cb27-499" aria-hidden="true" tabindex="-1"></a>Based on the information above, write a null and an alternative hypothesis for the paired *t*-test. Is the hypothesis directed or undirected?</span>
+<span id="cb27-493"><a href="#cb27-493" aria-hidden="true" tabindex="-1"></a>In this example, the samples are paired because coffee productivity was measured on the <span class="co">[</span><span class="ot">same farms</span><span class="co">]</span>{.underline} in two different years (before and after an intervention). This comparison also involves two groups: productivity measured in 2015 versus productivity measured in 2020. To answer our research question, a paired *t*-test seems appropriate.</span>
+<span id="cb27-494"><a href="#cb27-494" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-495"><a href="#cb27-495" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb27-496"><a href="#cb27-496" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 8</span></span>
+<span id="cb27-497"><a href="#cb27-497" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-498"><a href="#cb27-498" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb27-499"><a href="#cb27-499" aria-hidden="true" tabindex="-1"></a><span class="fu">## Question</span></span>
 <span id="cb27-500"><a href="#cb27-500" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-501"><a href="#cb27-501" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb27-501"><a href="#cb27-501" aria-hidden="true" tabindex="-1"></a>Based on the information above, write a null and an alternative hypothesis for the paired *t*-test. Is the hypothesis directed or undirected?</span>
 <span id="cb27-502"><a href="#cb27-502" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-503"><a href="#cb27-503" aria-hidden="true" tabindex="-1"></a>The hypotheses for this test would be as follows:</span>
+<span id="cb27-503"><a href="#cb27-503" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
 <span id="cb27-504"><a href="#cb27-504" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-505"><a href="#cb27-505" aria-hidden="true" tabindex="-1"></a>**Null hypothesis**: there is no difference in coffee productivity between 2015 and 2020.</span>
+<span id="cb27-505"><a href="#cb27-505" aria-hidden="true" tabindex="-1"></a>The hypotheses for this test would be as follows:</span>
 <span id="cb27-506"><a href="#cb27-506" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-507"><a href="#cb27-507" aria-hidden="true" tabindex="-1"></a>**Alternative hypothesis**: coffee productivity measured in 2020 <span class="co">[</span><span class="ot">is higher</span><span class="co">]</span>{.underline} than coffee productivity measured in 2025 (which is what we would expect if the intervention had been successful).</span>
+<span id="cb27-507"><a href="#cb27-507" aria-hidden="true" tabindex="-1"></a>**Null hypothesis**: there is no difference in coffee productivity between 2015 and 2020.</span>
 <span id="cb27-508"><a href="#cb27-508" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-509"><a href="#cb27-509" aria-hidden="true" tabindex="-1"></a>This is an example of a directed hypothesis (right-tailed), because we expect an increase in productivity following the intervention.</span>
-<span id="cb27-510"><a href="#cb27-510" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-511"><a href="#cb27-511" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb27-512"><a href="#cb27-512" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-513"><a href="#cb27-513" aria-hidden="true" tabindex="-1"></a>Before running the test, we must first check whether our data meet the assumptions of a paired *t*-test (normality and homoscedasticity).</span>
+<span id="cb27-509"><a href="#cb27-509" aria-hidden="true" tabindex="-1"></a>**Alternative hypothesis**: coffee productivity measured in 2020 <span class="co">[</span><span class="ot">is higher</span><span class="co">]</span>{.underline} than coffee productivity measured in 2025 (which is what we would expect if the intervention had been successful).</span>
+<span id="cb27-510"><a href="#cb27-510" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-511"><a href="#cb27-511" aria-hidden="true" tabindex="-1"></a>This is an example of a directed hypothesis (right-tailed), because we expect an increase in productivity following the intervention.</span>
+<span id="cb27-512"><a href="#cb27-512" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-513"><a href="#cb27-513" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb27-514"><a href="#cb27-514" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-515"><a href="#cb27-515" aria-hidden="true" tabindex="-1"></a><span class="fu">### Check assumptions</span></span>
+<span id="cb27-515"><a href="#cb27-515" aria-hidden="true" tabindex="-1"></a>Before running the test, we must first check whether our data meet the assumptions of a paired *t*-test (normality and homoscedasticity).</span>
 <span id="cb27-516"><a href="#cb27-516" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-517"><a href="#cb27-517" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Normality</span></span>
+<span id="cb27-517"><a href="#cb27-517" aria-hidden="true" tabindex="-1"></a><span class="fu">### Check assumptions</span></span>
 <span id="cb27-518"><a href="#cb27-518" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-519"><a href="#cb27-519" aria-hidden="true" tabindex="-1"></a>Earlier in this tutorial, you learned about methods for checking whether data follow a normal distribution (Shapiro-Wilk's test and Q-Q plots). We can use the same methods here, but first we need to calculate the differences in coffee productivity between 2020 and 2015 for each farm (because we want to perform a paired *t*-test). We can then check whether these differences follow a normal distribution.</span>
+<span id="cb27-519"><a href="#cb27-519" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Normality</span></span>
 <span id="cb27-520"><a href="#cb27-520" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-521"><a href="#cb27-521" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb27-522"><a href="#cb27-522" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 9</span></span>
-<span id="cb27-523"><a href="#cb27-523" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-524"><a href="#cb27-524" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Calculate differences in coffee productivity between 2020 (<span class="in">`coffee_prod`</span> variable) and 2015 (<span class="in">`coffee_prod_past`</span> variable). Store these differences in a new column called <span class="in">`coffee_prod_diff`</span> in <span class="in">`data`</span>.</span>
-<span id="cb27-525"><a href="#cb27-525" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Use a Shapiro-Wilk's test to check whether differences in coffee productivity follow a normal distribution. here, you do not need to do this separately for each farm, because we want to make a comparison across farms.</span>
-<span id="cb27-526"><a href="#cb27-526" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Create a Q-Q plot to visually assess deviations from normality.</span>
-<span id="cb27-527"><a href="#cb27-527" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>What can you conclude from the Shapiro-Wilk's test and the Q-Q plot?</span>
-<span id="cb27-528"><a href="#cb27-528" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-529"><a href="#cb27-529" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb27-530"><a href="#cb27-530" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
-<span id="cb27-531"><a href="#cb27-531" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-534"><a href="#cb27-534" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-535"><a href="#cb27-535" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-536"><a href="#cb27-536" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-537"><a href="#cb27-537" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-538"><a href="#cb27-538" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-539"><a href="#cb27-539" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-540"><a href="#cb27-540" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>coffee_prod_diff <span class="ot">&lt;-</span> data<span class="sc">$</span>coffee_prod <span class="sc">-</span> data<span class="sc">$</span>coffee_prod_past</span>
-<span id="cb27-541"><a href="#cb27-541" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-542"><a href="#cb27-542" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-543"><a href="#cb27-543" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb27-521"><a href="#cb27-521" aria-hidden="true" tabindex="-1"></a>Earlier in this tutorial, you learned about methods for checking whether data follow a normal distribution (Shapiro-Wilk's test and Q-Q plots). We can use the same methods here, but first we need to calculate the differences in coffee productivity between 2020 and 2015 for each farm (because we want to perform a paired *t*-test). We can then check whether these differences follow a normal distribution.</span>
+<span id="cb27-522"><a href="#cb27-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-523"><a href="#cb27-523" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb27-524"><a href="#cb27-524" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 9</span></span>
+<span id="cb27-525"><a href="#cb27-525" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-526"><a href="#cb27-526" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Calculate differences in coffee productivity between 2020 (<span class="in">`coffee_prod`</span> variable) and 2015 (<span class="in">`coffee_prod_past`</span> variable). Store these differences in a new column called <span class="in">`coffee_prod_diff`</span> in <span class="in">`data`</span>.</span>
+<span id="cb27-527"><a href="#cb27-527" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Use a Shapiro-Wilk's test to check whether differences in coffee productivity follow a normal distribution. here, you do not need to do this separately for each farm, because we want to make a comparison across farms.</span>
+<span id="cb27-528"><a href="#cb27-528" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Create a Q-Q plot to visually assess deviations from normality.</span>
+<span id="cb27-529"><a href="#cb27-529" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>What can you conclude from the Shapiro-Wilk's test and the Q-Q plot?</span>
+<span id="cb27-530"><a href="#cb27-530" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-531"><a href="#cb27-531" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb27-532"><a href="#cb27-532" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb27-533"><a href="#cb27-533" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-536"><a href="#cb27-536" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-537"><a href="#cb27-537" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-538"><a href="#cb27-538" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-539"><a href="#cb27-539" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-540"><a href="#cb27-540" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-541"><a href="#cb27-541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-542"><a href="#cb27-542" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>coffee_prod_diff <span class="ot">&lt;-</span> data<span class="sc">$</span>coffee_prod <span class="sc">-</span> data<span class="sc">$</span>coffee_prod_past</span>
+<span id="cb27-543"><a href="#cb27-543" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-544"><a href="#cb27-544" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-547"><a href="#cb27-547" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-548"><a href="#cb27-548" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-549"><a href="#cb27-549" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-550"><a href="#cb27-550" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-551"><a href="#cb27-551" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-552"><a href="#cb27-552" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-553"><a href="#cb27-553" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data<span class="sc">$</span>coffee_prod_diff)</span>
-<span id="cb27-554"><a href="#cb27-554" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-555"><a href="#cb27-555" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-556"><a href="#cb27-556" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb27-545"><a href="#cb27-545" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb27-546"><a href="#cb27-546" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-549"><a href="#cb27-549" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-550"><a href="#cb27-550" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-551"><a href="#cb27-551" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-552"><a href="#cb27-552" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-553"><a href="#cb27-553" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-554"><a href="#cb27-554" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-555"><a href="#cb27-555" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(data<span class="sc">$</span>coffee_prod_diff)</span>
+<span id="cb27-556"><a href="#cb27-556" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-557"><a href="#cb27-557" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-560"><a href="#cb27-560" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-561"><a href="#cb27-561" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-562"><a href="#cb27-562" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-563"><a href="#cb27-563" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-564"><a href="#cb27-564" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-565"><a href="#cb27-565" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
-<span id="cb27-566"><a href="#cb27-566" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
-<span id="cb27-567"><a href="#cb27-567" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 5</span></span>
-<span id="cb27-568"><a href="#cb27-568" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-569"><a href="#cb27-569" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">sample =</span> coffee_prod_diff)) <span class="sc">+</span></span>
-<span id="cb27-570"><a href="#cb27-570" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
-<span id="cb27-571"><a href="#cb27-571" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
-<span id="cb27-572"><a href="#cb27-572" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb27-573"><a href="#cb27-573" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Theoretical quantiles"</span>)<span class="sc">+</span></span>
-<span id="cb27-574"><a href="#cb27-574" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)</span>
-<span id="cb27-575"><a href="#cb27-575" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-576"><a href="#cb27-576" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-577"><a href="#cb27-577" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 4</span></span>
+<span id="cb27-558"><a href="#cb27-558" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb27-559"><a href="#cb27-559" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-562"><a href="#cb27-562" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-563"><a href="#cb27-563" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-564"><a href="#cb27-564" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-565"><a href="#cb27-565" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-566"><a href="#cb27-566" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-567"><a href="#cb27-567" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb27-568"><a href="#cb27-568" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb27-569"><a href="#cb27-569" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 5</span></span>
+<span id="cb27-570"><a href="#cb27-570" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-571"><a href="#cb27-571" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">sample =</span> coffee_prod_diff)) <span class="sc">+</span></span>
+<span id="cb27-572"><a href="#cb27-572" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb27-573"><a href="#cb27-573" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
+<span id="cb27-574"><a href="#cb27-574" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb27-575"><a href="#cb27-575" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Theoretical quantiles"</span>)<span class="sc">+</span></span>
+<span id="cb27-576"><a href="#cb27-576" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)</span>
+<span id="cb27-577"><a href="#cb27-577" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-578"><a href="#cb27-578" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-579"><a href="#cb27-579" aria-hidden="true" tabindex="-1"></a>The p-value of Shapiro-Wilk's test is higher than the significance level (0.05). Therefore, we fail to reject the null hypothesis and can reasonably assume that the data are normally distributed. The Q-Q plot suggests a slight skew in the data, but because the Shapiro-Wilk test is non-significant and most points lie close to the reference line, the normality assumption is considered acceptable.</span>
-<span id="cb27-580"><a href="#cb27-580" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-581"><a href="#cb27-581" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb27-582"><a href="#cb27-582" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-583"><a href="#cb27-583" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Homoscedasticity</span></span>
+<span id="cb27-579"><a href="#cb27-579" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 4</span></span>
+<span id="cb27-580"><a href="#cb27-580" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-581"><a href="#cb27-581" aria-hidden="true" tabindex="-1"></a>The p-value of Shapiro-Wilk's test is higher than the significance level (0.05). Therefore, we fail to reject the null hypothesis and can reasonably assume that the data are normally distributed. The Q-Q plot suggests a slight skew in the data, but because the Shapiro-Wilk test is non-significant and most points lie close to the reference line, the normality assumption is considered acceptable.</span>
+<span id="cb27-582"><a href="#cb27-582" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-583"><a href="#cb27-583" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb27-584"><a href="#cb27-584" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-585"><a href="#cb27-585" aria-hidden="true" tabindex="-1"></a>Does coffee productivity measured in 2015 and 2020 show equal variances?</span>
+<span id="cb27-585"><a href="#cb27-585" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Homoscedasticity</span></span>
 <span id="cb27-586"><a href="#cb27-586" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-587"><a href="#cb27-587" aria-hidden="true" tabindex="-1"></a>To answer this question, we can use Bartlett's test. The null hypothesis of this test is that the groups have equal variance, while the alternative hypothesis is that they have different variances.</span>
+<span id="cb27-587"><a href="#cb27-587" aria-hidden="true" tabindex="-1"></a>Does coffee productivity measured in 2015 and 2020 show equal variances?</span>
 <span id="cb27-588"><a href="#cb27-588" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-589"><a href="#cb27-589" aria-hidden="true" tabindex="-1"></a>In R, this test can be carried out using the <span class="in">`bartlett.test()`</span> function, which requires two main arguments:</span>
+<span id="cb27-589"><a href="#cb27-589" aria-hidden="true" tabindex="-1"></a>To answer this question, we can use Bartlett's test. The null hypothesis of this test is that the groups have equal variance, while the alternative hypothesis is that they have different variances.</span>
 <span id="cb27-590"><a href="#cb27-590" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-591"><a href="#cb27-591" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`x`</span>: a numeric vector of data values</span>
+<span id="cb27-591"><a href="#cb27-591" aria-hidden="true" tabindex="-1"></a>In R, this test can be carried out using the <span class="in">`bartlett.test()`</span> function, which requires two main arguments:</span>
 <span id="cb27-592"><a href="#cb27-592" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-593"><a href="#cb27-593" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`g`</span>: a vector or factor object giving the group for the corresponding elements of <span class="in">`x`</span></span>
+<span id="cb27-593"><a href="#cb27-593" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`x`</span>: a numeric vector of data values</span>
 <span id="cb27-594"><a href="#cb27-594" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-595"><a href="#cb27-595" aria-hidden="true" tabindex="-1"></a>To run this test, we would therefore need to reorganize the data a bit, so that we can have a data frame with a column for <span class="in">`x`</span> (the coffee productivity values) and a column for <span class="in">`g`</span> (the groups: 2015 and 2020).</span>
+<span id="cb27-595"><a href="#cb27-595" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`g`</span>: a vector or factor object giving the group for the corresponding elements of <span class="in">`x`</span></span>
 <span id="cb27-596"><a href="#cb27-596" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-597"><a href="#cb27-597" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb27-598"><a href="#cb27-598" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 10</span></span>
-<span id="cb27-599"><a href="#cb27-599" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-600"><a href="#cb27-600" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Reorganise the data so that it can be used in <span class="in">`bartlett.test()`</span>. One way to do this is to create a new data frame (<span class="in">`data_bartlett`</span>) using the function <span class="in">`data.frame()`</span> to combine variables into a single data frame. This data frame needs to contain two columns: <span class="in">`x`</span> and <span class="in">`g`</span> (but you could also name them differently). The column <span class="in">`x`</span> contains the response variable and is created by concatenating (<span class="in">`c()`</span>) coffee productivity values from two different years (<span class="in">`coffee_prod_past`</span> and <span class="in">`coffee_prod`</span>). The column <span class="in">`g`</span> defines a grouping variable and is generated using <span class="in">`rep()`</span>, which repeats the values <span class="in">`2015`</span> and <span class="in">`2020`</span> for each row in the original dataset (<span class="in">`nrow(data)`</span>).</span>
-<span id="cb27-601"><a href="#cb27-601" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Run the Bartlett's test.</span>
-<span id="cb27-602"><a href="#cb27-602" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>What can you conclude from this test?</span>
-<span id="cb27-603"><a href="#cb27-603" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-604"><a href="#cb27-604" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb27-605"><a href="#cb27-605" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
-<span id="cb27-606"><a href="#cb27-606" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-609"><a href="#cb27-609" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-610"><a href="#cb27-610" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-611"><a href="#cb27-611" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-612"><a href="#cb27-612" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-613"><a href="#cb27-613" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-614"><a href="#cb27-614" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-615"><a href="#cb27-615" aria-hidden="true" tabindex="-1"></a>data_bartlett <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(data<span class="sc">$</span>coffee_prod_past, data<span class="sc">$</span>coffee_prod),</span>
-<span id="cb27-616"><a href="#cb27-616" aria-hidden="true" tabindex="-1"></a>                            <span class="at">g =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">2015</span>, <span class="dv">2020</span>), <span class="at">each=</span><span class="fu">nrow</span>(data)))</span>
-<span id="cb27-617"><a href="#cb27-617" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-618"><a href="#cb27-618" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-619"><a href="#cb27-619" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb27-597"><a href="#cb27-597" aria-hidden="true" tabindex="-1"></a>To run this test, we would therefore need to reorganize the data a bit, so that we can have a data frame with a column for <span class="in">`x`</span> (the coffee productivity values) and a column for <span class="in">`g`</span> (the groups: 2015 and 2020).</span>
+<span id="cb27-598"><a href="#cb27-598" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-599"><a href="#cb27-599" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb27-600"><a href="#cb27-600" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 10</span></span>
+<span id="cb27-601"><a href="#cb27-601" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-602"><a href="#cb27-602" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Reorganise the data so that it can be used in <span class="in">`bartlett.test()`</span>. One way to do this is to create a new data frame (<span class="in">`data_bartlett`</span>) using the function <span class="in">`data.frame()`</span> to combine variables into a single data frame. This data frame needs to contain two columns: <span class="in">`x`</span> and <span class="in">`g`</span> (but you could also name them differently). The column <span class="in">`x`</span> contains the response variable and is created by concatenating (<span class="in">`c()`</span>) coffee productivity values from two different years (<span class="in">`coffee_prod_past`</span> and <span class="in">`coffee_prod`</span>). The column <span class="in">`g`</span> defines a grouping variable and is generated using <span class="in">`rep()`</span>, which repeats the values <span class="in">`2015`</span> and <span class="in">`2020`</span> for each row in the original dataset (<span class="in">`nrow(data)`</span>).</span>
+<span id="cb27-603"><a href="#cb27-603" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Run the Bartlett's test.</span>
+<span id="cb27-604"><a href="#cb27-604" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>What can you conclude from this test?</span>
+<span id="cb27-605"><a href="#cb27-605" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-606"><a href="#cb27-606" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb27-607"><a href="#cb27-607" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb27-608"><a href="#cb27-608" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-611"><a href="#cb27-611" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-612"><a href="#cb27-612" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-613"><a href="#cb27-613" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-614"><a href="#cb27-614" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-615"><a href="#cb27-615" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-616"><a href="#cb27-616" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-617"><a href="#cb27-617" aria-hidden="true" tabindex="-1"></a>data_bartlett <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(data<span class="sc">$</span>coffee_prod_past, data<span class="sc">$</span>coffee_prod),</span>
+<span id="cb27-618"><a href="#cb27-618" aria-hidden="true" tabindex="-1"></a>                            <span class="at">g =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">2015</span>, <span class="dv">2020</span>), <span class="at">each=</span><span class="fu">nrow</span>(data)))</span>
+<span id="cb27-619"><a href="#cb27-619" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-620"><a href="#cb27-620" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-623"><a href="#cb27-623" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-624"><a href="#cb27-624" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-625"><a href="#cb27-625" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-626"><a href="#cb27-626" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-627"><a href="#cb27-627" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-628"><a href="#cb27-628" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-629"><a href="#cb27-629" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="at">x =</span> data_bartlett<span class="sc">$</span>x,</span>
-<span id="cb27-630"><a href="#cb27-630" aria-hidden="true" tabindex="-1"></a>              <span class="at">g =</span> data_bartlett<span class="sc">$</span>g)</span>
-<span id="cb27-631"><a href="#cb27-631" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-632"><a href="#cb27-632" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-633"><a href="#cb27-633" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb27-621"><a href="#cb27-621" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb27-622"><a href="#cb27-622" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-625"><a href="#cb27-625" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-626"><a href="#cb27-626" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-627"><a href="#cb27-627" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-628"><a href="#cb27-628" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-629"><a href="#cb27-629" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-630"><a href="#cb27-630" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-631"><a href="#cb27-631" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="at">x =</span> data_bartlett<span class="sc">$</span>x,</span>
+<span id="cb27-632"><a href="#cb27-632" aria-hidden="true" tabindex="-1"></a>              <span class="at">g =</span> data_bartlett<span class="sc">$</span>g)</span>
+<span id="cb27-633"><a href="#cb27-633" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-634"><a href="#cb27-634" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-635"><a href="#cb27-635" aria-hidden="true" tabindex="-1"></a>The p-value of Bartlett's test is larger than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that coffee productivity data measured in 2015 and 2020 have equal variances.</span>
-<span id="cb27-636"><a href="#cb27-636" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-637"><a href="#cb27-637" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb27-638"><a href="#cb27-638" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-639"><a href="#cb27-639" aria-hidden="true" tabindex="-1"></a><span class="fu">### The slow way</span></span>
+<span id="cb27-635"><a href="#cb27-635" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb27-636"><a href="#cb27-636" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-637"><a href="#cb27-637" aria-hidden="true" tabindex="-1"></a>The p-value of Bartlett's test is larger than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that coffee productivity data measured in 2015 and 2020 have equal variances.</span>
+<span id="cb27-638"><a href="#cb27-638" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-639"><a href="#cb27-639" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb27-640"><a href="#cb27-640" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-641"><a href="#cb27-641" aria-hidden="true" tabindex="-1"></a>Now that we know that our data satisfy the underlying assumptions of a paired *t*-test, we can carry out the statistical test.</span>
+<span id="cb27-641"><a href="#cb27-641" aria-hidden="true" tabindex="-1"></a><span class="fu">### The slow way</span></span>
 <span id="cb27-642"><a href="#cb27-642" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-643"><a href="#cb27-643" aria-hidden="true" tabindex="-1"></a>First, let's do this using the "slow way" by manually computing the test statistic ($t$) and the p-value of the test.</span>
+<span id="cb27-643"><a href="#cb27-643" aria-hidden="true" tabindex="-1"></a>Now that we know that our data satisfy the underlying assumptions of a paired *t*-test, we can carry out the statistical test.</span>
 <span id="cb27-644"><a href="#cb27-644" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-645"><a href="#cb27-645" aria-hidden="true" tabindex="-1"></a>For a paired *t*-test, the test statistic ($t$) can be calculated using @eq-pairedttest, where $\bar{v}$ is the average difference in coffee productivity, $s_v$ is the standard deviation of the differences, and $n$ is the number of paired observations.</span>
+<span id="cb27-645"><a href="#cb27-645" aria-hidden="true" tabindex="-1"></a>First, let's do this using the "slow way" by manually computing the test statistic ($t$) and the p-value of the test.</span>
 <span id="cb27-646"><a href="#cb27-646" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-647"><a href="#cb27-647" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb27-648"><a href="#cb27-648" aria-hidden="true" tabindex="-1"></a>t = \frac{\bar{v}}{s_v / \sqrt{n}}</span>
-<span id="cb27-649"><a href="#cb27-649" aria-hidden="true" tabindex="-1"></a>$$ {#eq-pairedttest}</span>
-<span id="cb27-650"><a href="#cb27-650" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-651"><a href="#cb27-651" aria-hidden="true" tabindex="-1"></a>Under the null hypothesis (i.e., if there is no difference in the means of the two populations being compared), the $t$ statistic follows a Student’s *t* distribution with $n-1$ degrees of freedom, where $n$ is the number of paired observations (@fig-studentdistribution).</span>
+<span id="cb27-647"><a href="#cb27-647" aria-hidden="true" tabindex="-1"></a>For a paired *t*-test, the test statistic ($t$) can be calculated using @eq-pairedttest, where $\bar{v}$ is the average difference in coffee productivity, $s_v$ is the standard deviation of the differences, and $n$ is the number of paired observations.</span>
+<span id="cb27-648"><a href="#cb27-648" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-649"><a href="#cb27-649" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb27-650"><a href="#cb27-650" aria-hidden="true" tabindex="-1"></a>t = \frac{\bar{v}}{s_v / \sqrt{n}}</span>
+<span id="cb27-651"><a href="#cb27-651" aria-hidden="true" tabindex="-1"></a>$$ {#eq-pairedttest}</span>
 <span id="cb27-652"><a href="#cb27-652" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-653"><a href="#cb27-653" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb27-654"><a href="#cb27-654" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 11</span></span>
-<span id="cb27-655"><a href="#cb27-655" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-656"><a href="#cb27-656" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Calculate the value of the test statistic ($t$) using @eq-pairedttest.</span>
-<span id="cb27-657"><a href="#cb27-657" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Use the table of critical values of Student's *t* distribution available on Brightspace to obtain the critical value of the test.</span>
-<span id="cb27-658"><a href="#cb27-658" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Based on the calculated test statistic and critical value, what can you conclude about the effect of the intervention on coffee productivity?</span>
-<span id="cb27-659"><a href="#cb27-659" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-660"><a href="#cb27-660" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb27-661"><a href="#cb27-661" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
-<span id="cb27-662"><a href="#cb27-662" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-665"><a href="#cb27-665" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-666"><a href="#cb27-666" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-667"><a href="#cb27-667" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-668"><a href="#cb27-668" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-669"><a href="#cb27-669" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-670"><a href="#cb27-670" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-671"><a href="#cb27-671" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod_diff)<span class="sc">/</span>(<span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod_diff)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">nrow</span>(data)))</span>
-<span id="cb27-672"><a href="#cb27-672" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-673"><a href="#cb27-673" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-674"><a href="#cb27-674" aria-hidden="true" tabindex="-1"></a>The value of the test statistic is <span class="in">`{r} round(t, 3)`</span></span>
+<span id="cb27-653"><a href="#cb27-653" aria-hidden="true" tabindex="-1"></a>Under the null hypothesis (i.e., if there is no difference in the means of the two populations being compared), the $t$ statistic follows a Student’s *t* distribution with $n-1$ degrees of freedom, where $n$ is the number of paired observations (@fig-studentdistribution).</span>
+<span id="cb27-654"><a href="#cb27-654" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-655"><a href="#cb27-655" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb27-656"><a href="#cb27-656" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 11</span></span>
+<span id="cb27-657"><a href="#cb27-657" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-658"><a href="#cb27-658" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Calculate the value of the test statistic ($t$) using @eq-pairedttest.</span>
+<span id="cb27-659"><a href="#cb27-659" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Use the table of critical values of Student's *t* distribution available on Brightspace to obtain the critical value of the test.</span>
+<span id="cb27-660"><a href="#cb27-660" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Based on the calculated test statistic and critical value, what can you conclude about the effect of the intervention on coffee productivity?</span>
+<span id="cb27-661"><a href="#cb27-661" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-662"><a href="#cb27-662" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb27-663"><a href="#cb27-663" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb27-664"><a href="#cb27-664" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-667"><a href="#cb27-667" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-668"><a href="#cb27-668" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-669"><a href="#cb27-669" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-670"><a href="#cb27-670" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-671"><a href="#cb27-671" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-672"><a href="#cb27-672" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-673"><a href="#cb27-673" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>coffee_prod_diff)<span class="sc">/</span>(<span class="fu">sd</span>(data<span class="sc">$</span>coffee_prod_diff)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">nrow</span>(data)))</span>
+<span id="cb27-674"><a href="#cb27-674" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-675"><a href="#cb27-675" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-676"><a href="#cb27-676" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb27-676"><a href="#cb27-676" aria-hidden="true" tabindex="-1"></a>The value of the test statistic is <span class="in">`{r} round(t, 3)`</span></span>
 <span id="cb27-677"><a href="#cb27-677" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-680"><a href="#cb27-680" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-681"><a href="#cb27-681" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-682"><a href="#cb27-682" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-683"><a href="#cb27-683" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-684"><a href="#cb27-684" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-685"><a href="#cb27-685" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-686"><a href="#cb27-686" aria-hidden="true" tabindex="-1"></a><span class="co">#35 degrees of freedom, directed hypothesis (5%)</span></span>
-<span id="cb27-687"><a href="#cb27-687" aria-hidden="true" tabindex="-1"></a><span class="co">#Equivalent to doing a linear interpolation</span></span>
-<span id="cb27-688"><a href="#cb27-688" aria-hidden="true" tabindex="-1"></a>critical_value <span class="ot">&lt;-</span> (<span class="fl">1.697+1.684</span>)<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb27-689"><a href="#cb27-689" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-690"><a href="#cb27-690" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-691"><a href="#cb27-691" aria-hidden="true" tabindex="-1"></a>The critical value of the test is <span class="in">`{r} round(critical_value, 3)`</span></span>
+<span id="cb27-678"><a href="#cb27-678" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb27-679"><a href="#cb27-679" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-682"><a href="#cb27-682" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-683"><a href="#cb27-683" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-684"><a href="#cb27-684" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-685"><a href="#cb27-685" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-686"><a href="#cb27-686" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-687"><a href="#cb27-687" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-688"><a href="#cb27-688" aria-hidden="true" tabindex="-1"></a><span class="co">#35 degrees of freedom, directed hypothesis (5%)</span></span>
+<span id="cb27-689"><a href="#cb27-689" aria-hidden="true" tabindex="-1"></a><span class="co">#Equivalent to doing a linear interpolation</span></span>
+<span id="cb27-690"><a href="#cb27-690" aria-hidden="true" tabindex="-1"></a>critical_value <span class="ot">&lt;-</span> (<span class="fl">1.697+1.684</span>)<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb27-691"><a href="#cb27-691" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-692"><a href="#cb27-692" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-693"><a href="#cb27-693" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb27-693"><a href="#cb27-693" aria-hidden="true" tabindex="-1"></a>The critical value of the test is <span class="in">`{r} round(critical_value, 3)`</span></span>
 <span id="cb27-694"><a href="#cb27-694" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-695"><a href="#cb27-695" aria-hidden="true" tabindex="-1"></a>The absolute value of the calculated test statistic ($t$) is greater than the critical value. Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity.</span>
-<span id="cb27-696"><a href="#cb27-696" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-697"><a href="#cb27-697" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb27-698"><a href="#cb27-698" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-701"><a href="#cb27-701" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-702"><a href="#cb27-702" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-703"><a href="#cb27-703" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb27-704"><a href="#cb27-704" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-705"><a href="#cb27-705" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-706"><a href="#cb27-706" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
-<span id="cb27-707"><a href="#cb27-707" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb27-708"><a href="#cb27-708" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
-<span id="cb27-709"><a href="#cb27-709" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Student's t distribution with 35 degrees of freedom. The vertical dashed line shows the value of the observed t statistic (paired t-test)."</span></span>
-<span id="cb27-710"><a href="#cb27-710" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-studentdistribution</span></span>
-<span id="cb27-711"><a href="#cb27-711" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-712"><a href="#cb27-712" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">6</span>,<span class="dv">6</span>,<span class="fl">0.01</span>)</span>
-<span id="cb27-713"><a href="#cb27-713" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">dt</span>(ht,<span class="at">df=</span><span class="dv">35</span>)</span>
-<span id="cb27-714"><a href="#cb27-714" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-715"><a href="#cb27-715" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ht,<span class="fu">dt</span>(ht,<span class="at">df=</span><span class="dv">35</span>),<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="st">"black"</span>, <span class="at">ylab=</span><span class="st">"Probability density"</span>, <span class="at">xlab=</span><span class="st">"t statistic"</span>)</span>
-<span id="cb27-716"><a href="#cb27-716" aria-hidden="true" tabindex="-1"></a>xv <span class="ot">&lt;-</span> ht[ht<span class="sc">&gt;=</span>t]</span>
-<span id="cb27-717"><a href="#cb27-717" aria-hidden="true" tabindex="-1"></a>yv <span class="ot">&lt;-</span> pd[ht<span class="sc">&gt;=</span>t]</span>
-<span id="cb27-718"><a href="#cb27-718" aria-hidden="true" tabindex="-1"></a>xv <span class="ot">&lt;-</span> <span class="fu">c</span>(xv,<span class="dv">6</span>,t)</span>
-<span id="cb27-719"><a href="#cb27-719" aria-hidden="true" tabindex="-1"></a>yv <span class="ot">&lt;-</span> <span class="fu">c</span>(yv,<span class="dv">0</span>,<span class="dv">0</span>)</span>
-<span id="cb27-720"><a href="#cb27-720" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(xv,yv,<span class="at">col=</span><span class="st">"#FFCD00"</span>,<span class="at">border=</span><span class="cn">NA</span>)</span>
-<span id="cb27-721"><a href="#cb27-721" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>t, <span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb27-722"><a href="#cb27-722" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-723"><a href="#cb27-723" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-724"><a href="#cb27-724" aria-hidden="true" tabindex="-1"></a>We can now calculate the p-value associated with this test. We can do this using the <span class="in">`pt()`</span> function in R.</span>
+<span id="cb27-695"><a href="#cb27-695" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb27-696"><a href="#cb27-696" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-697"><a href="#cb27-697" aria-hidden="true" tabindex="-1"></a>The absolute value of the calculated test statistic ($t$) is greater than the critical value. Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity.</span>
+<span id="cb27-698"><a href="#cb27-698" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-699"><a href="#cb27-699" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb27-700"><a href="#cb27-700" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-703"><a href="#cb27-703" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-704"><a href="#cb27-704" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-705"><a href="#cb27-705" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb27-706"><a href="#cb27-706" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-707"><a href="#cb27-707" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-708"><a href="#cb27-708" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb27-709"><a href="#cb27-709" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb27-710"><a href="#cb27-710" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb27-711"><a href="#cb27-711" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Student's t distribution with 35 degrees of freedom. The vertical dashed line shows the value of the observed t statistic (paired t-test)."</span></span>
+<span id="cb27-712"><a href="#cb27-712" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-studentdistribution</span></span>
+<span id="cb27-713"><a href="#cb27-713" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-714"><a href="#cb27-714" aria-hidden="true" tabindex="-1"></a>ht <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">6</span>,<span class="dv">6</span>,<span class="fl">0.01</span>)</span>
+<span id="cb27-715"><a href="#cb27-715" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">dt</span>(ht,<span class="at">df=</span><span class="dv">35</span>)</span>
+<span id="cb27-716"><a href="#cb27-716" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-717"><a href="#cb27-717" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ht,<span class="fu">dt</span>(ht,<span class="at">df=</span><span class="dv">35</span>),<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="st">"black"</span>, <span class="at">ylab=</span><span class="st">"Probability density"</span>, <span class="at">xlab=</span><span class="st">"t statistic"</span>)</span>
+<span id="cb27-718"><a href="#cb27-718" aria-hidden="true" tabindex="-1"></a>xv <span class="ot">&lt;-</span> ht[ht<span class="sc">&gt;=</span>t]</span>
+<span id="cb27-719"><a href="#cb27-719" aria-hidden="true" tabindex="-1"></a>yv <span class="ot">&lt;-</span> pd[ht<span class="sc">&gt;=</span>t]</span>
+<span id="cb27-720"><a href="#cb27-720" aria-hidden="true" tabindex="-1"></a>xv <span class="ot">&lt;-</span> <span class="fu">c</span>(xv,<span class="dv">6</span>,t)</span>
+<span id="cb27-721"><a href="#cb27-721" aria-hidden="true" tabindex="-1"></a>yv <span class="ot">&lt;-</span> <span class="fu">c</span>(yv,<span class="dv">0</span>,<span class="dv">0</span>)</span>
+<span id="cb27-722"><a href="#cb27-722" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(xv,yv,<span class="at">col=</span><span class="st">"#FFCD00"</span>,<span class="at">border=</span><span class="cn">NA</span>)</span>
+<span id="cb27-723"><a href="#cb27-723" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>t, <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb27-724"><a href="#cb27-724" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-725"><a href="#cb27-725" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-726"><a href="#cb27-726" aria-hidden="true" tabindex="-1"></a>To calculate this p-value, it is important to remember that we are testing a directed (one-sided) hypothesis, as we expect coffee productivity in 2020 to be higher than in 2015. Graphically, this corresponds to calculating the area under the distribution curve to the right of the dashed vertical line shown in @fig-studentdistribution. This area represents the p-value and appears to be very small.</span>
+<span id="cb27-726"><a href="#cb27-726" aria-hidden="true" tabindex="-1"></a>We can now calculate the p-value associated with this test. We can do this using the <span class="in">`pt()`</span> function in R.</span>
 <span id="cb27-727"><a href="#cb27-727" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-728"><a href="#cb27-728" aria-hidden="true" tabindex="-1"></a>In R, this probability can be calculated using the function <span class="in">`pt()`</span>, which takes three main arguments:</span>
+<span id="cb27-728"><a href="#cb27-728" aria-hidden="true" tabindex="-1"></a>To calculate this p-value, it is important to remember that we are testing a directed (one-sided) hypothesis, as we expect coffee productivity in 2020 to be higher than in 2015. Graphically, this corresponds to calculating the area under the distribution curve to the right of the dashed vertical line shown in @fig-studentdistribution. This area represents the p-value and appears to be very small.</span>
 <span id="cb27-729"><a href="#cb27-729" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-730"><a href="#cb27-730" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`q`</span>: a vector of quantiles (in this example, it is the value of the observed *t* statistic)</span>
+<span id="cb27-730"><a href="#cb27-730" aria-hidden="true" tabindex="-1"></a>In R, this probability can be calculated using the function <span class="in">`pt()`</span>, which takes three main arguments:</span>
 <span id="cb27-731"><a href="#cb27-731" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-732"><a href="#cb27-732" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`df`</span>: the number of degrees of freedom ($n-1$)</span>
+<span id="cb27-732"><a href="#cb27-732" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`q`</span>: a vector of quantiles (in this example, it is the value of the observed *t* statistic)</span>
 <span id="cb27-733"><a href="#cb27-733" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-734"><a href="#cb27-734" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`lower.tail`</span>: a logical argument (can be either <span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>). If set to <span class="in">`TRUE`</span>, probabilities are $P(X \le x)$. If set to <span class="in">`FALSE`</span>, probabilities are $P(X &gt; x)$</span>
+<span id="cb27-734"><a href="#cb27-734" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`df`</span>: the number of degrees of freedom ($n-1$)</span>
 <span id="cb27-735"><a href="#cb27-735" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-736"><a href="#cb27-736" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb27-737"><a href="#cb27-737" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 12</span></span>
-<span id="cb27-738"><a href="#cb27-738" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-739"><a href="#cb27-739" aria-hidden="true" tabindex="-1"></a>Calculate the p-value of the paired *t*-test using <span class="in">`pt()`</span>. What can you conclude from this test?</span>
+<span id="cb27-736"><a href="#cb27-736" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`lower.tail`</span>: a logical argument (can be either <span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>). If set to <span class="in">`TRUE`</span>, probabilities are $P(X \le x)$. If set to <span class="in">`FALSE`</span>, probabilities are $P(X &gt; x)$</span>
+<span id="cb27-737"><a href="#cb27-737" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-738"><a href="#cb27-738" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb27-739"><a href="#cb27-739" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 12</span></span>
 <span id="cb27-740"><a href="#cb27-740" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-741"><a href="#cb27-741" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb27-742"><a href="#cb27-742" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
-<span id="cb27-743"><a href="#cb27-743" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-746"><a href="#cb27-746" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-747"><a href="#cb27-747" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-748"><a href="#cb27-748" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-749"><a href="#cb27-749" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-750"><a href="#cb27-750" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-751"><a href="#cb27-751" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-752"><a href="#cb27-752" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pt</span>(t, <span class="at">df=</span><span class="fu">nrow</span>(data)<span class="sc">-</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
-<span id="cb27-753"><a href="#cb27-753" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-754"><a href="#cb27-754" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-755"><a href="#cb27-755" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb27-741"><a href="#cb27-741" aria-hidden="true" tabindex="-1"></a>Calculate the p-value of the paired *t*-test using <span class="in">`pt()`</span>. What can you conclude from this test?</span>
+<span id="cb27-742"><a href="#cb27-742" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-743"><a href="#cb27-743" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb27-744"><a href="#cb27-744" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb27-745"><a href="#cb27-745" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-748"><a href="#cb27-748" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-749"><a href="#cb27-749" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-750"><a href="#cb27-750" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-751"><a href="#cb27-751" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-752"><a href="#cb27-752" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-753"><a href="#cb27-753" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-754"><a href="#cb27-754" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">pt</span>(t, <span class="at">df=</span><span class="fu">nrow</span>(data)<span class="sc">-</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
+<span id="cb27-755"><a href="#cb27-755" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-756"><a href="#cb27-756" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-757"><a href="#cb27-757" aria-hidden="true" tabindex="-1"></a>The calculated p-value is <span class="in">`{r} p`</span>, which is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity. On average, coffee productivity in 2020 increased by <span class="in">`{r} round(mean(data$coffee_prod_diff), 1)`</span> kg/ha/year.</span>
-<span id="cb27-758"><a href="#cb27-758" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-759"><a href="#cb27-759" aria-hidden="true" tabindex="-1"></a>::::</span>
-<span id="cb27-760"><a href="#cb27-760" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-761"><a href="#cb27-761" aria-hidden="true" tabindex="-1"></a><span class="fu">### The fast way</span></span>
+<span id="cb27-757"><a href="#cb27-757" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb27-758"><a href="#cb27-758" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-759"><a href="#cb27-759" aria-hidden="true" tabindex="-1"></a>The calculated p-value is <span class="in">`{r} p`</span>, which is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no difference in coffee productivity between 2015 and 2020. We conclude that the intervention led to an increase in coffee productivity. On average, coffee productivity in 2020 increased by <span class="in">`{r} round(mean(data$coffee_prod_diff), 1)`</span> kg/ha/year.</span>
+<span id="cb27-760"><a href="#cb27-760" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-761"><a href="#cb27-761" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb27-762"><a href="#cb27-762" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-763"><a href="#cb27-763" aria-hidden="true" tabindex="-1"></a>Of course, *t*-tests can be easily performed in R using the <span class="in">`t.test()`</span> function. Here are the most important arguments of this function:</span>
+<span id="cb27-763"><a href="#cb27-763" aria-hidden="true" tabindex="-1"></a><span class="fu">### The fast way</span></span>
 <span id="cb27-764"><a href="#cb27-764" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-765"><a href="#cb27-765" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`x`</span> and <span class="in">`y`</span>: the numeric vectors of data to compare (one vector per group)</span>
+<span id="cb27-765"><a href="#cb27-765" aria-hidden="true" tabindex="-1"></a>Of course, *t*-tests can be easily performed in R using the <span class="in">`t.test()`</span> function. Here are the most important arguments of this function:</span>
 <span id="cb27-766"><a href="#cb27-766" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-767"><a href="#cb27-767" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`paired`</span>: a logical value (<span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>) indicating whether the samples are paired (<span class="in">`TRUE`</span>) or independent (<span class="in">`FALSE`</span>)</span>
+<span id="cb27-767"><a href="#cb27-767" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`x`</span> and <span class="in">`y`</span>: the numeric vectors of data to compare (one vector per group)</span>
 <span id="cb27-768"><a href="#cb27-768" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-769"><a href="#cb27-769" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`alternative`</span>: specifies the type of test; <span class="in">`"two.sided"`</span> (default, for undirected hypotheses), <span class="in">`"greater"`</span>, or <span class="in">`"less"`</span></span>
+<span id="cb27-769"><a href="#cb27-769" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`paired`</span>: a logical value (<span class="in">`TRUE`</span> or <span class="in">`FALSE`</span>) indicating whether the samples are paired (<span class="in">`TRUE`</span>) or independent (<span class="in">`FALSE`</span>)</span>
 <span id="cb27-770"><a href="#cb27-770" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-771"><a href="#cb27-771" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`mu`</span>: the expected difference between group means if the null hypothesis is true</span>
+<span id="cb27-771"><a href="#cb27-771" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`alternative`</span>: specifies the type of test; <span class="in">`"two.sided"`</span> (default, for undirected hypotheses), <span class="in">`"greater"`</span>, or <span class="in">`"less"`</span></span>
 <span id="cb27-772"><a href="#cb27-772" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-773"><a href="#cb27-773" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`var.equal`</span>: a logical variable indicating whether to treat the two variances as being equal. If <span class="in">`TRUE`</span> then the pooled variance is used to estimate the variance otherwise the Welch (or Satterthwaite) approximation to the degrees of freedom is used.</span>
+<span id="cb27-773"><a href="#cb27-773" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`mu`</span>: the expected difference between group means if the null hypothesis is true</span>
 <span id="cb27-774"><a href="#cb27-774" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-775"><a href="#cb27-775" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`conf.level`</span>: the confidence level for the interval (default is 0.95)</span>
+<span id="cb27-775"><a href="#cb27-775" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`var.equal`</span>: a logical variable indicating whether to treat the two variances as being equal. If <span class="in">`TRUE`</span> then the pooled variance is used to estimate the variance otherwise the Welch (or Satterthwaite) approximation to the degrees of freedom is used.</span>
 <span id="cb27-776"><a href="#cb27-776" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-777"><a href="#cb27-777" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb27-778"><a href="#cb27-778" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 13</span></span>
-<span id="cb27-779"><a href="#cb27-779" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-780"><a href="#cb27-780" aria-hidden="true" tabindex="-1"></a>Use the <span class="in">`t.test()`</span> function to perform the statistical test. What information is shown in the R output? What can you conclude from this test? Write a few sentences to report this result, including the test statistic, p-value, sample size (degrees of freedom), and interpretation.</span>
+<span id="cb27-777"><a href="#cb27-777" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`conf.level`</span>: the confidence level for the interval (default is 0.95)</span>
+<span id="cb27-778"><a href="#cb27-778" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-779"><a href="#cb27-779" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb27-780"><a href="#cb27-780" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 13</span></span>
 <span id="cb27-781"><a href="#cb27-781" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-782"><a href="#cb27-782" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb27-783"><a href="#cb27-783" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
-<span id="cb27-784"><a href="#cb27-784" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-787"><a href="#cb27-787" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-788"><a href="#cb27-788" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-789"><a href="#cb27-789" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb27-790"><a href="#cb27-790" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-791"><a href="#cb27-791" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-792"><a href="#cb27-792" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-793"><a href="#cb27-793" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x =</span> data<span class="sc">$</span>coffee_prod,</span>
-<span id="cb27-794"><a href="#cb27-794" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> data<span class="sc">$</span>coffee_prod_past,</span>
-<span id="cb27-795"><a href="#cb27-795" aria-hidden="true" tabindex="-1"></a>       <span class="at">paired =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb27-796"><a href="#cb27-796" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"greater"</span>,</span>
-<span id="cb27-797"><a href="#cb27-797" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>,</span>
-<span id="cb27-798"><a href="#cb27-798" aria-hidden="true" tabindex="-1"></a>       <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-799"><a href="#cb27-799" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-800"><a href="#cb27-800" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-801"><a href="#cb27-801" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb27-782"><a href="#cb27-782" aria-hidden="true" tabindex="-1"></a>Use the <span class="in">`t.test()`</span> function to perform the statistical test. What information is shown in the R output? What can you conclude from this test? Write a few sentences to report this result, including the test statistic, p-value, sample size (degrees of freedom), and interpretation.</span>
+<span id="cb27-783"><a href="#cb27-783" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-784"><a href="#cb27-784" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb27-785"><a href="#cb27-785" aria-hidden="true" tabindex="-1"></a><span class="fu">## Code</span></span>
+<span id="cb27-786"><a href="#cb27-786" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-789"><a href="#cb27-789" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-790"><a href="#cb27-790" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-791"><a href="#cb27-791" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb27-792"><a href="#cb27-792" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-793"><a href="#cb27-793" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-794"><a href="#cb27-794" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-795"><a href="#cb27-795" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x =</span> data<span class="sc">$</span>coffee_prod,</span>
+<span id="cb27-796"><a href="#cb27-796" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> data<span class="sc">$</span>coffee_prod_past,</span>
+<span id="cb27-797"><a href="#cb27-797" aria-hidden="true" tabindex="-1"></a>       <span class="at">paired =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb27-798"><a href="#cb27-798" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"greater"</span>,</span>
+<span id="cb27-799"><a href="#cb27-799" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>,</span>
+<span id="cb27-800"><a href="#cb27-800" aria-hidden="true" tabindex="-1"></a>       <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-801"><a href="#cb27-801" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-802"><a href="#cb27-802" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-803"><a href="#cb27-803" aria-hidden="true" tabindex="-1"></a>We conducted a paired *t*-test to assess if an intervention from extension services resulted in increased coffee productivity (@fig-coffee-prod). Therefore, coffee productivity was measured in the same farms before and after the intervention (n=36 farms).&nbsp;The difference between coffee productivity before and after the intervention was significant (t= 5.37; p-value \&lt; 0.001) indicating that the intervention had a positive effect. On average, coffee productivity in 2020 was `{r} round(100*(mean(data$coffee_prod)-mean(data$coffee_prod_past))/mean(data$coffee_prod_past), 1)`% greater than in 2015.</span>
+<span id="cb27-803"><a href="#cb27-803" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
 <span id="cb27-804"><a href="#cb27-804" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-807"><a href="#cb27-807" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-808"><a href="#cb27-808" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
-<span id="cb27-809"><a href="#cb27-809" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb27-810"><a href="#cb27-810" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb27-811"><a href="#cb27-811" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb27-812"><a href="#cb27-812" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 4</span></span>
-<span id="cb27-813"><a href="#cb27-813" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4.2</span></span>
-<span id="cb27-814"><a href="#cb27-814" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
-<span id="cb27-815"><a href="#cb27-815" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Changes in coffee productivity measured in 2015 and 2020 across 36 farms. Summary statistics shown on the right side of each boxplot show the mean ± 95% CI (n=36)."</span></span>
-<span id="cb27-816"><a href="#cb27-816" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-coffee-prod</span></span>
-<span id="cb27-817"><a href="#cb27-817" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-818"><a href="#cb27-818" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb27-805"><a href="#cb27-805" aria-hidden="true" tabindex="-1"></a>We conducted a paired *t*-test to assess if an intervention from extension services resulted in increased coffee productivity (@fig-coffee-prod). Therefore, coffee productivity was measured in the same farms before and after the intervention (n=36 farms).&nbsp;The difference between coffee productivity before and after the intervention was significant (t= 5.37; p-value \&lt; 0.001) indicating that the intervention had a positive effect. On average, coffee productivity in 2020 was `{r} round(100*(mean(data$coffee_prod)-mean(data$coffee_prod_past))/mean(data$coffee_prod_past), 1)`% greater than in 2015.</span>
+<span id="cb27-806"><a href="#cb27-806" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-809"><a href="#cb27-809" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-810"><a href="#cb27-810" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb27-811"><a href="#cb27-811" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb27-812"><a href="#cb27-812" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-813"><a href="#cb27-813" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb27-814"><a href="#cb27-814" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 4</span></span>
+<span id="cb27-815"><a href="#cb27-815" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4.2</span></span>
+<span id="cb27-816"><a href="#cb27-816" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb27-817"><a href="#cb27-817" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Changes in coffee productivity measured in 2015 and 2020 across 36 farms. Summary statistics shown on the right side of each boxplot show the mean ± 95% CI (n=36)."</span></span>
+<span id="cb27-818"><a href="#cb27-818" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-coffee-prod</span></span>
 <span id="cb27-819"><a href="#cb27-819" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-820"><a href="#cb27-820" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_bartlett, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(g), <span class="at">y=</span>x))<span class="sc">+</span></span>
-<span id="cb27-821"><a href="#cb27-821" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.4</span>, <span class="at">fill=</span><span class="st">"#FFCD00"</span>)<span class="sc">+</span></span>
-<span id="cb27-822"><a href="#cb27-822" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> <span class="st">"mean_cl_boot"</span>, <span class="at">position=</span><span class="fu">position_nudge</span>(<span class="at">x=</span><span class="fl">0.4</span>))<span class="sc">+</span></span>
-<span id="cb27-823"><a href="#cb27-823" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
-<span id="cb27-824"><a href="#cb27-824" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
-<span id="cb27-825"><a href="#cb27-825" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Coffee productivity (kg/ha/year)"</span>)<span class="sc">+</span></span>
-<span id="cb27-826"><a href="#cb27-826" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size=</span><span class="dv">12</span>),</span>
-<span id="cb27-827"><a href="#cb27-827" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>), <span class="at">size=</span><span class="dv">13</span>))</span>
-<span id="cb27-828"><a href="#cb27-828" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-829"><a href="#cb27-829" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-830"><a href="#cb27-830" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb27-820"><a href="#cb27-820" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb27-821"><a href="#cb27-821" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-822"><a href="#cb27-822" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_bartlett, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(g), <span class="at">y=</span>x))<span class="sc">+</span></span>
+<span id="cb27-823"><a href="#cb27-823" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.4</span>, <span class="at">fill=</span><span class="st">"#FFCD00"</span>)<span class="sc">+</span></span>
+<span id="cb27-824"><a href="#cb27-824" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> <span class="st">"mean_cl_boot"</span>, <span class="at">position=</span><span class="fu">position_nudge</span>(<span class="at">x=</span><span class="fl">0.4</span>))<span class="sc">+</span></span>
+<span id="cb27-825"><a href="#cb27-825" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb27-826"><a href="#cb27-826" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">""</span>)<span class="sc">+</span></span>
+<span id="cb27-827"><a href="#cb27-827" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Coffee productivity (kg/ha/year)"</span>)<span class="sc">+</span></span>
+<span id="cb27-828"><a href="#cb27-828" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb27-829"><a href="#cb27-829" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">margin=</span><span class="fu">margin</span>(<span class="at">r=</span><span class="dv">10</span>), <span class="at">size=</span><span class="dv">13</span>))</span>
+<span id="cb27-830"><a href="#cb27-830" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-831"><a href="#cb27-831" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-832"><a href="#cb27-832" aria-hidden="true" tabindex="-1"></a>::::</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

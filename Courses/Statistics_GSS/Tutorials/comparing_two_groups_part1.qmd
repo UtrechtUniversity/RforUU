@@ -178,7 +178,9 @@ The `pnorm()` function takes four main arguments:
 
 -   `sd`: the standard deviation of the normal distribution (should be one for the standard normal, which is the default value)
 
--   `lower.tail`: a logical argument (can be either `TRUE` or `FALSE`). If set to `TRUE`, probabilities are $P(X \le x)$. If set to `FALSE`, probabilities are $P(X > x)$
+-   `lower.tail`: a logical argument (can be either `TRUE` or `FALSE`). If set to `TRUE`, probabilities are $P(X \le x)$. If set to `FALSE`, probabilities are $P(X > x)$ (@fig-lowertail)
+
+![Illustration of how the `lower.tail` argument works. The yellow area represents the probability that will be returned by `pnorm()` if `lower.tail` is set to `TRUE` (left scenario) or `FALSE` (right scenario).](/Images/lower_tail.png){#fig-lowertail fig-align="center"}
 
 :::: callout-tip
 ## Exercise 3
