@@ -640,7 +640,7 @@ ggplot(data, aes(x = SOM_fitted,
 
 ## Solution 3
 
-The residuals are well scattered around zero. Although a few observations have relatively large residuals, there is no clear systematic pattern, such as a funnel shape, that would indicate heteroscedasticity. This suggests that the assumption of equal variances is reasonably met.
+The residuals are well scattered around zero. Although a few observations have relatively large residuals, there is no clear systematic pattern, such as a funnel shape, that would indicate heteroscedasticity. This suggests that the assumption of homoscedasticity is reasonably met.
 :::
 ::::
 

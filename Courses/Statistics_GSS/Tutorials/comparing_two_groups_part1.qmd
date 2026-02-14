@@ -168,6 +168,7 @@ yv <- pd[ht>=zscore]
 xv <- c(xv,3,zscore)
 yv <- c(yv,0,0)
 polygon(xv,yv,col="#FFCD00",border=NA)
+abline(v=zscore, lty=2)
 ```
 
 The `pnorm()` function takes four main arguments:
@@ -454,6 +455,16 @@ up_CI_large <- mean_large + qt(0.975, n_large-1)*sd_large/sqrt(n_large)
 :::
 ::::
 
+::: callout-note
+## Standard deviation, standard error, and 95% confidence interval
+
+**Standard deviation** describes how much individual observations in a dataset differ from the average. A large standard deviation means the data points are widely spread out, while a small one means they cluster closely around the mean.
+
+**Standard error** is the standard deviation of the sampling distribution of the mean. It is mathematically related to the standard deviation. It measures how variable the sample mean will be, if you repeat the whole study many times (e.g., if you get a new random sample from the same population and calculate the mean value of that sample). A smaller standard error means the sample mean is likely to be closer to the true population mean, while a larger one indicates more uncertainty.
+
+A **95% confidence interval** gives a range of values that is likely to contain the true population mean (with 95% confidence), based on the sample data. It is mathematically related to the standard error. It means that if the same study were repeated many times, about 95% of the calculated intervals would contain the true population mean. A narrow interval indicates a precise estimate, while a wide interval indicates greater uncertainty.
+:::
+
 ## Doing a paired *t*-test
 
 ### Question and hypotheses
@@ -678,6 +689,14 @@ abline(v=t, lty=2)
 ```
 
 We can now calculate the p-value associated with this test. We can do this using the `pt()` function in R.
+
+::: callout-important
+## What is (not) a p-value?
+
+The p-value [**is not**]{.underline} the probability that the null hypothesis of your test is true.
+
+In this paired t-test, the **p-value represents the probability of obtaining a** $t$ **statistic at least as extreme as the one observed if the null hypothesis were true** (i.e, if there were actually no difference in coffee productivity between 2015 and 2020). A small p-value indicates that the observed result would be unlikely to occur purely by chance under the null hypothesis. If the p-value is sufficiently small (typically below 0.05), we would reject the null hypothesis in favor of the alternative hypothesis.
+:::
 
 To calculate this p-value, it is important to remember that we are testing a directed (one-sided) hypothesis, as we expect coffee productivity in 2020 to be higher than in 2015. Graphically, this corresponds to calculating the area under the distribution curve to the right of the dashed vertical line shown in @fig-studentdistribution. This area represents the p-value and appears to be very small.
 

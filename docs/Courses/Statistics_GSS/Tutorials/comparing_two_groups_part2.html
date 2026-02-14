@@ -685,7 +685,7 @@ window.Quarto = {
 <p>We want to determine whether coffee productivity measured in 2020 (after an intervention from extension services) is higher than that measured in 2015 (before an intervention from extension services). In other words, did the intervention increase coffee productivity on farms?</p>
 <p>In this example, the samples are paired because coffee productivity was measured on the <u>same farms</u> in two different years (before and after an intervention). This comparison also involves two groups: productivity measured in 2015 versus productivity measured in 2020.</p>
 <p><strong>Null hypothesis</strong>: there is no difference in coffee productivity between 2015 and 2020.</p>
-<p><strong>Alternative hypothesis</strong>: coffee productivity measured in 2020 <u>is higher</u> than coffee productivity measured in 2025 (which is what we would expect if the intervention had been successful). This is a directed hypothesis.</p>
+<p><strong>Alternative hypothesis</strong>: coffee productivity measured in 2020 <u>is higher</u> than coffee productivity measured in 2015 (which is what we would expect if the intervention had been successful). This is a directed hypothesis.</p>
 <p>In the previous tutorial, we checked whether the difference in coffee productivity between 2015 and 2020 followed a normal distribution before running a paired <em>t</em>-test. Both the Shapiro-Wilk’s test and the Q-Q plot suggested that the normality assumption was reasonable. But what should we do if this assumption is not met?</p>
 <p>One option is to use a non-parametric test for paired samples. The term <em>non-parametric</em> means that the test is based on the ranks of the data values rather than their raw values. In this tutorial, we will introduce two options: the <strong>Wilcoxon signed-rank test</strong> and the <strong>sign test</strong>. The underlying principles of these tests have already been covered in the associated lecture (see lecture slides if you need to refresh your memory).</p>
 </section>
@@ -1111,12 +1111,12 @@ t = \frac{\bar{y}_A - \bar{y}_B}{\sqrt{\frac{s_A^2}{n_A} + \frac{s_B^2}{n_B}}}
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>yB <span class="ot">&lt;-</span> <span class="fu">mean</span>(data_false<span class="sc">$</span>coffee_prod)</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate group variances</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>varA <span class="ot">&lt;-</span> <span class="fu">var</span>(data_false<span class="sc">$</span>coffee_prod)</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>varB <span class="ot">&lt;-</span> <span class="fu">var</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>varA <span class="ot">&lt;-</span> <span class="fu">var</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>varB <span class="ot">&lt;-</span> <span class="fu">var</span>(data_false<span class="sc">$</span>coffee_prod)</span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the number of observations in each group</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>nA <span class="ot">&lt;-</span> <span class="fu">length</span>(data_false<span class="sc">$</span>coffee_prod)</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>nB <span class="ot">&lt;-</span> <span class="fu">length</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>nA <span class="ot">&lt;-</span> <span class="fu">length</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>nB <span class="ot">&lt;-</span> <span class="fu">length</span>(data_false<span class="sc">$</span>coffee_prod)</span>
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the pooled standard deviation</span></span>
 <span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>sp <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(((nA<span class="dv">-1</span>)<span class="sc">*</span>varA <span class="sc">+</span> (nB<span class="dv">-1</span>)<span class="sc">*</span>varB)<span class="sc">/</span>(nA <span class="sc">+</span> nB <span class="sc">-</span> <span class="dv">2</span>))</span>
@@ -1903,7 +1903,7 @@ Figure&nbsp;3: Plant diversity (Shannon index) measured in farms that apply pest
 <span id="cb30-97"><a href="#cb30-97" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-98"><a href="#cb30-98" aria-hidden="true" tabindex="-1"></a>**Null hypothesis**: there is no difference in coffee productivity between 2015 and 2020.</span>
 <span id="cb30-99"><a href="#cb30-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-100"><a href="#cb30-100" aria-hidden="true" tabindex="-1"></a>**Alternative hypothesis**: coffee productivity measured in 2020 <span class="co">[</span><span class="ot">is higher</span><span class="co">]</span>{.underline} than coffee productivity measured in 2025 (which is what we would expect if the intervention had been successful). This is a directed hypothesis.</span>
+<span id="cb30-100"><a href="#cb30-100" aria-hidden="true" tabindex="-1"></a>**Alternative hypothesis**: coffee productivity measured in 2020 <span class="co">[</span><span class="ot">is higher</span><span class="co">]</span>{.underline} than coffee productivity measured in 2015 (which is what we would expect if the intervention had been successful). This is a directed hypothesis.</span>
 <span id="cb30-101"><a href="#cb30-101" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-102"><a href="#cb30-102" aria-hidden="true" tabindex="-1"></a>In the previous tutorial, we checked whether the difference in coffee productivity between 2015 and 2020 followed a normal distribution before running a paired *t*-test. Both the Shapiro-Wilk's test and the Q-Q plot suggested that the normality assumption was reasonable. But what should we do if this assumption is not met?</span>
 <span id="cb30-103"><a href="#cb30-103" aria-hidden="true" tabindex="-1"></a></span>
@@ -2218,12 +2218,12 @@ Figure&nbsp;3: Plant diversity (Shannon index) measured in farms that apply pest
 <span id="cb30-426"><a href="#cb30-426" aria-hidden="true" tabindex="-1"></a>yB <span class="ot">&lt;-</span> <span class="fu">mean</span>(data_false<span class="sc">$</span>coffee_prod)</span>
 <span id="cb30-427"><a href="#cb30-427" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-428"><a href="#cb30-428" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate group variances</span></span>
-<span id="cb30-429"><a href="#cb30-429" aria-hidden="true" tabindex="-1"></a>varA <span class="ot">&lt;-</span> <span class="fu">var</span>(data_false<span class="sc">$</span>coffee_prod)</span>
-<span id="cb30-430"><a href="#cb30-430" aria-hidden="true" tabindex="-1"></a>varB <span class="ot">&lt;-</span> <span class="fu">var</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb30-429"><a href="#cb30-429" aria-hidden="true" tabindex="-1"></a>varA <span class="ot">&lt;-</span> <span class="fu">var</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb30-430"><a href="#cb30-430" aria-hidden="true" tabindex="-1"></a>varB <span class="ot">&lt;-</span> <span class="fu">var</span>(data_false<span class="sc">$</span>coffee_prod)</span>
 <span id="cb30-431"><a href="#cb30-431" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-432"><a href="#cb30-432" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the number of observations in each group</span></span>
-<span id="cb30-433"><a href="#cb30-433" aria-hidden="true" tabindex="-1"></a>nA <span class="ot">&lt;-</span> <span class="fu">length</span>(data_false<span class="sc">$</span>coffee_prod)</span>
-<span id="cb30-434"><a href="#cb30-434" aria-hidden="true" tabindex="-1"></a>nB <span class="ot">&lt;-</span> <span class="fu">length</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb30-433"><a href="#cb30-433" aria-hidden="true" tabindex="-1"></a>nA <span class="ot">&lt;-</span> <span class="fu">length</span>(data_true<span class="sc">$</span>coffee_prod)</span>
+<span id="cb30-434"><a href="#cb30-434" aria-hidden="true" tabindex="-1"></a>nB <span class="ot">&lt;-</span> <span class="fu">length</span>(data_false<span class="sc">$</span>coffee_prod)</span>
 <span id="cb30-435"><a href="#cb30-435" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-436"><a href="#cb30-436" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate the pooled standard deviation</span></span>
 <span id="cb30-437"><a href="#cb30-437" aria-hidden="true" tabindex="-1"></a>sp <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(((nA<span class="dv">-1</span>)<span class="sc">*</span>varA <span class="sc">+</span> (nB<span class="dv">-1</span>)<span class="sc">*</span>varB)<span class="sc">/</span>(nA <span class="sc">+</span> nB <span class="sc">-</span> <span class="dv">2</span>))</span>

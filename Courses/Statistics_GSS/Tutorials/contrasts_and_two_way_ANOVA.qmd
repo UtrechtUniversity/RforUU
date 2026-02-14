@@ -35,7 +35,7 @@ Let's get started!
 
 ## Load R packages
 
-To work on this tutorial, you will need to load the *readxl* and *tidyverse* packages.
+To work on this tutorial, you will need to load the *readxl*, *rstatix*, and *tidyverse* packages.
 
 ```{r}
 #| eval: true 
@@ -45,6 +45,7 @@ To work on this tutorial, you will need to load the *readxl* and *tidyverse* pac
 
 library(readxl) 
 library(tidyverse)
+library(rstatix)
 ```
 
 ## Importing data
@@ -391,4 +392,324 @@ ggplot(data, aes(x=n_ext_projects, y=SOM))+
 
 ## Doing a two-way ANOVA
 
-Question and hypotheses
+### Questions and hypotheses
+
+In a one-way ANOVA, we examine the effect of a single explanatory variable on a response variable. So far, we have focused only on farm type (`farm_type`) as the explanatory variable. However, other factors may also influence the response. For example, location, represented in the dataset by municipality (`municipality`), could affect how agroecosystems function. Different municipalities may vary in environmental conditions such as rainfall, temperature, or soil type, and these differences can influence biodiversity, ecosystem processes, and agricultural production. To account for this additional source of variation, we can use a **two-way ANOVA**, including both farm type and municipality as explanatory variables and coffee productivity as the response variable. This allows us to test whether coffee production differs among farm types, among municipalities, and whether the effect of farm type depends on location (i.e., interaction between farm type and municipality).
+
+::: callout-important
+## The concept of interaction between independent/explanatory variables
+
+This is an important statistical concept. What do we mean when we say that "there is a significant interaction between explanatory variables"?
+
+An interaction between independent variables occurs when the effect of one explanatory variable on the response variable depends on the level of another explanatory variable. In other words, the influence of one factor is not constant across all levels of the second factor.
+
+Statistically, a significant interaction term in the model tells us that the combined effect of the two variables cannot be explained by simply adding their separate (main) effects (i.e., effects are not additive).
+:::
+
+Our new research question is:
+
+**Does coffee production differ among farm types and municipalities, and does the effect of farm type on coffee production depend on the municipality?**
+
+:::: callout-tip
+## Exercise 7
+
+::: panel-tabset
+## Question
+
+Based on the research question above, formulate a null hypothesis for each fixed factor and for the interaction between factors.
+
+## Answer
+
+**Null hypothesis (farm type)**: there are no differences in coffee productivity among farm types.
+
+**Null hypothesis (municipality)**: there are no differences in coffee productivity among municipalities.
+
+**Null hypothesis (interaction)**: the effects of farm type and municipality on coffee productivity are additive (i.e., the effect of farm type on coffee productivity does not depend on municipality).
+:::
+::::
+
+As usual, let's first start by plotting the data.
+
+### Visualize the data using a box plot
+
+::: callout-tip
+## Exercise 8
+
+Create a box plot showing differences in coffee productivity (`coffee_prod` variable) among farm types (`farm_type`) and municipalities (`municipality`). Tip: plot `farm_type` along the x-axis and use `facet_wrap()` to create a separate panel for each municipality.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 7
+#| fig-height: 4
+#| fig-align: center
+#| fig-cap: "Effects of farm type and municipality on coffee productivity."
+#| label: fig-twowayanova
+
+ggplot(data = data, mapping = aes(x = farm_type,
+                                  y = coffee_prod)) +
+  geom_boxplot(width = 0.4,
+               fill = "#FFCD00")+ #Create a box plot
+  xlab("Farm type")+ #Change name of x axis
+  ylab("Coffee productivity (kg/ha/year)")+ #Change name of y axis
+  theme_bw()+ #This creates a black/white plot
+  facet_wrap(~municipality)
+```
+:::
+
+### Fit a two-way ANOVA model
+
+In R, a two-way ANOVA model can be fitted using the `aov()` function. The first argument of this function is a formula that specifies the model structure, including the response variable (here, `coffee_prod`) and the explanatory variables.
+
+To fit a model that includes both main effects and their interaction, we use the following formula:
+
+`coffee_prod ~ farm_type * municipality`
+
+The `*` operator tells R to include the main effects of `farm_type` and `municipality` as well as their interaction. In other words, this shorthand notation expands to:
+
+`coffee_prod ~ farm_type + municipality + farm_type*municipality`
+
+If we are only interested in testing the main effects of the two predictor variables, without considering their interaction, we would instead write:
+
+`coffee_prod ~ farm_type + municipality`
+
+This model assumes that the effect of farm type is consistent across municipalities (i.e., no interaction).
+
+:::: callout-tip
+## Exercise 9
+
+1.  Make sure that `farm_type` and `municipality` are factor variables.
+2.  Fit a two-way ANOVA model to evaluate how farm type, municipality, and their interaction influence coffee productivity.
+3.  Use `summary()` to display the ANOVA table.
+4.  What can you conclude from this two-way ANOVA? **Tip**: When interpreting the output, **begin by examining the interaction term** between farm type and municipality. This is important because a significant interaction indicates that the effect of farm type on coffee productivity differs across municipalities. In such a case, the main effects should be interpreted carefully, as their influence depends on each other. Instead, your interpretation should focus primarily on describing the nature and implications of the interaction.
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+data$farm_type <- as.factor(data$farm_type)
+data$municipality <- as.factor(data$municipality)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+model <- aov(coffee_prod ~ farm_type*municipality,
+             data = data)
+```
+
+## Solution 3
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+summary(model)
+```
+
+## Solution 4
+
+The interaction between farm type and municipality is not significant (p = 0.332). This means that the effect of farm type on coffee productivity does not depend on the municipality (i.e., we fail to reject the null hypothesis that the effects of farm type and municipality on coffee productivity are additive).
+
+The results also show that municipality has a significant effect on coffee productivity (p = 0.00002), indicating that coffee production differs between the two municipalities. From @fig-twowayanova, it is clear that farms in the municipality of Divino have a lower average coffee productivity than the farms in the Araponga municipality.
+
+In contrast, farm type does not have a significant effect on coffee productivity (p = 0.424), suggesting that coffee productivity does not differ significantly among farm types when averaged across municipalities.
+:::
+::::
+
+Similarly to what we did for the one-way ANOVA, we can calculate $\eta^2$ for each source of variation (main effects and their interaction). For each source of variation, $\eta^2$ is the proportion of the total variation ($SS_{total}$) that is explained by the variation of the independent (or explanatory) variable ($SS_{factor}$) (@eq-eta2).
+
+Similarly to the one-way ANOVA, we can calculate $\eta^2$ for each source of variation, including the main effects and their interaction. For a given source of variation, $\eta^2$ represents the proportion of the total variability in the data ($SS_{total}$) that is attributable to that factor. After a two-way ANOVA, you can calculate three $\eta^2$: one for each main effect (e.g., farm type and municipality), and one for the interaction (@eq-eta2factor1, @eq-eta2factor2, @eq-eta2interaction).
+
+$$ \eta_{factor1}^2=\frac{SS_{factor1}}{SS_{total}}=\frac{SS_{factor1}}{SS_{factor1}+SS_{factor2}+SS_{interaction}+SS_{res}} $$ {#eq-eta2factor1}
+
+$$ \eta_{factor2}^2=\frac{SS_{factor2}}{SS_{total}}=\frac{SS_{factor2}}{SS_{factor1}+SS_{factor2}+SS_{interaction}+SS_{res}} $$ {#eq-eta2factor2}
+
+$$ \eta_{interaction}^2=\frac{SS_{interaction}}{SS_{total}}=\frac{SS_{interaction}}{SS_{factor1}+SS_{factor2}+SS_{interaction}+SS_{res}} $$ {#eq-eta2interaction}
+
+We can do these calculations easily in R, using sum of square values provided in the ANOVA table, but we can also do it faster using the `eta_squared()` function in the *rstatix* package. The only input you need to provide in an `aov` object.
+
+:::: callout-tip
+## Exercise 10
+
+1.  On a piece of paper, calculate the values of $\eta_{farmtype}^2$, $\eta_{municipality}^2$, and $\eta_{interaction}^2$ using output values provided in the ANOVA table (you need to be able to do this type of calculation for the exam).
+2.  Use `eta_squared()` to calculate the same $\eta^2$ values.
+3.  What can you conclude from these $\eta^2$ values?
+
+::: panel-tabset
+## Solution 2
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+eta_squared(model)
+```
+
+## Solution 3
+
+Most of the variation in coffee productivity is associated with differences among municipalities, which account for 42.9% of the total variability. The interaction between farm type and municipality explains an additional 3.8% of the variation. In contrast, farm type by itself explains only 3.0% of the total variation, suggesting that differences in coffee productivity between farm types are relatively small when municipality is not taken into account.
+:::
+::::
+
+### Check ANOVA assumptions
+
+To check ANOVA assumptions, we will follow the same procedure introduced in the previous tutorial. We will first fit the two-way ANOVA model. Then, we will check whether the normality and homoscedasticity assumptions are met by (1) examining whether the model residuals are approximately normally distributed, and (2) creating a residual plot.
+
+#### Normality
+
+After fitting an ANOVA model, you can check whether the normality assumption is met by examining whether the model residuals are approximately normally distributed. This can be done by (1) using the `residuals()` function on the ANOVA `model` object to extract the model residuals (i.e. the differences between observed values and model predictions), (2) applying a Shapiro-Wilk test to the residuals, and (3) creating a Q-Q plot using model residuals.
+
+:::: callout-tip
+## Exercise 10
+
+1.  Extract model residuals by using the `residuals()` function on the model object. Store these residuals in a new column (`coffee_prod_residuals`) in the `data` object.
+2.  Run a Shapiro-Wilk's test on model residuals.
+3.  Create a Q-Q plot using model residuals.
+4.  What can you conclude from these tests?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true 
+#| message: false 
+#| warning: false  
+
+data$coffee_prod_residuals <- residuals(model)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false 
+#| warning: false  
+
+shapiro.test(data$coffee_prod_residuals)
+```
+
+## Solution 3
+
+```{r}
+#| eval: true
+#| echo: true 
+#| message: false
+#| warning: false 
+#| fig-align: center
+#| fig-height: 6
+#| fig-width: 6  
+
+ggplot(data, aes(sample = coffee_prod_residuals)) +
+    stat_qq() +   
+    stat_qq_line() +   
+    theme_bw() +   
+    xlab("Theoretical quantiles")+   
+    ylab("Sample quantiles")+   
+    ggtitle("Model residuals")
+```
+
+## Solution 4
+
+The p-value of the Shapiro-Wilk test is greater than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that the model residuals are normally distributed. This result is supported by the Q-Q plot, in which most points lie close to the reference line. This suggests that the assumption of normality (of the residuals) is met.
+:::
+::::
+
+#### Homoscedasticity
+
+After fitting an ANOVA model, you can check the homoscedasticity assumption by creating a residual plot.
+
+:::: callout-tip
+## Exercise 11
+
+1.  Calculate the values fitted by the ANOVA model using the `fitted()` function on the model object. Store these values in a new column (`coffee_prod_fitted`) in the `data` object.
+2.  Create a residual plot (fitted values on the x-axis and residuals on the y-axis)
+3.  What can you conclude from this residual plot?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false  
+
+data$coffee_prod_fitted <- fitted(model)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true
+#| echo: true 
+#| message: false 
+#| warning: false 
+#| fig-align: center 
+#| fig-height: 6 
+#| fig-width: 6  
+
+ggplot(data, aes(x = coffee_prod_fitted,
+                 y = coffee_prod_residuals)) +   
+    geom_point() + #Add points to the plot   
+    geom_hline(yintercept = 0,              
+               linetype = "dashed")+ #Add horizontal dashed line at y=0   
+    theme_bw() +   
+    xlab("Fitted values")+   
+    ylab("Residuals")+   
+    ggtitle("Residual plot")
+```
+
+## Solution 3
+
+The residuals are scattered around zero. Although the variance of the residuals seem to be smaller in some groups than others, there is no clear systematic pattern, such as a funnel shape, that would indicate heteroscedasticity. This suggests that the assumption of homoscedasticity is reasonably met.
+:::
+::::
+
+## Doing a post hoc test
+
+Based on the results of our two-way ANOVA, a post hoc test is not strictly necessary. The analysis showed that municipality was the only factor with a significant effect on coffee productivity (p \< 0.05). Neither the interaction between farm type and municipality nor the main effect of farm type (averaged across municipalities) was statistically significant (p \> 0.05). Because the dataset includes only two municipalities (Araponga and Divino), no additional pairwise comparisons are required to determine which municipalities differ. With only two groups, a significant ANOVA already indicates that their means are different, and the direction of this difference (higher productivity in Araponga than in Divino) can be seen directly in @fig-twowayanova.
+
+Post hoc tests are mainly used when there are three or more groups and we need to identify which specific groups differ from each other. However, to demonstrate how post hoc comparisons can be performed after a two-way ANOVA, we will carry out one here. As in the previous tutorial, we will use **Tukey’s Honest Significant Difference** (Tukey HSD) test. In R, this test can be performed with the `TukeyHSD()` function from the *stats* package.
+
+:::: callout-tip
+## Exercise 12
+
+1.  Run a Tukey HSD post hoc test to find out which farm types differ from each other in soil organic matter content.
+2.  What can you conclude from this test? Write a paragraph summarizing the results of the ANOVA (and post hoc test).
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+TukeyHSD(model)
+```
+
+## Solution 2
+
+We found no evidence that the effect of farm type on coffee productivity depended on municipality, as the interaction between farm type and municipality was not significant (F(2, 30) = 1.14, p = 0.332). However, coffee productivity was significantly higher in Araponga than in Divino on average (F(1, 30) = 25.6, p \< 0.001). In contrast, farm type itself did not have a significant overall effect on productivity when averaged across municipalities (F(2, 30) = 0.88, p = 0.424).
+:::
+::::

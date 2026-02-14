@@ -91,7 +91,7 @@ In this example, the samples are paired because coffee productivity was measured
 
 **Null hypothesis**: there is no difference in coffee productivity between 2015 and 2020.
 
-**Alternative hypothesis**: coffee productivity measured in 2020 [is higher]{.underline} than coffee productivity measured in 2025 (which is what we would expect if the intervention had been successful). This is a directed hypothesis.
+**Alternative hypothesis**: coffee productivity measured in 2020 [is higher]{.underline} than coffee productivity measured in 2015 (which is what we would expect if the intervention had been successful). This is a directed hypothesis.
 
 In the previous tutorial, we checked whether the difference in coffee productivity between 2015 and 2020 followed a normal distribution before running a paired *t*-test. Both the Shapiro-Wilk's test and the Q-Q plot suggested that the normality assumption was reasonable. But what should we do if this assumption is not met?
 
@@ -406,12 +406,12 @@ yA <- mean(data_true$coffee_prod)
 yB <- mean(data_false$coffee_prod)
 
 #Calculate group variances
-varA <- var(data_false$coffee_prod)
-varB <- var(data_true$coffee_prod)
+varA <- var(data_true$coffee_prod)
+varB <- var(data_false$coffee_prod)
 
 #Calculate the number of observations in each group
-nA <- length(data_false$coffee_prod)
-nB <- length(data_true$coffee_prod)
+nA <- length(data_true$coffee_prod)
+nB <- length(data_false$coffee_prod)
 
 #Calculate the pooled standard deviation
 sp <- sqrt(((nA-1)*varA + (nB-1)*varB)/(nA + nB - 2))
