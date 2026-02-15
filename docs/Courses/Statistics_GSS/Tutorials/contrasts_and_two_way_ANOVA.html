@@ -781,7 +781,7 @@ window.Quarto = {
 </div>
 <div class="callout-body-container callout-body">
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Question</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Answer</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Question</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">One possible answer</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <p>Choose contrast coefficients to test the hypothesis that soil organic matter content is higher in large-scale farms than in conventional farms. Here, we want to compare <code>large</code> farms against <code>con</code> farms. <code>eco</code> farms are not considered here.</p>
@@ -1243,7 +1243,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </div>
-<p>Similarly to what we did for the one-way ANOVA, we can calculate <span class="math inline">\(\eta^2\)</span> for each source of variation (main effects and their interaction). For each source of variation, <span class="math inline">\(\eta^2\)</span> is the proportion of the total variation (<span class="math inline">\(SS_{total}\)</span>) that is explained by the variation of the independent (or explanatory) variable (<span class="math inline">\(SS_{factor}\)</span>) (<strong>?@eq-eta2</strong>).</p>
+<p>Similarly to what we did for the one-way ANOVA, we can calculate <span class="math inline">\(\eta^2\)</span> for each source of variation (main effects and their interaction). For each source of variation, <span class="math inline">\(\eta^2\)</span> is the proportion of the total variation (<span class="math inline">\(SS_{total}\)</span>) that is explained by the variation of the independent (or explanatory) variable.</p>
 <p>Similarly to the one-way ANOVA, we can calculate <span class="math inline">\(\eta^2\)</span> for each source of variation, including the main effects and their interaction. For a given source of variation, <span class="math inline">\(\eta^2\)</span> represents the proportion of the total variability in the data (<span class="math inline">\(SS_{total}\)</span>) that is attributable to that factor. After a two-way ANOVA, you can calculate three <span class="math inline">\(\eta^2\)</span>: one for each main effect (e.g., farm type and municipality), and one for the interaction (<a href="#eq-eta2factor1" class="quarto-xref">Equation&nbsp;1</a>, <a href="#eq-eta2factor2" class="quarto-xref">Equation&nbsp;2</a>, <a href="#eq-eta2interaction" class="quarto-xref">Equation&nbsp;3</a>).</p>
 <p><span id="eq-eta2factor1"><span class="math display">\[ \eta_{factor1}^2=\frac{SS_{factor1}}{SS_{total}}=\frac{SS_{factor1}}{SS_{factor1}+SS_{factor2}+SS_{interaction}+SS_{res}}  \tag{1}\]</span></span></p>
 <p><span id="eq-eta2factor2"><span class="math display">\[ \eta_{factor2}^2=\frac{SS_{factor2}}{SS_{total}}=\frac{SS_{factor2}}{SS_{factor1}+SS_{factor2}+SS_{interaction}+SS_{res}}  \tag{2}\]</span></span></p>
@@ -1299,7 +1299,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Exercise 10
+<span class="screen-reader-only">Tip</span>Exercise 11
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1373,7 +1373,7 @@ W = 0.97415, p-value = 0.5492</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Exercise 11
+<span class="screen-reader-only">Tip</span>Exercise 12
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1436,7 +1436,7 @@ W = 0.97415, p-value = 0.5492</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Exercise 12
+<span class="screen-reader-only">Tip</span>Exercise 13
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2128,7 +2128,7 @@ large:Divino-eco:Divino      -347.8005 -1182.3239  486.72285 0.7997330</code></p
 <span id="cb35-151"><a href="#cb35-151" aria-hidden="true" tabindex="-1"></a><span class="pp">|-----|-----|-------|</span></span>
 <span id="cb35-152"><a href="#cb35-152" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ?   <span class="pp">|</span> ?   <span class="pp">|</span> ?     <span class="pp">|</span></span>
 <span id="cb35-153"><a href="#cb35-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-154"><a href="#cb35-154" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb35-154"><a href="#cb35-154" aria-hidden="true" tabindex="-1"></a><span class="fu">## One possible answer</span></span>
 <span id="cb35-155"><a href="#cb35-155" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-156"><a href="#cb35-156" aria-hidden="true" tabindex="-1"></a>Following the rules to set contrast coefficients, the two farm types being contrasted (<span class="in">`large`</span> and <span class="in">`con`</span>) must receive opposite signs, and the excluded group (<span class="in">`eco`</span>) must receive a coefficient of zero. The coefficients must again sum to zero. A suitable set of contrast coefficients is <span class="in">`eco`</span> = 0, <span class="in">`con`</span> = –1, and <span class="in">`large`</span> = +1. <span class="in">`eco`</span> is excluded from the comparison, <span class="in">`large`</span> and <span class="in">`con`</span> receive opposite signs, and the coefficients sum to zero (0 – 1 + 1 = 0). <span class="co">[</span><span class="ot">Note that this is only one option among many.</span><span class="co">]</span>{.underline}</span>
 <span id="cb35-157"><a href="#cb35-157" aria-hidden="true" tabindex="-1"></a></span>
@@ -2512,7 +2512,7 @@ large:Divino-eco:Divino      -347.8005 -1182.3239  486.72285 0.7997330</code></p
 <span id="cb35-569"><a href="#cb35-569" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb35-570"><a href="#cb35-570" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb35-571"><a href="#cb35-571" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-572"><a href="#cb35-572" aria-hidden="true" tabindex="-1"></a>Similarly to what we did for the one-way ANOVA, we can calculate $\eta^2$ for each source of variation (main effects and their interaction). For each source of variation, $\eta^2$ is the proportion of the total variation ($SS_{total}$) that is explained by the variation of the independent (or explanatory) variable ($SS_{factor}$) (@eq-eta2).</span>
+<span id="cb35-572"><a href="#cb35-572" aria-hidden="true" tabindex="-1"></a>Similarly to what we did for the one-way ANOVA, we can calculate $\eta^2$ for each source of variation (main effects and their interaction). For each source of variation, $\eta^2$ is the proportion of the total variation ($SS_{total}$) that is explained by the variation of the independent (or explanatory) variable.</span>
 <span id="cb35-573"><a href="#cb35-573" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-574"><a href="#cb35-574" aria-hidden="true" tabindex="-1"></a>Similarly to the one-way ANOVA, we can calculate $\eta^2$ for each source of variation, including the main effects and their interaction. For a given source of variation, $\eta^2$ represents the proportion of the total variability in the data ($SS_{total}$) that is attributable to that factor. After a two-way ANOVA, you can calculate three $\eta^2$: one for each main effect (e.g., farm type and municipality), and one for the interaction (@eq-eta2factor1, @eq-eta2factor2, @eq-eta2interaction).</span>
 <span id="cb35-575"><a href="#cb35-575" aria-hidden="true" tabindex="-1"></a></span>
@@ -2558,7 +2558,7 @@ large:Divino-eco:Divino      -347.8005 -1182.3239  486.72285 0.7997330</code></p
 <span id="cb35-617"><a href="#cb35-617" aria-hidden="true" tabindex="-1"></a>After fitting an ANOVA model, you can check whether the normality assumption is met by examining whether the model residuals are approximately normally distributed. This can be done by (1) using the <span class="in">`residuals()`</span> function on the ANOVA <span class="in">`model`</span> object to extract the model residuals (i.e. the differences between observed values and model predictions), (2) applying a Shapiro-Wilk test to the residuals, and (3) creating a Q-Q plot using model residuals.</span>
 <span id="cb35-618"><a href="#cb35-618" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-619"><a href="#cb35-619" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb35-620"><a href="#cb35-620" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 10</span></span>
+<span id="cb35-620"><a href="#cb35-620" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 11</span></span>
 <span id="cb35-621"><a href="#cb35-621" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-622"><a href="#cb35-622" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Extract model residuals by using the <span class="in">`residuals()`</span> function on the model object. Store these residuals in a new column (<span class="in">`coffee_prod_residuals`</span>) in the <span class="in">`data`</span> object.</span>
 <span id="cb35-623"><a href="#cb35-623" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Run a Shapiro-Wilk's test on model residuals.</span>
@@ -2619,7 +2619,7 @@ large:Divino-eco:Divino      -347.8005 -1182.3239  486.72285 0.7997330</code></p
 <span id="cb35-684"><a href="#cb35-684" aria-hidden="true" tabindex="-1"></a>After fitting an ANOVA model, you can check the homoscedasticity assumption by creating a residual plot.</span>
 <span id="cb35-685"><a href="#cb35-685" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-686"><a href="#cb35-686" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb35-687"><a href="#cb35-687" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 11</span></span>
+<span id="cb35-687"><a href="#cb35-687" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 12</span></span>
 <span id="cb35-688"><a href="#cb35-688" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-689"><a href="#cb35-689" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Calculate the values fitted by the ANOVA model using the <span class="in">`fitted()`</span> function on the model object. Store these values in a new column (<span class="in">`coffee_prod_fitted`</span>) in the <span class="in">`data`</span> object.</span>
 <span id="cb35-690"><a href="#cb35-690" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Create a residual plot (fitted values on the x-axis and residuals on the y-axis)</span>
@@ -2672,7 +2672,7 @@ large:Divino-eco:Divino      -347.8005 -1182.3239  486.72285 0.7997330</code></p
 <span id="cb35-741"><a href="#cb35-741" aria-hidden="true" tabindex="-1"></a>Post hoc tests are mainly used when there are three or more groups and we need to identify which specific groups differ from each other. However, to demonstrate how post hoc comparisons can be performed after a two-way ANOVA, we will carry out one here. As in the previous tutorial, we will use **Tukey’s Honest Significant Difference** (Tukey HSD) test. In R, this test can be performed with the <span class="in">`TukeyHSD()`</span> function from the *stats* package.</span>
 <span id="cb35-742"><a href="#cb35-742" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-743"><a href="#cb35-743" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb35-744"><a href="#cb35-744" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 12</span></span>
+<span id="cb35-744"><a href="#cb35-744" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 13</span></span>
 <span id="cb35-745"><a href="#cb35-745" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-746"><a href="#cb35-746" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Run a Tukey HSD post hoc test to find out which farm types differ from each other in soil organic matter content.</span>
 <span id="cb35-747"><a href="#cb35-747" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What can you conclude from this test? Write a paragraph summarizing the results of the ANOVA (and post hoc test).</span>

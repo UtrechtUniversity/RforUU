@@ -147,7 +147,7 @@ Choose contrast coefficients to test the hypothesis that soil organic matter con
 |-----|-----|-------|
 | ?   | ?   | ?     |
 
-## Answer
+## One possible answer
 
 Following the rules to set contrast coefficients, the two farm types being contrasted (`large` and `con`) must receive opposite signs, and the excluded group (`eco`) must receive a coefficient of zero. The coefficients must again sum to zero. A suitable set of contrast coefficients is `eco` = 0, `con` = –1, and `large` = +1. `eco` is excluded from the comparison, `large` and `con` receive opposite signs, and the coefficients sum to zero (0 – 1 + 1 = 0). [Note that this is only one option among many.]{.underline}
 
@@ -531,7 +531,7 @@ In contrast, farm type does not have a significant effect on coffee productivity
 :::
 ::::
 
-Similarly to what we did for the one-way ANOVA, we can calculate $\eta^2$ for each source of variation (main effects and their interaction). For each source of variation, $\eta^2$ is the proportion of the total variation ($SS_{total}$) that is explained by the variation of the independent (or explanatory) variable ($SS_{factor}$) (@eq-eta2).
+Similarly to what we did for the one-way ANOVA, we can calculate $\eta^2$ for each source of variation (main effects and their interaction). For each source of variation, $\eta^2$ is the proportion of the total variation ($SS_{total}$) that is explained by the variation of the independent (or explanatory) variable.
 
 Similarly to the one-way ANOVA, we can calculate $\eta^2$ for each source of variation, including the main effects and their interaction. For a given source of variation, $\eta^2$ represents the proportion of the total variability in the data ($SS_{total}$) that is attributable to that factor. After a two-way ANOVA, you can calculate three $\eta^2$: one for each main effect (e.g., farm type and municipality), and one for the interaction (@eq-eta2factor1, @eq-eta2factor2, @eq-eta2interaction).
 
@@ -577,7 +577,7 @@ To check ANOVA assumptions, we will follow the same procedure introduced in the 
 After fitting an ANOVA model, you can check whether the normality assumption is met by examining whether the model residuals are approximately normally distributed. This can be done by (1) using the `residuals()` function on the ANOVA `model` object to extract the model residuals (i.e. the differences between observed values and model predictions), (2) applying a Shapiro-Wilk test to the residuals, and (3) creating a Q-Q plot using model residuals.
 
 :::: callout-tip
-## Exercise 10
+## Exercise 11
 
 1.  Extract model residuals by using the `residuals()` function on the model object. Store these residuals in a new column (`coffee_prod_residuals`) in the `data` object.
 2.  Run a Shapiro-Wilk's test on model residuals.
@@ -638,7 +638,7 @@ The p-value of the Shapiro-Wilk test is greater than the significance threshold 
 After fitting an ANOVA model, you can check the homoscedasticity assumption by creating a residual plot.
 
 :::: callout-tip
-## Exercise 11
+## Exercise 12
 
 1.  Calculate the values fitted by the ANOVA model using the `fitted()` function on the model object. Store these values in a new column (`coffee_prod_fitted`) in the `data` object.
 2.  Create a residual plot (fitted values on the x-axis and residuals on the y-axis)
@@ -691,7 +691,7 @@ Based on the results of our two-way ANOVA, a post hoc test is not strictly neces
 Post hoc tests are mainly used when there are three or more groups and we need to identify which specific groups differ from each other. However, to demonstrate how post hoc comparisons can be performed after a two-way ANOVA, we will carry out one here. As in the previous tutorial, we will use **Tukey’s Honest Significant Difference** (Tukey HSD) test. In R, this test can be performed with the `TukeyHSD()` function from the *stats* package.
 
 :::: callout-tip
-## Exercise 12
+## Exercise 13
 
 1.  Run a Tukey HSD post hoc test to find out which farm types differ from each other in soil organic matter content.
 2.  What can you conclude from this test? Write a paragraph summarizing the results of the ANOVA (and post hoc test).
