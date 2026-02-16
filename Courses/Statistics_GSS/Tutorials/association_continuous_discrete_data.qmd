@@ -23,4 +23,6 @@ editor_options:
 image: /Images/Rlogo.png
 ---
 
-Add text
+About this tutorial
+
+Hypotheses of interest in this tutorial

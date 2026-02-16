@@ -693,7 +693,7 @@ Post hoc tests are mainly used when there are three or more groups and we need t
 :::: callout-tip
 ## Exercise 13
 
-1.  Run a Tukey HSD post hoc test to find out which farm types differ from each other in soil organic matter content.
+1.  Run a Tukey HSD post hoc test to find out which farm types or municipalities differ from each other in coffee productivity.
 2.  What can you conclude from this test? Write a paragraph summarizing the results of the ANOVA (and post hoc test).
 
 ::: panel-tabset
