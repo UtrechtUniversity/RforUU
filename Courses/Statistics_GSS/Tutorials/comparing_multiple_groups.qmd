@@ -385,7 +385,7 @@ F <- MSfactor/MSresidual
 :::
 ::::
 
-Under the null hypothesis (i.e., if there are no differences in soil organic matter content among farm types), we expect the F statistic to follow an F distribution with $df1=k-1$ and $df2=(n-1)k$ degrees of freedom (@fig-Fdistribution).
+Under the null hypothesis (i.e., if there are no differences in soil organic matter content among farm types), we expect the F statistic to follow an F distribution with $df1=k-1$ and $df2=\sum_{i=1}^k(n_i-1)$ degrees of freedom (@fig-Fdistribution).
 
 ```{r}
 #| eval: true
@@ -413,7 +413,7 @@ In R, this probability can be calculated using the function `pf()`, which takes 
 
 -   `df1`: the number of degrees of freedom for the factor ($k-1$)
 
--   `df2`: the number of degrees of freedom for the residuals ($(n-1)k$)
+-   `df2`: the number of degrees of freedom for the residuals ($\sum_{i=1}^k(n_i-1)$)
 
 -   `lower.tail`: a logical argument (can be either `TRUE` or `FALSE`). If set to `TRUE`, probabilities are $P(X \le x)$. If set to `FALSE`, probabilities are $P(X > x)$
 
