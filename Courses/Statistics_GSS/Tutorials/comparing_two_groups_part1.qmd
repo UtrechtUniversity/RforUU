@@ -627,7 +627,7 @@ Under the null hypothesis (i.e., if there is no difference in the means of the t
 ## Exercise 11
 
 1.  Calculate the value of the test statistic ($t$) using @eq-pairedttest.
-2.  Use the table of critical values of Student's *t* distribution available on Brightspace to obtain the critical value of the test.
+2.  Use the table of critical values of Student's *t* distribution available on Brightspace to obtain the critical value of the test. **Tip:** To find the critical value of a Student’s *t* distribution with 35 degrees of freedom, use linear interpolation between the tabulated values for 30 and 40 degrees of freedom. Because 35 lies exactly halfway between 30 and 40, this is equivalent to taking the average of the two critical values.
 3.  Based on the calculated test statistic and critical value, what can you conclude about the effect of the intervention on coffee productivity?
 
 ::: panel-tabset
