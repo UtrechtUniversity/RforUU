@@ -23,6 +23,385 @@ editor_options:
 image: /Images/Rlogo.png
 ---
 
-About this tutorial
+## About this tutorial
 
-Hypotheses of interest in this tutorial
+In this practical, you will investigate associations between numerical variables using correlation analysis. You will work with pairs of variables that may be continuous, ordinal, or show non-linear relationships, and you will learn how to choose an appropriate correlation method for each situation. Specifically, you will calculate and interpret three commonly used correlation measures:
+
+-   Pearson’s correlation: used when both variables are continuous and the relationship is approximately linear.
+
+-   Spearman’s rank correlation and Kendall’s Tau: used when one or both variables are ordinal, when the relationship is monotonic but not linear (for example, curved), or when assumptions for Pearson’s correlation are not met.
+
+In addition, you will explore how the relationship between two variables may be influenced by a third variable using partial correlation.
+
+Let's get started!
+
+## Hypotheses of interest in this tutorial
+
+You will test the following null hypotheses:
+
+-   There is no positive correlation between litter thickness (`litter_thickness`) and soil organic matter (`SOM`).
+
+-   There is no positive correlation between mowing intensity (`mowing`) and carbon microbial biomass (`CMB`).
+
+-   There is no positive correlation between the number of agroecological practices (`n_practices`) and the Shannon diversity index (`shannon_PIM`).
+
+::: callout-note
+## The importance of sample size for correlation analysis
+
+The statistical significance of a correlation depends strongly on sample size. With large samples, even weak correlations can become statistically significant. Conversely, with very small samples, even strong relationships may fail to reach significance. Therefore, when interpreting correlation results, you should always (1) visualize the data (for example, using scatter plots) and (2) interpret results cautiously when sample sizes are very small or very large.
+:::
+
+## Load R packages
+
+To work on this tutorial, you will need to load the *readxl* and *tidyverse* packages.
+
+```{r}
+#| eval: true 
+#| echo: true
+#| message: false
+#| warning: false
+
+library(readxl)
+library(tidyverse)
+```
+
+## Importing data
+
+Start by importing the data used in this course (see previous tutorials).
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+#Option 1 (csv file)
+data <- read_csv("gss_statistics_master_data_set2.csv")
+
+#Option 2 (Excel file)
+data <- read_excel("gss_statistics_master_data_set2.xlsx")
+```
+
+## Visualizing relationships with scatter plots
+
+For each hypothesis, we will use *ggplot2* to create a scatter plot to visualize the relationship between pairs of variables.
+
+:::: callout-tip
+## Exercise 1
+
+1.  Create a scatter plot showing the relationship between litter thickness (`litter_thickness`, x-axis) and soil organic matter (`SOM`, y-axis).
+2.  Create a scatter plot showing the relationship between mowing intensity (`mowing`, x-axis) and carbon microbial biomass (`CMB`, y-axis).
+3.  Create a scatter plot showing the relationship between the number of agroecological practices (`n_practices`, x-axis) and the Shannon diversity index (`shannon_PIM`, y-axis).
+4.  What can you conclude about the shape of these relationships?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+#| fig-cap: "Relationship between litter thickness and soil organic matter."
+#| label: fig-litter-SOM
+
+ggplot(data, aes(x=litter_thickness, 
+                 y=SOM))+
+    geom_point(shape=21, #Choose point shape
+               fill="#FFCD00", #Choose colour to fill the point shape
+               colour="black")+ #Choose colour for the border of the shape
+    theme_bw()+
+    xlab("Litter thickness (cm)")+
+    ylab("Soil organic matter content (%)")
+```
+
+## Solution 2
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+#| fig-cap: "Relationship between mowing intensity and carbon microbial biomass."
+#| label: fig-mowing-CMB
+
+ggplot(data, aes(x=mowing, 
+                 y=CMB))+
+    geom_point(shape=21, #Choose point shape
+               fill="#FFCD00", #Choose colour to fill the point shape
+               colour="black")+ #Choose colour for the border of the shape
+    theme_bw()+
+    xlab("Mowing intensity (hours/ha/year)")+
+    ylab("Carbon microbial biomass (µg/g dry soil)")
+```
+
+## Solution 3
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+#| fig-cap: "Relationship between the number of agroecological practices and the Shannon diversity index."
+#| label: fig-practices-diversity
+
+ggplot(data, aes(x=n_practices, 
+                 y=shannon_PIM))+
+    geom_point(shape=21, #Choose point shape
+               fill="#FFCD00", #Choose colour to fill the point shape
+               colour="black")+ #Choose colour for the border of the shape
+    theme_bw()+
+    xlab("Number of agroecological practices")+
+    ylab("Shannon diversity index")
+```
+
+## Solution 4
+
+The relationship between litter thickness and soil organic matter content is positive, but does not seem linear (@fig-litter-SOM).
+
+The relationship between mowing intensity and carbon microbial biomass is weakly positive, with one low moving intensity observation having a particularly high value of carbon microbial biomass (@fig-mowing-CMB).
+
+The relationship between the number of agroecological practices and plant diversity is positive, and the relationship seems to follow a linear trend (@fig-practices-diversity).
+:::
+::::
+
+## Covariance and correlation coefficients
+
+Covariance and correlation coefficients are statistical measures used to quantify the strength of the relationship between two numeric variables. They describe whether variables change together, in which direction, and how strongly they are associated.
+
+**Covariance** measures the extent to which two variables vary together. It is calculated using @eq-covariance, where $\bar{x}$ is the mean value of variable $x$, $\bar{y}$ is the mean value of variable $y$, and $n$ is the total number of observations. If large values of one variable tend to occur with large values of the other (and small with small), the covariance will be positive. If large values of one variable tend to occur with small values of the other, the covariance will be negative. A covariance close to zero indicates no consistent linear association. However, covariance depends on the scale and units of measurement of the variables, making it difficult to interpret its magnitude directly or compare across datasets.
+
+$$
+cov(x,y)=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{n-1}
+$$ {#eq-covariance}
+
+To overcome this limitation, covariance is standardized to produce a **correlation coefficient**, which ranges from -1 to +1 and is unit-free. A value of +1 indicates a perfect positive association, -1 a perfect negative association, and 0 no association.
+
+::: callout-important
+## Correlation does not mean causation!
+
+A correlation between two variables indicates that they are associated: when one variable changes, the other tends to change in a predictable way. However, this statistical relationship alone does not show that one variable causes the other to change (i.e., causal relationship). Establishing causality by demonstrating that a change in one variable directly leads to a change in another typically requires additional evidence. This often comes from controlled experiments in which researchers deliberately manipulate one or more factors while keeping other conditions constant and carefully measure the resulting response.
+:::
+
+One of the most commonly used correlation measure is the **Pearson's correlation coefficient** ($r$). It assesses the strength and direction of a [linear relationship]{.underline} between two continuous variables. Pearson’s correlation is calculated using @eq-pearson, where $s_x$ and $s_y$ are the standard deviations of variables $x$ and $y$, respectively. Pearson’s correlation assumes that the relationship is approximately linear. A high positive Pearson correlation indicates that the variables increase together along a straight-line trend, while a high negative value indicates that one variable decreases as the other increases.
+
+$$
+r=\frac{cov(x,y)}{s_xs_y}
+$$ {#eq-pearson}
+
+When the assumptions of Pearson’s correlation are not met, rank-based measures can be used. The **Spearman's rank correlation coefficient** ($\rho$) evaluates the strength and direction of a [monotonic relationship]{.underline}, meaning that one variable consistently increases or decreases as the other changes, though not necessarily in a straight line. To compute Spearman’s correlation, the original data values are first converted into ranks. Pearson’s correlation is then calculated on these ranks rather than on the raw data (@eq-spearman). Because it uses ranks, Spearman’s correlation is less sensitive to outliers and does not require normally distributed data. It is appropriate for ordinal variables or when the relationship is curved but consistently increasing or decreasing.
+
+$$
+\rho=\frac{cov(R[x],R[y])}{s_{R[x]}s_{R[y]}}
+$$ {#eq-spearman}
+
+Another rank-based measure is **Kendall’s Tau** ($\tau$), which is conceptually based on comparing pairs of observations (see lecture for a detailed example). For every possible pair of data points, Kendall’s Tau counts whether the rankings of the two variables agree (a concordant pair) or disagree (a discordant pair). The coefficient is calculated from the difference between the number of concordant and discordant pairs, scaled by the total number of pairs. Like Spearman’s correlation, Kendall’s Tau ranges from -1 to +1 and measures monotonic association.
+
+:::: callout-tip
+## Exercise 2
+
+::: panel-tabset
+## Question
+
+Use @eq-covariance to calculate the covariance between the variables litter thickness (`litter_thickness`) and soil organic matter content (`SOM`).
+
+## Answer
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+cov_litter_SOM <- sum((data$litter_thickness-mean(data$litter_thickness))*(data$SOM-mean(data$SOM)))/(nrow(data)-1)
+```
+:::
+::::
+
+In R, the covariance between two variables can be calculated using `cov()`. As arguments, we just need to provide a vector of data for variable $x$, and a vector of data for variable $y$.
+
+:::: callout-tip
+## Exercise 3
+
+1.  Use `cov()` to calculate the covariance between litter thickness (`litter_thickness`) and soil organic matter (`SOM`).
+2.  Use `cov()` to calculate the covariance between mowing intensity (`mowing`) and carbon microbial biomass (`CMB`).
+3.  Use `cov()` to calculate the covariance between the number of agroecological practices (`n_practices`) and plant diversity (`shannon_PIM`).
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+cov_litter_SOM <- cov(data$litter_thickness,
+                      data$SOM)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+cov_mowing_CMB <- cov(data$mowing,
+                      data$CMB)
+```
+
+## Solution 3
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+cov_practices_diversity <- cov(data$n_practices,
+                               data$shannon_PIM)
+```
+:::
+::::
+
+We can now calculate Pearson's correlation coefficient for each relationship. We will first do this manually, using @eq-pearson.
+
+:::: callout-tip
+## Exercise 4
+
+1.  Use @eq-pearson to calculate Pearson's correlation coefficient between litter thickness (`litter_thickness`) and soil organic matter (`SOM`).
+2.  Use @eq-pearson to calculate Pearson's correlation coefficient between mowing intensity (`mowing`) and carbon microbial biomass (`CMB`).
+3.  Use @eq-pearson to calculate Pearson's correlation coefficient between the number of agroecological practices (`n_practices`) and plant diversity (`shannon_PIM`).
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+pearson_litter_SOM <- cov_litter_SOM/(sd(data$litter_thickness)*sd(data$SOM))
+```
+
+Pearson's correlation coefficient between litter thickness and soil organic matter is equal to `{r} round(pearson_litter_SOM, 2)`.
+
+## Solution 2
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+pearson_mowing_CMB <- cov_mowing_CMB/(sd(data$mowing)*sd(data$CMB))
+```
+
+Pearson's correlation coefficient between mowing intensity and carbon microbial biomass is equal to `{r} round(pearson_mowing_CMB, 2)`.
+
+## Solution 3
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+pearson_practices_diversity <- cov_practices_diversity/(sd(data$n_practices)*sd(data$shannon_PIM))
+```
+
+Pearson's correlation coefficient between the number of agroecological practices and plant diversity is equal to `{r} round(pearson_mowing_CMB, 2)`.
+:::
+::::
+
+In R, you can also easily calculate correlation coefficients using the `cor()` function. This function takes three main arguments:
+
+-   `x`: a vector of data values for the $x$ variable
+
+-   `y`: a vector of data values for the $y$ variable
+
+-   `method`: a character string indicating which correlation coefficient is to be computed. One of `"pearson"` (default), `"kendall"`, or `"spearman"`.
+
+:::: callout-tip
+## Exercise 5
+
+::: panel-tabset
+## Question
+
+Use the `cor()` function to fill in the table below.
+
+| Relationship | Pearson's correlation coefficient | Spearman's correlation coefficient | Kendall's correlation coefficient |
+|------------------|------------------|------------------|------------------|
+| Litter thickness - SOM | ? | ? | ? |
+| Mowing - CMB | ? | ? | ? |
+| Number of agroecological practices - plant diversity | ? | ? | ? |
+
+## Answer
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+#Pearson
+pearson_litter_SOM <- cor(x = data$litter_thickness,
+                          y = data$SOM,
+                          method = "pearson")
+pearson_mowing_CMB <- cor(x = data$mowing,
+                          y = data$CMB,
+                          method = "pearson")
+pearson_practices_diversity <- cor(x = data$n_practices,
+                                   y = data$shannon_PIM,
+                                   method = "pearson")
+
+#Spearman
+spearman_litter_SOM <- cor(x = data$litter_thickness,
+                           y = data$SOM,
+                           method = "spearman")
+spearman_mowing_CMB <- cor(x = data$mowing,
+                           y = data$CMB,
+                           method = "spearman")
+spearman_practices_diversity <- cor(x = data$n_practices,
+                                    y = data$shannon_PIM,
+                                    method = "spearman")
+
+#Kendall
+kendall_litter_SOM <- cor(x = data$litter_thickness,
+                          y = data$SOM,
+                          method = "kendall")
+kendall_mowing_CMB <- cor(x = data$mowing,
+                          y = data$CMB,
+                          method = "kendall")
+kendall_practices_diversity <- cor(x = data$n_practices,
+                                   y = data$shannon_PIM,
+                                   method = "kendall")
+```
+
+## Summary table and conclusions
+
+| Relationship | Pearson's correlation coefficient | Spearman's correlation coefficient | Kendall's correlation coefficient |
+|------------------|------------------|------------------|------------------|
+| Litter thickness - SOM | `{r} round(pearson_litter_SOM, 2)` | `{r} round(spearman_litter_SOM, 2)` | `{r} round(kendall_litter_SOM, 2)` |
+| Mowing - CMB | `{r} round(pearson_mowing_CMB, 2)` | `{r} round(spearman_mowing_CMB, 2)` | `{r} round(kendall_mowing_CMB, 2)` |
+| Number of agroecological practices - plant diversity | `{r} round(pearson_practices_diversity, 2)` | `{r} round(spearman_practices_diversity, 2)` | `{r} round(kendall_practices_diversity, 2)` |
+
+All three relationships are characterized by positive correlation coefficients. The strongest positive relationship is found between litter thickness and soil organic matter content, while the weakest relationship is found between mowing intensity and carbon microbial biomass.
+:::
+::::
+
+## How to test hypotheses
+
+In R, you can test the null hypothesis that there is no relationship between two variables using the `cor.test()` function. This function uses the same main arguments as `cor()`, but it provides more than just a correlation coefficient. In addition to calculating the correlation (e.g., Pearson, Spearman, or Kendall), `cor.test()` performs a statistical test of association between paired observations. It returns the estimated correlation coefficient along with a test statistic, the corresponding degrees of freedom (when applicable), and a p-value for the hypothesis test.
