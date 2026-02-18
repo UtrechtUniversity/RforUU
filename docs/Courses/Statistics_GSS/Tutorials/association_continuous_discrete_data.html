@@ -554,6 +554,7 @@ window.Quarto = {
   <li><a href="#visualizing-relationships-with-scatter-plots" id="toc-visualizing-relationships-with-scatter-plots" class="nav-link" data-scroll-target="#visualizing-relationships-with-scatter-plots">Visualizing relationships with scatter plots</a></li>
   <li><a href="#covariance-and-correlation-coefficients" id="toc-covariance-and-correlation-coefficients" class="nav-link" data-scroll-target="#covariance-and-correlation-coefficients">Covariance and correlation coefficients</a></li>
   <li><a href="#how-to-test-hypotheses" id="toc-how-to-test-hypotheses" class="nav-link" data-scroll-target="#how-to-test-hypotheses">How to test hypotheses</a></li>
+  <li><a href="#correlation-plots" id="toc-correlation-plots" class="nav-link" data-scroll-target="#correlation-plots">Correlation plots</a></li>
   </ul>
 </nav>
     </div>
@@ -611,7 +612,7 @@ window.Quarto = {
 
 <section id="about-this-tutorial" class="level2">
 <h2 class="anchored" data-anchor-id="about-this-tutorial">About this tutorial</h2>
-<p>In this practical, you will investigate associations between numerical variables using correlation analysis. You will work with pairs of variables that may be continuous, ordinal, or show non-linear relationships, and you will learn how to choose an appropriate correlation method for each situation. Specifically, you will calculate and interpret three commonly used correlation measures:</p>
+<p>In this practical, you will investigate associations between numerical variables using correlation analysis. You will work with pairs of variables that may be continuous, discrete, or show non-linear relationships, and you will learn how to choose an appropriate correlation method for each situation. Specifically, you will calculate and interpret three commonly used correlation measures:</p>
 <ul>
 <li><p>Pearson’s correlation: used when both variables are continuous and the relationship is approximately linear.</p></li>
 <li><p>Spearman’s rank correlation and Kendall’s Tau: used when one or both variables are ordinal, when the relationship is monotonic but not linear (for example, curved), or when assumptions for Pearson’s correlation are not met.</p></li>
@@ -931,7 +932,7 @@ r=\frac{cov(x,y)}{s_xs_y}
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pearson_practices_diversity <span class="ot">&lt;-</span> cov_practices_diversity<span class="sc">/</span>(<span class="fu">sd</span>(data<span class="sc">$</span>n_practices)<span class="sc">*</span><span class="fu">sd</span>(data<span class="sc">$</span>shannon_PIM))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Pearson’s correlation coefficient between the number of agroecological practices and plant diversity is equal to 0.39.</p>
+<p>Pearson’s correlation coefficient between the number of agroecological practices and plant diversity is equal to 0.59.</p>
 </div>
 </div>
 </div>
@@ -1081,6 +1082,9 @@ r=\frac{cov(x,y)}{s_xs_y}
 <section id="how-to-test-hypotheses" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-test-hypotheses">How to test hypotheses</h2>
 <p>In R, you can test the null hypothesis that there is no relationship between two variables using the <code>cor.test()</code> function. This function uses the same main arguments as <code>cor()</code>, but it provides more than just a correlation coefficient. In addition to calculating the correlation (e.g., Pearson, Spearman, or Kendall), <code>cor.test()</code> performs a statistical test of association between paired observations. It returns the estimated correlation coefficient along with a test statistic, the corresponding degrees of freedom (when applicable), and a p-value for the hypothesis test.</p>
+</section>
+<section id="correlation-plots" class="level2">
+<h2 class="anchored" data-anchor-id="correlation-plots">Correlation plots</h2>
 
 
 <!-- -->
@@ -1591,7 +1595,7 @@ r=\frac{cov(x,y)}{s_xs_y}
 <span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## About this tutorial</span></span>
 <span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>In this practical, you will investigate associations between numerical variables using correlation analysis. You will work with pairs of variables that may be continuous, ordinal, or show non-linear relationships, and you will learn how to choose an appropriate correlation method for each situation. Specifically, you will calculate and interpret three commonly used correlation measures:</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>In this practical, you will investigate associations between numerical variables using correlation analysis. You will work with pairs of variables that may be continuous, discrete, or show non-linear relationships, and you will learn how to choose an appropriate correlation method for each situation. Specifically, you will calculate and interpret three commonly used correlation measures:</span>
 <span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Pearson’s correlation: used when both variables are continuous and the relationship is approximately linear.</span>
 <span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a></span>
@@ -1888,7 +1892,7 @@ r=\frac{cov(x,y)}{s_xs_y}
 <span id="cb14-346"><a href="#cb14-346" aria-hidden="true" tabindex="-1"></a>pearson_practices_diversity <span class="ot">&lt;-</span> cov_practices_diversity<span class="sc">/</span>(<span class="fu">sd</span>(data<span class="sc">$</span>n_practices)<span class="sc">*</span><span class="fu">sd</span>(data<span class="sc">$</span>shannon_PIM))</span>
 <span id="cb14-347"><a href="#cb14-347" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-348"><a href="#cb14-348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-349"><a href="#cb14-349" aria-hidden="true" tabindex="-1"></a>Pearson's correlation coefficient between the number of agroecological practices and plant diversity is equal to <span class="in">`{r} round(pearson_mowing_CMB, 2)`</span>.</span>
+<span id="cb14-349"><a href="#cb14-349" aria-hidden="true" tabindex="-1"></a>Pearson's correlation coefficient between the number of agroecological practices and plant diversity is equal to <span class="in">`{r} round(pearson_practices_diversity, 2)`</span>.</span>
 <span id="cb14-350"><a href="#cb14-350" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb14-351"><a href="#cb14-351" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb14-352"><a href="#cb14-352" aria-hidden="true" tabindex="-1"></a></span>
@@ -1971,6 +1975,8 @@ r=\frac{cov(x,y)}{s_xs_y}
 <span id="cb14-431"><a href="#cb14-431" aria-hidden="true" tabindex="-1"></a><span class="fu">## How to test hypotheses</span></span>
 <span id="cb14-432"><a href="#cb14-432" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-433"><a href="#cb14-433" aria-hidden="true" tabindex="-1"></a>In R, you can test the null hypothesis that there is no relationship between two variables using the <span class="in">`cor.test()`</span> function. This function uses the same main arguments as <span class="in">`cor()`</span>, but it provides more than just a correlation coefficient. In addition to calculating the correlation (e.g., Pearson, Spearman, or Kendall), <span class="in">`cor.test()`</span> performs a statistical test of association between paired observations. It returns the estimated correlation coefficient along with a test statistic, the corresponding degrees of freedom (when applicable), and a p-value for the hypothesis test.</span>
+<span id="cb14-434"><a href="#cb14-434" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-435"><a href="#cb14-435" aria-hidden="true" tabindex="-1"></a><span class="fu">## Correlation plots</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
