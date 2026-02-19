@@ -51,9 +51,22 @@ You will test the following null hypotheses:
 The statistical significance of a correlation depends strongly on sample size. With large samples, even weak correlations can become statistically significant. Conversely, with very small samples, even strong relationships may fail to reach significance. Therefore, when interpreting correlation results, you should always (1) visualize the data (for example, using scatter plots) and (2) interpret results cautiously when sample sizes are very small or very large.
 :::
 
+## Install R packages
+
+You will need to install the *ggcorrplot* package to work on this tutorial.
+
+```{r}
+#| eval: false 
+#| echo: true
+#| message: false
+#| warning: false
+
+install.packages("ggcorrplot")
+```
+
 ## Load R packages
 
-To work on this tutorial, you will need to load the *readxl* and *tidyverse* packages.
+To work on this tutorial, you will need to load the *readxl*, *tidyverse*, and *ggcorrplot* packages.
 
 ```{r}
 #| eval: true 
@@ -63,6 +76,7 @@ To work on this tutorial, you will need to load the *readxl* and *tidyverse* pac
 
 library(readxl)
 library(tidyverse)
+library(ggcorrplot)
 ```
 
 ## Importing data
@@ -192,13 +206,13 @@ To overcome this limitation, covariance is standardized to produce a **correlati
 A correlation between two variables indicates that they are associated: when one variable changes, the other tends to change in a predictable way. However, this statistical relationship alone does not show that one variable causes the other to change (i.e., causal relationship). Establishing causality by demonstrating that a change in one variable directly leads to a change in another typically requires additional evidence. This often comes from controlled experiments in which researchers deliberately manipulate one or more factors while keeping other conditions constant and carefully measure the resulting response.
 :::
 
-One of the most commonly used correlation measure is the **Pearson's correlation coefficient** ($r$). It assesses the strength and direction of a [linear relationship]{.underline} between two continuous variables. Pearson’s correlation is calculated using @eq-pearson, where $s_x$ and $s_y$ are the standard deviations of variables $x$ and $y$, respectively. Pearson’s correlation assumes that the relationship is approximately linear. A high positive Pearson correlation indicates that the variables increase together along a straight-line trend, while a high negative value indicates that one variable decreases as the other increases.
+One of the most commonly used correlation measure is the **Pearson's correlation coefficient** ($r$). It assesses the strength and direction of a [linear relationship]{.underline} between two continuous variables. Pearson’s correlation is calculated using @eq-pearson, where $s_x$ and $s_y$ are the standard deviations of variables $x$ and $y$, respectively. Pearson’s correlation assumes that the relationship is approximately linear. A high positive Pearson correlation indicates that the variables increase together along a straight-line trend, while a high negative value indicates that one variable decreases as the other increases. Pearson's correlation is a good choice for continuous data, when relationship looks linear, and when there are no strong outliers.
 
 $$
 r=\frac{cov(x,y)}{s_xs_y}
 $$ {#eq-pearson}
 
-When the assumptions of Pearson’s correlation are not met, rank-based measures can be used. The **Spearman's rank correlation coefficient** ($\rho$) evaluates the strength and direction of a [monotonic relationship]{.underline}, meaning that one variable consistently increases or decreases as the other changes, though not necessarily in a straight line. To compute Spearman’s correlation, the original data values are first converted into ranks. Pearson’s correlation is then calculated on these ranks rather than on the raw data (@eq-spearman). Because it uses ranks, Spearman’s correlation is less sensitive to outliers and does not require normally distributed data. It is appropriate for ordinal variables or when the relationship is curved but consistently increasing or decreasing.
+When the assumptions of Pearson’s correlation are not met, rank-based measures can be used. The **Spearman's rank correlation coefficient** ($\rho$) evaluates the strength and direction of a [monotonic relationship]{.underline}, meaning that one variable consistently increases or decreases as the other changes, though not necessarily in a straight line. To compute Spearman’s correlation, the original data values are first converted into ranks. Pearson’s correlation is then calculated on these ranks rather than on the raw data (@eq-spearman). Because it uses ranks, Spearman’s correlation is less sensitive to outliers and does not require normally distributed data. It is appropriate for ordinal variables or when the relationship is curved but consistently increasing or decreasing. Spearman's correlation is a good choice for discrete data that may contain outliers or when the relationship is monotonic but curved.
 
 $$
 \rho=\frac{cov(R[x],R[y])}{s_{R[x]}s_{R[y]}}
@@ -406,4 +420,134 @@ All three relationships are characterized by positive correlation coefficients. 
 
 In R, you can test the null hypothesis that there is no relationship between two variables using the `cor.test()` function. This function uses the same main arguments as `cor()`, but it provides more than just a correlation coefficient. In addition to calculating the correlation (e.g., Pearson, Spearman, or Kendall), `cor.test()` performs a statistical test of association between paired observations. It returns the estimated correlation coefficient along with a test statistic, the corresponding degrees of freedom (when applicable), and a p-value for the hypothesis test.
 
+The `cor.test()` function uses the same arguments as the `cor()` function, plus a couple of extra ones:
+
+-   `x`: a vector of data values for the $x$ variable
+
+-   `y`: a vector of data values for the $y$ variable
+
+-   `method`: a character string indicating which correlation coefficient is to be computed. One of `"pearson"` (default), `"kendall"`, or `"spearman"`.
+
+-   `alternative`: a character string indicating the alternative hypothesis and must be one of `"two.sided"` (default), `"greater"` or `"less"`.
+
+-   `conf.level`: the confidence level of the returned confidence interval (default to 0.95)
+
+:::: callout-tip
+## Exercise 6
+
+1.  Use `cor.test()` to calculate Spearman's correlation coefficient between litter thickness (`litter_thickness`) and soil organic matter content (`SOM`). In this case, Spearman's correlation is a good option because the relationship between the two variables is monotonic but does not seem perfectly linear (@fig-litter-SOM). Note that the value of Spearman's correlation coefficient for this relationship is very close to the value of Pearson's correlation coefficient (Exercise 5).
+2.  What can you conclude about the relationship between litter thickness and soil organic matter content?
+3.  Use `cor.test()` to calculate Spearman's correlation coefficient between the number of agroecological practices (`n_practices`) and plant diversity (`shannon_PIM`). In this case, Spearman's correlation coefficient is also a reasonable choice because the number of practices is a discrete variable (i.e., not continuous) and the relationship is monotonic. Note that the value of Spearman's correlation coefficient for this relationship is very close to the value of Pearson's correlation coefficient (Exercise 5).
+4.  What can you conclude about the relationship between the number of agroecological practices and plant diversity?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+cor.test(x = data$litter_thickness,
+         y = data$SOM,
+         method = "spearman")
+```
+
+## Solution 2
+
+The p-value of the test is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no correlation between litter thickness and soil organic matter content. The value of Spearman's correlation coefficient is strongly positive (0.83), meaning that soil organic matter increases with litter thickness.
+
+## Solution 3
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+cor.test(x = data$n_practices,
+         y = data$shannon_PIM,
+         method = "spearman")
+```
+
+## Solution 4
+
+The p-value of the test is much lower than the significance threshold (0.05). Therefore, we reject the null hypothesis that there is no correlation between the number of agroecological practices and plant diversity. The value of Spearman's correlation coefficient is positive (0.61), meaning that plant diversity increases with the number of agroecological practices.
+:::
+::::
+
 ## Correlation plots
+
+A correlation plot visualizes the pairwise correlations among multiple variables in a dataset. Each cell represents the correlation coefficient between two variables, and the strength and direction of the relationship are encoded using a color and/or size gradient. Such plots are particularly useful to detect potential multicollinearity.
+
+In R, one option to create a correlation plot is to use the `ggcorrplot()` function in the *ggcorrplot* package. Here are some of the most important arguments of this function (but see the help page of this function to see all the arguments available to personalize your plot):
+
+-   `corr`: the correlation matrix to visualize
+
+-   `method`: the visualization method to be used (either `"square"` or `"circle"`)
+
+-   `type`: the type of display (either `"full"`, `"lower"` or `"upper"`)
+
+-   `colors`: a vector of 3 colors for low, mid and high correlation values (default to `c("blue", "white", "red")`)
+
+:::: callout-tip
+## Exercise 7
+
+1.  Create a dataset containing only the soil variables (`CMB`, `pH`, `SOM`, `clay`, `P_soil`, `K_soil`, `SB`, `litter_thickness`). Name this dataset `data_soil`. The function `select()` in the *dplyr* package is well suited to do this (see tutorial 2, exercise 6).
+2.  Use `cor()` to calculate a correlation matrix (use Pearson's correlation coefficient). **Tip**: in this case, provide `data_soil` as input for the `x` argument.
+3.  Visualize the correlation matrix using `ggcorrplot()`. Do not hesitate to play around with the arguments of this function to see how it affects the graphical output.
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+data_soil <- dplyr::select(data,
+                           CMB,
+                           pH,
+                           SOM,
+                           clay,
+                           P_soil,
+                           K_soil,
+                           SB,
+                           litter_thickness)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+corr.matrix <- cor(x = data_soil,
+                   method = "pearson")
+```
+
+## Solution 3
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 5
+#| fig-height: 5
+#| fig-align: center
+#| fig-cap: "Pearson's correlation between soil variables."
+#| label: fig-corrplot
+
+ggcorrplot(corr = corr.matrix,
+           method = "circle",
+           type = "lower",
+           colors = c("blue", "white", "red"),
+           legend.title = "Correlation")
+```
+:::
+::::
