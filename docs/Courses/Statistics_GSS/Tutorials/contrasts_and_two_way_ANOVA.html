@@ -714,7 +714,7 @@ window.Quarto = {
 </section>
 <section id="set-contrast-coefficients" class="level3">
 <h3 class="anchored" data-anchor-id="set-contrast-coefficients">Set contrast coefficients</h3>
-<p>Our dataset contains data for three types of farm: agroecological (<code>eco</code>), conventional (<code>con</code>), and large-scale (<code>large</code>). The farm_type variable is a factor with three levels.</p>
+<p>Our dataset contains data for three types of farm: agroecological (<code>eco</code>), conventional (<code>con</code>), and large-scale (<code>large</code>). The <code>farm_type</code> variable is a factor with three levels.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -921,7 +921,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </div>
-<p>To break down the effect of the factor farm_type into the individual contrasts that we previously defined, we need to use the <code>split</code> argument in the <code>summary()</code> function used to display the ANOVA table. This would look like this:</p>
+<p>To break down the effect of the factor <code>farm_type</code> into the individual contrasts that we previously defined, we need to use the <code>split</code> argument in the <code>summary()</code> function used to display the ANOVA table. This would look like this:</p>
 <p><code>summary(model, split=list(farm_type=list("Eco vs. Con and Large"=1, "Con vs. Large" = 2)))</code></p>
 <p>Using the <code>split</code> argument, we specify that the factor <code>farm_type</code> should be divided into two components. The first contrast (column 1 of the contrast matrix) is labeled <code>"Eco vs. Con and Large"</code>, and the second contrast (column 2) is labeled <code>"Con vs. Large"</code>. The numbers 1 and 2 refer to the first and second contrast columns in the contrast matrix.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -2092,7 +2092,7 @@ large:Divino-eco:Divino      -347.8005 -1182.3239  486.72285 0.7997330</code></p
 <span id="cb35-115"><a href="#cb35-115" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-116"><a href="#cb35-116" aria-hidden="true" tabindex="-1"></a><span class="fu">### Set contrast coefficients</span></span>
 <span id="cb35-117"><a href="#cb35-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-118"><a href="#cb35-118" aria-hidden="true" tabindex="-1"></a>Our dataset contains data for three types of farm: agroecological (<span class="in">`eco`</span>), conventional (<span class="in">`con`</span>), and large-scale (<span class="in">`large`</span>). The farm_type variable is a factor with three levels.</span>
+<span id="cb35-118"><a href="#cb35-118" aria-hidden="true" tabindex="-1"></a>Our dataset contains data for three types of farm: agroecological (<span class="in">`eco`</span>), conventional (<span class="in">`con`</span>), and large-scale (<span class="in">`large`</span>). The <span class="in">`farm_type`</span> variable is a factor with three levels.</span>
 <span id="cb35-119"><a href="#cb35-119" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-120"><a href="#cb35-120" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
 <span id="cb35-121"><a href="#cb35-121" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 2</span></span>
@@ -2230,7 +2230,7 @@ large:Divino-eco:Divino      -347.8005 -1182.3239  486.72285 0.7997330</code></p
 <span id="cb35-265"><a href="#cb35-265" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb35-266"><a href="#cb35-266" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb35-267"><a href="#cb35-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-268"><a href="#cb35-268" aria-hidden="true" tabindex="-1"></a>To break down the effect of the factor farm_type into the individual contrasts that we previously defined, we need to use the <span class="in">`split`</span> argument in the <span class="in">`summary()`</span> function used to display the ANOVA table. This would look like this:</span>
+<span id="cb35-268"><a href="#cb35-268" aria-hidden="true" tabindex="-1"></a>To break down the effect of the factor <span class="in">`farm_type`</span> into the individual contrasts that we previously defined, we need to use the <span class="in">`split`</span> argument in the <span class="in">`summary()`</span> function used to display the ANOVA table. This would look like this:</span>
 <span id="cb35-269"><a href="#cb35-269" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-270"><a href="#cb35-270" aria-hidden="true" tabindex="-1"></a><span class="in">`summary(model, split=list(farm_type=list("Eco vs. Con and Large"=1, "Con vs. Large" = 2)))`</span></span>
 <span id="cb35-271"><a href="#cb35-271" aria-hidden="true" tabindex="-1"></a></span>

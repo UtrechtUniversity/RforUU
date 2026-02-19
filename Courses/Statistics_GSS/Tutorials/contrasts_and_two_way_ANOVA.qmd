@@ -111,7 +111,7 @@ In R, contrasts are specified using contrast coefficients that define how group 
 
 ### Set contrast coefficients
 
-Our dataset contains data for three types of farm: agroecological (`eco`), conventional (`con`), and large-scale (`large`). The farm_type variable is a factor with three levels.
+Our dataset contains data for three types of farm: agroecological (`eco`), conventional (`con`), and large-scale (`large`). The `farm_type` variable is a factor with three levels.
 
 :::: callout-tip
 ## Exercise 2
@@ -249,7 +249,7 @@ summary(model)
 :::
 ::::
 
-To break down the effect of the factor farm_type into the individual contrasts that we previously defined, we need to use the `split` argument in the `summary()` function used to display the ANOVA table. This would look like this:
+To break down the effect of the factor `farm_type` into the individual contrasts that we previously defined, we need to use the `split` argument in the `summary()` function used to display the ANOVA table. This would look like this:
 
 `summary(model, split=list(farm_type=list("Eco vs. Con and Large"=1, "Con vs. Large" = 2)))`
 
