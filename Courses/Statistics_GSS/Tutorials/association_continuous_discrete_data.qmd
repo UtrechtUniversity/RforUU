@@ -25,7 +25,7 @@ image: /Images/Rlogo.png
 
 ## About this tutorial
 
-In this practical, you will investigate associations between numerical variables using correlation analysis. You will work with pairs of variables that may be continuous, discrete, or show non-linear relationships, and you will learn how to choose an appropriate correlation method for each situation. Specifically, you will calculate and interpret three commonly used correlation measures:
+In this tutorial, you will investigate associations between numerical variables using correlation analysis. You will work with pairs of variables that may be continuous, discrete, or show non-linear relationships, and you will learn how to choose an appropriate correlation method for each situation. Specifically, you will calculate and interpret three commonly used correlation measures:
 
 -   Pearson’s correlation: used when both variables are continuous and the relationship is approximately linear.
 

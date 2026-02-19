@@ -225,7 +225,7 @@ The p-value of the test is slightly below the significance threshold (0.05), sug
 
 ## Doing a one-way ANOVA
 
-Both exploratory analyses and formal statistical tests indicate that SOM data from agroecological farms do not follow a normal distribution, and that variability in SOM is lower in conventional farms. These results suggest that some key assumptions of ANOVA (normality and homoscedasticity) may not be fully met. In the next tutorial, we will introduce non-parametric alternatives to ANOVA that may be more appropriate for such data.
+Both exploratory analyses and formal statistical tests indicate that SOM data from agroecological farms do not follow a normal distribution, and that variability in SOM is lower in conventional farms. These results suggest that some key assumptions of ANOVA (normality and homoscedasticity) may not be fully met. Later in this tutorial, we will introduce non-parametric alternatives to ANOVA that may be more appropriate for such data.
 
 That said, it is important to note that ANOVA is generally robust to moderate departures from normality and homoscedasticity. For this reason, we will proceed with ANOVA for now, and later compare its results with those from non-parametric tests. This comparison will allow us to assess whether different statistical approaches lead to the same conclusions.
 
