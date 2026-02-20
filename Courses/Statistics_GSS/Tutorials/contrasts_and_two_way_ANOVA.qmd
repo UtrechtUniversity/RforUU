@@ -295,7 +295,7 @@ To illustrate polynomial contrasts, let's focus on the relationship between soil
 1.  Convert the `n_ext_projects` variable to a factor using `as.factor()`.
 2.  Get contrast coefficients using `contr.poly()`. To use this function, you just need to specify the number of levels (`n`) that your factor has (in our case, `n_ext_projects` has 5 levels). Store the contract coefficients into an object called `contrast.matrix.poly`. The contrast coefficients created by `contr.poly()` are designed to test linear, quadratic, and higher-order trends.
 3.  Tell R to use these custom contrasts when analyzing the factor `n_ext_projects` by assigning this matrix to `contrasts(data$n_ext_projects)`.
-4.  Fit a one-way ANOVA model to test the effect of farm type (`n_ext_projects`) on soil organic matter content (`SOM`). Show the ANOVA table using `summary()`.
+4.  Fit a one-way ANOVA model to test the effect of the number of projects accessed (`n_ext_projects`) on soil organic matter content (`SOM`). Show the ANOVA table using `summary()`.
 5.  Run the `summary()` function on the ANOVA object using the `split` argument. We are only interested in examining the results for the first two trend components (linear and quadratic). Linear contrasts are stored in the first column of `contrast.matrix.poly`, while quadratic contrasts are stored in the second column.
 6.  Based on the summary table, what can you conclude about the relationship between soil organic matter content and the number of projects accessed?
 
