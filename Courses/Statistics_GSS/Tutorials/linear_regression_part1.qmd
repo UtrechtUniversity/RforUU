@@ -99,8 +99,8 @@ As usual, let's start by visualizing this relationship. A scatter plot is the id
 #| echo: true
 #| warning: false
 #| message: false
-#| fig-width: 4
-#| fig-height: 4
+#| fig-width: 5
+#| fig-height: 5
 #| fig-align: center
 #| fig-cap: "Relationship between litter thickness and soil microbial biomass."
 #| label: fig-litterCMB
@@ -412,7 +412,7 @@ Observations 23 and 36 stand out due to their comparatively high leverage and la
 
 ### The slow way
 
-The goodness of fit of a linear regression model (i.e., how well the model explains the observed data) can be quantified by the **coefficient of determination** **(R^2^)** (@eq-R2). R^2^ measures the proportion of the total variability in the response variable that is explained by the predictors included in the model. For example, an R^2^ of 0.70 indicates that 70% of the variation in the outcome is accounted for by the linear relationship specified in the model.
+The goodness of fit of a linear regression model (i.e., how well the model explains the observed data) can be quantified by the **coefficient of determination** **(R^2^)** (@eq-R2). R^2^ measures the proportion of the total variability in the response variable ($SS_{tot}$) that is explained by the predictors included in the model ($SS_{reg}$). For example, an R^2^ of 0.70 indicates that 70% of the variation in the outcome is accounted for by the linear relationship specified in the model.
 
 $$
 R^2=\frac{SS_{reg}}{SS_{tot}}=\frac{SS_{reg}}{SS_{reg}+SS_{res}}
@@ -652,8 +652,8 @@ Let's try both options!
 #| echo: true
 #| warning: false
 #| message: false
-#| fig-width: 4
-#| fig-height: 4
+#| fig-width: 5
+#| fig-height: 5
 #| fig-align: center
 #| fig-cap: "Relationship between litter thickness and soil microbial biomass. The solid line is the fitted linear model. The shaded area represents the 95% confidence interval."
 #| label: fig-litterCMB-lm-CI
@@ -678,8 +678,8 @@ ggplot(data = data, mapping = aes(x = litter_thickness,
 #| echo: true
 #| warning: false
 #| message: false
-#| fig-width: 4
-#| fig-height: 4
+#| fig-width: 5
+#| fig-height: 5
 #| fig-align: center
 #| fig-cap: "Relationship between litter thickness and soil microbial biomass. The solid line is the fitted linear model. The shaded area represents the 95% prediction interval."
 #| label: fig-litterCMB-lm-PI

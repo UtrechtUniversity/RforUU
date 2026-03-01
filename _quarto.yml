@@ -148,9 +148,12 @@ format:
     code-tools: true
     code-overflow: scroll
     fig-cap-location: bottom
-    fig-format: png
-    fig-dpi: 600
+    fig-format: svg
     fig-align: center
+
+knitr:
+  opts_chunk:
+    dev: svglite
 
 editor: visual
 editor_options: 
