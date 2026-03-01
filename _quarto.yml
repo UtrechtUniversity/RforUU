@@ -148,7 +148,8 @@ format:
     code-tools: true
     code-overflow: scroll
     fig-cap-location: bottom
-    fig-format: svg
+    fig-format: png
+    fig-dpi: 600
     fig-align: center
 
 editor: visual

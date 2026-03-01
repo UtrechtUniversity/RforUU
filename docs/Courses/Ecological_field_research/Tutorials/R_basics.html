@@ -80,9 +80,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-0d26f0a4a29ec1d3ea99b64edf6dfaea.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-15d6fd7d8cfea2a142b05677da548de5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../../site_libs/bootstrap/bootstrap-0d26f0a4a29ec1d3ea99b64edf6dfaea.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-d3d30c608f49e8720cdcd7c82e968a24.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-065e9eb37320e2ccb05392e97200b60c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-d3d30c608f49e8720cdcd7c82e968a24.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -653,12 +653,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#View matrix</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>x2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          [,1]       [,2]        [,3]      [,4]      [,5]
-[1,] 0.4084907 0.77595098 0.459329236 0.7840486 0.3221020
-[2,] 0.1438791 0.04045776 0.688322075 0.5358483 0.5322019
-[3,] 0.1226525 0.77006903 0.009502033 0.6257163 0.4074854
-[4,] 0.4624201 0.97677414 0.394275714 0.4246039 0.4813939
-[5,] 0.1867380 0.98647387 0.027232368 0.5206485 0.6896492</code></pre>
+<pre><code>           [,1]      [,2]      [,3]      [,4]       [,5]
+[1,] 0.08806369 0.2796322 0.4785231 0.7537510 0.19403132
+[2,] 0.17423625 0.3931225 0.4404863 0.9753306 0.42231037
+[3,] 0.37062532 0.7547472 0.9324187 0.7129828 0.16851181
+[4,] 0.70998095 0.9681198 0.8084971 0.6950972 0.07035504
+[5,] 0.03066779 0.7662371 0.9518448 0.7373414 0.19084859</code></pre>
 </div>
 </div>
 <p>You can check the size of a matrix using the <code>dim()</code> function. The first element of the output is the number of rows. The second element of the output is the number of columns.</p>
@@ -717,12 +717,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [1] 1 2 3 4 5
 
 [[2]]
-          [,1]       [,2]        [,3]      [,4]      [,5]
-[1,] 0.4084907 0.77595098 0.459329236 0.7840486 0.3221020
-[2,] 0.1438791 0.04045776 0.688322075 0.5358483 0.5322019
-[3,] 0.1226525 0.77006903 0.009502033 0.6257163 0.4074854
-[4,] 0.4624201 0.97677414 0.394275714 0.4246039 0.4813939
-[5,] 0.1867380 0.98647387 0.027232368 0.5206485 0.6896492
+           [,1]      [,2]      [,3]      [,4]       [,5]
+[1,] 0.08806369 0.2796322 0.4785231 0.7537510 0.19403132
+[2,] 0.17423625 0.3931225 0.4404863 0.9753306 0.42231037
+[3,] 0.37062532 0.7547472 0.9324187 0.7129828 0.16851181
+[4,] 0.70998095 0.9681198 0.8084971 0.6950972 0.07035504
+[5,] 0.03066779 0.7662371 0.9518448 0.7373414 0.19084859
 
 [[3]]
   Var1 Var2  Var3
@@ -768,7 +768,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>x2[<span class="dv">2</span>,<span class="dv">3</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.6883221</code></pre>
+<pre><code>[1] 0.4404863</code></pre>
 </div>
 </div>
 <p>With a data frame, there are a couple of other options to extract data from specific columns. One option is to use the dollar symbol (<code>$</code>) followed by the column name.</p>
@@ -814,12 +814,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>x4[[<span class="dv">2</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          [,1]       [,2]        [,3]      [,4]      [,5]
-[1,] 0.4084907 0.77595098 0.459329236 0.7840486 0.3221020
-[2,] 0.1438791 0.04045776 0.688322075 0.5358483 0.5322019
-[3,] 0.1226525 0.77006903 0.009502033 0.6257163 0.4074854
-[4,] 0.4624201 0.97677414 0.394275714 0.4246039 0.4813939
-[5,] 0.1867380 0.98647387 0.027232368 0.5206485 0.6896492</code></pre>
+<pre><code>           [,1]      [,2]      [,3]      [,4]       [,5]
+[1,] 0.08806369 0.2796322 0.4785231 0.7537510 0.19403132
+[2,] 0.17423625 0.3931225 0.4404863 0.9753306 0.42231037
+[3,] 0.37062532 0.7547472 0.9324187 0.7129828 0.16851181
+[4,] 0.70998095 0.9681198 0.8084971 0.6950972 0.07035504
+[5,] 0.03066779 0.7662371 0.9518448 0.7373414 0.19084859</code></pre>
 </div>
 </div>
 
