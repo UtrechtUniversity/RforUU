@@ -99,8 +99,8 @@ As usual, let's start by visualizing this relationship. A scatter plot is the id
 #| echo: true
 #| warning: false
 #| message: false
-#| fig-width: 5
-#| fig-height: 5
+#| fig-width: 4
+#| fig-height: 4
 #| fig-align: center
 #| fig-cap: "Relationship between litter thickness and soil microbial biomass."
 #| label: fig-litterCMB
@@ -397,7 +397,7 @@ In R, you can easily create such a graph using `plot(model, which=5)`. The `whic
 #| warning: false
 #| fig-align: center
 #| fig-height: 5
-#| fig-width: 5
+#| fig-width: 6
 
 plot(model, which = 5)
 ```
@@ -652,8 +652,8 @@ Let's try both options!
 #| echo: true
 #| warning: false
 #| message: false
-#| fig-width: 5
-#| fig-height: 5
+#| fig-width: 4
+#| fig-height: 4
 #| fig-align: center
 #| fig-cap: "Relationship between litter thickness and soil microbial biomass. The solid line is the fitted linear model. The shaded area represents the 95% confidence interval."
 #| label: fig-litterCMB-lm-CI
@@ -678,8 +678,8 @@ ggplot(data = data, mapping = aes(x = litter_thickness,
 #| echo: true
 #| warning: false
 #| message: false
-#| fig-width: 5
-#| fig-height: 5
+#| fig-width: 4
+#| fig-height: 4
 #| fig-align: center
 #| fig-cap: "Relationship between litter thickness and soil microbial biomass. The solid line is the fitted linear model. The shaded area represents the 95% prediction interval."
 #| label: fig-litterCMB-lm-PI
