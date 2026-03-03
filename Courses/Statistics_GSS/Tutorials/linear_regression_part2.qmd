@@ -81,7 +81,7 @@ data <- read_excel("gss_statistics_master_data_set2.xlsx")
 Multiple linear regression is a statistical method used to explain or predict the value of one continuous response variable ($y$) based on two or more predictor variables ($x_1, x_2,...,x_n$) (@eq-multiplelm).
 
 $$
-y=\beta_0+\beta_1x_1+\beta_2x_2+...\beta_nx_n+\epsilon
+y=\beta_0+\beta_1x_1+\beta_2x_2+...+\beta_nx_n+\epsilon
 $$ {#eq-multiplelm}
 
 In this equation, $\beta_0$ is the **intercept** and $\beta_{1,2,...,n}$ are the **slopes**. $\epsilon$ is the model residual (error).
