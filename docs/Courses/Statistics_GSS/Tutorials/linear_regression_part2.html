@@ -1482,19 +1482,22 @@ coffeeprod=-77.75+2.26 \times altitude+4275.83 \times Divino - 5.35 \times altit
 <p>In this equation, <code>altitude</code> is a numeric variable, while <code>Divino</code> is a dummy variable that can only take the value 0 (when we want to make a prediction for the Araponga municipality) or 1 (when we want to make a prediction for the Divino municipality).</p>
 <p>Let’s first make a prediction for coffee productivity at an altitude of 1000 m in the municipality of Araponga. In this case, we need to set <code>Divino=0</code>. The equation of the linear model therefore becomes:</p>
 <p><span class="math display">\[
-coffeeprod=-77.75+2.26 \times altitude+4275.83 \times 0 - 5.35 \times altitude \times 0=-77.75+2.26 \times altitude
+coffeeprod=-77.75+2.26 \times altitude+4275.83 \times 0 - 5.35 \times altitude \times 0
+\]</span></p>
+<p><span class="math display">\[
+coffeeprod=-77.75+2.26 \times altitude
 \]</span></p>
 <p>At an altitude of 1000 m, the coffee productivity in Araponga can be calculated as:</p>
 <p><span class="math display">\[
-coffeeprod=-77.75+2.26 \times 1000 = -77.75 + 2260 = 2182.25 \space kg/ha/year
+coffeeprod=-77.75+2.26 \times 1000 = 2182.25 \space kg/ha/year
 \]</span></p>
 <p>To make a prediction for the municipality of Divino, we need to set <code>Divino=1</code> in the equation of the linear model. The equation of the linear model therefore becomes:</p>
 <p><span class="math display">\[
-coffeeprod=-77.75+2.26 \times altitude+4275.83 \times 1 - 5.35 \times altitude \times 1=4198.08-3.09 \times altitude
+coffeeprod=-77.75+2.26 \times altitude+4275.83 \times 1 - 5.35 \times altitude \times 1
 \]</span></p>
 <p>At an altitude of 1000 m, the coffee productivity in Divino can be calculated as:</p>
 <p><span class="math display">\[
-coffeeprod=4198.08-3.09 \times 1000 = 4198.08 - 3090 = 1108.08 \space kg/ha/year
+coffeeprod=4198.08-3.09 \times 1000 = 1108.08 \space kg/ha/year
 \]</span></p>
 </div>
 </div>
@@ -2660,28 +2663,32 @@ coffeeprod=4198.08-3.09 \times 1000 = 4198.08 - 3090 = 1108.08 \space kg/ha/year
 <span id="cb38-728"><a href="#cb38-728" aria-hidden="true" tabindex="-1"></a>Let's first make a prediction for coffee productivity at an altitude of 1000 m in the municipality of Araponga. In this case, we need to set <span class="in">`Divino=0`</span>. The equation of the linear model therefore becomes:</span>
 <span id="cb38-729"><a href="#cb38-729" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-730"><a href="#cb38-730" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb38-731"><a href="#cb38-731" aria-hidden="true" tabindex="-1"></a>coffeeprod=-77.75+2.26 \times altitude+4275.83 \times 0 - 5.35 \times altitude \times 0=-77.75+2.26 \times altitude</span>
+<span id="cb38-731"><a href="#cb38-731" aria-hidden="true" tabindex="-1"></a>coffeeprod=-77.75+2.26 \times altitude+4275.83 \times 0 - 5.35 \times altitude \times 0</span>
 <span id="cb38-732"><a href="#cb38-732" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb38-733"><a href="#cb38-733" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-734"><a href="#cb38-734" aria-hidden="true" tabindex="-1"></a>At an altitude of 1000 m, the coffee productivity in Araponga can be calculated as:</span>
-<span id="cb38-735"><a href="#cb38-735" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-734"><a href="#cb38-734" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-735"><a href="#cb38-735" aria-hidden="true" tabindex="-1"></a>coffeeprod=-77.75+2.26 \times altitude</span>
 <span id="cb38-736"><a href="#cb38-736" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb38-737"><a href="#cb38-737" aria-hidden="true" tabindex="-1"></a>coffeeprod=-77.75+2.26 \times 1000 = -77.75 + 2260 = 2182.25 \space kg/ha/year</span>
-<span id="cb38-738"><a href="#cb38-738" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-737"><a href="#cb38-737" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-738"><a href="#cb38-738" aria-hidden="true" tabindex="-1"></a>At an altitude of 1000 m, the coffee productivity in Araponga can be calculated as:</span>
 <span id="cb38-739"><a href="#cb38-739" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-740"><a href="#cb38-740" aria-hidden="true" tabindex="-1"></a>To make a prediction for the municipality of Divino, we need to set <span class="in">`Divino=1`</span> in the equation of the linear model. The equation of the linear model therefore becomes:</span>
-<span id="cb38-741"><a href="#cb38-741" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-740"><a href="#cb38-740" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-741"><a href="#cb38-741" aria-hidden="true" tabindex="-1"></a>coffeeprod=-77.75+2.26 \times 1000 = 2182.25 \space kg/ha/year</span>
 <span id="cb38-742"><a href="#cb38-742" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb38-743"><a href="#cb38-743" aria-hidden="true" tabindex="-1"></a>coffeeprod=-77.75+2.26 \times altitude+4275.83 \times 1 - 5.35 \times altitude \times 1=4198.08-3.09 \times altitude</span>
-<span id="cb38-744"><a href="#cb38-744" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-743"><a href="#cb38-743" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-744"><a href="#cb38-744" aria-hidden="true" tabindex="-1"></a>To make a prediction for the municipality of Divino, we need to set <span class="in">`Divino=1`</span> in the equation of the linear model. The equation of the linear model therefore becomes:</span>
 <span id="cb38-745"><a href="#cb38-745" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-746"><a href="#cb38-746" aria-hidden="true" tabindex="-1"></a>At an altitude of 1000 m, the coffee productivity in Divino can be calculated as:</span>
-<span id="cb38-747"><a href="#cb38-747" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-746"><a href="#cb38-746" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-747"><a href="#cb38-747" aria-hidden="true" tabindex="-1"></a>coffeeprod=-77.75+2.26 \times altitude+4275.83 \times 1 - 5.35 \times altitude \times 1</span>
 <span id="cb38-748"><a href="#cb38-748" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb38-749"><a href="#cb38-749" aria-hidden="true" tabindex="-1"></a>coffeeprod=4198.08-3.09 \times 1000 = 4198.08 - 3090 = 1108.08 \space kg/ha/year</span>
-<span id="cb38-750"><a href="#cb38-750" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb38-751"><a href="#cb38-751" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb38-752"><a href="#cb38-752" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb38-749"><a href="#cb38-749" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-750"><a href="#cb38-750" aria-hidden="true" tabindex="-1"></a>At an altitude of 1000 m, the coffee productivity in Divino can be calculated as:</span>
+<span id="cb38-751"><a href="#cb38-751" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-752"><a href="#cb38-752" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-753"><a href="#cb38-753" aria-hidden="true" tabindex="-1"></a>coffeeprod=4198.08-3.09 \times 1000 = 1108.08 \space kg/ha/year</span>
+<span id="cb38-754"><a href="#cb38-754" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-755"><a href="#cb38-755" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb38-756"><a href="#cb38-756" aria-hidden="true" tabindex="-1"></a>::::</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
