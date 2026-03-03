@@ -25,7 +25,7 @@ image: /Images/Rlogo.png
 
 ## About this tutorial
 
-The goal of this tutorial is to understand and apply [multiple]{.underline} linear regression models to examine the relationship between a numerical variable (the response variable) and several predictor (or independent) variables. You will learn how to estimate the model coefficients, and test the statistical significance of the model. In addition, you will learn how to compare different models and interpret their output. Finally, we will check whether the assumptions underlying linear regression are satisfied.
+The goal of this tutorial is to understand and apply [multiple]{.underline} linear regression models to examine the relationship between a numerical variable (the response variable) and several predictor (or independent) variables. You will learn how to check for collinearity, how to estimate the model coefficients, and test the statistical significance of the model. In addition, you will learn how to compare different models and interpret their output. Finally, we will check whether the assumptions underlying linear regression are satisfied.
 
 Let's get started!
 

@@ -476,7 +476,7 @@
     "href": "Courses/Statistics_GSS/Tutorials/linear_regression_part2.html",
     "title": "Tutorial 9: Linear regression (part 2)",
     "section": "",
-    "text": "The goal of this tutorial is to understand and apply multiple linear regression models to examine the relationship between a numerical variable (the response variable) and several predictor (or independent) variables. You will learn how to estimate the model coefficients, and test the statistical significance of the model. In addition, you will learn how to compare different models and interpret their output. Finally, we will check whether the assumptions underlying linear regression are satisfied.\nLet’s get started!",
+    "text": "The goal of this tutorial is to understand and apply multiple linear regression models to examine the relationship between a numerical variable (the response variable) and several predictor (or independent) variables. You will learn how to check for collinearity, how to estimate the model coefficients, and test the statistical significance of the model. In addition, you will learn how to compare different models and interpret their output. Finally, we will check whether the assumptions underlying linear regression are satisfied.\nLet’s get started!",
     "crumbs": [
       "Statistics GSS",
       "Tutorials",
@@ -488,7 +488,7 @@
     "href": "Courses/Statistics_GSS/Tutorials/linear_regression_part2.html#about-this-tutorial",
     "title": "Tutorial 9: Linear regression (part 2)",
     "section": "",
-    "text": "The goal of this tutorial is to understand and apply multiple linear regression models to examine the relationship between a numerical variable (the response variable) and several predictor (or independent) variables. You will learn how to estimate the model coefficients, and test the statistical significance of the model. In addition, you will learn how to compare different models and interpret their output. Finally, we will check whether the assumptions underlying linear regression are satisfied.\nLet’s get started!",
+    "text": "The goal of this tutorial is to understand and apply multiple linear regression models to examine the relationship between a numerical variable (the response variable) and several predictor (or independent) variables. You will learn how to check for collinearity, how to estimate the model coefficients, and test the statistical significance of the model. In addition, you will learn how to compare different models and interpret their output. Finally, we will check whether the assumptions underlying linear regression are satisfied.\nLet’s get started!",
     "crumbs": [
       "Statistics GSS",
       "Tutorials",
