@@ -66,7 +66,7 @@ Linear regression is a statistical method used to model the relationship between
 
 $$
 y=\beta_0+\beta_1x+\epsilon
-$$ {#eq-linearreg}In this equation, $\beta_0$ is the **intercept** and $\beta_1$ is the **slope**. $\epsilon$ is the model residual (error).
+$$ {#eq-linearreg} this equation, $\beta_0$ is the **intercept** and $\beta_1$ is the **slope**. $\epsilon$ is the model residual (error).
 
 The **intercept** ($\beta_0$) represents the predicted value of $y$ when $x$ is equal to zero. It is the point where the regression line crosses the y-axis.
 
@@ -495,13 +495,13 @@ The fastest way to obtain the values of both the unadjusted and adjusted R^2^ is
 After fitting the linear model, we obtained the following equation:
 
 $$
-CMN=17.98\times{litterthickness}+334.94
+CMB=17.98\times{litterthickness}+334.94
 $$
 
 To predict the soil microbial biomass for a litter thickness of 6 cm, we simply substitute this value into the equation:
 
 $$
-CMN=17.98\times6+334.94=442.82
+CMB=17.98\times6+334.94=442.82
 $$
 
 Thus, the model predicts a soil microbial biomass of 442.82 µg/g dry soil for a litter thickness of 6 cm.
