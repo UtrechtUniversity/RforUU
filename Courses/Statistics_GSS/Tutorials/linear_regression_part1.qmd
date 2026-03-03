@@ -65,8 +65,8 @@ data <- read_excel("gss_statistics_master_data_set2.xlsx")
 Linear regression is a statistical method used to model the relationship between a response variable (which is usually numeric) and a number of predictor variables. In the simplest case, it involves one response variable ($y$) and one predictor variable ($x$). The goal is to model how changes in $x$ are associated with changes in $y$ by fitting a straight line to the data. This relationship is expressed with @eq-linearreg.
 
 $$
-y=\beta_0+\beta_1x
-$$ {#eq-linearreg} this equation, $\beta_0$ is the **intercept** and $\beta_1$ is the **slope**.
+y=\beta_0+\beta_1x+\epsilon
+$$ {#eq-linearreg}In this equation, $\beta_0$ is the **intercept** and $\beta_1$ is the **slope**. $\epsilon$ is the model residual (error).
 
 The **intercept** ($\beta_0$) represents the predicted value of $y$ when $x$ is equal to zero. It is the point where the regression line crosses the y-axis.
 
@@ -253,7 +253,7 @@ Both regression coefficients (slope and intercept) are significantly different f
 :::
 ::::
 
-## Check model assumptions
+## Checking model assumptions
 
 ### Normality
 

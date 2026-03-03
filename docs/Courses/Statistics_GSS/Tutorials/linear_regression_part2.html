@@ -113,6 +113,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -513,8 +542,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#about-this-tutorial" id="toc-about-this-tutorial" class="nav-link active" data-scroll-target="#about-this-tutorial">About this tutorial</a></li>
+  <li><a href="#install-r-packages" id="toc-install-r-packages" class="nav-link" data-scroll-target="#install-r-packages">Install R packages</a></li>
+  <li><a href="#load-r-packages" id="toc-load-r-packages" class="nav-link" data-scroll-target="#load-r-packages">Load R packages</a></li>
+  <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data">Importing data</a></li>
+  <li><a href="#what-is-multiple-linear-regression" id="toc-what-is-multiple-linear-regression" class="nav-link" data-scroll-target="#what-is-multiple-linear-regression">What is multiple linear regression?</a></li>
+  <li><a href="#research-question" id="toc-research-question" class="nav-link" data-scroll-target="#research-question">Research question</a></li>
+  <li><a href="#checking-for-collinearity" id="toc-checking-for-collinearity" class="nav-link" data-scroll-target="#checking-for-collinearity">Checking for collinearity</a></li>
+  <li><a href="#fitting-a-multiple-linear-regression-model" id="toc-fitting-a-multiple-linear-regression-model" class="nav-link" data-scroll-target="#fitting-a-multiple-linear-regression-model">Fitting a multiple linear regression model</a></li>
+  <li><a href="#building-alternative-models" id="toc-building-alternative-models" class="nav-link" data-scroll-target="#building-alternative-models">Building alternative models</a></li>
+  <li><a href="#comparing-models" id="toc-comparing-models" class="nav-link" data-scroll-target="#comparing-models">Comparing models</a></li>
+  <li><a href="#standardized-regression-coefficients" id="toc-standardized-regression-coefficients" class="nav-link" data-scroll-target="#standardized-regression-coefficients">Standardized regression coefficients</a></li>
+  <li><a href="#checking-model-assumptions" id="toc-checking-model-assumptions" class="nav-link" data-scroll-target="#checking-model-assumptions">Checking model assumptions</a>
+  <ul>
+  <li><a href="#normality" id="toc-normality" class="nav-link" data-scroll-target="#normality">Normality</a></li>
+  <li><a href="#homoscedasticity" id="toc-homoscedasticity" class="nav-link" data-scroll-target="#homoscedasticity">Homoscedasticity</a></li>
+  </ul></li>
+  <li><a href="#checking-for-influential-observations" id="toc-checking-for-influential-observations" class="nav-link" data-scroll-target="#checking-for-influential-observations">Checking for influential observations</a></li>
+  <li><a href="#checking-for-collinearity-again" id="toc-checking-for-collinearity-again" class="nav-link" data-scroll-target="#checking-for-collinearity-again">Checking for collinearity (again!)</a></li>
+  <li><a href="#combining-numerical-and-categorical-variables-in-a-linear-model" id="toc-combining-numerical-and-categorical-variables-in-a-linear-model" class="nav-link" data-scroll-target="#combining-numerical-and-categorical-variables-in-a-linear-model">Combining numerical and categorical variables in a linear model</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -522,7 +575,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/index.html">Statistics GSS</a></li><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/Tutorials/index.html">Tutorials</a></li><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/Tutorials/linear_regression_part2.html">9. Linear regression (part 2)</a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Tutorial 9: Linear regression (part 2)</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Tutorial 9: Linear regression (part 2)</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -568,11 +621,891 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Add text</p>
+<section id="about-this-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="about-this-tutorial">About this tutorial</h2>
+<p>The goal of this tutorial is to understand and apply <u>multiple</u> linear regression models to examine the relationship between a numerical variable (the response variable) and several predictor (or independent) variables. You will learn how to estimate the model coefficients, and test the statistical significance of the model. In addition, you will learn how to compare different models and interpret their output. Finally, we will check whether the assumptions underlying linear regression are satisfied.</p>
+<p>Let’s get started!</p>
+</section>
+<section id="install-r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="install-r-packages">Install R packages</h2>
+<p>In this tutorial, we will need to use functions in the <em>GGally</em> and <em>olsrr</em> packages. Make sure to install these packages before starting the tutorial.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"GGally"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"olsrr"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="load-r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="load-r-packages">Load R packages</h2>
+<p>To work on this tutorial, you will need to load the <em>readxl</em>, <em>tidyverse</em>, <em>GGally</em>, and <em>olsrr</em> packages.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl) </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(olsrr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="importing-data" class="level2">
+<h2 class="anchored" data-anchor-id="importing-data">Importing data</h2>
+<p>Start by importing the data used in this course (see previous tutorials).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1 (csv file) </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"gss_statistics_master_data_set2.csv"</span>)  </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 2 (Excel file) </span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"gss_statistics_master_data_set2.xlsx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="what-is-multiple-linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-multiple-linear-regression">What is multiple linear regression?</h2>
+<p>Multiple linear regression is a statistical method used to explain or predict the value of one continuous response variable (<span class="math inline">\(y\)</span>) based on two or more predictor variables (<span class="math inline">\(x_1, x_2,...,x_n\)</span>) (<a href="#eq-multiplelm" class="quarto-xref">Equation&nbsp;1</a>).</p>
+<p><span id="eq-multiplelm"><span class="math display">\[
+y=\beta_0+\beta_1x_1+\beta_2x_2+...\beta_nx_n+\epsilon
+\tag{1}\]</span></span></p>
+<p>In this equation, <span class="math inline">\(\beta_0\)</span> is the <strong>intercept</strong> and <span class="math inline">\(\beta_{1,2,...,n}\)</span> are the <strong>slopes</strong>. <span class="math inline">\(\epsilon\)</span> is the model residual (error).</p>
+<p>The <strong>intercept</strong> (<span class="math inline">\(\beta_0\)</span>) represents the predicted value of <span class="math inline">\(y\)</span> when all the predictor variables are equal to zero.</p>
+<p>Each <strong>slope</strong> (<span class="math inline">\(\beta_{1,2,...,n}\)</span>​) represents the expected change in <span class="math inline">\(y\)</span> when that a predictor increases by one-unit while holding all the other predictors constant.</p>
+</section>
+<section id="research-question" class="level2">
+<h2 class="anchored" data-anchor-id="research-question">Research question</h2>
+<p>In this tutorial, we will analyze how the number of agroecological practices (<code>n_practices</code>), mowing intensity (<code>mowing</code>), and pesticide use (<code>pesticide</code>) affect plant diversity (<code>shannon_PIM</code>).</p>
+</section>
+<section id="checking-for-collinearity" class="level2">
+<h2 class="anchored" data-anchor-id="checking-for-collinearity">Checking for collinearity</h2>
+<p>Let’s first examine the relationships among the variables. At this stage, we want to assess whether there is multicollinearity among the explanatory variables and whether the relationships between the response variable and each explanatory variable appear approximately linear.</p>
+<p>If two explanatory variables are highly correlated, this suggests potential multicollinearity. In such cases, we may consider excluding one of the strongly correlated variables.</p>
+<p>If the relationship between the response variable and a predictor shows a clear non-linear pattern, such as a curved trend, we may consider transforming the variable or including a non-linear term in the model.</p>
+<p>To visualize pairwise relationships between variables, we can use the <code>ggpairs()</code> function in the <em>GGally</em> package. The output of <code>ggpairs()</code> is a graph displaying a scatter plot for each relationship, as well as their Pearson’s correlation coefficients.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Create a new dataset (<code>subdata</code>) that only contains the variables of interest for this tutorial (<code>n_practices</code>, <code>mowing</code>, <code>pesticide</code>, <code>shannon_PIM</code>).</li>
+<li>Use <code>ggpairs()</code> to visualize pairwise relationships between these variables.</li>
+<li>What observations can you make from this graph?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Solution 3</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>subdata <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">select</span>(data,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                         n_practices,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                         mowing,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                         pesticide,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                         shannon_PIM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(subdata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="linear_regression_part2_files/figure-html/unnamed-chunk-5-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p>Among the explanatory variables, <code>pesticide</code> and <code>n_practices</code> are the most strongly correlated (r = -0.743). The correlation between the other explanatory variables is weaker (r = 0.444 and r = -0.473).</p>
+<p>When looking at the relationship between the response variable (<code>shannon_PIM</code>) and each explanatory variable, we can see that the relationship between plant diversity and mowing intensity seems asymptotic, while the relationship between plant diversity and the other explanatory variables looks more linear.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="fitting-a-multiple-linear-regression-model" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-a-multiple-linear-regression-model">Fitting a multiple linear regression model</h2>
+<p>Let’s start by fitting the most complicated model including all three explanatory variables and their two-way and three-way interactions. We can do this using the <code>lm()</code> function in R.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Use <code>lm()</code> to fit a multiple linear regression model using plant diversity (<code>shannon_PIM</code>) as the response variable, and the number of agroecological practices (<code>n_practices</code>), mowing intensity (<code>mowing</code>), and pesticide use (<code>pesticide</code>) as explanatory variables. Include all two-way and three-way interactions in this model. Store model output in an R object called <code>model1</code>.</li>
+<li>Run the <code>summary()</code> function on the <code>model1</code> object.</li>
+<li>What can you conclude from this output?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Solution 3</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(shannon_PIM <span class="sc">~</span> n_practices<span class="sc">*</span>mowing<span class="sc">*</span>pesticide,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> subdata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = shannon_PIM ~ n_practices * mowing * pesticide, 
+    data = subdata)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.45191 -0.18385 -0.01184  0.25254  1.01461 
+
+Coefficients:
+                               Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)                   7.926e-01  1.089e+00   0.728    0.473
+n_practices                   5.580e-02  5.889e-02   0.948    0.351
+mowing                       -1.879e-03  2.592e-02  -0.072    0.943
+pesticide                     2.305e-04  6.579e-04   0.350    0.729
+n_practices:mowing            1.362e-04  1.283e-03   0.106    0.916
+n_practices:pesticide        -4.320e-05  4.759e-05  -0.908    0.372
+mowing:pesticide             -8.400e-06  2.391e-05  -0.351    0.728
+n_practices:mowing:pesticide  1.201e-06  1.841e-06   0.652    0.519
+
+Residual standard error: 0.5224 on 28 degrees of freedom
+Multiple R-squared:  0.564, Adjusted R-squared:  0.4551 
+F-statistic: 5.175 on 7 and 28 DF,  p-value: 0.0007201</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<p>Although the model explains 45.5% of the total variation in plant diversity, none of the estimated regression coefficients are statistically different from zero (p &gt; 0.05). This indicates that, once uncertainty is taken into account, we cannot detect a clear effect of any predictor on plant diversity. Consequently, despite the relatively moderate R<sup>2</sup>, the model does not provide evidence that the explanatory variables are associated with plant diversity, and its explanatory value is therefore limited.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Let’s now fit a simpler model that includes all explanatory variables, but not their two-way and three-way interactions.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Use <code>lm()</code> to fit a multiple linear regression model using plant diversity (<code>shannon_PIM</code>) as the response variable, and the number of agroecological practices (<code>n_practices</code>), mowing intensity (<code>mowing</code>), and pesticide use (<code>pesticide</code>) as explanatory variables. Do not include any interaction term in this model. Store model output in an R object called <code>model2</code>.</li>
+<li>Run the <code>summary()</code> function on the <code>model2</code> object.</li>
+<li>What can you conclude from this output?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Solution 3</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(shannon_PIM <span class="sc">~</span> n_practices <span class="sc">+</span> mowing <span class="sc">+</span> pesticide,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> subdata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = shannon_PIM ~ n_practices + mowing + pesticide, 
+    data = subdata)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.45573 -0.34748  0.02186  0.26529  1.03048 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)  9.559e-01  5.043e-01   1.896   0.0671 .
+n_practices  3.139e-02  2.463e-02   1.275   0.2116  
+mowing       4.330e-03  2.451e-03   1.766   0.0869 .
+pesticide   -1.309e-04  8.356e-05  -1.566   0.1271  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5378 on 32 degrees of freedom
+Multiple R-squared:  0.4721,    Adjusted R-squared:  0.4226 
+F-statistic: 9.539 on 3 and 32 DF,  p-value: 0.0001191</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<p>This simpler model explains 42.3% of the total variation in plant diversity (which is close to the R<sup>2</sup> value from the more complicated model we fitted in the first exercise), but none of the estimated regression coefficients are statistically different from zero (p &gt; 0.05). Among all the explanatory variables included in the model, <code>n_practices</code> has the lowest t statistic value and the largest p-value. This variable was also strongly correlated with pesticide use. A logical next step to make a better model could be to remove the <code>n_practices</code> variable from the model.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="building-alternative-models" class="level2">
+<h2 class="anchored" data-anchor-id="building-alternative-models">Building alternative models</h2>
+<p>Let’s now fit a new model that only includes pesticide use (<code>pesticide</code>) and mowing intensity (<code>mowing</code>) as explanatory variables.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Use <code>lm()</code> to fit a multiple linear regression model using plant diversity (<code>shannon_PIM</code>) as the response variable, and mowing intensity (<code>mowing</code>) and pesticide use (<code>pesticide</code>) as explanatory variables. Do not include any interaction term in this model. Store model output in an R object called <code>model3</code>.</li>
+<li>Run the <code>summary()</code> function on the <code>model3</code> object.</li>
+<li>What can you conclude from this output?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Solution 3</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(shannon_PIM <span class="sc">~</span> mowing <span class="sc">+</span> pesticide,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> subdata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = shannon_PIM ~ mowing + pesticide, data = subdata)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.65174 -0.34054  0.01613  0.29181  1.01955 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  1.542e+00  2.082e-01   7.409 1.64e-08 ***
+mowing       4.823e-03  2.444e-03   1.974  0.05685 .  
+pesticide   -2.027e-04  6.226e-05  -3.256  0.00261 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5428 on 33 degrees of freedom
+Multiple R-squared:  0.4453,    Adjusted R-squared:  0.4117 
+F-statistic: 13.25 on 2 and 33 DF,  p-value: 5.984e-05</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<p>This new model is highly significant (p &lt; 0.001) and explains 41.2% of the total variation in plant diversity. Two regression coefficients are significantly different from zero: the intercept of the model and the slope of the <code>pesticide</code> variable. The slope of the <code>mowing</code> variable is not significantly different from zero (p &gt; 0.05).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Because the relationship between plant diversity (<code>shannon_PIM</code>) and mowing intensity (<code>mowing</code>) appeared asymptotic, a reasonable next step would be to apply a log transformation to the <code>mowing</code> variable and refit the model using this transformed predictor. A log transformation can help linearize asymptotic relationships, improve model fit, and better meet the assumptions of linear regression.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Use <code>lm()</code> to fit a multiple linear regression model using plant diversity (<code>shannon_PIM</code>) as the response variable, and the logarithm of mowing intensity (<code>log(mowing)</code>) and pesticide use (<code>pesticide</code>) as explanatory variables. Do not include any interaction term in this model. Store model output in an R object called <code>model4</code>.</li>
+<li>Run the <code>summary()</code> function on the <code>model4</code> object.</li>
+<li>What can you conclude from this output?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false" href="">Solution 3</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(shannon_PIM <span class="sc">~</span> <span class="fu">log</span>(mowing) <span class="sc">+</span> pesticide,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> subdata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = shannon_PIM ~ log(mowing) + pesticide, data = subdata)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.74523 -0.24342 -0.01516  0.31162  0.98015 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)  8.659e-01  4.244e-01   2.040  0.04938 * 
+log(mowing)  2.636e-01  1.075e-01   2.453  0.01963 * 
+pesticide   -2.073e-04  5.764e-05  -3.597  0.00104 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5279 on 33 degrees of freedom
+Multiple R-squared:  0.4755,    Adjusted R-squared:  0.4437 
+F-statistic: 14.96 on 2 and 33 DF,  p-value: 2.379e-05</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
+<p>This new model is highly significant (p &lt; 0.001) and explains 44.4% of the total variation in plant diversity. All regression coefficients are significantly different from zero (p &lt; 0.05).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="comparing-models" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-models">Comparing models</h2>
+<p>The <strong>Akaike Information Criterion (AIC)</strong> is a measure used to compare statistical models and select the one that best balances goodness of fit and model complexity. It is based on the idea that a good model should explain the data well while using as few parameters as necessary.</p>
+<p>AIC is calculated from the model’s likelihood and includes a penalty for the number of estimated parameters. As a result, models with more parameters are penalized to reduce the risk of overfitting. The absolute value of AIC is not meaningful on its own. It is only useful when comparing multiple models fitted to the same dataset.</p>
+<p>In model selection, the model with the lowest AIC is preferred. Differences in AIC (ΔAIC) are often used to assess the relative support for competing models. Small differences suggest that models have similar support, whereas large differences indicate stronger evidence for the model with the lower AIC.</p>
+<p>In R, AIC values can be calculated by running the <code>AIC()</code> function on one or more model objects. We will now use it to calculate AIC values for all the models fitted in the previous exercises.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Use the <code>AIC()</code> function to calculate the AIC values of <code>model1</code>, <code>model2</code>, <code>model3</code>, and <code>model4</code>.</li>
+<li>What can you conclude from this comparison?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Solution 2</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(model1,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    model2,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    model3,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    model4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       df      AIC
+model1  9 64.37036
+model2  5 63.25960
+model3  4 63.04242
+model4  4 61.02963</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<p>The model with the smallest AIC value is <code>model4</code>. This indicates that, among the four models being compared, <code>model4</code> provides the best balance between goodness of fit (model likelihood) and model complexity (number of estimated parameters).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="standardized-regression-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="standardized-regression-coefficients">Standardized regression coefficients</h2>
+<p>Standardized regression coefficients are regression coefficients obtained after all variables (both the response and the predictors) have been standardized, typically by subtracting their mean and dividing by their standard deviation (z-score transformation). This transformation puts all variables on the same scale, with a mean of zero and a standard deviation of one. In R, variables can be transformed in this way using the <code>scale()</code> function.</p>
+<p>Standardized regression coefficients are primarily used to compare the relative importance of predictors within the same model. Because the variables are expressed on a common scale, the magnitude of the standardized coefficients indicates which predictors have stronger or weaker associations with the response variable.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Use <code>lm()</code> to fit a multiple linear regression model using scaled plant diversity (<code>scale(shannon_PIM)</code>) as the response variable, and the scaled logarithm of mowing intensity (<code>scale(log(mowing))</code>) and scaled pesticide use (<code>scale(pesticide)</code>) as explanatory variables. Do not include any interaction term in this model. Store model output in an R object called <code>model5</code>.</li>
+<li>Run the <code>summary()</code> function on the <code>model5</code> object.</li>
+<li>What can you conclude from this output? Which explanatory variable has the strongest effect on plant diversity?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false" href="">Solution 3</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>model5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">scale</span>(shannon_PIM) <span class="sc">~</span> <span class="fu">scale</span>(<span class="fu">log</span>(mowing)) <span class="sc">+</span> <span class="fu">scale</span>(pesticide),</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> subdata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = scale(shannon_PIM) ~ scale(log(mowing)) + scale(pesticide), 
+    data = subdata)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.46600 -0.34396 -0.02142  0.44032  1.38494 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)         4.337e-17  1.243e-01   0.000  1.00000   
+scale(log(mowing))  3.341e-01  1.362e-01   2.453  0.01963 * 
+scale(pesticide)   -4.899e-01  1.362e-01  -3.597  0.00104 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.7459 on 33 degrees of freedom
+Multiple R-squared:  0.4755,    Adjusted R-squared:  0.4437 
+F-statistic: 14.96 on 2 and 33 DF,  p-value: 2.379e-05</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-7-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-3-tab">
+<p>The absolute value of the standardized regression coefficient of the <code>pesticide</code> variable is the largest, meaning it has the strongest effect on plant diversity.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="checking-model-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="checking-model-assumptions">Checking model assumptions</h2>
+<section id="normality" class="level3">
+<h3 class="anchored" data-anchor-id="normality">Normality</h3>
+<p>After fitting a linear model, you can check whether the normality assumption is met by examining whether the model residuals are approximately normally distributed. This can be done by (1) using the <code>residuals()</code> function on the <code>model4</code> object to extract the model residuals (i.e.&nbsp;the differences between observed values and model predictions), (2) applying a Shapiro-Wilk test to the residuals, and (3) creating a Q-Q plot using model residuals.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Extract model residuals by using the <code>residuals()</code> function on the <code>model4</code> object. Store these residuals in a new column (<code>div_residuals</code>) in the <code>subdata</code> object.</li>
+<li>Run a Shapiro-Wilk’s test on model residuals.</li>
+<li>Create a Q-Q plot using model residuals.</li>
+<li>What can you conclude from these tests?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-3" role="tab" aria-controls="tabset-8-3" aria-selected="false" href="">Solution 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-4" role="tab" aria-controls="tabset-8-4" aria-selected="false" href="">Solution 4</a></li></ul>
+<div class="tab-content">
+<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>subdata<span class="sc">$</span>div_residuals <span class="ot">&lt;-</span> <span class="fu">residuals</span>(model4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(subdata<span class="sc">$</span>div_residuals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  subdata$div_residuals
+W = 0.9488, p-value = 0.09587</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-8-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-3-tab">
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(subdata, <span class="fu">aes</span>(<span class="at">sample =</span> div_residuals)) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Theoretical quantiles"</span>)<span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)<span class="sc">+</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Model residuals"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="linear_regression_part2_files/figure-html/unnamed-chunk-19-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-8-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-4-tab">
+<p>The p-value of the Shapiro-Wilk test is greater than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that the model residuals are normally distributed. This result is supported by the Q-Q plot, in which most points lie close to the reference line (it is worth noting that one extreme quantile value seems to strongly deviate from the reference line).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="homoscedasticity" class="level3">
+<h3 class="anchored" data-anchor-id="homoscedasticity">Homoscedasticity</h3>
+<p>After fitting a linear model, you can check the homoscedasticity assumption by creating a <strong>residual plot</strong>.</p>
+<p>A residual plot shows the model residuals plotted against the fitted values. A residual is the difference between an observed value and the value predicted by the model. The fitted value is simply the value predicted by the model for that observation. Each point in the residual plot represents one observation. Its horizontal position shows the fitted value, while its vertical position shows the residual, indicating how far that observation lies above or below the model prediction.</p>
+<p>Residual plots are used to assess the assumption of homoscedasticity, which means that the variance of the residuals is constant across the range of fitted values. If this assumption is met, the residuals should be randomly scattered around zero with no clear pattern and a roughly constant spread. In contrast, patterns such as a funnel shape (increasing or decreasing spread) would indicate heteroscedasticity, suggesting that the assumption of equal variances may be violated.</p>
+<p>To create a residual plot, we first need to extract model residuals (<code>residuals()</code>) and fitted values (<code>fitted()</code>). We already extracted the model residuals earlier (<code>div_residuals</code> column).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Calculate the values fitted by the linear model using the <code>fitted()</code> function on the <code>model4</code> object. Store these values in a new column (<code>div_fitted</code>) in the <code>subdata</code> object.</li>
+<li>Create a residual plot (fitted values on the x-axis and residuals on the y-axis)</li>
+<li>What can you conclude from this residual plot?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-3" role="tab" aria-controls="tabset-9-3" aria-selected="false" href="">Solution 3</a></li></ul>
+<div class="tab-content">
+<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>subdata<span class="sc">$</span>div_fitted <span class="ot">&lt;-</span> <span class="fu">fitted</span>(model4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(subdata, <span class="fu">aes</span>(<span class="at">x =</span> div_fitted,</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> div_residuals)) <span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co">#Add points to the plot</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>)<span class="sc">+</span> <span class="co">#Add horizontal dashed line at y=0</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Fitted values"</span>)<span class="sc">+</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Residuals"</span>)<span class="sc">+</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Residual plot"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="linear_regression_part2_files/figure-html/unnamed-chunk-21-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-9-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-3-tab">
+<p>The residuals are well scattered around zero. There is no clear systematic pattern, such as a funnel shape, that would indicate heteroscedasticity. This suggests that the assumption of homoscedasticity is reasonably met.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="checking-for-influential-observations" class="level2">
+<h2 class="anchored" data-anchor-id="checking-for-influential-observations">Checking for influential observations</h2>
+<p>A plot of <strong>residuals versus leverage</strong> is commonly used to identify influential observations in a linear regression model. In this plot, the leverage values (which measure how far an observation’s predictor value is from the mean of the predictor) are shown on the x-axis, and the standardized residuals are shown on the y-axis.</p>
+<p>Observations are potentially influential if they combine high leverage with large residuals. High leverage alone does not necessarily make a point influential, and neither does a large residual on its own. However, a data point that lies far to the right (high leverage) and far from zero vertically (large residual) can have a strong impact on the estimated regression coefficients. Such points are often highlighted using contours of <strong>Cook’s distance</strong> in the plot. Observations that lie beyond these contours should be examined carefully (especially if Cook’s distance is larger than 1), as they may disproportionately affect the fitted model and its conclusions.</p>
+<p>In R, you can easily create such a graph using <code>plot(model, which=5)</code>. The <code>which</code> argument specifies the type of plot we want to create (here, a residuals vs leverage plot). In addition, you can also calculate Cook’s distance values by running the <code>cooks.distance()</code> function on your linear model object (<code>model4</code>).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 10
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Create a residuals versus leverage plot using the fitted linear model object (<code>model4</code>).</li>
+<li>Calculate the Cook’s distance value of all observations using <code>cooks.distance()</code>.</li>
+<li>What can you conclude from this plot?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-3" role="tab" aria-controls="tabset-10-3" aria-selected="false" href="">Solution 3</a></li></ul>
+<div class="tab-content">
+<div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model4, <span class="at">which =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="linear_regression_part2_files/figure-html/unnamed-chunk-22-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cooks.distance</span>(model4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>           1            2            3            4            5            6 
+2.931126e-05 6.162495e-02 1.171256e-03 6.959609e-03 1.564835e-02 4.849678e-03 
+           7            8            9           10           11           12 
+1.171256e-03 8.175952e-03 6.965889e-02 7.483288e-04 1.337587e-02 2.969563e-02 
+          13           14           15           16           17           18 
+3.291517e-02 2.256411e-02 9.635902e-03 9.635902e-03 1.966514e-02 2.069233e-02 
+          19           20           21           22           23           24 
+3.347721e-03 8.129837e-02 3.354294e-03 3.354294e-03 6.236238e-02 5.019710e-02 
+          25           26           27           28           29           30 
+1.390232e-04 8.755990e-03 7.483288e-04 7.905871e-04 8.175952e-03 3.555127e-03 
+          31           32           33           34           35           36 
+1.842960e-03 4.452395e-06 2.599312e-01 1.337587e-02 3.291517e-02 2.256411e-02 </code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-10-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-3-tab">
+<p>Observations 33 stands out due to their comparatively high residual value. No observation has a Cook’s distance exceeding 0.5, indicating that none exerts a strong influence on the estimated regression coefficients.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="checking-for-collinearity-again" class="level2">
+<h2 class="anchored" data-anchor-id="checking-for-collinearity-again">Checking for collinearity (again!)</h2>
+<p>In the first part of this tutorial, we explored collinearity by visually inspecting scatter plots and by calculating correlation coefficients. Collinearity (or multicollinearity) occurs when two or more predictors are strongly correlated, meaning they contain overlapping information, which is not ideal.</p>
+<p>After fitting a linear model, we can assess collinearity using two related measures: <strong>tolerance</strong> and the <strong>variance inflation factor (VIF)</strong>. Tolerance measures the proportion of variation in a given predictor that is <u>not</u> explained by the other predictors in the model (<span class="math inline">\(1-R_i^2\)</span>). <span class="math inline">\(R_i^2\)</span> is the unadjusted coefficient of determination for regressing the <em>i<sup>th</sup></em> independent variable on the remaining ones. Low tolerance values indicate that a predictor is largely explained by the others, suggesting problematic collinearity. The variance inflation factor is directly related to tolerance (<a href="#eq-VIF" class="quarto-xref">Equation&nbsp;2</a>). Larger VIF values indicate stronger multicollinearity. If the VIF value of a predictor is larger than 5, we may consider removing it from the model.</p>
+<p><span id="eq-VIF"><span class="math display">\[
+VIF=\frac{1}{Tolerance}=\frac{1}{1-R_i^2}
+\tag{2}\]</span></span></p>
+<p>In R, you can calculate these parameters using the <code>ols_vif_tol()</code> function in the <em>olsrr</em> package.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 11
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Use <code>ols_vif_tol()</code> to calculate the tolerance and variance inflation factor for each explanatory variable included in <code>model4</code>.</li>
+<li>What can you conclude from these values?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false" href="">Solution 2</a></li></ul>
+<div class="tab-content">
+<div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ols_vif_tol</span>(model4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Variables Tolerance      VIF
+1 log(mowing) 0.8568252 1.167099
+2   pesticide 0.8568252 1.167099</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
+<p>All VIF values are lower than 2, which suggests that multicollinearity is not an issue in this model.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="combining-numerical-and-categorical-variables-in-a-linear-model" class="level2">
+<h2 class="anchored" data-anchor-id="combining-numerical-and-categorical-variables-in-a-linear-model">Combining numerical and categorical variables in a linear model</h2>
+<p>So far, the models we fitted in this tutorial only included numeric explanatory variables, but it is also possible to include categorical variables in such a model. To illustrate this, let’s model coffee productivity (<code>coffee_prod</code>) as a function of altitude (<code>altitude</code>) and municipality (<code>municipality</code>).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 12
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Use <code>lm()</code> to fit a multiple linear regression model using coffee productivity (<code>coffee_prod</code>) as the response variable, and altitude (<code>altitude</code>) and municipality (<code>municipality</code>) as explanatory variables. Include a two-way interaction in this model. Store model output in an R object called <code>model6</code>.</li>
+<li>Run the <code>summary()</code> function on the <code>model6</code> object.</li>
+<li>From the model output, write down the equation of the linear model linking coffee productivity to altitude and municipality.</li>
+<li>Create a scatter plot showing the relationship between coffee productivity (<code>coffee_prod</code>) and altitude (<code>altitude</code>) for each municipality (<code>municipality</code>). Add fitted linear models to this scatter plot as well.</li>
+<li>From the model output and the scatter plot, what can you conclude about the interaction between altitude and municipality on coffee productivity?</li>
+<li>Manually calculate the coffee productivity predicted by the linear model at an altitude of 1000 m in both municipalities.</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-3" role="tab" aria-controls="tabset-12-3" aria-selected="false" href="">Solution 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-4" role="tab" aria-controls="tabset-12-4" aria-selected="false" href="">Solution 4</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-5" role="tab" aria-controls="tabset-12-5" aria-selected="false" href="">Solution 5</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-6" role="tab" aria-controls="tabset-12-6" aria-selected="false" href="">Solution 6</a></li></ul>
+<div class="tab-content">
+<div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>model6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(coffee_prod <span class="sc">~</span> altitude<span class="sc">*</span>municipality,</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = coffee_prod ~ altitude * municipality, data = data)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-481.0 -174.1   21.9  167.8  411.4 
+
+Coefficients:
+                             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                  -77.7510   364.5613  -0.213    0.832    
+altitude                       2.2614     0.3465   6.526 2.39e-07 ***
+municipalityDivino          4275.8264   530.6083   8.058 3.35e-09 ***
+altitude:municipalityDivino   -5.3534     0.5732  -9.339 1.17e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 239 on 32 degrees of freedom
+Multiple R-squared:  0.8303,    Adjusted R-squared:  0.8143 
+F-statistic: 52.17 on 3 and 32 DF,  p-value: 2.011e-12</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-12-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-3-tab">
+<p><span class="math display">\[
+coffeeprod=-77.75+2.26 \times altitude+4275.83 \times Divino - 5.35 \times altitude \times Divino
+\]</span></p>
+</div>
+<div id="tabset-12-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-4-tab">
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> altitude,</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> coffee_prod))<span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>municipality)<span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">colour =</span> <span class="st">"black"</span>)<span class="sc">+</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">21</span>,</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">"#FFCD00"</span>,</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>)<span class="sc">+</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Altitude (m)"</span>)<span class="sc">+</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Coffee productivity (kg/ha/year)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="linear_regression_part2_files/figure-html/unnamed-chunk-27-1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-12-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-5-tab">
+<p>Coffee productivity increases with altitude in the municipality of Araponga, as indicated by the positive regression coefficient for <code>altitude</code>. In contrast, in Divino the relationship is reversed. The negative interaction coefficient (-5.35) is larger in magnitude than the positive main effect of <code>altitude</code> (2.26), resulting in a negative overall slope for altitude in Divino (2.26-5.35 = -3.09).</p>
+</div>
+<div id="tabset-12-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-6-tab">
+<p>The linear model has the following equation:</p>
+<p><span class="math display">\[
+coffeeprod=-77.75+2.26 \times altitude+4275.83 \times Divino - 5.35 \times altitude \times Divino
+\]</span></p>
+<p>In this equation, <code>altitude</code> is a numeric variable, while <code>Divino</code> is a dummy variable that can only take the value 0 (when we want to make a prediction for the Araponga municipality) or 1 (when we want to make a prediction for the Divino municipality).</p>
+<p>Let’s first make a prediction for coffee productivity at an altitude of 1000 m in the municipality of Araponga. In this case, we need to set <code>Divino=0</code>. The equation of the linear model therefore becomes:</p>
+<p><span class="math display">\[
+coffeeprod=-77.75+2.26 \times altitude+4275.83 \times 0 - 5.35 \times altitude \times 0=-77.75+2.26 \times altitude
+\]</span></p>
+<p>At an altitude of 1000 m, the coffee productivity in Araponga can be calculated as:</p>
+<p><span class="math display">\[
+coffeeprod=-77.75+2.26 \times 1000 = -77.75 + 2260 = 2182.25 \space kg/ha/year
+\]</span></p>
+<p>To make a prediction for the municipality of Divino, we need to set <code>Divino=1</code> in the equation of the linear model. The equation of the linear model therefore becomes:</p>
+<p><span class="math display">\[
+coffeeprod=-77.75+2.26 \times altitude+4275.83 \times 1 - 5.35 \times altitude \times 1=4198.08-3.09 \times altitude
+\]</span></p>
+<p>At an altitude of 1000 m, the coffee productivity in Divino can be calculated as:</p>
+<p><span class="math display">\[
+coffeeprod=4198.08-3.09 \times 1000 = 4198.08 - 3090 = 1108.08 \space kg/ha/year
+\]</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
 <!-- -->
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1051,32 +1984,705 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Tutorial 9: Linear regression (part 2)"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Benjamin Delory</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-1190-8060</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    email: b.m.m.delory@uu.nl</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Copernicus institute of sustainable development, Utrecht University</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Natalie Davis</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-2678-0389</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    email: n.a.davis@vu.nl</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Amsterdam sustainability institute, Vrije Universiteit Amsterdam</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Heitor Mancini Teixeira</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-6992-0671</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">    email: heitor.teixeira@ufv.br</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Departamento de Solos Centro de Ciências Agrárias, Universidade Federal de Vicosa, Brazil</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="an">editor_options:</span><span class="co"> </span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">  chunk_output_type: console</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> /Images/Rlogo.png</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>Add text</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Tutorial 9: Linear regression (part 2)"</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Benjamin Delory</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-1190-8060</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co">    email: b.m.m.delory@uu.nl</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Copernicus institute of sustainable development, Utrecht University</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Natalie Davis</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-2678-0389</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="co">    email: n.a.davis@vu.nl</span></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Amsterdam sustainability institute, Vrije Universiteit Amsterdam</span></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Heitor Mancini Teixeira</span></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-6992-0671</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="co">    email: heitor.teixeira@ufv.br</span></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Departamento de Solos Centro de Ciências Agrárias, Universidade Federal de Vicosa, Brazil</span></span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a><span class="an">editor_options:</span><span class="co"> </span></span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a><span class="co">  chunk_output_type: console</span></span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> /Images/Rlogo.png</span></span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## About this tutorial</span></span>
+<span id="cb38-27"><a href="#cb38-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-28"><a href="#cb38-28" aria-hidden="true" tabindex="-1"></a>The goal of this tutorial is to understand and apply <span class="co">[</span><span class="ot">multiple</span><span class="co">]</span>{.underline} linear regression models to examine the relationship between a numerical variable (the response variable) and several predictor (or independent) variables. You will learn how to estimate the model coefficients, and test the statistical significance of the model. In addition, you will learn how to compare different models and interpret their output. Finally, we will check whether the assumptions underlying linear regression are satisfied.</span>
+<span id="cb38-29"><a href="#cb38-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-30"><a href="#cb38-30" aria-hidden="true" tabindex="-1"></a>Let's get started!</span>
+<span id="cb38-31"><a href="#cb38-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-32"><a href="#cb38-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Install R packages</span></span>
+<span id="cb38-33"><a href="#cb38-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-34"><a href="#cb38-34" aria-hidden="true" tabindex="-1"></a>In this tutorial, we will need to use functions in the *GGally* and *olsrr* packages. Make sure to install these packages before starting the tutorial.</span>
+<span id="cb38-35"><a href="#cb38-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-38"><a href="#cb38-38" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-39"><a href="#cb38-39" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false </span></span>
+<span id="cb38-40"><a href="#cb38-40" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb38-41"><a href="#cb38-41" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb38-42"><a href="#cb38-42" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-43"><a href="#cb38-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-44"><a href="#cb38-44" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"GGally"</span>)</span>
+<span id="cb38-45"><a href="#cb38-45" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"olsrr"</span>)</span>
+<span id="cb38-46"><a href="#cb38-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-47"><a href="#cb38-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-48"><a href="#cb38-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load R packages</span></span>
+<span id="cb38-49"><a href="#cb38-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-50"><a href="#cb38-50" aria-hidden="true" tabindex="-1"></a>To work on this tutorial, you will need to load the *readxl*, *tidyverse*, *GGally*, and *olsrr* packages.</span>
+<span id="cb38-51"><a href="#cb38-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-54"><a href="#cb38-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-55"><a href="#cb38-55" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb38-56"><a href="#cb38-56" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-57"><a href="#cb38-57" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-58"><a href="#cb38-58" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false  </span></span>
+<span id="cb38-59"><a href="#cb38-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-60"><a href="#cb38-60" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl) </span>
+<span id="cb38-61"><a href="#cb38-61" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb38-62"><a href="#cb38-62" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb38-63"><a href="#cb38-63" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(olsrr)</span>
+<span id="cb38-64"><a href="#cb38-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-65"><a href="#cb38-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-66"><a href="#cb38-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## Importing data</span></span>
+<span id="cb38-67"><a href="#cb38-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-68"><a href="#cb38-68" aria-hidden="true" tabindex="-1"></a>Start by importing the data used in this course (see previous tutorials).</span>
+<span id="cb38-69"><a href="#cb38-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-72"><a href="#cb38-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-73"><a href="#cb38-73" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb38-74"><a href="#cb38-74" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-75"><a href="#cb38-75" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-76"><a href="#cb38-76" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false  </span></span>
+<span id="cb38-77"><a href="#cb38-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-78"><a href="#cb38-78" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 1 (csv file) </span></span>
+<span id="cb38-79"><a href="#cb38-79" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"gss_statistics_master_data_set2.csv"</span>)  </span>
+<span id="cb38-80"><a href="#cb38-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-81"><a href="#cb38-81" aria-hidden="true" tabindex="-1"></a><span class="co">#Option 2 (Excel file) </span></span>
+<span id="cb38-82"><a href="#cb38-82" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"gss_statistics_master_data_set2.xlsx"</span>)</span>
+<span id="cb38-83"><a href="#cb38-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-84"><a href="#cb38-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-85"><a href="#cb38-85" aria-hidden="true" tabindex="-1"></a><span class="fu">## What is multiple linear regression?</span></span>
+<span id="cb38-86"><a href="#cb38-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-87"><a href="#cb38-87" aria-hidden="true" tabindex="-1"></a>Multiple linear regression is a statistical method used to explain or predict the value of one continuous response variable ($y$) based on two or more predictor variables ($x_1, x_2,...,x_n$) (@eq-multiplelm).</span>
+<span id="cb38-88"><a href="#cb38-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-89"><a href="#cb38-89" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-90"><a href="#cb38-90" aria-hidden="true" tabindex="-1"></a>y=\beta_0+\beta_1x_1+\beta_2x_2+...\beta_nx_n+\epsilon</span>
+<span id="cb38-91"><a href="#cb38-91" aria-hidden="true" tabindex="-1"></a>$$ {#eq-multiplelm}</span>
+<span id="cb38-92"><a href="#cb38-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-93"><a href="#cb38-93" aria-hidden="true" tabindex="-1"></a>In this equation, $\beta_0$ is the **intercept** and $\beta_{1,2,...,n}$ are the **slopes**. $\epsilon$ is the model residual (error).</span>
+<span id="cb38-94"><a href="#cb38-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-95"><a href="#cb38-95" aria-hidden="true" tabindex="-1"></a>The **intercept** ($\beta_0$) represents the predicted value of $y$ when all the predictor variables are equal to zero.</span>
+<span id="cb38-96"><a href="#cb38-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-97"><a href="#cb38-97" aria-hidden="true" tabindex="-1"></a>Each **slope** ($\beta_{1,2,...,n}$​) represents the expected change in $y$ when that a predictor increases by one-unit while holding all the other predictors constant.</span>
+<span id="cb38-98"><a href="#cb38-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-99"><a href="#cb38-99" aria-hidden="true" tabindex="-1"></a><span class="fu">## Research question</span></span>
+<span id="cb38-100"><a href="#cb38-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-101"><a href="#cb38-101" aria-hidden="true" tabindex="-1"></a>In this tutorial, we will analyze how the number of agroecological practices (<span class="in">`n_practices`</span>), mowing intensity (<span class="in">`mowing`</span>), and pesticide use (<span class="in">`pesticide`</span>) affect plant diversity (<span class="in">`shannon_PIM`</span>).</span>
+<span id="cb38-102"><a href="#cb38-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-103"><a href="#cb38-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checking for collinearity</span></span>
+<span id="cb38-104"><a href="#cb38-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-105"><a href="#cb38-105" aria-hidden="true" tabindex="-1"></a>Let’s first examine the relationships among the variables. At this stage, we want to assess whether there is multicollinearity among the explanatory variables and whether the relationships between the response variable and each explanatory variable appear approximately linear.</span>
+<span id="cb38-106"><a href="#cb38-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-107"><a href="#cb38-107" aria-hidden="true" tabindex="-1"></a>If two explanatory variables are highly correlated, this suggests potential multicollinearity. In such cases, we may consider excluding one of the strongly correlated variables.</span>
+<span id="cb38-108"><a href="#cb38-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-109"><a href="#cb38-109" aria-hidden="true" tabindex="-1"></a>If the relationship between the response variable and a predictor shows a clear non-linear pattern, such as a curved trend, we may consider transforming the variable or including a non-linear term in the model.</span>
+<span id="cb38-110"><a href="#cb38-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-111"><a href="#cb38-111" aria-hidden="true" tabindex="-1"></a>To visualize pairwise relationships between variables, we can use the <span class="in">`ggpairs()`</span> function in the *GGally* package. The output of <span class="in">`ggpairs()`</span> is a graph displaying a scatter plot for each relationship, as well as their Pearson's correlation coefficients.</span>
+<span id="cb38-112"><a href="#cb38-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-113"><a href="#cb38-113" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb38-114"><a href="#cb38-114" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 1</span></span>
+<span id="cb38-115"><a href="#cb38-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-116"><a href="#cb38-116" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Create a new dataset (<span class="in">`subdata`</span>) that only contains the variables of interest for this tutorial (<span class="in">`n_practices`</span>, <span class="in">`mowing`</span>, <span class="in">`pesticide`</span>, <span class="in">`shannon_PIM`</span>).</span>
+<span id="cb38-117"><a href="#cb38-117" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Use <span class="in">`ggpairs()`</span> to visualize pairwise relationships between these variables.</span>
+<span id="cb38-118"><a href="#cb38-118" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>What observations can you make from this graph?</span>
+<span id="cb38-119"><a href="#cb38-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-120"><a href="#cb38-120" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb38-121"><a href="#cb38-121" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb38-122"><a href="#cb38-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-125"><a href="#cb38-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-126"><a href="#cb38-126" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb38-127"><a href="#cb38-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-128"><a href="#cb38-128" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-129"><a href="#cb38-129" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false  </span></span>
+<span id="cb38-130"><a href="#cb38-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-131"><a href="#cb38-131" aria-hidden="true" tabindex="-1"></a>subdata <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">select</span>(data,</span>
+<span id="cb38-132"><a href="#cb38-132" aria-hidden="true" tabindex="-1"></a>                         n_practices,</span>
+<span id="cb38-133"><a href="#cb38-133" aria-hidden="true" tabindex="-1"></a>                         mowing,</span>
+<span id="cb38-134"><a href="#cb38-134" aria-hidden="true" tabindex="-1"></a>                         pesticide,</span>
+<span id="cb38-135"><a href="#cb38-135" aria-hidden="true" tabindex="-1"></a>                         shannon_PIM)</span>
+<span id="cb38-136"><a href="#cb38-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-137"><a href="#cb38-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-138"><a href="#cb38-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb38-139"><a href="#cb38-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-142"><a href="#cb38-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-143"><a href="#cb38-143" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb38-144"><a href="#cb38-144" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-145"><a href="#cb38-145" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-146"><a href="#cb38-146" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-147"><a href="#cb38-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-148"><a href="#cb38-148" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(subdata)</span>
+<span id="cb38-149"><a href="#cb38-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-150"><a href="#cb38-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-151"><a href="#cb38-151" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb38-152"><a href="#cb38-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-153"><a href="#cb38-153" aria-hidden="true" tabindex="-1"></a>Among the explanatory variables, <span class="in">`pesticide`</span> and <span class="in">`n_practices`</span> are the most strongly correlated (r = -0.743). The correlation between the other explanatory variables is weaker (r = 0.444 and r = -0.473).</span>
+<span id="cb38-154"><a href="#cb38-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-155"><a href="#cb38-155" aria-hidden="true" tabindex="-1"></a>When looking at the relationship between the response variable (<span class="in">`shannon_PIM`</span>) and each explanatory variable, we can see that the relationship between plant diversity and mowing intensity seems asymptotic, while the relationship between plant diversity and the other explanatory variables looks more linear.</span>
+<span id="cb38-156"><a href="#cb38-156" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb38-157"><a href="#cb38-157" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb38-158"><a href="#cb38-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-159"><a href="#cb38-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fitting a multiple linear regression model</span></span>
+<span id="cb38-160"><a href="#cb38-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-161"><a href="#cb38-161" aria-hidden="true" tabindex="-1"></a>Let's start by fitting the most complicated model including all three explanatory variables and their two-way and three-way interactions. We can do this using the <span class="in">`lm()`</span> function in R.</span>
+<span id="cb38-162"><a href="#cb38-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-163"><a href="#cb38-163" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb38-164"><a href="#cb38-164" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 2</span></span>
+<span id="cb38-165"><a href="#cb38-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-166"><a href="#cb38-166" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use <span class="in">`lm()`</span> to fit a multiple linear regression model using plant diversity (<span class="in">`shannon_PIM`</span>) as the response variable, and the number of agroecological practices (<span class="in">`n_practices`</span>), mowing intensity (<span class="in">`mowing`</span>), and pesticide use (<span class="in">`pesticide`</span>) as explanatory variables. Include all two-way and three-way interactions in this model. Store model output in an R object called <span class="in">`model1`</span>.</span>
+<span id="cb38-167"><a href="#cb38-167" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Run the <span class="in">`summary()`</span> function on the <span class="in">`model1`</span> object.</span>
+<span id="cb38-168"><a href="#cb38-168" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>What can you conclude from this output?</span>
+<span id="cb38-169"><a href="#cb38-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-170"><a href="#cb38-170" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb38-171"><a href="#cb38-171" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb38-172"><a href="#cb38-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-175"><a href="#cb38-175" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-176"><a href="#cb38-176" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb38-177"><a href="#cb38-177" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-178"><a href="#cb38-178" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-179"><a href="#cb38-179" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-180"><a href="#cb38-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-181"><a href="#cb38-181" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(shannon_PIM <span class="sc">~</span> n_practices<span class="sc">*</span>mowing<span class="sc">*</span>pesticide,</span>
+<span id="cb38-182"><a href="#cb38-182" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> subdata)</span>
+<span id="cb38-183"><a href="#cb38-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-184"><a href="#cb38-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-185"><a href="#cb38-185" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb38-186"><a href="#cb38-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-189"><a href="#cb38-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-190"><a href="#cb38-190" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb38-191"><a href="#cb38-191" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-192"><a href="#cb38-192" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-193"><a href="#cb38-193" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-194"><a href="#cb38-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-195"><a href="#cb38-195" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span>
+<span id="cb38-196"><a href="#cb38-196" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-197"><a href="#cb38-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-198"><a href="#cb38-198" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb38-199"><a href="#cb38-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-200"><a href="#cb38-200" aria-hidden="true" tabindex="-1"></a>Although the model explains 45.5% of the total variation in plant diversity, none of the estimated regression coefficients are statistically different from zero (p <span class="sc">\&gt;</span> 0.05). This indicates that, once uncertainty is taken into account, we cannot detect a clear effect of any predictor on plant diversity. Consequently, despite the relatively moderate R^2^, the model does not provide evidence that the explanatory variables are associated with plant diversity, and its explanatory value is therefore limited.</span>
+<span id="cb38-201"><a href="#cb38-201" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb38-202"><a href="#cb38-202" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb38-203"><a href="#cb38-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-204"><a href="#cb38-204" aria-hidden="true" tabindex="-1"></a>Let's now fit a simpler model that includes all explanatory variables, but not their two-way and three-way interactions.</span>
+<span id="cb38-205"><a href="#cb38-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-206"><a href="#cb38-206" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb38-207"><a href="#cb38-207" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 3</span></span>
+<span id="cb38-208"><a href="#cb38-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-209"><a href="#cb38-209" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use <span class="in">`lm()`</span> to fit a multiple linear regression model using plant diversity (<span class="in">`shannon_PIM`</span>) as the response variable, and the number of agroecological practices (<span class="in">`n_practices`</span>), mowing intensity (<span class="in">`mowing`</span>), and pesticide use (<span class="in">`pesticide`</span>) as explanatory variables. Do not include any interaction term in this model. Store model output in an R object called <span class="in">`model2`</span>.</span>
+<span id="cb38-210"><a href="#cb38-210" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Run the <span class="in">`summary()`</span> function on the <span class="in">`model2`</span> object.</span>
+<span id="cb38-211"><a href="#cb38-211" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>What can you conclude from this output?</span>
+<span id="cb38-212"><a href="#cb38-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-213"><a href="#cb38-213" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb38-214"><a href="#cb38-214" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb38-215"><a href="#cb38-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-218"><a href="#cb38-218" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-219"><a href="#cb38-219" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb38-220"><a href="#cb38-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-221"><a href="#cb38-221" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-222"><a href="#cb38-222" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-223"><a href="#cb38-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-224"><a href="#cb38-224" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(shannon_PIM <span class="sc">~</span> n_practices <span class="sc">+</span> mowing <span class="sc">+</span> pesticide,</span>
+<span id="cb38-225"><a href="#cb38-225" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> subdata)</span>
+<span id="cb38-226"><a href="#cb38-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-227"><a href="#cb38-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-228"><a href="#cb38-228" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb38-229"><a href="#cb38-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-232"><a href="#cb38-232" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-233"><a href="#cb38-233" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb38-234"><a href="#cb38-234" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-235"><a href="#cb38-235" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-236"><a href="#cb38-236" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-237"><a href="#cb38-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-238"><a href="#cb38-238" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span>
+<span id="cb38-239"><a href="#cb38-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-240"><a href="#cb38-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-241"><a href="#cb38-241" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb38-242"><a href="#cb38-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-243"><a href="#cb38-243" aria-hidden="true" tabindex="-1"></a>This simpler model explains 42.3% of the total variation in plant diversity (which is close to the R^2^ value from the more complicated model we fitted in the first exercise), but none of the estimated regression coefficients are statistically different from zero (p <span class="sc">\&gt;</span> 0.05). Among all the explanatory variables included in the model, <span class="in">`n_practices`</span> has the lowest t statistic value and the largest p-value. This variable was also strongly correlated with pesticide use. A logical next step to make a better model could be to remove the <span class="in">`n_practices`</span> variable from the model.</span>
+<span id="cb38-244"><a href="#cb38-244" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb38-245"><a href="#cb38-245" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb38-246"><a href="#cb38-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-247"><a href="#cb38-247" aria-hidden="true" tabindex="-1"></a><span class="fu">## Building alternative models</span></span>
+<span id="cb38-248"><a href="#cb38-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-249"><a href="#cb38-249" aria-hidden="true" tabindex="-1"></a>Let's now fit a new model that only includes pesticide use (<span class="in">`pesticide`</span>) and mowing intensity (<span class="in">`mowing`</span>) as explanatory variables.</span>
+<span id="cb38-250"><a href="#cb38-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-251"><a href="#cb38-251" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb38-252"><a href="#cb38-252" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 4</span></span>
+<span id="cb38-253"><a href="#cb38-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-254"><a href="#cb38-254" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use <span class="in">`lm()`</span> to fit a multiple linear regression model using plant diversity (<span class="in">`shannon_PIM`</span>) as the response variable, and mowing intensity (<span class="in">`mowing`</span>) and pesticide use (<span class="in">`pesticide`</span>) as explanatory variables. Do not include any interaction term in this model. Store model output in an R object called <span class="in">`model3`</span>.</span>
+<span id="cb38-255"><a href="#cb38-255" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Run the <span class="in">`summary()`</span> function on the <span class="in">`model3`</span> object.</span>
+<span id="cb38-256"><a href="#cb38-256" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>What can you conclude from this output?</span>
+<span id="cb38-257"><a href="#cb38-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-258"><a href="#cb38-258" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb38-259"><a href="#cb38-259" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb38-260"><a href="#cb38-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-263"><a href="#cb38-263" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-264"><a href="#cb38-264" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb38-265"><a href="#cb38-265" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-266"><a href="#cb38-266" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-267"><a href="#cb38-267" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-268"><a href="#cb38-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-269"><a href="#cb38-269" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(shannon_PIM <span class="sc">~</span> mowing <span class="sc">+</span> pesticide,</span>
+<span id="cb38-270"><a href="#cb38-270" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> subdata)</span>
+<span id="cb38-271"><a href="#cb38-271" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-272"><a href="#cb38-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-273"><a href="#cb38-273" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb38-274"><a href="#cb38-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-277"><a href="#cb38-277" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-278"><a href="#cb38-278" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb38-279"><a href="#cb38-279" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-280"><a href="#cb38-280" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-281"><a href="#cb38-281" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-282"><a href="#cb38-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-283"><a href="#cb38-283" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model3)</span>
+<span id="cb38-284"><a href="#cb38-284" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-285"><a href="#cb38-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-286"><a href="#cb38-286" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb38-287"><a href="#cb38-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-288"><a href="#cb38-288" aria-hidden="true" tabindex="-1"></a>This new model is highly significant (p <span class="sc">\&lt;</span> 0.001) and explains 41.2% of the total variation in plant diversity. Two regression coefficients are significantly different from zero: the intercept of the model and the slope of the <span class="in">`pesticide`</span> variable. The slope of the <span class="in">`mowing`</span> variable is not significantly different from zero (p <span class="sc">\&gt;</span> 0.05).</span>
+<span id="cb38-289"><a href="#cb38-289" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb38-290"><a href="#cb38-290" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb38-291"><a href="#cb38-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-292"><a href="#cb38-292" aria-hidden="true" tabindex="-1"></a>Because the relationship between plant diversity (<span class="in">`shannon_PIM`</span>) and mowing intensity (<span class="in">`mowing`</span>) appeared asymptotic, a reasonable next step would be to apply a log transformation to the <span class="in">`mowing`</span> variable and refit the model using this transformed predictor. A log transformation can help linearize asymptotic relationships, improve model fit, and better meet the assumptions of linear regression.</span>
+<span id="cb38-293"><a href="#cb38-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-294"><a href="#cb38-294" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb38-295"><a href="#cb38-295" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 5</span></span>
+<span id="cb38-296"><a href="#cb38-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-297"><a href="#cb38-297" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use <span class="in">`lm()`</span> to fit a multiple linear regression model using plant diversity (<span class="in">`shannon_PIM`</span>) as the response variable, and the logarithm of mowing intensity (<span class="in">`log(mowing)`</span>) and pesticide use (<span class="in">`pesticide`</span>) as explanatory variables. Do not include any interaction term in this model. Store model output in an R object called <span class="in">`model4`</span>.</span>
+<span id="cb38-298"><a href="#cb38-298" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Run the <span class="in">`summary()`</span> function on the <span class="in">`model4`</span> object.</span>
+<span id="cb38-299"><a href="#cb38-299" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>What can you conclude from this output?</span>
+<span id="cb38-300"><a href="#cb38-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-301"><a href="#cb38-301" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb38-302"><a href="#cb38-302" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb38-303"><a href="#cb38-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-306"><a href="#cb38-306" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-307"><a href="#cb38-307" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb38-308"><a href="#cb38-308" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-309"><a href="#cb38-309" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-310"><a href="#cb38-310" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-311"><a href="#cb38-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-312"><a href="#cb38-312" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(shannon_PIM <span class="sc">~</span> <span class="fu">log</span>(mowing) <span class="sc">+</span> pesticide,</span>
+<span id="cb38-313"><a href="#cb38-313" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> subdata)</span>
+<span id="cb38-314"><a href="#cb38-314" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-315"><a href="#cb38-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-316"><a href="#cb38-316" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb38-317"><a href="#cb38-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-320"><a href="#cb38-320" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-321"><a href="#cb38-321" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb38-322"><a href="#cb38-322" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-323"><a href="#cb38-323" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-324"><a href="#cb38-324" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-325"><a href="#cb38-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-326"><a href="#cb38-326" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model4)</span>
+<span id="cb38-327"><a href="#cb38-327" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-328"><a href="#cb38-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-329"><a href="#cb38-329" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb38-330"><a href="#cb38-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-331"><a href="#cb38-331" aria-hidden="true" tabindex="-1"></a>This new model is highly significant (p <span class="sc">\&lt;</span> 0.001) and explains 44.4% of the total variation in plant diversity. All regression coefficients are significantly different from zero (p <span class="sc">\&lt;</span> 0.05).</span>
+<span id="cb38-332"><a href="#cb38-332" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb38-333"><a href="#cb38-333" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb38-334"><a href="#cb38-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-335"><a href="#cb38-335" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparing models</span></span>
+<span id="cb38-336"><a href="#cb38-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-337"><a href="#cb38-337" aria-hidden="true" tabindex="-1"></a>The **Akaike Information Criterion (AIC)** is a measure used to compare statistical models and select the one that best balances goodness of fit and model complexity. It is based on the idea that a good model should explain the data well while using as few parameters as necessary.</span>
+<span id="cb38-338"><a href="#cb38-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-339"><a href="#cb38-339" aria-hidden="true" tabindex="-1"></a>AIC is calculated from the model’s likelihood and includes a penalty for the number of estimated parameters. As a result, models with more parameters are penalized to reduce the risk of overfitting. The absolute value of AIC is not meaningful on its own. It is only useful when comparing multiple models fitted to the same dataset.</span>
+<span id="cb38-340"><a href="#cb38-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-341"><a href="#cb38-341" aria-hidden="true" tabindex="-1"></a>In model selection, the model with the lowest AIC is preferred. Differences in AIC (ΔAIC) are often used to assess the relative support for competing models. Small differences suggest that models have similar support, whereas large differences indicate stronger evidence for the model with the lower AIC.</span>
+<span id="cb38-342"><a href="#cb38-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-343"><a href="#cb38-343" aria-hidden="true" tabindex="-1"></a>In R, AIC values can be calculated by running the <span class="in">`AIC()`</span> function on one or more model objects. We will now use it to calculate AIC values for all the models fitted in the previous exercises.</span>
+<span id="cb38-344"><a href="#cb38-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-345"><a href="#cb38-345" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb38-346"><a href="#cb38-346" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 6</span></span>
+<span id="cb38-347"><a href="#cb38-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-348"><a href="#cb38-348" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use the <span class="in">`AIC()`</span> function to calculate the AIC values of <span class="in">`model1`</span>, <span class="in">`model2`</span>, <span class="in">`model3`</span>, and <span class="in">`model4`</span>.</span>
+<span id="cb38-349"><a href="#cb38-349" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What can you conclude from this comparison?</span>
+<span id="cb38-350"><a href="#cb38-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-351"><a href="#cb38-351" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb38-352"><a href="#cb38-352" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb38-353"><a href="#cb38-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-356"><a href="#cb38-356" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-357"><a href="#cb38-357" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb38-358"><a href="#cb38-358" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-359"><a href="#cb38-359" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-360"><a href="#cb38-360" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-361"><a href="#cb38-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-362"><a href="#cb38-362" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(model1,</span>
+<span id="cb38-363"><a href="#cb38-363" aria-hidden="true" tabindex="-1"></a>    model2,</span>
+<span id="cb38-364"><a href="#cb38-364" aria-hidden="true" tabindex="-1"></a>    model3,</span>
+<span id="cb38-365"><a href="#cb38-365" aria-hidden="true" tabindex="-1"></a>    model4)</span>
+<span id="cb38-366"><a href="#cb38-366" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-367"><a href="#cb38-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-368"><a href="#cb38-368" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb38-369"><a href="#cb38-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-370"><a href="#cb38-370" aria-hidden="true" tabindex="-1"></a>The model with the smallest AIC value is <span class="in">`model4`</span>. This indicates that, among the four models being compared, <span class="in">`model4`</span> provides the best balance between goodness of fit (model likelihood) and model complexity (number of estimated parameters).</span>
+<span id="cb38-371"><a href="#cb38-371" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb38-372"><a href="#cb38-372" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb38-373"><a href="#cb38-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-374"><a href="#cb38-374" aria-hidden="true" tabindex="-1"></a><span class="fu">## Standardized regression coefficients</span></span>
+<span id="cb38-375"><a href="#cb38-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-376"><a href="#cb38-376" aria-hidden="true" tabindex="-1"></a>Standardized regression coefficients are regression coefficients obtained after all variables (both the response and the predictors) have been standardized, typically by subtracting their mean and dividing by their standard deviation (z-score transformation). This transformation puts all variables on the same scale, with a mean of zero and a standard deviation of one. In R, variables can be transformed in this way using the <span class="in">`scale()`</span> function.</span>
+<span id="cb38-377"><a href="#cb38-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-378"><a href="#cb38-378" aria-hidden="true" tabindex="-1"></a>Standardized regression coefficients are primarily used to compare the relative importance of predictors within the same model. Because the variables are expressed on a common scale, the magnitude of the standardized coefficients indicates which predictors have stronger or weaker associations with the response variable.</span>
+<span id="cb38-379"><a href="#cb38-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-380"><a href="#cb38-380" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb38-381"><a href="#cb38-381" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 7</span></span>
+<span id="cb38-382"><a href="#cb38-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-383"><a href="#cb38-383" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use <span class="in">`lm()`</span> to fit a multiple linear regression model using scaled plant diversity (<span class="in">`scale(shannon_PIM)`</span>) as the response variable, and the scaled logarithm of mowing intensity (<span class="in">`scale(log(mowing))`</span>) and scaled pesticide use (<span class="in">`scale(pesticide)`</span>) as explanatory variables. Do not include any interaction term in this model. Store model output in an R object called <span class="in">`model5`</span>.</span>
+<span id="cb38-384"><a href="#cb38-384" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Run the <span class="in">`summary()`</span> function on the <span class="in">`model5`</span> object.</span>
+<span id="cb38-385"><a href="#cb38-385" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>What can you conclude from this output? Which explanatory variable has the strongest effect on plant diversity?</span>
+<span id="cb38-386"><a href="#cb38-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-387"><a href="#cb38-387" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb38-388"><a href="#cb38-388" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb38-389"><a href="#cb38-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-392"><a href="#cb38-392" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-393"><a href="#cb38-393" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb38-394"><a href="#cb38-394" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-395"><a href="#cb38-395" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-396"><a href="#cb38-396" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-397"><a href="#cb38-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-398"><a href="#cb38-398" aria-hidden="true" tabindex="-1"></a>model5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">scale</span>(shannon_PIM) <span class="sc">~</span> <span class="fu">scale</span>(<span class="fu">log</span>(mowing)) <span class="sc">+</span> <span class="fu">scale</span>(pesticide),</span>
+<span id="cb38-399"><a href="#cb38-399" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> subdata)</span>
+<span id="cb38-400"><a href="#cb38-400" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-401"><a href="#cb38-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-402"><a href="#cb38-402" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb38-403"><a href="#cb38-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-406"><a href="#cb38-406" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-407"><a href="#cb38-407" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb38-408"><a href="#cb38-408" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-409"><a href="#cb38-409" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-410"><a href="#cb38-410" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-411"><a href="#cb38-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-412"><a href="#cb38-412" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model5)</span>
+<span id="cb38-413"><a href="#cb38-413" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-414"><a href="#cb38-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-415"><a href="#cb38-415" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb38-416"><a href="#cb38-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-417"><a href="#cb38-417" aria-hidden="true" tabindex="-1"></a>The absolute value of the standardized regression coefficient of the <span class="in">`pesticide`</span> variable is the largest, meaning it has the strongest effect on plant diversity.</span>
+<span id="cb38-418"><a href="#cb38-418" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb38-419"><a href="#cb38-419" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb38-420"><a href="#cb38-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-421"><a href="#cb38-421" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checking model assumptions</span></span>
+<span id="cb38-422"><a href="#cb38-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-423"><a href="#cb38-423" aria-hidden="true" tabindex="-1"></a><span class="fu">### Normality</span></span>
+<span id="cb38-424"><a href="#cb38-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-425"><a href="#cb38-425" aria-hidden="true" tabindex="-1"></a>After fitting a linear model, you can check whether the normality assumption is met by examining whether the model residuals are approximately normally distributed. This can be done by (1) using the <span class="in">`residuals()`</span> function on the <span class="in">`model4`</span> object to extract the model residuals (i.e. the differences between observed values and model predictions), (2) applying a Shapiro-Wilk test to the residuals, and (3) creating a Q-Q plot using model residuals.</span>
+<span id="cb38-426"><a href="#cb38-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-427"><a href="#cb38-427" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb38-428"><a href="#cb38-428" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 8</span></span>
+<span id="cb38-429"><a href="#cb38-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-430"><a href="#cb38-430" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Extract model residuals by using the <span class="in">`residuals()`</span> function on the <span class="in">`model4`</span> object. Store these residuals in a new column (<span class="in">`div_residuals`</span>) in the <span class="in">`subdata`</span> object.</span>
+<span id="cb38-431"><a href="#cb38-431" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Run a Shapiro-Wilk's test on model residuals.</span>
+<span id="cb38-432"><a href="#cb38-432" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Create a Q-Q plot using model residuals.</span>
+<span id="cb38-433"><a href="#cb38-433" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>What can you conclude from these tests?</span>
+<span id="cb38-434"><a href="#cb38-434" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-435"><a href="#cb38-435" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb38-436"><a href="#cb38-436" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb38-437"><a href="#cb38-437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-440"><a href="#cb38-440" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-441"><a href="#cb38-441" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb38-442"><a href="#cb38-442" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb38-443"><a href="#cb38-443" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb38-444"><a href="#cb38-444" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-445"><a href="#cb38-445" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-446"><a href="#cb38-446" aria-hidden="true" tabindex="-1"></a>subdata<span class="sc">$</span>div_residuals <span class="ot">&lt;-</span> <span class="fu">residuals</span>(model4)</span>
+<span id="cb38-447"><a href="#cb38-447" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-448"><a href="#cb38-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-449"><a href="#cb38-449" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb38-450"><a href="#cb38-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-453"><a href="#cb38-453" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-454"><a href="#cb38-454" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb38-455"><a href="#cb38-455" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb38-456"><a href="#cb38-456" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb38-457"><a href="#cb38-457" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-458"><a href="#cb38-458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-459"><a href="#cb38-459" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(subdata<span class="sc">$</span>div_residuals)</span>
+<span id="cb38-460"><a href="#cb38-460" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-461"><a href="#cb38-461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-462"><a href="#cb38-462" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb38-463"><a href="#cb38-463" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-466"><a href="#cb38-466" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-467"><a href="#cb38-467" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb38-468"><a href="#cb38-468" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb38-469"><a href="#cb38-469" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb38-470"><a href="#cb38-470" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-471"><a href="#cb38-471" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb38-472"><a href="#cb38-472" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb38-473"><a href="#cb38-473" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 5</span></span>
+<span id="cb38-474"><a href="#cb38-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-475"><a href="#cb38-475" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(subdata, <span class="fu">aes</span>(<span class="at">sample =</span> div_residuals)) <span class="sc">+</span></span>
+<span id="cb38-476"><a href="#cb38-476" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb38-477"><a href="#cb38-477" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
+<span id="cb38-478"><a href="#cb38-478" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb38-479"><a href="#cb38-479" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Theoretical quantiles"</span>)<span class="sc">+</span></span>
+<span id="cb38-480"><a href="#cb38-480" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sample quantiles"</span>)<span class="sc">+</span></span>
+<span id="cb38-481"><a href="#cb38-481" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Model residuals"</span>)</span>
+<span id="cb38-482"><a href="#cb38-482" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-483"><a href="#cb38-483" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-484"><a href="#cb38-484" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 4</span></span>
+<span id="cb38-485"><a href="#cb38-485" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-486"><a href="#cb38-486" aria-hidden="true" tabindex="-1"></a>The p-value of the Shapiro-Wilk test is greater than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that the model residuals are normally distributed. This result is supported by the Q-Q plot, in which most points lie close to the reference line (it is worth noting that one extreme quantile value seems to strongly deviate from the reference line).</span>
+<span id="cb38-487"><a href="#cb38-487" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb38-488"><a href="#cb38-488" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb38-489"><a href="#cb38-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-490"><a href="#cb38-490" aria-hidden="true" tabindex="-1"></a><span class="fu">### Homoscedasticity</span></span>
+<span id="cb38-491"><a href="#cb38-491" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-492"><a href="#cb38-492" aria-hidden="true" tabindex="-1"></a>After fitting a linear model, you can check the homoscedasticity assumption by creating a **residual plot**.</span>
+<span id="cb38-493"><a href="#cb38-493" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-494"><a href="#cb38-494" aria-hidden="true" tabindex="-1"></a>A residual plot shows the model residuals plotted against the fitted values. A residual is the difference between an observed value and the value predicted by the model. The fitted value is simply the value predicted by the model for that observation. Each point in the residual plot represents one observation. Its horizontal position shows the fitted value, while its vertical position shows the residual, indicating how far that observation lies above or below the model prediction.</span>
+<span id="cb38-495"><a href="#cb38-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-496"><a href="#cb38-496" aria-hidden="true" tabindex="-1"></a>Residual plots are used to assess the assumption of homoscedasticity, which means that the variance of the residuals is constant across the range of fitted values. If this assumption is met, the residuals should be randomly scattered around zero with no clear pattern and a roughly constant spread. In contrast, patterns such as a funnel shape (increasing or decreasing spread) would indicate heteroscedasticity, suggesting that the assumption of equal variances may be violated.</span>
+<span id="cb38-497"><a href="#cb38-497" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-498"><a href="#cb38-498" aria-hidden="true" tabindex="-1"></a>To create a residual plot, we first need to extract model residuals (<span class="in">`residuals()`</span>) and fitted values (<span class="in">`fitted()`</span>). We already extracted the model residuals earlier (<span class="in">`div_residuals`</span> column).</span>
+<span id="cb38-499"><a href="#cb38-499" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-500"><a href="#cb38-500" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb38-501"><a href="#cb38-501" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 9</span></span>
+<span id="cb38-502"><a href="#cb38-502" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-503"><a href="#cb38-503" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Calculate the values fitted by the linear model using the <span class="in">`fitted()`</span> function on the <span class="in">`model4`</span> object. Store these values in a new column (<span class="in">`div_fitted`</span>) in the <span class="in">`subdata`</span> object.</span>
+<span id="cb38-504"><a href="#cb38-504" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Create a residual plot (fitted values on the x-axis and residuals on the y-axis)</span>
+<span id="cb38-505"><a href="#cb38-505" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>What can you conclude from this residual plot?</span>
+<span id="cb38-506"><a href="#cb38-506" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-507"><a href="#cb38-507" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb38-508"><a href="#cb38-508" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb38-509"><a href="#cb38-509" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-512"><a href="#cb38-512" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-513"><a href="#cb38-513" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb38-514"><a href="#cb38-514" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb38-515"><a href="#cb38-515" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb38-516"><a href="#cb38-516" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-517"><a href="#cb38-517" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-518"><a href="#cb38-518" aria-hidden="true" tabindex="-1"></a>subdata<span class="sc">$</span>div_fitted <span class="ot">&lt;-</span> <span class="fu">fitted</span>(model4)</span>
+<span id="cb38-519"><a href="#cb38-519" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-520"><a href="#cb38-520" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-521"><a href="#cb38-521" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb38-522"><a href="#cb38-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-525"><a href="#cb38-525" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-526"><a href="#cb38-526" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb38-527"><a href="#cb38-527" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb38-528"><a href="#cb38-528" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb38-529"><a href="#cb38-529" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-530"><a href="#cb38-530" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb38-531"><a href="#cb38-531" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb38-532"><a href="#cb38-532" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 5</span></span>
+<span id="cb38-533"><a href="#cb38-533" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-534"><a href="#cb38-534" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(subdata, <span class="fu">aes</span>(<span class="at">x =</span> div_fitted,</span>
+<span id="cb38-535"><a href="#cb38-535" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> div_residuals)) <span class="sc">+</span></span>
+<span id="cb38-536"><a href="#cb38-536" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co">#Add points to the plot</span></span>
+<span id="cb38-537"><a href="#cb38-537" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>,</span>
+<span id="cb38-538"><a href="#cb38-538" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>)<span class="sc">+</span> <span class="co">#Add horizontal dashed line at y=0</span></span>
+<span id="cb38-539"><a href="#cb38-539" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb38-540"><a href="#cb38-540" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Fitted values"</span>)<span class="sc">+</span></span>
+<span id="cb38-541"><a href="#cb38-541" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Residuals"</span>)<span class="sc">+</span></span>
+<span id="cb38-542"><a href="#cb38-542" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Residual plot"</span>)</span>
+<span id="cb38-543"><a href="#cb38-543" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-544"><a href="#cb38-544" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-545"><a href="#cb38-545" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb38-546"><a href="#cb38-546" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-547"><a href="#cb38-547" aria-hidden="true" tabindex="-1"></a>The residuals are well scattered around zero. There is no clear systematic pattern, such as a funnel shape, that would indicate heteroscedasticity. This suggests that the assumption of homoscedasticity is reasonably met.</span>
+<span id="cb38-548"><a href="#cb38-548" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb38-549"><a href="#cb38-549" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb38-550"><a href="#cb38-550" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-551"><a href="#cb38-551" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checking for influential observations</span></span>
+<span id="cb38-552"><a href="#cb38-552" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-553"><a href="#cb38-553" aria-hidden="true" tabindex="-1"></a>A plot of **residuals versus leverage** is commonly used to identify influential observations in a linear regression model. In this plot, the leverage values (which measure how far an observation’s predictor value is from the mean of the predictor) are shown on the x-axis, and the standardized residuals are shown on the y-axis.</span>
+<span id="cb38-554"><a href="#cb38-554" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-555"><a href="#cb38-555" aria-hidden="true" tabindex="-1"></a>Observations are potentially influential if they combine high leverage with large residuals. High leverage alone does not necessarily make a point influential, and neither does a large residual on its own. However, a data point that lies far to the right (high leverage) and far from zero vertically (large residual) can have a strong impact on the estimated regression coefficients. Such points are often highlighted using contours of **Cook’s distance** in the plot. Observations that lie beyond these contours should be examined carefully (especially if Cook's distance is larger than 1), as they may disproportionately affect the fitted model and its conclusions.</span>
+<span id="cb38-556"><a href="#cb38-556" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-557"><a href="#cb38-557" aria-hidden="true" tabindex="-1"></a>In R, you can easily create such a graph using <span class="in">`plot(model, which=5)`</span>. The <span class="in">`which`</span> argument specifies the type of plot we want to create (here, a residuals vs leverage plot). In addition, you can also calculate Cook's distance values by running the <span class="in">`cooks.distance()`</span> function on your linear model object (<span class="in">`model4`</span>).</span>
+<span id="cb38-558"><a href="#cb38-558" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-559"><a href="#cb38-559" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb38-560"><a href="#cb38-560" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 10</span></span>
+<span id="cb38-561"><a href="#cb38-561" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-562"><a href="#cb38-562" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Create a residuals versus leverage plot using the fitted linear model object (<span class="in">`model4`</span>).</span>
+<span id="cb38-563"><a href="#cb38-563" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Calculate the Cook's distance value of all observations using <span class="in">`cooks.distance()`</span>.</span>
+<span id="cb38-564"><a href="#cb38-564" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>What can you conclude from this plot?</span>
+<span id="cb38-565"><a href="#cb38-565" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-566"><a href="#cb38-566" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb38-567"><a href="#cb38-567" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb38-568"><a href="#cb38-568" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-571"><a href="#cb38-571" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-572"><a href="#cb38-572" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb38-573"><a href="#cb38-573" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb38-574"><a href="#cb38-574" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb38-575"><a href="#cb38-575" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-576"><a href="#cb38-576" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb38-577"><a href="#cb38-577" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb38-578"><a href="#cb38-578" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb38-579"><a href="#cb38-579" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-580"><a href="#cb38-580" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model4, <span class="at">which =</span> <span class="dv">5</span>)</span>
+<span id="cb38-581"><a href="#cb38-581" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-582"><a href="#cb38-582" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-583"><a href="#cb38-583" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb38-584"><a href="#cb38-584" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-587"><a href="#cb38-587" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-588"><a href="#cb38-588" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb38-589"><a href="#cb38-589" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb38-590"><a href="#cb38-590" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb38-591"><a href="#cb38-591" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-592"><a href="#cb38-592" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-593"><a href="#cb38-593" aria-hidden="true" tabindex="-1"></a><span class="fu">cooks.distance</span>(model4)</span>
+<span id="cb38-594"><a href="#cb38-594" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-595"><a href="#cb38-595" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-596"><a href="#cb38-596" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb38-597"><a href="#cb38-597" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-598"><a href="#cb38-598" aria-hidden="true" tabindex="-1"></a>Observations 33 stands out due to their comparatively high residual value. No observation has a Cook’s distance exceeding 0.5, indicating that none exerts a strong influence on the estimated regression coefficients.</span>
+<span id="cb38-599"><a href="#cb38-599" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb38-600"><a href="#cb38-600" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb38-601"><a href="#cb38-601" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-602"><a href="#cb38-602" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checking for collinearity (again!)</span></span>
+<span id="cb38-603"><a href="#cb38-603" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-604"><a href="#cb38-604" aria-hidden="true" tabindex="-1"></a>In the first part of this tutorial, we explored collinearity by visually inspecting scatter plots and by calculating correlation coefficients. Collinearity (or multicollinearity) occurs when two or more predictors are strongly correlated, meaning they contain overlapping information, which is not ideal.</span>
+<span id="cb38-605"><a href="#cb38-605" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-606"><a href="#cb38-606" aria-hidden="true" tabindex="-1"></a>After fitting a linear model, we can assess collinearity using two related measures: **tolerance** and the **variance inflation factor (VIF)**. Tolerance measures the proportion of variation in a given predictor that is <span class="co">[</span><span class="ot">not</span><span class="co">]</span>{.underline} explained by the other predictors in the model ($1-R_i^2$). $R_i^2$ is the unadjusted coefficient of determination for regressing the *i^th^* independent variable on the remaining ones. Low tolerance values indicate that a predictor is largely explained by the others, suggesting problematic collinearity. The variance inflation factor is directly related to tolerance (@eq-VIF). Larger VIF values indicate stronger multicollinearity. If the VIF value of a predictor is larger than 5, we may consider removing it from the model.</span>
+<span id="cb38-607"><a href="#cb38-607" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-608"><a href="#cb38-608" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-609"><a href="#cb38-609" aria-hidden="true" tabindex="-1"></a>VIF=\frac{1}{Tolerance}=\frac{1}{1-R_i^2}</span>
+<span id="cb38-610"><a href="#cb38-610" aria-hidden="true" tabindex="-1"></a>$$ {#eq-VIF}</span>
+<span id="cb38-611"><a href="#cb38-611" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-612"><a href="#cb38-612" aria-hidden="true" tabindex="-1"></a>In R, you can calculate these parameters using the <span class="in">`ols_vif_tol()`</span> function in the *olsrr* package.</span>
+<span id="cb38-613"><a href="#cb38-613" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-614"><a href="#cb38-614" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb38-615"><a href="#cb38-615" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 11</span></span>
+<span id="cb38-616"><a href="#cb38-616" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-617"><a href="#cb38-617" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use <span class="in">`ols_vif_tol()`</span> to calculate the tolerance and variance inflation factor for each explanatory variable included in <span class="in">`model4`</span>.</span>
+<span id="cb38-618"><a href="#cb38-618" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>What can you conclude from these values?</span>
+<span id="cb38-619"><a href="#cb38-619" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-620"><a href="#cb38-620" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb38-621"><a href="#cb38-621" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb38-622"><a href="#cb38-622" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-625"><a href="#cb38-625" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-626"><a href="#cb38-626" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb38-627"><a href="#cb38-627" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb38-628"><a href="#cb38-628" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb38-629"><a href="#cb38-629" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-630"><a href="#cb38-630" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-631"><a href="#cb38-631" aria-hidden="true" tabindex="-1"></a><span class="fu">ols_vif_tol</span>(model4)</span>
+<span id="cb38-632"><a href="#cb38-632" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-633"><a href="#cb38-633" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-634"><a href="#cb38-634" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb38-635"><a href="#cb38-635" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-636"><a href="#cb38-636" aria-hidden="true" tabindex="-1"></a>All VIF values are lower than 2, which suggests that multicollinearity is not an issue in this model.</span>
+<span id="cb38-637"><a href="#cb38-637" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb38-638"><a href="#cb38-638" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb38-639"><a href="#cb38-639" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-640"><a href="#cb38-640" aria-hidden="true" tabindex="-1"></a><span class="fu">## Combining numerical and categorical variables in a linear model</span></span>
+<span id="cb38-641"><a href="#cb38-641" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-642"><a href="#cb38-642" aria-hidden="true" tabindex="-1"></a>So far, the models we fitted in this tutorial only included numeric explanatory variables, but it is also possible to include categorical variables in such a model. To illustrate this, let's model coffee productivity (<span class="in">`coffee_prod`</span>) as a function of altitude (<span class="in">`altitude`</span>) and municipality (<span class="in">`municipality`</span>).</span>
+<span id="cb38-643"><a href="#cb38-643" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-644"><a href="#cb38-644" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb38-645"><a href="#cb38-645" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 12</span></span>
+<span id="cb38-646"><a href="#cb38-646" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-647"><a href="#cb38-647" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use <span class="in">`lm()`</span> to fit a multiple linear regression model using coffee productivity (<span class="in">`coffee_prod`</span>) as the response variable, and altitude (<span class="in">`altitude`</span>) and municipality (<span class="in">`municipality`</span>) as explanatory variables. Include a two-way interaction in this model. Store model output in an R object called <span class="in">`model6`</span>.</span>
+<span id="cb38-648"><a href="#cb38-648" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Run the <span class="in">`summary()`</span> function on the <span class="in">`model6`</span> object.</span>
+<span id="cb38-649"><a href="#cb38-649" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>From the model output, write down the equation of the linear model linking coffee productivity to altitude and municipality.</span>
+<span id="cb38-650"><a href="#cb38-650" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Create a scatter plot showing the relationship between coffee productivity (<span class="in">`coffee_prod`</span>) and altitude (<span class="in">`altitude`</span>) for each municipality (<span class="in">`municipality`</span>). Add fitted linear models to this scatter plot as well.</span>
+<span id="cb38-651"><a href="#cb38-651" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>From the model output and the scatter plot, what can you conclude about the interaction between altitude and municipality on coffee productivity?</span>
+<span id="cb38-652"><a href="#cb38-652" aria-hidden="true" tabindex="-1"></a><span class="ss">6.  </span>Manually calculate the coffee productivity predicted by the linear model at an altitude of 1000 m in both municipalities.</span>
+<span id="cb38-653"><a href="#cb38-653" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-654"><a href="#cb38-654" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb38-655"><a href="#cb38-655" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb38-656"><a href="#cb38-656" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-659"><a href="#cb38-659" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-660"><a href="#cb38-660" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb38-661"><a href="#cb38-661" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-662"><a href="#cb38-662" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-663"><a href="#cb38-663" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-664"><a href="#cb38-664" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-665"><a href="#cb38-665" aria-hidden="true" tabindex="-1"></a>model6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(coffee_prod <span class="sc">~</span> altitude<span class="sc">*</span>municipality,</span>
+<span id="cb38-666"><a href="#cb38-666" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> data)</span>
+<span id="cb38-667"><a href="#cb38-667" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-668"><a href="#cb38-668" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-669"><a href="#cb38-669" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb38-670"><a href="#cb38-670" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-673"><a href="#cb38-673" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-674"><a href="#cb38-674" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb38-675"><a href="#cb38-675" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb38-676"><a href="#cb38-676" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb38-677"><a href="#cb38-677" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-678"><a href="#cb38-678" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-679"><a href="#cb38-679" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model6)</span>
+<span id="cb38-680"><a href="#cb38-680" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-681"><a href="#cb38-681" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-682"><a href="#cb38-682" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb38-683"><a href="#cb38-683" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-684"><a href="#cb38-684" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-685"><a href="#cb38-685" aria-hidden="true" tabindex="-1"></a>coffeeprod=-77.75+2.26 \times altitude+4275.83 \times Divino - 5.35 \times altitude \times Divino</span>
+<span id="cb38-686"><a href="#cb38-686" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-687"><a href="#cb38-687" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-688"><a href="#cb38-688" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 4</span></span>
+<span id="cb38-689"><a href="#cb38-689" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-692"><a href="#cb38-692" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb38-693"><a href="#cb38-693" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb38-694"><a href="#cb38-694" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb38-695"><a href="#cb38-695" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb38-696"><a href="#cb38-696" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-697"><a href="#cb38-697" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb38-698"><a href="#cb38-698" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb38-699"><a href="#cb38-699" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb38-700"><a href="#cb38-700" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-701"><a href="#cb38-701" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> altitude,</span>
+<span id="cb38-702"><a href="#cb38-702" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> coffee_prod))<span class="sc">+</span></span>
+<span id="cb38-703"><a href="#cb38-703" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>municipality)<span class="sc">+</span></span>
+<span id="cb38-704"><a href="#cb38-704" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>,</span>
+<span id="cb38-705"><a href="#cb38-705" aria-hidden="true" tabindex="-1"></a>                <span class="at">colour =</span> <span class="st">"black"</span>)<span class="sc">+</span></span>
+<span id="cb38-706"><a href="#cb38-706" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">21</span>,</span>
+<span id="cb38-707"><a href="#cb38-707" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">"#FFCD00"</span>,</span>
+<span id="cb38-708"><a href="#cb38-708" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>)<span class="sc">+</span></span>
+<span id="cb38-709"><a href="#cb38-709" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb38-710"><a href="#cb38-710" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Altitude (m)"</span>)<span class="sc">+</span></span>
+<span id="cb38-711"><a href="#cb38-711" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Coffee productivity (kg/ha/year)"</span>)</span>
+<span id="cb38-712"><a href="#cb38-712" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb38-713"><a href="#cb38-713" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-714"><a href="#cb38-714" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 5</span></span>
+<span id="cb38-715"><a href="#cb38-715" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-716"><a href="#cb38-716" aria-hidden="true" tabindex="-1"></a>Coffee productivity increases with altitude in the municipality of Araponga, as indicated by the positive regression coefficient for <span class="in">`altitude`</span>. In contrast, in Divino the relationship is reversed. The negative interaction coefficient (-5.35) is larger in magnitude than the positive main effect of <span class="in">`altitude`</span> (2.26), resulting in a negative overall slope for altitude in Divino (2.26-5.35 = -3.09).</span>
+<span id="cb38-717"><a href="#cb38-717" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-718"><a href="#cb38-718" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 6</span></span>
+<span id="cb38-719"><a href="#cb38-719" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-720"><a href="#cb38-720" aria-hidden="true" tabindex="-1"></a>The linear model has the following equation:</span>
+<span id="cb38-721"><a href="#cb38-721" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-722"><a href="#cb38-722" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-723"><a href="#cb38-723" aria-hidden="true" tabindex="-1"></a>coffeeprod=-77.75+2.26 \times altitude+4275.83 \times Divino - 5.35 \times altitude \times Divino</span>
+<span id="cb38-724"><a href="#cb38-724" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-725"><a href="#cb38-725" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-726"><a href="#cb38-726" aria-hidden="true" tabindex="-1"></a>In this equation, <span class="in">`altitude`</span> is a numeric variable, while <span class="in">`Divino`</span> is a dummy variable that can only take the value 0 (when we want to make a prediction for the Araponga municipality) or 1 (when we want to make a prediction for the Divino municipality).</span>
+<span id="cb38-727"><a href="#cb38-727" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-728"><a href="#cb38-728" aria-hidden="true" tabindex="-1"></a>Let's first make a prediction for coffee productivity at an altitude of 1000 m in the municipality of Araponga. In this case, we need to set <span class="in">`Divino=0`</span>. The equation of the linear model therefore becomes:</span>
+<span id="cb38-729"><a href="#cb38-729" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-730"><a href="#cb38-730" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-731"><a href="#cb38-731" aria-hidden="true" tabindex="-1"></a>coffeeprod=-77.75+2.26 \times altitude+4275.83 \times 0 - 5.35 \times altitude \times 0=-77.75+2.26 \times altitude</span>
+<span id="cb38-732"><a href="#cb38-732" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-733"><a href="#cb38-733" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-734"><a href="#cb38-734" aria-hidden="true" tabindex="-1"></a>At an altitude of 1000 m, the coffee productivity in Araponga can be calculated as:</span>
+<span id="cb38-735"><a href="#cb38-735" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-736"><a href="#cb38-736" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-737"><a href="#cb38-737" aria-hidden="true" tabindex="-1"></a>coffeeprod=-77.75+2.26 \times 1000 = -77.75 + 2260 = 2182.25 \space kg/ha/year</span>
+<span id="cb38-738"><a href="#cb38-738" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-739"><a href="#cb38-739" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-740"><a href="#cb38-740" aria-hidden="true" tabindex="-1"></a>To make a prediction for the municipality of Divino, we need to set <span class="in">`Divino=1`</span> in the equation of the linear model. The equation of the linear model therefore becomes:</span>
+<span id="cb38-741"><a href="#cb38-741" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-742"><a href="#cb38-742" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-743"><a href="#cb38-743" aria-hidden="true" tabindex="-1"></a>coffeeprod=-77.75+2.26 \times altitude+4275.83 \times 1 - 5.35 \times altitude \times 1=4198.08-3.09 \times altitude</span>
+<span id="cb38-744"><a href="#cb38-744" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-745"><a href="#cb38-745" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-746"><a href="#cb38-746" aria-hidden="true" tabindex="-1"></a>At an altitude of 1000 m, the coffee productivity in Divino can be calculated as:</span>
+<span id="cb38-747"><a href="#cb38-747" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-748"><a href="#cb38-748" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-749"><a href="#cb38-749" aria-hidden="true" tabindex="-1"></a>coffeeprod=4198.08-3.09 \times 1000 = 4198.08 - 3090 = 1108.08 \space kg/ha/year</span>
+<span id="cb38-750"><a href="#cb38-750" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb38-751"><a href="#cb38-751" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb38-752"><a href="#cb38-752" aria-hidden="true" tabindex="-1"></a>::::</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

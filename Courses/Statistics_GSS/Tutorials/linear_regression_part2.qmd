@@ -23,4 +23,676 @@ editor_options:
 image: /Images/Rlogo.png
 ---
 
-Add text
+## About this tutorial
+
+The goal of this tutorial is to understand and apply [multiple]{.underline} linear regression models to examine the relationship between a numerical variable (the response variable) and several predictor (or independent) variables. You will learn how to estimate the model coefficients, and test the statistical significance of the model. In addition, you will learn how to compare different models and interpret their output. Finally, we will check whether the assumptions underlying linear regression are satisfied.
+
+Let's get started!
+
+## Install R packages
+
+In this tutorial, we will need to use functions in the *GGally* and *olsrr* packages. Make sure to install these packages before starting the tutorial.
+
+```{r}
+#| eval: false 
+#| echo: true
+#| message: false
+#| warning: false
+
+install.packages("GGally")
+install.packages("olsrr")
+```
+
+## Load R packages
+
+To work on this tutorial, you will need to load the *readxl*, *tidyverse*, *GGally*, and *olsrr* packages.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false  
+
+library(readxl) 
+library(tidyverse)
+library(GGally)
+library(olsrr)
+```
+
+## Importing data
+
+Start by importing the data used in this course (see previous tutorials).
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false  
+
+#Option 1 (csv file) 
+data <- read_csv("gss_statistics_master_data_set2.csv")  
+
+#Option 2 (Excel file) 
+data <- read_excel("gss_statistics_master_data_set2.xlsx")
+```
+
+## What is multiple linear regression?
+
+Multiple linear regression is a statistical method used to explain or predict the value of one continuous response variable ($y$) based on two or more predictor variables ($x_1, x_2,...,x_n$) (@eq-multiplelm).
+
+$$
+y=\beta_0+\beta_1x_1+\beta_2x_2+...\beta_nx_n+\epsilon
+$$ {#eq-multiplelm}
+
+In this equation, $\beta_0$ is the **intercept** and $\beta_{1,2,...,n}$ are the **slopes**. $\epsilon$ is the model residual (error).
+
+The **intercept** ($\beta_0$) represents the predicted value of $y$ when all the predictor variables are equal to zero.
+
+Each **slope** ($\beta_{1,2,...,n}$​) represents the expected change in $y$ when that a predictor increases by one-unit while holding all the other predictors constant.
+
+## Research question
+
+In this tutorial, we will analyze how the number of agroecological practices (`n_practices`), mowing intensity (`mowing`), and pesticide use (`pesticide`) affect plant diversity (`shannon_PIM`).
+
+## Checking for collinearity
+
+Let’s first examine the relationships among the variables. At this stage, we want to assess whether there is multicollinearity among the explanatory variables and whether the relationships between the response variable and each explanatory variable appear approximately linear.
+
+If two explanatory variables are highly correlated, this suggests potential multicollinearity. In such cases, we may consider excluding one of the strongly correlated variables.
+
+If the relationship between the response variable and a predictor shows a clear non-linear pattern, such as a curved trend, we may consider transforming the variable or including a non-linear term in the model.
+
+To visualize pairwise relationships between variables, we can use the `ggpairs()` function in the *GGally* package. The output of `ggpairs()` is a graph displaying a scatter plot for each relationship, as well as their Pearson's correlation coefficients.
+
+:::: callout-tip
+## Exercise 1
+
+1.  Create a new dataset (`subdata`) that only contains the variables of interest for this tutorial (`n_practices`, `mowing`, `pesticide`, `shannon_PIM`).
+2.  Use `ggpairs()` to visualize pairwise relationships between these variables.
+3.  What observations can you make from this graph?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false  
+
+subdata <- dplyr::select(data,
+                         n_practices,
+                         mowing,
+                         pesticide,
+                         shannon_PIM)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+ggpairs(subdata)
+```
+
+## Solution 3
+
+Among the explanatory variables, `pesticide` and `n_practices` are the most strongly correlated (r = -0.743). The correlation between the other explanatory variables is weaker (r = 0.444 and r = -0.473).
+
+When looking at the relationship between the response variable (`shannon_PIM`) and each explanatory variable, we can see that the relationship between plant diversity and mowing intensity seems asymptotic, while the relationship between plant diversity and the other explanatory variables looks more linear.
+:::
+::::
+
+## Fitting a multiple linear regression model
+
+Let's start by fitting the most complicated model including all three explanatory variables and their two-way and three-way interactions. We can do this using the `lm()` function in R.
+
+:::: callout-tip
+## Exercise 2
+
+1.  Use `lm()` to fit a multiple linear regression model using plant diversity (`shannon_PIM`) as the response variable, and the number of agroecological practices (`n_practices`), mowing intensity (`mowing`), and pesticide use (`pesticide`) as explanatory variables. Include all two-way and three-way interactions in this model. Store model output in an R object called `model1`.
+2.  Run the `summary()` function on the `model1` object.
+3.  What can you conclude from this output?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+model1 <- lm(shannon_PIM ~ n_practices*mowing*pesticide,
+             data = subdata)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+summary(model1)
+```
+
+## Solution 3
+
+Although the model explains 45.5% of the total variation in plant diversity, none of the estimated regression coefficients are statistically different from zero (p \> 0.05). This indicates that, once uncertainty is taken into account, we cannot detect a clear effect of any predictor on plant diversity. Consequently, despite the relatively moderate R^2^, the model does not provide evidence that the explanatory variables are associated with plant diversity, and its explanatory value is therefore limited.
+:::
+::::
+
+Let's now fit a simpler model that includes all explanatory variables, but not their two-way and three-way interactions.
+
+:::: callout-tip
+## Exercise 3
+
+1.  Use `lm()` to fit a multiple linear regression model using plant diversity (`shannon_PIM`) as the response variable, and the number of agroecological practices (`n_practices`), mowing intensity (`mowing`), and pesticide use (`pesticide`) as explanatory variables. Do not include any interaction term in this model. Store model output in an R object called `model2`.
+2.  Run the `summary()` function on the `model2` object.
+3.  What can you conclude from this output?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+model2 <- lm(shannon_PIM ~ n_practices + mowing + pesticide,
+             data = subdata)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+summary(model2)
+```
+
+## Solution 3
+
+This simpler model explains 42.3% of the total variation in plant diversity (which is close to the R^2^ value from the more complicated model we fitted in the first exercise), but none of the estimated regression coefficients are statistically different from zero (p \> 0.05). Among all the explanatory variables included in the model, `n_practices` has the lowest t statistic value and the largest p-value. This variable was also strongly correlated with pesticide use. A logical next step to make a better model could be to remove the `n_practices` variable from the model.
+:::
+::::
+
+## Building alternative models
+
+Let's now fit a new model that only includes pesticide use (`pesticide`) and mowing intensity (`mowing`) as explanatory variables.
+
+:::: callout-tip
+## Exercise 4
+
+1.  Use `lm()` to fit a multiple linear regression model using plant diversity (`shannon_PIM`) as the response variable, and mowing intensity (`mowing`) and pesticide use (`pesticide`) as explanatory variables. Do not include any interaction term in this model. Store model output in an R object called `model3`.
+2.  Run the `summary()` function on the `model3` object.
+3.  What can you conclude from this output?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+model3 <- lm(shannon_PIM ~ mowing + pesticide,
+             data = subdata)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true
+#| echo: true 
+#| message: false 
+#| warning: false
+
+summary(model3)
+```
+
+## Solution 3
+
+This new model is highly significant (p \< 0.001) and explains 41.2% of the total variation in plant diversity. Two regression coefficients are significantly different from zero: the intercept of the model and the slope of the `pesticide` variable. The slope of the `mowing` variable is not significantly different from zero (p \> 0.05).
+:::
+::::
+
+Because the relationship between plant diversity (`shannon_PIM`) and mowing intensity (`mowing`) appeared asymptotic, a reasonable next step would be to apply a log transformation to the `mowing` variable and refit the model using this transformed predictor. A log transformation can help linearize asymptotic relationships, improve model fit, and better meet the assumptions of linear regression.
+
+:::: callout-tip
+## Exercise 5
+
+1.  Use `lm()` to fit a multiple linear regression model using plant diversity (`shannon_PIM`) as the response variable, and the logarithm of mowing intensity (`log(mowing)`) and pesticide use (`pesticide`) as explanatory variables. Do not include any interaction term in this model. Store model output in an R object called `model4`.
+2.  Run the `summary()` function on the `model4` object.
+3.  What can you conclude from this output?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+model4 <- lm(shannon_PIM ~ log(mowing) + pesticide,
+             data = subdata)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true
+#| echo: true 
+#| message: false 
+#| warning: false
+
+summary(model4)
+```
+
+## Solution 3
+
+This new model is highly significant (p \< 0.001) and explains 44.4% of the total variation in plant diversity. All regression coefficients are significantly different from zero (p \< 0.05).
+:::
+::::
+
+## Comparing models
+
+The **Akaike Information Criterion (AIC)** is a measure used to compare statistical models and select the one that best balances goodness of fit and model complexity. It is based on the idea that a good model should explain the data well while using as few parameters as necessary.
+
+AIC is calculated from the model’s likelihood and includes a penalty for the number of estimated parameters. As a result, models with more parameters are penalized to reduce the risk of overfitting. The absolute value of AIC is not meaningful on its own. It is only useful when comparing multiple models fitted to the same dataset.
+
+In model selection, the model with the lowest AIC is preferred. Differences in AIC (ΔAIC) are often used to assess the relative support for competing models. Small differences suggest that models have similar support, whereas large differences indicate stronger evidence for the model with the lower AIC.
+
+In R, AIC values can be calculated by running the `AIC()` function on one or more model objects. We will now use it to calculate AIC values for all the models fitted in the previous exercises.
+
+:::: callout-tip
+## Exercise 6
+
+1.  Use the `AIC()` function to calculate the AIC values of `model1`, `model2`, `model3`, and `model4`.
+2.  What can you conclude from this comparison?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true 
+#| message: false 
+#| warning: false
+
+AIC(model1,
+    model2,
+    model3,
+    model4)
+```
+
+## Solution 2
+
+The model with the smallest AIC value is `model4`. This indicates that, among the four models being compared, `model4` provides the best balance between goodness of fit (model likelihood) and model complexity (number of estimated parameters).
+:::
+::::
+
+## Standardized regression coefficients
+
+Standardized regression coefficients are regression coefficients obtained after all variables (both the response and the predictors) have been standardized, typically by subtracting their mean and dividing by their standard deviation (z-score transformation). This transformation puts all variables on the same scale, with a mean of zero and a standard deviation of one. In R, variables can be transformed in this way using the `scale()` function.
+
+Standardized regression coefficients are primarily used to compare the relative importance of predictors within the same model. Because the variables are expressed on a common scale, the magnitude of the standardized coefficients indicates which predictors have stronger or weaker associations with the response variable.
+
+:::: callout-tip
+## Exercise 7
+
+1.  Use `lm()` to fit a multiple linear regression model using scaled plant diversity (`scale(shannon_PIM)`) as the response variable, and the scaled logarithm of mowing intensity (`scale(log(mowing))`) and scaled pesticide use (`scale(pesticide)`) as explanatory variables. Do not include any interaction term in this model. Store model output in an R object called `model5`.
+2.  Run the `summary()` function on the `model5` object.
+3.  What can you conclude from this output? Which explanatory variable has the strongest effect on plant diversity?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+model5 <- lm(scale(shannon_PIM) ~ scale(log(mowing)) + scale(pesticide),
+             data = subdata)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true
+#| echo: true 
+#| message: false 
+#| warning: false
+
+summary(model5)
+```
+
+## Solution 3
+
+The absolute value of the standardized regression coefficient of the `pesticide` variable is the largest, meaning it has the strongest effect on plant diversity.
+:::
+::::
+
+## Checking model assumptions
+
+### Normality
+
+After fitting a linear model, you can check whether the normality assumption is met by examining whether the model residuals are approximately normally distributed. This can be done by (1) using the `residuals()` function on the `model4` object to extract the model residuals (i.e. the differences between observed values and model predictions), (2) applying a Shapiro-Wilk test to the residuals, and (3) creating a Q-Q plot using model residuals.
+
+:::: callout-tip
+## Exercise 8
+
+1.  Extract model residuals by using the `residuals()` function on the `model4` object. Store these residuals in a new column (`div_residuals`) in the `subdata` object.
+2.  Run a Shapiro-Wilk's test on model residuals.
+3.  Create a Q-Q plot using model residuals.
+4.  What can you conclude from these tests?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+subdata$div_residuals <- residuals(model4)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+shapiro.test(subdata$div_residuals)
+```
+
+## Solution 3
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+#| fig-align: center
+#| fig-height: 5
+#| fig-width: 5
+
+ggplot(subdata, aes(sample = div_residuals)) +
+  stat_qq() +
+  stat_qq_line() +
+  theme_bw() +
+  xlab("Theoretical quantiles")+
+  ylab("Sample quantiles")+
+  ggtitle("Model residuals")
+```
+
+## Solution 4
+
+The p-value of the Shapiro-Wilk test is greater than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that the model residuals are normally distributed. This result is supported by the Q-Q plot, in which most points lie close to the reference line (it is worth noting that one extreme quantile value seems to strongly deviate from the reference line).
+:::
+::::
+
+### Homoscedasticity
+
+After fitting a linear model, you can check the homoscedasticity assumption by creating a **residual plot**.
+
+A residual plot shows the model residuals plotted against the fitted values. A residual is the difference between an observed value and the value predicted by the model. The fitted value is simply the value predicted by the model for that observation. Each point in the residual plot represents one observation. Its horizontal position shows the fitted value, while its vertical position shows the residual, indicating how far that observation lies above or below the model prediction.
+
+Residual plots are used to assess the assumption of homoscedasticity, which means that the variance of the residuals is constant across the range of fitted values. If this assumption is met, the residuals should be randomly scattered around zero with no clear pattern and a roughly constant spread. In contrast, patterns such as a funnel shape (increasing or decreasing spread) would indicate heteroscedasticity, suggesting that the assumption of equal variances may be violated.
+
+To create a residual plot, we first need to extract model residuals (`residuals()`) and fitted values (`fitted()`). We already extracted the model residuals earlier (`div_residuals` column).
+
+:::: callout-tip
+## Exercise 9
+
+1.  Calculate the values fitted by the linear model using the `fitted()` function on the `model4` object. Store these values in a new column (`div_fitted`) in the `subdata` object.
+2.  Create a residual plot (fitted values on the x-axis and residuals on the y-axis)
+3.  What can you conclude from this residual plot?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+subdata$div_fitted <- fitted(model4)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+#| fig-align: center
+#| fig-height: 5
+#| fig-width: 5
+
+ggplot(subdata, aes(x = div_fitted,
+                    y = div_residuals)) +
+  geom_point() + #Add points to the plot
+  geom_hline(yintercept = 0,
+             linetype = "dashed")+ #Add horizontal dashed line at y=0
+  theme_bw() +
+  xlab("Fitted values")+
+  ylab("Residuals")+
+  ggtitle("Residual plot")
+```
+
+## Solution 3
+
+The residuals are well scattered around zero. There is no clear systematic pattern, such as a funnel shape, that would indicate heteroscedasticity. This suggests that the assumption of homoscedasticity is reasonably met.
+:::
+::::
+
+## Checking for influential observations
+
+A plot of **residuals versus leverage** is commonly used to identify influential observations in a linear regression model. In this plot, the leverage values (which measure how far an observation’s predictor value is from the mean of the predictor) are shown on the x-axis, and the standardized residuals are shown on the y-axis.
+
+Observations are potentially influential if they combine high leverage with large residuals. High leverage alone does not necessarily make a point influential, and neither does a large residual on its own. However, a data point that lies far to the right (high leverage) and far from zero vertically (large residual) can have a strong impact on the estimated regression coefficients. Such points are often highlighted using contours of **Cook’s distance** in the plot. Observations that lie beyond these contours should be examined carefully (especially if Cook's distance is larger than 1), as they may disproportionately affect the fitted model and its conclusions.
+
+In R, you can easily create such a graph using `plot(model, which=5)`. The `which` argument specifies the type of plot we want to create (here, a residuals vs leverage plot). In addition, you can also calculate Cook's distance values by running the `cooks.distance()` function on your linear model object (`model4`).
+
+:::: callout-tip
+## Exercise 10
+
+1.  Create a residuals versus leverage plot using the fitted linear model object (`model4`).
+2.  Calculate the Cook's distance value of all observations using `cooks.distance()`.
+3.  What can you conclude from this plot?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+#| fig-align: center
+#| fig-height: 5
+#| fig-width: 6
+
+plot(model4, which = 5)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+cooks.distance(model4)
+```
+
+## Solution 3
+
+Observations 33 stands out due to their comparatively high residual value. No observation has a Cook’s distance exceeding 0.5, indicating that none exerts a strong influence on the estimated regression coefficients.
+:::
+::::
+
+## Checking for collinearity (again!)
+
+In the first part of this tutorial, we explored collinearity by visually inspecting scatter plots and by calculating correlation coefficients. Collinearity (or multicollinearity) occurs when two or more predictors are strongly correlated, meaning they contain overlapping information, which is not ideal.
+
+After fitting a linear model, we can assess collinearity using two related measures: **tolerance** and the **variance inflation factor (VIF)**. Tolerance measures the proportion of variation in a given predictor that is [not]{.underline} explained by the other predictors in the model ($1-R_i^2$). $R_i^2$ is the unadjusted coefficient of determination for regressing the *i^th^* independent variable on the remaining ones. Low tolerance values indicate that a predictor is largely explained by the others, suggesting problematic collinearity. The variance inflation factor is directly related to tolerance (@eq-VIF). Larger VIF values indicate stronger multicollinearity. If the VIF value of a predictor is larger than 5, we may consider removing it from the model.
+
+$$
+VIF=\frac{1}{Tolerance}=\frac{1}{1-R_i^2}
+$$ {#eq-VIF}
+
+In R, you can calculate these parameters using the `ols_vif_tol()` function in the *olsrr* package.
+
+:::: callout-tip
+## Exercise 11
+
+1.  Use `ols_vif_tol()` to calculate the tolerance and variance inflation factor for each explanatory variable included in `model4`.
+2.  What can you conclude from these values?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+
+ols_vif_tol(model4)
+```
+
+## Solution 2
+
+All VIF values are lower than 2, which suggests that multicollinearity is not an issue in this model.
+:::
+::::
+
+## Combining numerical and categorical variables in a linear model
+
+So far, the models we fitted in this tutorial only included numeric explanatory variables, but it is also possible to include categorical variables in such a model. To illustrate this, let's model coffee productivity (`coffee_prod`) as a function of altitude (`altitude`) and municipality (`municipality`).
+
+:::: callout-tip
+## Exercise 12
+
+1.  Use `lm()` to fit a multiple linear regression model using coffee productivity (`coffee_prod`) as the response variable, and altitude (`altitude`) and municipality (`municipality`) as explanatory variables. Include a two-way interaction in this model. Store model output in an R object called `model6`.
+2.  Run the `summary()` function on the `model6` object.
+3.  From the model output, write down the equation of the linear model linking coffee productivity to altitude and municipality.
+4.  Create a scatter plot showing the relationship between coffee productivity (`coffee_prod`) and altitude (`altitude`) for each municipality (`municipality`). Add fitted linear models to this scatter plot as well.
+5.  From the model output and the scatter plot, what can you conclude about the interaction between altitude and municipality on coffee productivity?
+6.  Manually calculate the coffee productivity predicted by the linear model at an altitude of 1000 m in both municipalities.
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+model6 <- lm(coffee_prod ~ altitude*municipality,
+             data = data)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+summary(model6)
+```
+
+## Solution 3
+
+$$
+coffeeprod=-77.75+2.26 \times altitude+4275.83 \times Divino - 5.35 \times altitude \times Divino
+$$
+
+## Solution 4
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#| warning: false
+#| fig-align: center
+#| fig-height: 4
+#| fig-width: 6
+
+ggplot(data, aes(x = altitude,
+                 y = coffee_prod))+
+    facet_wrap(~municipality)+
+    geom_smooth(method="lm",
+                colour = "black")+
+    geom_point(shape=21,
+               fill = "#FFCD00",
+               colour = "black")+
+    theme_bw()+
+    xlab("Altitude (m)")+
+    ylab("Coffee productivity (kg/ha/year)")
+```
+
+## Solution 5
+
+Coffee productivity increases with altitude in the municipality of Araponga, as indicated by the positive regression coefficient for `altitude`. In contrast, in Divino the relationship is reversed. The negative interaction coefficient (-5.35) is larger in magnitude than the positive main effect of `altitude` (2.26), resulting in a negative overall slope for altitude in Divino (2.26-5.35 = -3.09).
+
+## Solution 6
+
+The linear model has the following equation:
+
+$$
+coffeeprod=-77.75+2.26 \times altitude+4275.83 \times Divino - 5.35 \times altitude \times Divino
+$$
+
+In this equation, `altitude` is a numeric variable, while `Divino` is a dummy variable that can only take the value 0 (when we want to make a prediction for the Araponga municipality) or 1 (when we want to make a prediction for the Divino municipality).
+
+Let's first make a prediction for coffee productivity at an altitude of 1000 m in the municipality of Araponga. In this case, we need to set `Divino=0`. The equation of the linear model therefore becomes:
+
+$$
+coffeeprod=-77.75+2.26 \times altitude+4275.83 \times 0 - 5.35 \times altitude \times 0=-77.75+2.26 \times altitude
+$$
+
+At an altitude of 1000 m, the coffee productivity in Araponga can be calculated as:
+
+$$
+coffeeprod=-77.75+2.26 \times 1000 = -77.75 + 2260 = 2182.25 \space kg/ha/year
+$$
+
+To make a prediction for the municipality of Divino, we need to set `Divino=1` in the equation of the linear model. The equation of the linear model therefore becomes:
+
+$$
+coffeeprod=-77.75+2.26 \times altitude+4275.83 \times 1 - 5.35 \times altitude \times 1=4198.08-3.09 \times altitude
+$$
+
+At an altitude of 1000 m, the coffee productivity in Divino can be calculated as:
+
+$$
+coffeeprod=4198.08-3.09 \times 1000 = 4198.08 - 3090 = 1108.08 \space kg/ha/year
+$$
+:::
+::::

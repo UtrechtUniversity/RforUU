@@ -557,7 +557,7 @@ window.Quarto = {
   <li><a href="#the-slow-way" id="toc-the-slow-way" class="nav-link" data-scroll-target="#the-slow-way">The slow way</a></li>
   <li><a href="#the-fast-way" id="toc-the-fast-way" class="nav-link" data-scroll-target="#the-fast-way">The fast way</a></li>
   </ul></li>
-  <li><a href="#check-model-assumptions" id="toc-check-model-assumptions" class="nav-link" data-scroll-target="#check-model-assumptions">Check model assumptions</a>
+  <li><a href="#checking-model-assumptions" id="toc-checking-model-assumptions" class="nav-link" data-scroll-target="#checking-model-assumptions">Checking model assumptions</a>
   <ul>
   <li><a href="#normality" id="toc-normality" class="nav-link" data-scroll-target="#normality">Normality</a></li>
   <li><a href="#homoscedasticity" id="toc-homoscedasticity" class="nav-link" data-scroll-target="#homoscedasticity">Homoscedasticity</a></li>
@@ -661,10 +661,10 @@ window.Quarto = {
 </section>
 <section id="what-is-linear-regression" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-linear-regression">What is linear regression?</h2>
-<p>Linear regression is a statistical method used to model the relationship between a response variable (which is usually numeric) and a number of predictor variables. In the simplest case, it involves one response variable (<span class="math inline">\(y\)</span>) and one predictor variable (<span class="math inline">\(x\)</span>). The goal is to model how changes in <span class="math inline">\(x\)</span> are associated with changes in <span class="math inline">\(y\)</span> by fitting a straight line to the data. This relationship is expressed with <a href="#eq-linearreg" class="quarto-xref">Equation&nbsp;1</a>.</p>
-<p><span id="eq-linearreg"><span class="math display">\[
-y=\beta_0+\beta_1x
-\tag{1}\]</span></span> this equation, <span class="math inline">\(\beta_0\)</span> is the <strong>intercept</strong> and <span class="math inline">\(\beta_1\)</span> is the <strong>slope</strong>.</p>
+<p>Linear regression is a statistical method used to model the relationship between a response variable (which is usually numeric) and a number of predictor variables. In the simplest case, it involves one response variable (<span class="math inline">\(y\)</span>) and one predictor variable (<span class="math inline">\(x\)</span>). The goal is to model how changes in <span class="math inline">\(x\)</span> are associated with changes in <span class="math inline">\(y\)</span> by fitting a straight line to the data. This relationship is expressed with <strong>?@eq-linearreg</strong>.</p>
+<p><span class="math display">\[
+y=\beta_0+\beta_1x+\epsilon
+\]</span> {#eq-linearreg}In this equation, <span class="math inline">\(\beta_0\)</span> is the <strong>intercept</strong> and <span class="math inline">\(\beta_1\)</span> is the <strong>slope</strong>. <span class="math inline">\(\epsilon\)</span> is the model residual (error).</p>
 <p>The <strong>intercept</strong> (<span class="math inline">\(\beta_0\)</span>) represents the predicted value of <span class="math inline">\(y\)</span> when <span class="math inline">\(x\)</span> is equal to zero. It is the point where the regression line crosses the y-axis.</p>
 <p>The <strong>slope</strong> (<span class="math inline">\(\beta_1\)</span>​) represents the change in <span class="math inline">\(y\)</span> associated with a one-unit increase in <span class="math inline">\(x\)</span>. It describes both the direction and the strength of the relationship: if the slope is positive, <span class="math inline">\(y\)</span> increases as <span class="math inline">\(x\)</span> increases; if it is negative, <span class="math inline">\(y\)</span> decreases as <span class="math inline">\(x\)</span> increases.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -764,14 +764,14 @@ sample estimates:
 <h2 class="anchored" data-anchor-id="fitting-a-simple-linear-regression-model">Fitting a simple linear regression model</h2>
 <section id="the-slow-way" class="level3">
 <h3 class="anchored" data-anchor-id="the-slow-way">The slow way</h3>
-<p>Fitting a simple linear regression means using raw data to estimate the intercept and slope coefficients in <a href="#eq-linearreg" class="quarto-xref">Equation&nbsp;1</a>. The most common method used is <strong>ordinary least squares (OLS)</strong>. The idea behind OLS is simple: for each data point, we calculate the residual, which is the difference between the observed value and the predicted value from the linear model. Some points lie above the line and some below it, so instead of adding residuals directly (which could cancel out), we square them. <u>Ordinary least squares then selects the slope and intercept that minimize the sum of these squared residuals</u>. By minimizing the total squared differences between observed and predicted values, OLS finds the line that best represents the overall linear trend in the data.</p>
-<p>Using the OLS approach, the slope (<span class="math inline">\(\beta_1\)</span>) and intercept (<span class="math inline">\(\beta_0\)</span>) of the linear model are estimated using <a href="#eq-slope" class="quarto-xref">Equation&nbsp;2</a> and <a href="#eq-intercept" class="quarto-xref">Equation&nbsp;3</a>, respectively.</p>
+<p>Fitting a simple linear regression means using raw data to estimate the intercept and slope coefficients in <strong>?@eq-linearreg</strong>. The most common method used is <strong>ordinary least squares (OLS)</strong>. The idea behind OLS is simple: for each data point, we calculate the residual, which is the difference between the observed value and the predicted value from the linear model. Some points lie above the line and some below it, so instead of adding residuals directly (which could cancel out), we square them. <u>Ordinary least squares then selects the slope and intercept that minimize the sum of these squared residuals</u>. By minimizing the total squared differences between observed and predicted values, OLS finds the line that best represents the overall linear trend in the data.</p>
+<p>Using the OLS approach, the slope (<span class="math inline">\(\beta_1\)</span>) and intercept (<span class="math inline">\(\beta_0\)</span>) of the linear model are estimated using <a href="#eq-slope" class="quarto-xref">Equation&nbsp;1</a> and <a href="#eq-intercept" class="quarto-xref">Equation&nbsp;2</a>, respectively.</p>
 <p><span id="eq-slope"><span class="math display">\[
 \beta_1=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2}
-\tag{2}\]</span></span></p>
+\tag{1}\]</span></span></p>
 <p><span id="eq-intercept"><span class="math display">\[
 \beta_0=\bar{y}-\beta_1\bar{x}
-\tag{3}\]</span></span></p>
+\tag{2}\]</span></span></p>
 <p>In these equations, <span class="math inline">\(x_i\)</span> and <span class="math inline">\(y_i\)</span> are observations of variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, while <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(\bar{y}\)</span> are the average values of variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -784,8 +784,8 @@ sample estimates:
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li>Use <a href="#eq-slope" class="quarto-xref">Equation&nbsp;2</a> to calculate the slope of the relationship between litter thickness (<code>litter_thickness</code>) and soil microbial biomass (<code>CMB</code>).</li>
-<li>Use <a href="#eq-intercept" class="quarto-xref">Equation&nbsp;3</a> to calculate the intercept of the relationship between litter thickness (<code>litter_thickness</code>) and soil microbial biomass (<code>CMB</code>).</li>
+<li>Use <a href="#eq-slope" class="quarto-xref">Equation&nbsp;1</a> to calculate the slope of the relationship between litter thickness (<code>litter_thickness</code>) and soil microbial biomass (<code>CMB</code>).</li>
+<li>Use <a href="#eq-intercept" class="quarto-xref">Equation&nbsp;2</a> to calculate the intercept of the relationship between litter thickness (<code>litter_thickness</code>) and soil microbial biomass (<code>CMB</code>).</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Solution 2</a></li></ul>
@@ -909,8 +909,8 @@ CMN=17.98\times{litterthickness}+334.94
 </div>
 </section>
 </section>
-<section id="check-model-assumptions" class="level2">
-<h2 class="anchored" data-anchor-id="check-model-assumptions">Check model assumptions</h2>
+<section id="checking-model-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="checking-model-assumptions">Checking model assumptions</h2>
 <section id="normality" class="level3">
 <h3 class="anchored" data-anchor-id="normality">Normality</h3>
 <p>After fitting a linear model, you can check whether the normality assumption is met by examining whether the model residuals are approximately normally distributed. This can be done by (1) using the <code>residuals()</code> function on the <code>model</code> object to extract the model residuals (i.e.&nbsp;the differences between observed values and model predictions), (2) applying a Shapiro-Wilk test to the residuals, and (3) creating a Q-Q plot using model residuals.</p>
@@ -1098,15 +1098,15 @@ W = 0.95874, p-value = 0.1965</code></pre>
 <h2 class="anchored" data-anchor-id="assess-model-fit">Assess model fit</h2>
 <section id="the-slow-way-1" class="level3">
 <h3 class="anchored" data-anchor-id="the-slow-way-1">The slow way</h3>
-<p>The goodness of fit of a linear regression model (i.e., how well the model explains the observed data) can be quantified by the <strong>coefficient of determination</strong> <strong>(R<sup>2</sup>)</strong> (<a href="#eq-R2" class="quarto-xref">Equation&nbsp;4</a>). R<sup>2</sup> measures the proportion of the total variability in the response variable (<span class="math inline">\(SS_{tot}\)</span>) that is explained by the predictors included in the model (<span class="math inline">\(SS_{reg}\)</span>). For example, an R<sup>2</sup> of 0.70 indicates that 70% of the variation in the outcome is accounted for by the linear relationship specified in the model.</p>
+<p>The goodness of fit of a linear regression model (i.e., how well the model explains the observed data) can be quantified by the <strong>coefficient of determination</strong> <strong>(R<sup>2</sup>)</strong> (<a href="#eq-R2" class="quarto-xref">Equation&nbsp;3</a>). R<sup>2</sup> measures the proportion of the total variability in the response variable (<span class="math inline">\(SS_{tot}\)</span>) that is explained by the predictors included in the model (<span class="math inline">\(SS_{reg}\)</span>). For example, an R<sup>2</sup> of 0.70 indicates that 70% of the variation in the outcome is accounted for by the linear relationship specified in the model.</p>
 <p><span id="eq-R2"><span class="math display">\[
 R^2=\frac{SS_{reg}}{SS_{tot}}=\frac{SS_{reg}}{SS_{reg}+SS_{res}}
-\tag{4}\]</span></span></p>
+\tag{3}\]</span></span></p>
 <p>However, R<sup>2</sup> has an important limitation: it never decreases when additional predictors are added, even if those predictors are only weakly or not at all related to the response variable. As a result, it may overstate the improvement in model fit when unnecessary variables are included.</p>
-<p>The adjusted coefficient of determination (adjusted R<sup>2</sup>) addresses this issue by accounting for both the sample size (<span class="math inline">\(n\)</span>) and the number of predictors (<span class="math inline">\(p\)</span>) in the model (<a href="#eq-adjustedR2" class="quarto-xref">Equation&nbsp;5</a>). By incorporating a penalty for model complexity, adjusted R<sup>2</sup> increases only if a newly added predictor improves the model sufficiently. Unlike the unadjusted R<sup>2</sup>, it can decrease when an irrelevant predictor is added, making it a more reliable measure for comparing models with different numbers of predictors.</p>
+<p>The adjusted coefficient of determination (adjusted R<sup>2</sup>) addresses this issue by accounting for both the sample size (<span class="math inline">\(n\)</span>) and the number of predictors (<span class="math inline">\(p\)</span>) in the model (<a href="#eq-adjustedR2" class="quarto-xref">Equation&nbsp;4</a>). By incorporating a penalty for model complexity, adjusted R<sup>2</sup> increases only if a newly added predictor improves the model sufficiently. Unlike the unadjusted R<sup>2</sup>, it can decrease when an irrelevant predictor is added, making it a more reliable measure for comparing models with different numbers of predictors.</p>
 <p><span id="eq-adjustedR2"><span class="math display">\[
 adjusted \space R^2=1-\frac{(1-R^2)(n-1)}{n-p-1}
-\tag{5}\]</span></span></p>
+\tag{4}\]</span></span></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1120,8 +1120,8 @@ adjusted \space R^2=1-\frac{(1-R^2)(n-1)}{n-p-1}
 <ol type="1">
 <li>Calculate the regression sum of squares (<span class="math inline">\(SS_{reg}\)</span>) for the linear model. Remember that the regression sum of squares is obtained by summing the squared differences between model predictions (<code>CMB_fitted</code>) and the overall mean calculated from the data.</li>
 <li>Calculate the residual sum of squares (<span class="math inline">\(SS_{res}\)</span>) for the linear model. Remember that the residual sum of squares is obtained by summing the squared differences between observations (<code>CMB</code>) and model predictions (<code>CMB_fitted</code>).</li>
-<li>Use <a href="#eq-R2" class="quarto-xref">Equation&nbsp;4</a> to calculate the coefficient of determination (<span class="math inline">\(R^2\)</span>).</li>
-<li>Use <a href="#eq-adjustedR2" class="quarto-xref">Equation&nbsp;5</a> to calculate the adjusted coefficient of determination (<span class="math inline">\(adjusted \space R^2\)</span>).</li>
+<li>Use <a href="#eq-R2" class="quarto-xref">Equation&nbsp;3</a> to calculate the coefficient of determination (<span class="math inline">\(R^2\)</span>).</li>
+<li>Use <a href="#eq-adjustedR2" class="quarto-xref">Equation&nbsp;4</a> to calculate the adjusted coefficient of determination (<span class="math inline">\(adjusted \space R^2\)</span>).</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false" href="">Solution 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-4" role="tab" aria-controls="tabset-7-4" aria-selected="false" href="">Solution 4</a></li></ul>
@@ -1184,15 +1184,15 @@ CMN=17.98\times{litterthickness}+334.94
 CMN=17.98\times6+334.94=442.82
 \]</span></p>
 <p>Thus, the model predicts a soil microbial biomass of 442.82 µg/g dry soil for a litter thickness of 6 cm.</p>
-<p>While calculating the predicted value is straightforward, it is equally important to quantify the uncertainty associated with this estimate. In linear regression, this uncertainty can be described using two different types of intervals: a 95% confidence interval (<a href="#eq-CI" class="quarto-xref">Equation&nbsp;6</a>) and a 95% prediction interval (<a href="#eq-PI" class="quarto-xref">Equation&nbsp;7</a>).</p>
-<p>A <strong>95%</strong> <strong>confidence interval</strong> provides a range of plausible values for the <u>mean</u> soil microbial biomass at a litter thickness of 6 cm. In <a href="#eq-CI" class="quarto-xref">Equation&nbsp;6</a> and <a href="#eq-PI" class="quarto-xref">Equation&nbsp;7</a>, <span class="math inline">\(\hat{y}\)</span> is the predicted soil microbial biomass value, <span class="math inline">\(t\)</span> is a quantile value from a Student’s <em>t</em> distribution with <span class="math inline">\(n-2\)</span> degrees of freedom, <span class="math inline">\(MS_{res}\)</span> is the residual mean squares, <span class="math inline">\(n\)</span> is the total number of observations, <span class="math inline">\(x\)</span> is the litter thickness value for which we calculated a prediction (in this case: 6 cm), and <span class="math inline">\(\bar{x}\)</span> is the average litter thickness measured across all observations.</p>
+<p>While calculating the predicted value is straightforward, it is equally important to quantify the uncertainty associated with this estimate. In linear regression, this uncertainty can be described using two different types of intervals: a 95% confidence interval (<a href="#eq-CI" class="quarto-xref">Equation&nbsp;5</a>) and a 95% prediction interval (<a href="#eq-PI" class="quarto-xref">Equation&nbsp;6</a>).</p>
+<p>A <strong>95%</strong> <strong>confidence interval</strong> provides a range of plausible values for the <u>mean</u> soil microbial biomass at a litter thickness of 6 cm. In <a href="#eq-CI" class="quarto-xref">Equation&nbsp;5</a> and <a href="#eq-PI" class="quarto-xref">Equation&nbsp;6</a>, <span class="math inline">\(\hat{y}\)</span> is the predicted soil microbial biomass value, <span class="math inline">\(t\)</span> is a quantile value from a Student’s <em>t</em> distribution with <span class="math inline">\(n-2\)</span> degrees of freedom, <span class="math inline">\(MS_{res}\)</span> is the residual mean squares, <span class="math inline">\(n\)</span> is the total number of observations, <span class="math inline">\(x\)</span> is the litter thickness value for which we calculated a prediction (in this case: 6 cm), and <span class="math inline">\(\bar{x}\)</span> is the average litter thickness measured across all observations.</p>
 <p><span id="eq-CI"><span class="math display">\[
 CI=\hat{y} \pm t_{1-\frac{\alpha}{2},n-2}\sqrt{MS_{res}(\frac{1}{n}+\frac{(x-\bar{x})^2}{\sum_{i=1}^{n}(x_i-\bar{x})^2})}
-\tag{6}\]</span></span></p>
+\tag{5}\]</span></span></p>
 <p>A <strong>95%</strong> <strong>prediction interval</strong>, in contrast, provides a range of plausible values for a <u>single new observation</u> at 6 cm litter thickness. The prediction interval is always wider than the confidence interval.</p>
 <p><span id="eq-PI"><span class="math display">\[
 PI=\hat{y} \pm t_{1-\frac{\alpha}{2},n-2}\sqrt{MS_{res}(1+\frac{1}{n}+\frac{(x-\bar{x})^2}{\sum_{i=1}^{n}(x_i-\bar{x})^2})}
-\tag{7}\]</span></span></p>
+\tag{6}\]</span></span></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1204,8 +1204,8 @@ PI=\hat{y} \pm t_{1-\frac{\alpha}{2},n-2}\sqrt{MS_{res}(1+\frac{1}{n}+\frac{(x-\
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li>Use <a href="#eq-CI" class="quarto-xref">Equation&nbsp;6</a> to calculate the lower and upper boundaries of the 95% confidence interval around the soil microbial biomass value predicted by the linear model for a litter thickness of 6 cm.</li>
-<li>Use <a href="#eq-PI" class="quarto-xref">Equation&nbsp;7</a> to calculate the lower and upper boundaries of the 95% prediction interval around the soil microbial biomass value predicted by the linear model for a litter thickness of 6 cm.</li>
+<li>Use <a href="#eq-CI" class="quarto-xref">Equation&nbsp;5</a> to calculate the lower and upper boundaries of the 95% confidence interval around the soil microbial biomass value predicted by the linear model for a litter thickness of 6 cm.</li>
+<li>Use <a href="#eq-PI" class="quarto-xref">Equation&nbsp;6</a> to calculate the lower and upper boundaries of the 95% prediction interval around the soil microbial biomass value predicted by the linear model for a litter thickness of 6 cm.</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Solution 2</a></li></ul>
@@ -1980,8 +1980,8 @@ Figure&nbsp;3: Relationship between litter thickness and soil microbial biomass.
 <span id="cb32-69"><a href="#cb32-69" aria-hidden="true" tabindex="-1"></a>Linear regression is a statistical method used to model the relationship between a response variable (which is usually numeric) and a number of predictor variables. In the simplest case, it involves one response variable ($y$) and one predictor variable ($x$). The goal is to model how changes in $x$ are associated with changes in $y$ by fitting a straight line to the data. This relationship is expressed with @eq-linearreg.</span>
 <span id="cb32-70"><a href="#cb32-70" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-71"><a href="#cb32-71" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb32-72"><a href="#cb32-72" aria-hidden="true" tabindex="-1"></a>y=\beta_0+\beta_1x</span>
-<span id="cb32-73"><a href="#cb32-73" aria-hidden="true" tabindex="-1"></a>$$ {#eq-linearreg} this equation, $\beta_0$ is the **intercept** and $\beta_1$ is the **slope**.</span>
+<span id="cb32-72"><a href="#cb32-72" aria-hidden="true" tabindex="-1"></a>y=\beta_0+\beta_1x+\epsilon</span>
+<span id="cb32-73"><a href="#cb32-73" aria-hidden="true" tabindex="-1"></a>$$ {#eq-linearreg}In this equation, $\beta_0$ is the **intercept** and $\beta_1$ is the **slope**. $\epsilon$ is the model residual (error).</span>
 <span id="cb32-74"><a href="#cb32-74" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-75"><a href="#cb32-75" aria-hidden="true" tabindex="-1"></a>The **intercept** ($\beta_0$) represents the predicted value of $y$ when $x$ is equal to zero. It is the point where the regression line crosses the y-axis.</span>
 <span id="cb32-76"><a href="#cb32-76" aria-hidden="true" tabindex="-1"></a></span>
@@ -2168,7 +2168,7 @@ Figure&nbsp;3: Relationship between litter thickness and soil microbial biomass.
 <span id="cb32-271"><a href="#cb32-271" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb32-272"><a href="#cb32-272" aria-hidden="true" tabindex="-1"></a>::::</span>
 <span id="cb32-273"><a href="#cb32-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-274"><a href="#cb32-274" aria-hidden="true" tabindex="-1"></a><span class="fu">## Check model assumptions</span></span>
+<span id="cb32-274"><a href="#cb32-274" aria-hidden="true" tabindex="-1"></a><span class="fu">## Checking model assumptions</span></span>
 <span id="cb32-275"><a href="#cb32-275" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-276"><a href="#cb32-276" aria-hidden="true" tabindex="-1"></a><span class="fu">### Normality</span></span>
 <span id="cb32-277"><a href="#cb32-277" aria-hidden="true" tabindex="-1"></a></span>

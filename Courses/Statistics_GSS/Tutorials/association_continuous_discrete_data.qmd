@@ -263,6 +263,8 @@ cov_litter_SOM <- cov(data$litter_thickness,
                       data$SOM)
 ```
 
+The covariance between litter thickness and soil organic matter content is equal to `{r} round(cov_litter_SOM, 2)`.
+
 ## Solution 2
 
 ```{r}
@@ -275,6 +277,8 @@ cov_mowing_CMB <- cov(data$mowing,
                       data$CMB)
 ```
 
+The covariance between mowing intensity and soil microbial biomass is equal to `{r} round(cov_mowing_CMB, 2)`.
+
 ## Solution 3
 
 ```{r}
@@ -286,6 +290,8 @@ cov_mowing_CMB <- cov(data$mowing,
 cov_practices_diversity <- cov(data$n_practices,
                                data$shannon_PIM)
 ```
+
+The covariance between the number of agroecological practices and plant diversity is equal to `{r} round(cov_practices_diversity, 2)`.
 :::
 ::::
 
