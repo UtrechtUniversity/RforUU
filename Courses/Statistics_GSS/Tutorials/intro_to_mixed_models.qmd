@@ -13,4 +13,456 @@ editor_options:
 image: /Images/Rlogo.png
 ---
 
-Add text
+## About this tutorial
+
+This tutorial will provide you with a hands-on introduction to linear mixed-effects models using real ecological data from a controlled experiment. You will learn how to fit a linear mixed-effects model with a random intercept using R. You will also learn how to extend the model to include a random slope and understand when this is appropriate. In addition, you will learn how to interpret fixed effects, random effects, variance components, and model summaries. We will also build on previous tutorials by comparing different models and checking model assumptions.
+
+Let's get started!
+
+## Data used in this tutorial
+
+Exceptionally, we will use a different dataset for this tutorial. The data come from a controlled ecological experiment investigating how the order of arrival of three plant functional groups (forbs, grasses, and legumes) affects the vertical distribution of roots in soil.
+
+Our main research question was:
+
+**Does plant functional group order of arrival affect the vertical distribution of roots in grasslands?**
+
+From an ecological restoration perspective, this question is particularly relevant because manipulating the order of arrival of plant species or functional groups during restoration may influence how plant communities develop belowground. If certain arrival sequences promote deeper rooting, these communities may gain access to water and nutrients from deeper soil layers. This could enhance their resistance to drought and other extreme weather events, ultimately increasing long-term resilience.
+
+To address this question, we conducted a greenhouse experiment in which the order of arrival of forbs, grasses, and legumes was manipulated in rhizoboxes. Rhizoboxes are specialized pots filled with soil and equipped with a transparent front window, allowing researchers to observe and monitor root growth over time.
+
+We tested five arrival scenarios (referred to as `Treatment` in the dataset):
+
+-   **Sync1**: all plant functional groups sown simultaneously at the first sowing event
+
+-   **F-first**: forbs sown 10 days before grasses and legumes
+
+-   **G-first**: grasses sown 10 days before forbs and legumes
+
+-   **L-first**: legumes sown 10 days before forbs and grasses
+
+-   **Sync2**: all plant functional groups sown simultaneously at the second sowing event
+
+After establishing the experiment, we photographed the roots visible along the transparent window of each rhizobox three times per week. In total, images were collected at 19 time points. From these images, we quantified the mean rooting depth of each plant community (`mrd`).
+
+The dataset used in this tutorial contains data from 30 rhizoboxes, with 550 observations and four variables:
+
+-   `mrd`: mean rooting depth of the plant community (cm)
+
+-   `Rz`: identification number of the rhizobox
+
+-   `Treatment`: plant functional group arrival scenario
+
+-   `dafs`: number of days after first sowing (i.e., time)
+
+More information about this experiment can be found in the following article: Alonso-Crespo, I. M., Weidlich, E. W. A., Temperton, V. M., & Delory, B. M. (2023). [Assembly history modulates vertical root distribution in a grassland experiment](https://nsojournals.onlinelibrary.wiley.com/doi/full/10.1111/oik.08886). *Oikos*, *2023*(1), e08886.
+
+The fact that we conducted repeated measurements over time using the same rhizoboxes makes the dataset particularly suitable for introducing mixed-effects models.
+
+## Install R packages
+
+In this tutorial, we will need to use functions in the *lmerTest*, *ggeffects*, and *viridis* packages. Make sure to install these packages before starting the tutorial.
+
+```{r}
+#| eval: false 
+#| echo: true
+#| message: false
+#| warning: false
+
+install.packages("lmerTest")
+install.packages("ggeffects")
+install.packages("viridis")
+```
+
+## Load R packages
+
+To work on this tutorial, you will need to load the *tidyverse*, *lmerTest*, and *ggeffects* packages.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false  
+
+library(tidyverse)
+library(lmerTest)
+library(ggeffects)
+library(viridis)
+```
+
+## Importing data
+
+Start by importing the data used in this course (see previous tutorials). You will need to download the data file (data_tutorial10.csv) from Brightspace.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false  
+
+data <- read_csv("data_tutorial10.csv")  
+```
+
+## Visualizing data
+
+As usual, let's first make a plot to visualize the data.
+
+In this tutorial, we are interested in modeling the relationship between mean rooting depth (`mrd`, response variable) and time (`dafs`). To be able to answer our research question, we also need to test if this relationship changes with plant order of arrival (`Treatment`).
+
+::: callout-tip
+## Exercise 1
+
+Create a scatter plot showing the relationship between mean rooting depth (`mrd`, y-axis) and time (`dafs`, x-axis) separately for each order of arrival scenario (`Treatment`). Because repeated measurements were collected for each rhizobox (`Rz`), we can specify this information in the aesthetics (`aes()`) using `group=Rz`. This will allow us to easily add a line connecting the different observations from the same rhizobox using `geom_line()`.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false  
+
+ggplot(data, aes(x = dafs,
+                 y = mrd,
+                 group = Rz))+
+    geom_line()+
+    geom_point(shape=21,
+               fill = "#FFCD00",
+               colour = "black")+
+    facet_wrap(~Treatment)+
+    xlab("Days after sowing")+
+    ylab("Mean rooting depth (cm)")+
+    theme_bw()
+```
+:::
+
+## Fitting a simple linear regression model
+
+Let's start with what we already know: fitting a simple linear regression model. The idea here is to compare the results of this model with those of the linear mixed-effects models that we will fit later in this tutorial and see how they differ from each other. Since the measurements included in our dataset are not independent (because we measured the average rooting depth in the same rhizoboxes multiple times), we know from the outset that a simple linear regression model is [**not a good choice**]{.underline} in this case. But let's do it anyway.
+
+:::: callout-tip
+## Exercise 2
+
+1.  Make sure that the `Treatment` variable is considered as a factor (use `as.factor()`).
+2.  Use `lm()` to fit a simple linear regression model using mean rooting depth (`mrd`) as the response variable, and time (`dafs`) and plant order of arrival (`Treatment`) as predictor variables. Make sure to include the two-way interaction between the explanatory variables in your model. Store the results in an object called `model1`.
+3.  Run `summary()` on the `model1` object.
+4.  Run `anova()` on the `model1` object.
+5.  What can you conclude from these R outputs?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+data$Treatment <- as.factor(data$Treatment)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+model1 <- lm(mrd ~ dafs*Treatment,
+             data)
+```
+
+## Solution 3
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+summary(model1)
+```
+
+## Solution 4
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+anova(model1)
+```
+
+## Solution 5
+
+The fitted linear model is highly significant (p \< 0.001) and explains 85.2% of the variation in mean rooting depth. We found a highly significant interaction between time (`dafs`) and plant order of arrival (`Treatment`), which suggests that the slope of the linear relationship between mean rooting depth and time depends on the plant order of arrival scenario. From the summary output, we can indeed see that the slope of the relationship between mean rooting depth and time becomes less steep when grasses were sown first (G-first).
+
+The main issue with this model is that it incorrectly assumes that all observations are independent. Because repeated measurements from the same rhizobox are correlated, this assumption inflates the number of degrees of freedom available for the analysis.
+:::
+::::
+
+## Fitting a linear mixed-effect model
+
+### Model with random intercepts only
+
+#### Fitting the model
+
+To take into account the fact that mean rooting depth values coming from the same rhizobox are correlated and not independent from each other, we should consider fitting a linear mixed-effect model to the data. Such a model contains one or more fixed effects (in our case: `dafs`, `Treatment`, and their interaction), but also include one or more random effects (in this case: `Rz`).
+
+In R, you can fit linear mixed-effect models with the `lmer()` function in the *lmerTest* R package. A random intercept model can be fitted using the following syntax:
+
+`lmer(mrd ~ dafs*Treatment + (1|Rz), data)`
+
+In this model, mean rooting depth (`mrd`) is modeled as a function of time since first sowing (`dafs`), `Treatment`, and their interaction, while accounting for the repeated measurements within rhizoboxes (`Rz`).
+
+The fixed-effects part of the model is given by `dafs * Treatment`. These fixed effects describe the average relationship between rooting depth and time across all rhizoboxes. The intercept represents the expected mean rooting depth at day zero for the reference treatment. The reference treatment is usually the one coming first alphabetically (in our case: F-first). The coefficient for `dafs` represents the average change in rooting depth per day in the reference treatment. The treatment coefficients describe how baseline rooting depth differs among arrival scenarios, and the interaction terms indicate whether the rate of change in rooting depth over time differs between plant order of arrival scenarios.
+
+The random-effects term `(1 | Rz)` specifies a random intercept for each rhizobox. This means that each rhizobox is allowed to have its own baseline level of rooting depth, deviating from the overall intercept. These deviations are assumed to be normally distributed with mean zero and an estimated variance.
+
+This random intercept model therefore assumes that rhizoboxes may differ in their overall rooting depth but that they share the same time trend and the same treatment effects. In other words, all rhizoboxes are assumed to follow parallel growth trajectories over time, with differences only in their starting points.
+
+Conceptually, the fixed effects describe how rooting depth changes over time and whether this change differs among plant order of arrival scenarios, while the random effect captures unexplained heterogeneity among rhizoboxes.
+
+:::: callout-tip
+## Exercise 3
+
+1.  Make sure that the `Rz` variable is considered as a factor (use `as.factor()`).
+2.  Use `lmerTest::lmer()` to fit a mixed-effects model (random intercepts) using mean rooting depth (`mrd`) as the response variable, and time (`dafs`), plant order of arrival (`Treatment`), and their interaction as fixed effects. Use the rhizobox ID number (`Rz`) as a random effect. Store the results in an object called `model2`.
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+data$Rz <- as.factor(data$Rz)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+model2 <- lmerTest::lmer(mrd ~ dafs*Treatment + (1|Rz),
+                         data)
+```
+:::
+::::
+
+#### Understanding model outputs
+
+After fitting a linear mixed-effects model, several functions can be used to explore and interpret the results. The most commonly used are `summary()`, `anova()`, and `coef()`.
+
+The `summary()` function provides a comprehensive overview of the fitted model. For the fixed effects, it reports the estimated model parameters, their standard errors, and associated test statistics. In our example, it shows how mean rooting depth changes over time, how treatments differ from the reference level, and whether the effect of time varies among treatments when interactions are included. In addition to the fixed effects, the summary output includes the estimated variances and standard deviations of the random effects. These values describe how much variation exists among groups, such as differences in baseline rooting depth among rhizoboxes. The output also reports the residual variance, representing unexplained variation within groups. The function also provides a correlation matrix of fixed effects, but this is not something you need to worry about today.
+
+The `anova()` function is used to evaluate the statistical significance of predictors in the model. It produces an ANOVA table that summarizes how much variation in the response variable is explained by each fixed effect. For each term in the model, the output typically includes a test statistic and a corresponding p-value.
+
+The `coef()` function provides the estimated coefficients for each grouping level in the random-effects structure. While the fixed-effects table in the summary describes the average relationship across all groups, `coef()` combines the fixed effects with the estimated random effects to produce group-specific coefficients. For example, it can show the estimated intercept for each rhizobox after accounting for its random deviation from the overall mean. This output is useful for examining how individual groups differ from the overall trend and for understanding the variability captured by the random-effects component of the model.
+
+:::: callout-tip
+## Exercise 4
+
+1.  Run `summary()` on the fitted linear mixed-effects model (`model2`).
+2.  Run `anova()` on the fitted linear mixed-effects model (`model2`).
+3.  Run `coef()` on the fitted linear mixed-effects model (`model2`).
+4.  Look carefully at the R outputs. What can you learn about the effect of plant order of arrival on the relationship between mean rooting depth and time? Within each plant order of arrival scenario, how different are model coefficients for each rhizobox?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+summary(model2)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+anova(model2)
+```
+
+## Solution 3
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+coef(model2)
+```
+
+## Solution 4
+
+The ANOVA table shows a highly significant interaction between time (`dafs`) and plant order of arrival (`Treatment`). This indicates that the slope of the relationship between mean rooting depth (`mrd`) and time depends on the plant order of arrival scenario.
+
+This pattern is reflected in the coefficients shown in the summary table. In the reference treatment (F-first, which is used as the reference level because it comes first alphabetically), the slope of the relationship between mean rooting depth and time is negative (−0.259). This means that, in this treatment, the mean rooting depth decreases over time at a rate of 0.259 cm per day. In the scenario where grasses were sown first (G-first), the slope increases by 0.05 relative to the F-first treatment. As a result, the slope in the G-first treatment becomes −0.259 + 0.05 = −0.209. In other words, the decline in mean rooting depth over time is less pronounced when grasses are sown first. The summary table also indicates that, on average, plant communities in which legumes were sown first tend to have deeper roots than communities in which forbs were sown first.
+
+The random-effects section of the summary output shows that the variance in mean rooting depth attributable to differences among rhizoboxes is 0.613.
+
+Finally, when examining the model coefficients for individual rhizoboxes, we see that all rhizoboxes share the same fixed-effect coefficients. The only difference among rhizoboxes is the value of their intercepts, which vary due to the random intercept included in the model. This reflects the model assumption that rhizoboxes may differ in their baseline rooting depth but follow the same overall relationship between rooting depth, time, and plant order of arrival.
+:::
+::::
+
+#### Plotting model results
+
+After fitting a linear mixed-effects model, there are two main ways to visualize the model results. The first approach is to display predictions separately for each rhizobox. Because the model includes rhizobox identity as a random intercept, each rhizobox is represented by its own regression line. These lines all share the same slope but differ in their intercepts, reflecting differences in baseline rooting depth among rhizoboxes.
+
+The second approach is to visualize only the fixed effects of the model. In this case, the plot shows the average predicted relationships between the predictors (`dafs` and `Treatment`) and the response variable (`mrd`). This results in a smaller number of lines that represent the mean trajectories for each treatment. This type of visualization is simpler and is typically preferred when presenting results in a scientific paper, because it focuses on the overall patterns rather than the variability among individual experimental units.
+
+In the following steps, we will use both approaches to see how they represent different aspects of the fitted model.
+
+Let’s start with the first approach, where we visualize the model predictions for each rhizobox separately. The first step is to obtain predicted values from the fitted model for specific values of the predictor variables. As in previous tutorials, this can be done using the `predict()` function. The predicted values represent the expected mean rooting depth based on the fitted model. Once the predictions have been obtained, they can be plotted using *ggplot2*. Because we want to display one regression line per rhizobox, the plot will include separate lines for each rhizobox in the dataset. For the sake of clarity, we will not include confidence intervals in this plot, as showing them for all rhizoboxes would make the figure difficult to read. Instead, the goal is simply to illustrate how the model represents each rhizobox with its own regression line.
+
+:::: callout-tip
+## Exercise 5
+
+1.  Use `predict()` to calculate mean rooting depth values predicted by the model (`model2`) and store these values in a new column (`pred`) in the `data` object.
+2.  Create a scatter plot showing model results separately for each rhizobox. Keep the raw data (individual data points) in the background. Create a separate panel (or facet) for each plant order of arrival scenario.
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+data$pred <- predict(model2)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+ggplot(data, aes(x = dafs,
+                 y = mrd,
+                 group = Rz))+ #Group data per rhizobox
+    geom_point(shape=16,
+               colour = "#FFCD00",
+               alpha = 0.5)+ #Make points more transparent
+    geom_line(aes(y = pred))+ #Use pred column to plot predictions
+    facet_wrap(~Treatment)+
+    xlab("Days after sowing")+
+    ylab("Mean rooting depth (cm)")+
+    theme_bw()
+```
+:::
+::::
+
+Let us now use the second approach and visualize only the fixed effects of the model. In this case, we will obtain model predictions using the `ggpredict()` function from the *ggeffects* package. This function is convenient because it directly generates predicted values that can easily be plotted with *ggplot2*.
+
+When using `ggpredict()`, two main arguments are required:
+
+-   `model`: specifies the fitted model object (in our case, `model2`)
+
+-   `terms`: indicates the predictor variables for which predictions should be calculated.
+
+To obtain model predictions, we can use the following syntax:
+
+`ggpredict(model2, terms = c("dafs [1:44]", "Treatment"))`
+
+In this code, `"dafs [1:44]"` tells the function to calculate predictions across a sequence of values for `dafs`, ranging from 1 to 44 days after the first sowing event. Predictions are calculated for each value in this range and for each level of `Treatment`.
+
+`ggpredict()` will return a data frame with the following columns:
+
+-   `x`: the values of the first term in terms (`dafs`)
+
+-   `predicted`: the predicted values of the response (`mrd`)
+
+-   `std.error`: the standard error of the predictions
+
+-   `conf.low`: the lower bound of the 95% confidence interval for the predicted values
+
+-   `conf.high`: the upper bound of the 95% confidence interval for the predicted values
+
+-   `group`: the grouping level from the second term in `terms` (`Treatment`)
+
+-   `facet`: the grouping level from the third term in `terms` (not applicable in our case)
+
+:::: callout-tip
+## Exercise 6
+
+1.  Use `ggpredict()` to calculate mean rooting depth values predicted by the model (`model2`) and store these values in a new object (`pred_fixed`).
+2.  Rename columns in `pred_fixed` to keep the same variable names as in `data`. We can use the `rename()` function in the *dplyr* package to do this. The syntax is `rename(new_name = old_name)`.
+3.  Create a scatter plot showing the model predictions. This time, we will not display the raw data points in the background in order to keep the figure easier to read. Plot all regression lines in the same graph and assign a different colour to each of them (one colour per plant order of arrival scenario). A convenient and colour-blind-friendly option is to use the viridis colour palette from the *viridis* package. This can be done by adding the layers `scale_colour_viridis(discrete = TRUE)` and `scale_fill_viridis(discrete = TRUE)` to the ggplot. The first function assigns a different colour to each regression line, while the second assigns matching colours to the shaded areas representing the 95% confidence intervals. The argument `discrete = TRUE` is used because the `Treatment` variable is categorical rather than continuous. Finally, do not forget to add the 95% confidence intervals around each regression line using `geom_ribbon()`.
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+pred_fixed <- ggpredict(model2, terms = c("dafs [1:44]", "Treatment"))
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+pred_fixed <- dplyr::rename(pred_fixed,
+                            dafs = x,
+                            mrd = predicted,
+                            Treatment = group)
+```
+
+## Solution 3
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+#| fig-height: 4
+#| fig-width: 5.5
+
+ggplot(data, 
+       aes(x = dafs,
+           y = mrd,
+           colour = Treatment, #Ask for one colour per treatment (for the regression line)
+           fill = Treatment))+ #Ask for one filling colour per treatment (for the confidence interval)
+    geom_ribbon(data = pred_fixed, #Add shaded area for the 95% confidence interval
+                aes(ymin = conf.low, 
+                    ymax = conf.high),
+                alpha=0.2, #alpha is an argument used to adjust the transparency level of a colour. Lower values means more transparent. It has nothing to do with the significance level of a test.
+                colour = NA)+ #Do not show borders of shaded areas
+    geom_line(data = pred_fixed,
+              aes(x = dafs,
+                  y = mrd))+
+    scale_colour_viridis(discrete = TRUE)+
+    scale_fill_viridis(discrete = TRUE)+
+    xlab("Days after sowing")+
+    ylab("Mean rooting depth (cm)")+
+    theme_bw()
+```
+:::
+::::
+
+### Model with random slopes and intercepts

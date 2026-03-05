@@ -246,7 +246,7 @@ anova(model)
 From the summary and anova tables, we get the information that the fitted linear model has the following equation:
 
 $$
-CMN=17.98\times{litterthickness}+334.94
+CMB=17.98\times{litterthickness}+334.94
 $$
 
 Both regression coefficients (slope and intercept) are significantly different from zero (p \< 0.001). The model explains 39.1% (adjusted R^2^) of the variation in soil microbial biomass (`CMB`) and is statistically significant (F(1,34) = 23.48, p \< 0.001).

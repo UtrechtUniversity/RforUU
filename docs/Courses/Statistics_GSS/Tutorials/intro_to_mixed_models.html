@@ -511,8 +511,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#about-this-tutorial" id="toc-about-this-tutorial" class="nav-link active" data-scroll-target="#about-this-tutorial">About this tutorial</a></li>
+  <li><a href="#data-used-in-this-tutorial" id="toc-data-used-in-this-tutorial" class="nav-link" data-scroll-target="#data-used-in-this-tutorial">Data used in this tutorial</a></li>
+  <li><a href="#install-r-packages" id="toc-install-r-packages" class="nav-link" data-scroll-target="#install-r-packages">Install R packages</a></li>
+  <li><a href="#load-r-packages" id="toc-load-r-packages" class="nav-link" data-scroll-target="#load-r-packages">Load R packages</a></li>
+  <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data">Importing data</a></li>
+  <li><a href="#visualizing-data" id="toc-visualizing-data" class="nav-link" data-scroll-target="#visualizing-data">Visualizing data</a></li>
+  <li><a href="#fitting-a-simple-linear-regression-model" id="toc-fitting-a-simple-linear-regression-model" class="nav-link" data-scroll-target="#fitting-a-simple-linear-regression-model">Fitting a simple linear regression model</a></li>
+  <li><a href="#fitting-a-linear-mixed-effect-model" id="toc-fitting-a-linear-mixed-effect-model" class="nav-link" data-scroll-target="#fitting-a-linear-mixed-effect-model">Fitting a linear mixed-effect model</a>
+  <ul>
+  <li><a href="#model-with-random-intercepts-only" id="toc-model-with-random-intercepts-only" class="nav-link" data-scroll-target="#model-with-random-intercepts-only">Model with random intercepts only</a>
+  <ul>
+  <li><a href="#fitting-the-model" id="toc-fitting-the-model" class="nav-link" data-scroll-target="#fitting-the-model">Fitting the model</a></li>
+  <li><a href="#understanding-model-outputs" id="toc-understanding-model-outputs" class="nav-link" data-scroll-target="#understanding-model-outputs">Understanding model outputs</a></li>
+  <li><a href="#plotting-model-results" id="toc-plotting-model-results" class="nav-link" data-scroll-target="#plotting-model-results">Plotting model results</a></li>
+  </ul></li>
+  <li><a href="#model-with-random-slopes-and-intercepts" id="toc-model-with-random-slopes-and-intercepts" class="nav-link" data-scroll-target="#model-with-random-slopes-and-intercepts">Model with random slopes and intercepts</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -520,7 +542,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/index.html">Statistics GSS</a></li><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/Tutorials/index.html">Tutorials</a></li><li class="breadcrumb-item"><a href="../../../Courses/Statistics_GSS/Tutorials/intro_to_mixed_models.html">10. Introduction to linear mixed-effect models</a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Tutorial 10: Introduction to linear mixed-effect models</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Tutorial 10: Introduction to linear mixed-effect models</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -550,11 +572,646 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Add text</p>
+<section id="about-this-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="about-this-tutorial">About this tutorial</h2>
+<p>This tutorial will provide you with a hands-on introduction to linear mixed-effects models using real ecological data from a controlled experiment. You will learn how to fit a linear mixed-effects model with a random intercept using R. You will also learn how to extend the model to include a random slope and understand when this is appropriate. In addition, you will learn how to interpret fixed effects, random effects, variance components, and model summaries. We will also build on previous tutorials by comparing different models and checking model assumptions.</p>
+<p>Let’s get started!</p>
+</section>
+<section id="data-used-in-this-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="data-used-in-this-tutorial">Data used in this tutorial</h2>
+<p>Exceptionally, we will use a different dataset for this tutorial. The data come from a controlled ecological experiment investigating how the order of arrival of three plant functional groups (forbs, grasses, and legumes) affects the vertical distribution of roots in soil.</p>
+<p>Our main research question was:</p>
+<p><strong>Does plant functional group order of arrival affect the vertical distribution of roots in grasslands?</strong></p>
+<p>From an ecological restoration perspective, this question is particularly relevant because manipulating the order of arrival of plant species or functional groups during restoration may influence how plant communities develop belowground. If certain arrival sequences promote deeper rooting, these communities may gain access to water and nutrients from deeper soil layers. This could enhance their resistance to drought and other extreme weather events, ultimately increasing long-term resilience.</p>
+<p>To address this question, we conducted a greenhouse experiment in which the order of arrival of forbs, grasses, and legumes was manipulated in rhizoboxes. Rhizoboxes are specialized pots filled with soil and equipped with a transparent front window, allowing researchers to observe and monitor root growth over time.</p>
+<p>We tested five arrival scenarios (referred to as <code>Treatment</code> in the dataset):</p>
+<ul>
+<li><p><strong>Sync1</strong>: all plant functional groups sown simultaneously at the first sowing event</p></li>
+<li><p><strong>F-first</strong>: forbs sown 10 days before grasses and legumes</p></li>
+<li><p><strong>G-first</strong>: grasses sown 10 days before forbs and legumes</p></li>
+<li><p><strong>L-first</strong>: legumes sown 10 days before forbs and grasses</p></li>
+<li><p><strong>Sync2</strong>: all plant functional groups sown simultaneously at the second sowing event</p></li>
+</ul>
+<p>After establishing the experiment, we photographed the roots visible along the transparent window of each rhizobox three times per week. In total, images were collected at 19 time points. From these images, we quantified the mean rooting depth of each plant community (<code>mrd</code>).</p>
+<p>The dataset used in this tutorial contains data from 30 rhizoboxes, with 550 observations and four variables:</p>
+<ul>
+<li><p><code>mrd</code>: mean rooting depth of the plant community (cm)</p></li>
+<li><p><code>Rz</code>: identification number of the rhizobox</p></li>
+<li><p><code>Treatment</code>: plant functional group arrival scenario</p></li>
+<li><p><code>dafs</code>: number of days after first sowing (i.e., time)</p></li>
+</ul>
+<p>More information about this experiment can be found in the following article: Alonso-Crespo, I. M., Weidlich, E. W. A., Temperton, V. M., &amp; Delory, B. M. (2023). <a href="https://nsojournals.onlinelibrary.wiley.com/doi/full/10.1111/oik.08886">Assembly history modulates vertical root distribution in a grassland experiment</a>. <em>Oikos</em>, <em>2023</em>(1), e08886.</p>
+<p>The fact that we conducted repeated measurements over time using the same rhizoboxes makes the dataset particularly suitable for introducing mixed-effects models.</p>
+</section>
+<section id="install-r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="install-r-packages">Install R packages</h2>
+<p>In this tutorial, we will need to use functions in the <em>lmerTest</em>, <em>ggeffects</em>, and <em>viridis</em> packages. Make sure to install these packages before starting the tutorial.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"lmerTest"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggeffects"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"viridis"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="load-r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="load-r-packages">Load R packages</h2>
+<p>To work on this tutorial, you will need to load the <em>tidyverse</em>, <em>lmerTest</em>, and <em>ggeffects</em> packages.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="importing-data" class="level2">
+<h2 class="anchored" data-anchor-id="importing-data">Importing data</h2>
+<p>Start by importing the data used in this course (see previous tutorials). You will need to download the data file (data_tutorial10.csv) from Brightspace.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data_tutorial10.csv"</span>)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="visualizing-data" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-data">Visualizing data</h2>
+<p>As usual, let’s first make a plot to visualize the data.</p>
+<p>In this tutorial, we are interested in modeling the relationship between mean rooting depth (<code>mrd</code>, response variable) and time (<code>dafs</code>). To be able to answer our research question, we also need to test if this relationship changes with plant order of arrival (<code>Treatment</code>).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Create a scatter plot showing the relationship between mean rooting depth (<code>mrd</code>, y-axis) and time (<code>dafs</code>, x-axis) separately for each order of arrival scenario (<code>Treatment</code>). Because repeated measurements were collected for each rhizobox (<code>Rz</code>), we can specify this information in the aesthetics (<code>aes()</code>) using <code>group=Rz</code>. This will allow us to easily add a line connecting the different observations from the same rhizobox using <code>geom_line()</code>.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mrd,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> Rz))<span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">21</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">"#FFCD00"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>)<span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Treatment)<span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Days after sowing"</span>)<span class="sc">+</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Mean rooting depth (cm)"</span>)<span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_to_mixed_models_files/figure-html/unnamed-chunk-4-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="fitting-a-simple-linear-regression-model" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-a-simple-linear-regression-model">Fitting a simple linear regression model</h2>
+<p>Let’s start with what we already know: fitting a simple linear regression model. The idea here is to compare the results of this model with those of the linear mixed-effects models that we will fit later in this tutorial and see how they differ from each other. Since the measurements included in our dataset are not independent (because we measured the average rooting depth in the same rhizoboxes multiple times), we know from the outset that a simple linear regression model is <u><strong>not a good choice</strong></u> in this case. But let’s do it anyway.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Make sure that the <code>Treatment</code> variable is considered as a factor (use <code>as.factor()</code>).</li>
+<li>Use <code>lm()</code> to fit a simple linear regression model using mean rooting depth (<code>mrd</code>) as the response variable, and time (<code>dafs</code>) and plant order of arrival (<code>Treatment</code>) as predictor variables. Make sure to include the two-way interaction between the explanatory variables in your model. Store the results in an object called <code>model1</code>.</li>
+<li>Run <code>summary()</code> on the <code>model1</code> object.</li>
+<li>Run <code>anova()</code> on the <code>model1</code> object.</li>
+<li>What can you conclude from these R outputs?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Solution 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Solution 4</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href="">Solution 5</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Treatment <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>Treatment)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mrd <span class="sc">~</span> dafs<span class="sc">*</span>Treatment,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>             data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mrd ~ dafs * Treatment, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.4704 -0.9948 -0.1736  1.0235  4.9619 
+
+Coefficients:
+                       Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)           -1.826349   0.272006  -6.714 4.79e-11 ***
+dafs                  -0.259003   0.010333 -25.064  &lt; 2e-16 ***
+TreatmentG-first       1.061768   0.384675   2.760 0.005973 ** 
+TreatmentL-first      -1.280747   0.384675  -3.329 0.000930 ***
+TreatmentSync1        -0.726108   0.370682  -1.959 0.050646 .  
+TreatmentSync2        -0.178218   0.426390  -0.418 0.676136    
+dafs:TreatmentG-first  0.049935   0.014614   3.417 0.000681 ***
+dafs:TreatmentL-first  0.008242   0.014614   0.564 0.572997    
+dafs:TreatmentSync1   -0.014196   0.014082  -1.008 0.313879    
+dafs:TreatmentSync2   -0.016314   0.019157  -0.852 0.394822    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.412 on 540 degrees of freedom
+Multiple R-squared:  0.8549,    Adjusted R-squared:  0.8525 
+F-statistic: 353.6 on 9 and 540 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: mrd
+                Df Sum Sq Mean Sq   F value    Pr(&gt;F)    
+dafs             1 5450.9  5450.9 2732.1687 &lt; 2.2e-16 ***
+Treatment        4  849.8   212.5  106.4896 &lt; 2.2e-16 ***
+dafs:Treatment   4   49.3    12.3    6.1793 7.241e-05 ***
+Residuals      540 1077.3     2.0                        
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<p>The fitted linear model is highly significant (p &lt; 0.001) and explains 85.2% of the variation in mean rooting depth. We found a highly significant interaction between time (<code>dafs</code>) and plant order of arrival (<code>Treatment</code>), which suggests that the slope of the linear relationship between mean rooting depth and time depends on the plant order of arrival scenario. From the summary output, we can indeed see that the slope of the relationship between mean rooting depth and time becomes less steep when grasses were sown first (G-first).</p>
+<p>The main issue with this model is that it incorrectly assumes that all observations are independent. Because repeated measurements from the same rhizobox are correlated, this assumption inflates the number of degrees of freedom available for the analysis.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="fitting-a-linear-mixed-effect-model" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-a-linear-mixed-effect-model">Fitting a linear mixed-effect model</h2>
+<section id="model-with-random-intercepts-only" class="level3">
+<h3 class="anchored" data-anchor-id="model-with-random-intercepts-only">Model with random intercepts only</h3>
+<section id="fitting-the-model" class="level4">
+<h4 class="anchored" data-anchor-id="fitting-the-model">Fitting the model</h4>
+<p>To take into account the fact that mean rooting depth values coming from the same rhizobox are correlated and not independent from each other, we should consider fitting a linear mixed-effect model to the data. Such a model contains one or more fixed effects (in our case: <code>dafs</code>, <code>Treatment</code>, and their interaction), but also include one or more random effects (in this case: <code>Rz</code>).</p>
+<p>In R, you can fit linear mixed-effect models with the <code>lmer()</code> function in the <em>lmerTest</em> R package. A random intercept model can be fitted using the following syntax:</p>
+<p><code>lmer(mrd ~ dafs*Treatment + (1|Rz), data)</code></p>
+<p>In this model, mean rooting depth (<code>mrd</code>) is modeled as a function of time since first sowing (<code>dafs</code>), <code>Treatment</code>, and their interaction, while accounting for the repeated measurements within rhizoboxes (<code>Rz</code>).</p>
+<p>The fixed-effects part of the model is given by <code>dafs * Treatment</code>. These fixed effects describe the average relationship between rooting depth and time across all rhizoboxes. The intercept represents the expected mean rooting depth at day zero for the reference treatment. The reference treatment is usually the one coming first alphabetically (in our case: F-first). The coefficient for <code>dafs</code> represents the average change in rooting depth per day in the reference treatment. The treatment coefficients describe how baseline rooting depth differs among arrival scenarios, and the interaction terms indicate whether the rate of change in rooting depth over time differs between plant order of arrival scenarios.</p>
+<p>The random-effects term <code>(1 | Rz)</code> specifies a random intercept for each rhizobox. This means that each rhizobox is allowed to have its own baseline level of rooting depth, deviating from the overall intercept. These deviations are assumed to be normally distributed with mean zero and an estimated variance.</p>
+<p>This random intercept model therefore assumes that rhizoboxes may differ in their overall rooting depth but that they share the same time trend and the same treatment effects. In other words, all rhizoboxes are assumed to follow parallel growth trajectories over time, with differences only in their starting points.</p>
+<p>Conceptually, the fixed effects describe how rooting depth changes over time and whether this change differs among plant order of arrival scenarios, while the random effect captures unexplained heterogeneity among rhizoboxes.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Make sure that the <code>Rz</code> variable is considered as a factor (use <code>as.factor()</code>).</li>
+<li>Use <code>lmerTest::lmer()</code> to fit a mixed-effects model (random intercepts) using mean rooting depth (<code>mrd</code>) as the response variable, and time (<code>dafs</code>), plant order of arrival (<code>Treatment</code>), and their interaction as fixed effects. Use the rhizobox ID number (<code>Rz</code>) as a random effect. Store the results in an object called <code>model2</code>.</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Solution 2</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Rz <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>Rz)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(mrd <span class="sc">~</span> dafs<span class="sc">*</span>Treatment <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Rz),</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                         data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="understanding-model-outputs" class="level4">
+<h4 class="anchored" data-anchor-id="understanding-model-outputs">Understanding model outputs</h4>
+<p>After fitting a linear mixed-effects model, several functions can be used to explore and interpret the results. The most commonly used are <code>summary()</code>, <code>anova()</code>, and <code>coef()</code>.</p>
+<p>The <code>summary()</code> function provides a comprehensive overview of the fitted model. For the fixed effects, it reports the estimated model parameters, their standard errors, and associated test statistics. In our example, it shows how mean rooting depth changes over time, how treatments differ from the reference level, and whether the effect of time varies among treatments when interactions are included. In addition to the fixed effects, the summary output includes the estimated variances and standard deviations of the random effects. These values describe how much variation exists among groups, such as differences in baseline rooting depth among rhizoboxes. The output also reports the residual variance, representing unexplained variation within groups. The function also provides a correlation matrix of fixed effects, but this is not something you need to worry about today.</p>
+<p>The <code>anova()</code> function is used to evaluate the statistical significance of predictors in the model. It produces an ANOVA table that summarizes how much variation in the response variable is explained by each fixed effect. For each term in the model, the output typically includes a test statistic and a corresponding p-value.</p>
+<p>The <code>coef()</code> function provides the estimated coefficients for each grouping level in the random-effects structure. While the fixed-effects table in the summary describes the average relationship across all groups, <code>coef()</code> combines the fixed effects with the estimated random effects to produce group-specific coefficients. For example, it can show the estimated intercept for each rhizobox after accounting for its random deviation from the overall mean. This output is useful for examining how individual groups differ from the overall trend and for understanding the variability captured by the random-effects component of the model.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Run <code>summary()</code> on the fitted linear mixed-effects model (<code>model2</code>).</li>
+<li>Run <code>anova()</code> on the fitted linear mixed-effects model (<code>model2</code>).</li>
+<li>Run <code>coef()</code> on the fitted linear mixed-effects model (<code>model2</code>).</li>
+<li>Look carefully at the R outputs. What can you learn about the effect of plant order of arrival on the relationship between mean rooting depth and time? Within each plant order of arrival scenario, how different are model coefficients for each rhizobox?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Solution 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false" href="">Solution 4</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: mrd ~ dafs * Treatment + (1 | Rz)
+   Data: data
+
+REML criterion at convergence: 1868.7
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.1374 -0.7551 -0.1120  0.5773  3.2938 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Rz       (Intercept) 0.6126   0.7827  
+ Residual             1.4770   1.2153  
+Number of obs: 550, groups:  Rz, 30
+
+Fixed effects:
+                        Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept)            -1.826349   0.396070  45.698286  -4.611 3.23e-05 ***
+dafs                   -0.259003   0.008891 514.964927 -29.131  &lt; 2e-16 ***
+TreatmentG-first        1.061768   0.560128  45.698286   1.896   0.0644 .  
+TreatmentL-first       -1.280747   0.560128  45.698286  -2.287   0.0269 *  
+TreatmentSync1         -0.726108   0.539753  45.698286  -1.345   0.1852    
+TreatmentSync2         -0.178218   0.599341  49.405454  -0.297   0.7674    
+dafs:TreatmentG-first   0.049935   0.012574 514.964927   3.971 8.16e-05 ***
+dafs:TreatmentL-first   0.008242   0.012574 514.964927   0.655   0.5124    
+dafs:TreatmentSync1    -0.014196   0.012116 514.964927  -1.172   0.2419    
+dafs:TreatmentSync2    -0.016314   0.016483 514.964927  -0.990   0.3228    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) dafs   TrtmG- TrtmL- TrtmS1 TrtmS2 df:TG- df:TL- df:TS1
+dafs        -0.516                                                        
+TrtmntG-frs -0.707  0.365                                                 
+TrtmntL-frs -0.707  0.365  0.500                                          
+TrtmntSync1 -0.734  0.379  0.519  0.519                                   
+TrtmntSync2 -0.661  0.341  0.467  0.467  0.485                            
+dfs:TrtmnG-  0.365 -0.707 -0.516 -0.258 -0.268 -0.241                     
+dfs:TrtmnL-  0.365 -0.707 -0.258 -0.516 -0.268 -0.241  0.500              
+dfs:TrtmnS1  0.379 -0.734 -0.268 -0.268 -0.516 -0.250  0.519  0.519       
+dfs:TrtmnS2  0.278 -0.539 -0.197 -0.197 -0.204 -0.529  0.381  0.381  0.396</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Type III Analysis of Variance Table with Satterthwaite's method
+               Sum Sq Mean Sq NumDF  DenDF   F value    Pr(&gt;F)    
+dafs           4767.8  4767.8     1 514.96 3228.1055 &lt; 2.2e-16 ***
+Treatment        29.3     7.3     4  47.01    4.9625  0.002024 ** 
+dafs:Treatment   49.3    12.3     4 514.96    8.3469 1.576e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Rz
+    (Intercept)       dafs TreatmentG-first TreatmentL-first TreatmentSync1
+3    -2.7345367 -0.2590028         1.061768        -1.280747     -0.7261079
+8    -1.7910853 -0.2590028         1.061768        -1.280747     -0.7261079
+9    -1.8263003 -0.2590028         1.061768        -1.280747     -0.7261079
+13   -1.0765658 -0.2590028         1.061768        -1.280747     -0.7261079
+14   -2.1370327 -0.2590028         1.061768        -1.280747     -0.7261079
+16   -2.8424354 -0.2590028         1.061768        -1.280747     -0.7261079
+18   -1.8740727 -0.2590028         1.061768        -1.280747     -0.7261079
+19   -2.2932682 -0.2590028         1.061768        -1.280747     -0.7261079
+22   -0.7121563 -0.2590028         1.061768        -1.280747     -0.7261079
+23   -1.3172733 -0.2590028         1.061768        -1.280747     -0.7261079
+25   -2.1763595 -0.2590028         1.061768        -1.280747     -0.7261079
+26   -2.9507763 -0.2590028         1.061768        -1.280747     -0.7261079
+29   -1.6551676 -0.2590028         1.061768        -1.280747     -0.7261079
+30   -1.3168783 -0.2590028         1.061768        -1.280747     -0.7261079
+31   -0.8674725 -0.2590028         1.061768        -1.280747     -0.7261079
+37   -1.2909327 -0.2590028         1.061768        -1.280747     -0.7261079
+38   -1.6560712 -0.2590028         1.061768        -1.280747     -0.7261079
+39   -2.2987664 -0.2590028         1.061768        -1.280747     -0.7261079
+40   -0.9141160 -0.2590028         1.061768        -1.280747     -0.7261079
+42   -3.0262394 -0.2590028         1.061768        -1.280747     -0.7261079
+43   -0.6816328 -0.2590028         1.061768        -1.280747     -0.7261079
+44   -2.1732857 -0.2590028         1.061768        -1.280747     -0.7261079
+48   -2.5042590 -0.2590028         1.061768        -1.280747     -0.7261079
+49   -2.5000245 -0.2590028         1.061768        -1.280747     -0.7261079
+53   -2.6991672 -0.2590028         1.061768        -1.280747     -0.7261079
+57   -1.1879024 -0.2590028         1.061768        -1.280747     -0.7261079
+130  -1.7108764 -0.2590028         1.061768        -1.280747     -0.7261079
+131  -1.4195624 -0.2590028         1.061768        -1.280747     -0.7261079
+135  -1.3948257 -0.2590028         1.061768        -1.280747     -0.7261079
+136  -1.7614263 -0.2590028         1.061768        -1.280747     -0.7261079
+    TreatmentSync2 dafs:TreatmentG-first dafs:TreatmentL-first
+3       -0.1782178            0.04993487           0.008241948
+8       -0.1782178            0.04993487           0.008241948
+9       -0.1782178            0.04993487           0.008241948
+13      -0.1782178            0.04993487           0.008241948
+14      -0.1782178            0.04993487           0.008241948
+16      -0.1782178            0.04993487           0.008241948
+18      -0.1782178            0.04993487           0.008241948
+19      -0.1782178            0.04993487           0.008241948
+22      -0.1782178            0.04993487           0.008241948
+23      -0.1782178            0.04993487           0.008241948
+25      -0.1782178            0.04993487           0.008241948
+26      -0.1782178            0.04993487           0.008241948
+29      -0.1782178            0.04993487           0.008241948
+30      -0.1782178            0.04993487           0.008241948
+31      -0.1782178            0.04993487           0.008241948
+37      -0.1782178            0.04993487           0.008241948
+38      -0.1782178            0.04993487           0.008241948
+39      -0.1782178            0.04993487           0.008241948
+40      -0.1782178            0.04993487           0.008241948
+42      -0.1782178            0.04993487           0.008241948
+43      -0.1782178            0.04993487           0.008241948
+44      -0.1782178            0.04993487           0.008241948
+48      -0.1782178            0.04993487           0.008241948
+49      -0.1782178            0.04993487           0.008241948
+53      -0.1782178            0.04993487           0.008241948
+57      -0.1782178            0.04993487           0.008241948
+130     -0.1782178            0.04993487           0.008241948
+131     -0.1782178            0.04993487           0.008241948
+135     -0.1782178            0.04993487           0.008241948
+136     -0.1782178            0.04993487           0.008241948
+    dafs:TreatmentSync1 dafs:TreatmentSync2
+3           -0.01419557         -0.01631421
+8           -0.01419557         -0.01631421
+9           -0.01419557         -0.01631421
+13          -0.01419557         -0.01631421
+14          -0.01419557         -0.01631421
+16          -0.01419557         -0.01631421
+18          -0.01419557         -0.01631421
+19          -0.01419557         -0.01631421
+22          -0.01419557         -0.01631421
+23          -0.01419557         -0.01631421
+25          -0.01419557         -0.01631421
+26          -0.01419557         -0.01631421
+29          -0.01419557         -0.01631421
+30          -0.01419557         -0.01631421
+31          -0.01419557         -0.01631421
+37          -0.01419557         -0.01631421
+38          -0.01419557         -0.01631421
+39          -0.01419557         -0.01631421
+40          -0.01419557         -0.01631421
+42          -0.01419557         -0.01631421
+43          -0.01419557         -0.01631421
+44          -0.01419557         -0.01631421
+48          -0.01419557         -0.01631421
+49          -0.01419557         -0.01631421
+53          -0.01419557         -0.01631421
+57          -0.01419557         -0.01631421
+130         -0.01419557         -0.01631421
+131         -0.01419557         -0.01631421
+135         -0.01419557         -0.01631421
+136         -0.01419557         -0.01631421
+
+attr(,"class")
+[1] "coef.mer"</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
+<p>The ANOVA table shows a highly significant interaction between time (<code>dafs</code>) and plant order of arrival (<code>Treatment</code>). This indicates that the slope of the relationship between mean rooting depth (<code>mrd</code>) and time depends on the plant order of arrival scenario.</p>
+<p>This pattern is reflected in the coefficients shown in the summary table. In the reference treatment (F-first, which is used as the reference level because it comes first alphabetically), the slope of the relationship between mean rooting depth and time is negative (−0.259). This means that, in this treatment, the mean rooting depth decreases over time at a rate of 0.259 cm per day. In the scenario where grasses were sown first (G-first), the slope increases by 0.05 relative to the F-first treatment. As a result, the slope in the G-first treatment becomes −0.259 + 0.05 = −0.209. In other words, the decline in mean rooting depth over time is less pronounced when grasses are sown first. The summary table also indicates that, on average, plant communities in which legumes were sown first tend to have deeper roots than communities in which forbs were sown first.</p>
+<p>The random-effects section of the summary output shows that the variance in mean rooting depth attributable to differences among rhizoboxes is 0.613.</p>
+<p>Finally, when examining the model coefficients for individual rhizoboxes, we see that all rhizoboxes share the same fixed-effect coefficients. The only difference among rhizoboxes is the value of their intercepts, which vary due to the random intercept included in the model. This reflects the model assumption that rhizoboxes may differ in their baseline rooting depth but follow the same overall relationship between rooting depth, time, and plant order of arrival.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="plotting-model-results" class="level4">
+<h4 class="anchored" data-anchor-id="plotting-model-results">Plotting model results</h4>
+<p>After fitting a linear mixed-effects model, there are two main ways to visualize the model results. The first approach is to display predictions separately for each rhizobox. Because the model includes rhizobox identity as a random intercept, each rhizobox is represented by its own regression line. These lines all share the same slope but differ in their intercepts, reflecting differences in baseline rooting depth among rhizoboxes.</p>
+<p>The second approach is to visualize only the fixed effects of the model. In this case, the plot shows the average predicted relationships between the predictors (<code>dafs</code> and <code>Treatment</code>) and the response variable (<code>mrd</code>). This results in a smaller number of lines that represent the mean trajectories for each treatment. This type of visualization is simpler and is typically preferred when presenting results in a scientific paper, because it focuses on the overall patterns rather than the variability among individual experimental units.</p>
+<p>In the following steps, we will use both approaches to see how they represent different aspects of the fitted model.</p>
+<p>Let’s start with the first approach, where we visualize the model predictions for each rhizobox separately. The first step is to obtain predicted values from the fitted model for specific values of the predictor variables. As in previous tutorials, this can be done using the <code>predict()</code> function. The predicted values represent the expected mean rooting depth based on the fitted model. Once the predictions have been obtained, they can be plotted using <em>ggplot2</em>. Because we want to display one regression line per rhizobox, the plot will include separate lines for each rhizobox in the dataset. For the sake of clarity, we will not include confidence intervals in this plot, as showing them for all rhizoboxes would make the figure difficult to read. Instead, the goal is simply to illustrate how the model represents each rhizobox with its own regression line.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Use <code>predict()</code> to calculate mean rooting depth values predicted by the model (<code>model2</code>) and store these values in a new column (<code>pred</code>) in the <code>data</code> object.</li>
+<li>Create a scatter plot showing model results separately for each rhizobox. Keep the raw data (individual data points) in the background. Create a separate panel (or facet) for each plant order of arrival scenario.</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Solution 2</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mrd,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> Rz))<span class="sc">+</span> <span class="co">#Group data per rhizobox</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">16</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"#FFCD00"</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span> <span class="co">#Make points more transparent</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> pred))<span class="sc">+</span> <span class="co">#Use pred column to plot predictions</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Treatment)<span class="sc">+</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Days after sowing"</span>)<span class="sc">+</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Mean rooting depth (cm)"</span>)<span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_to_mixed_models_files/figure-html/unnamed-chunk-15-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Let us now use the second approach and visualize only the fixed effects of the model. In this case, we will obtain model predictions using the <code>ggpredict()</code> function from the <em>ggeffects</em> package. This function is convenient because it directly generates predicted values that can easily be plotted with <em>ggplot2</em>.</p>
+<p>When using <code>ggpredict()</code>, two main arguments are required:</p>
+<ul>
+<li><p><code>model</code>: specifies the fitted model object (in our case, <code>model2</code>)</p></li>
+<li><p><code>terms</code>: indicates the predictor variables for which predictions should be calculated.</p></li>
+</ul>
+<p>To obtain model predictions, we can use the following syntax:</p>
+<p><code>ggpredict(model2, terms = c("dafs [1:44]", "Treatment"))</code></p>
+<p>In this code, <code>"dafs [1:44]"</code> tells the function to calculate predictions across a sequence of values for <code>dafs</code>, ranging from 1 to 44 days after the first sowing event. Predictions are calculated for each value in this range and for each level of <code>Treatment</code>.</p>
+<p><code>ggpredict()</code> will return a data frame with the following columns:</p>
+<ul>
+<li><p><code>x</code>: the values of the first term in terms (<code>dafs</code>)</p></li>
+<li><p><code>predicted</code>: the predicted values of the response (<code>mrd</code>)</p></li>
+<li><p><code>std.error</code>: the standard error of the predictions</p></li>
+<li><p><code>conf.low</code>: the lower bound of the 95% confidence interval for the predicted values</p></li>
+<li><p><code>conf.high</code>: the upper bound of the 95% confidence interval for the predicted values</p></li>
+<li><p><code>group</code>: the grouping level from the second term in <code>terms</code> (<code>Treatment</code>)</p></li>
+<li><p><code>facet</code>: the grouping level from the third term in <code>terms</code> (not applicable in our case)</p></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Exercise 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Use <code>ggpredict()</code> to calculate mean rooting depth values predicted by the model (<code>model2</code>) and store these values in a new object (<code>pred_fixed</code>).</li>
+<li>Rename columns in <code>pred_fixed</code> to keep the same variable names as in <code>data</code>. We can use the <code>rename()</code> function in the <em>dplyr</em> package to do this. The syntax is <code>rename(new_name = old_name)</code>.</li>
+<li>Create a scatter plot showing the model predictions. This time, we will not display the raw data points in the background in order to keep the figure easier to read. Plot all regression lines in the same graph and assign a different colour to each of them (one colour per plant order of arrival scenario). A convenient and colour-blind-friendly option is to use the viridis colour palette from the <em>viridis</em> package. This can be done by adding the layers <code>scale_colour_viridis(discrete = TRUE)</code> and <code>scale_fill_viridis(discrete = TRUE)</code> to the ggplot. The first function assigns a different colour to each regression line, while the second assigns matching colours to the shaded areas representing the 95% confidence intervals. The argument <code>discrete = TRUE</code> is used because the <code>Treatment</code> variable is categorical rather than continuous. Finally, do not forget to add the 95% confidence intervals around each regression line using <code>geom_ribbon()</code>.</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false" href="">Solution 3</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pred_fixed <span class="ot">&lt;-</span> <span class="fu">ggpredict</span>(model2, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"dafs [1:44]"</span>, <span class="st">"Treatment"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pred_fixed <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">rename</span>(pred_fixed,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">dafs =</span> x,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mrd =</span> predicted,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">Treatment =</span> group)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</div>
+<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Show me the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> mrd,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> Treatment, <span class="co">#Ask for one colour per treatment (for the regression line)</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> Treatment))<span class="sc">+</span> <span class="co">#Ask for one filling colour per treatment (for the confidence interval)</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">data =</span> pred_fixed, <span class="co">#Add shaded area for the 95% confidence interval</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">ymin =</span> conf.low, </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> conf.high),</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">alpha=</span><span class="fl">0.2</span>, <span class="co">#alpha is an argument used to adjust the transparency level of a colour. Lower values means more transparent. It has nothing to do with the significance level of a test.</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">colour =</span> <span class="cn">NA</span>)<span class="sc">+</span> <span class="co">#Do not show borders of shaded areas</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> pred_fixed,</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> mrd))<span class="sc">+</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_viridis</span>(<span class="at">discrete =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis</span>(<span class="at">discrete =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Days after sowing"</span>)<span class="sc">+</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Mean rooting depth (cm)"</span>)<span class="sc">+</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_to_mixed_models_files/figure-html/unnamed-chunk-18-1.svg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="model-with-random-slopes-and-intercepts" class="level3">
+<h3 class="anchored" data-anchor-id="model-with-random-slopes-and-intercepts">Model with random slopes and intercepts</h3>
 
 
 <!-- -->
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1033,22 +1690,475 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Tutorial 10: Introduction to linear mixed-effect models"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Benjamin Delory</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-1190-8060</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    email: b.m.m.delory@uu.nl</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Copernicus institute of sustainable development, Utrecht University</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="an">editor_options:</span><span class="co"> </span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">  chunk_output_type: console</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> /Images/Rlogo.png</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>Add text</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Tutorial 10: Introduction to linear mixed-effect models"</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Benjamin Delory</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0002-1190-8060</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">    email: b.m.m.delory@uu.nl</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliations:</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">      - name: Copernicus institute of sustainable development, Utrecht University</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="an">editor:</span><span class="co"> visual</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="an">editor_options:</span><span class="co"> </span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">  chunk_output_type: console</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> /Images/Rlogo.png</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## About this tutorial</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>This tutorial will provide you with a hands-on introduction to linear mixed-effects models using real ecological data from a controlled experiment. You will learn how to fit a linear mixed-effects model with a random intercept using R. You will also learn how to extend the model to include a random slope and understand when this is appropriate. In addition, you will learn how to interpret fixed effects, random effects, variance components, and model summaries. We will also build on previous tutorials by comparing different models and checking model assumptions.</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>Let's get started!</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data used in this tutorial</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>Exceptionally, we will use a different dataset for this tutorial. The data come from a controlled ecological experiment investigating how the order of arrival of three plant functional groups (forbs, grasses, and legumes) affects the vertical distribution of roots in soil.</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>Our main research question was:</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>**Does plant functional group order of arrival affect the vertical distribution of roots in grasslands?**</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>From an ecological restoration perspective, this question is particularly relevant because manipulating the order of arrival of plant species or functional groups during restoration may influence how plant communities develop belowground. If certain arrival sequences promote deeper rooting, these communities may gain access to water and nutrients from deeper soil layers. This could enhance their resistance to drought and other extreme weather events, ultimately increasing long-term resilience.</span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>To address this question, we conducted a greenhouse experiment in which the order of arrival of forbs, grasses, and legumes was manipulated in rhizoboxes. Rhizoboxes are specialized pots filled with soil and equipped with a transparent front window, allowing researchers to observe and monitor root growth over time.</span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>We tested five arrival scenarios (referred to as <span class="in">`Treatment`</span> in the dataset):</span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Sync1**: all plant functional groups sown simultaneously at the first sowing event</span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**F-first**: forbs sown 10 days before grasses and legumes</span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**G-first**: grasses sown 10 days before forbs and legumes</span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**L-first**: legumes sown 10 days before forbs and grasses</span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Sync2**: all plant functional groups sown simultaneously at the second sowing event</span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a>After establishing the experiment, we photographed the roots visible along the transparent window of each rhizobox three times per week. In total, images were collected at 19 time points. From these images, we quantified the mean rooting depth of each plant community (<span class="in">`mrd`</span>).</span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a>The dataset used in this tutorial contains data from 30 rhizoboxes, with 550 observations and four variables:</span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`mrd`</span>: mean rooting depth of the plant community (cm)</span>
+<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Rz`</span>: identification number of the rhizobox</span>
+<span id="cb24-53"><a href="#cb24-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-54"><a href="#cb24-54" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Treatment`</span>: plant functional group arrival scenario</span>
+<span id="cb24-55"><a href="#cb24-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-56"><a href="#cb24-56" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`dafs`</span>: number of days after first sowing (i.e., time)</span>
+<span id="cb24-57"><a href="#cb24-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-58"><a href="#cb24-58" aria-hidden="true" tabindex="-1"></a>More information about this experiment can be found in the following article: Alonso-Crespo, I. M., Weidlich, E. W. A., Temperton, V. M., &amp; Delory, B. M. (2023). <span class="co">[</span><span class="ot">Assembly history modulates vertical root distribution in a grassland experiment</span><span class="co">](https://nsojournals.onlinelibrary.wiley.com/doi/full/10.1111/oik.08886)</span>. *Oikos*, *2023*(1), e08886.</span>
+<span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-60"><a href="#cb24-60" aria-hidden="true" tabindex="-1"></a>The fact that we conducted repeated measurements over time using the same rhizoboxes makes the dataset particularly suitable for introducing mixed-effects models.</span>
+<span id="cb24-61"><a href="#cb24-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-62"><a href="#cb24-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## Install R packages</span></span>
+<span id="cb24-63"><a href="#cb24-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-64"><a href="#cb24-64" aria-hidden="true" tabindex="-1"></a>In this tutorial, we will need to use functions in the *lmerTest*, *ggeffects*, and *viridis* packages. Make sure to install these packages before starting the tutorial.</span>
+<span id="cb24-65"><a href="#cb24-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-68"><a href="#cb24-68" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-69"><a href="#cb24-69" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false </span></span>
+<span id="cb24-70"><a href="#cb24-70" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb24-71"><a href="#cb24-71" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb24-72"><a href="#cb24-72" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-73"><a href="#cb24-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-74"><a href="#cb24-74" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"lmerTest"</span>)</span>
+<span id="cb24-75"><a href="#cb24-75" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggeffects"</span>)</span>
+<span id="cb24-76"><a href="#cb24-76" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"viridis"</span>)</span>
+<span id="cb24-77"><a href="#cb24-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-78"><a href="#cb24-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-79"><a href="#cb24-79" aria-hidden="true" tabindex="-1"></a><span class="fu">## Load R packages</span></span>
+<span id="cb24-80"><a href="#cb24-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-81"><a href="#cb24-81" aria-hidden="true" tabindex="-1"></a>To work on this tutorial, you will need to load the *tidyverse*, *lmerTest*, and *ggeffects* packages.</span>
+<span id="cb24-82"><a href="#cb24-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-85"><a href="#cb24-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-86"><a href="#cb24-86" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-87"><a href="#cb24-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-88"><a href="#cb24-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-89"><a href="#cb24-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false  </span></span>
+<span id="cb24-90"><a href="#cb24-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-91"><a href="#cb24-91" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb24-92"><a href="#cb24-92" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
+<span id="cb24-93"><a href="#cb24-93" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span>
+<span id="cb24-94"><a href="#cb24-94" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
+<span id="cb24-95"><a href="#cb24-95" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-96"><a href="#cb24-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-97"><a href="#cb24-97" aria-hidden="true" tabindex="-1"></a><span class="fu">## Importing data</span></span>
+<span id="cb24-98"><a href="#cb24-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-99"><a href="#cb24-99" aria-hidden="true" tabindex="-1"></a>Start by importing the data used in this course (see previous tutorials). You will need to download the data file (data_tutorial10.csv) from Brightspace.</span>
+<span id="cb24-100"><a href="#cb24-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-103"><a href="#cb24-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-104"><a href="#cb24-104" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-105"><a href="#cb24-105" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-106"><a href="#cb24-106" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-107"><a href="#cb24-107" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false  </span></span>
+<span id="cb24-108"><a href="#cb24-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-109"><a href="#cb24-109" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data_tutorial10.csv"</span>)  </span>
+<span id="cb24-110"><a href="#cb24-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-111"><a href="#cb24-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-112"><a href="#cb24-112" aria-hidden="true" tabindex="-1"></a><span class="fu">## Visualizing data</span></span>
+<span id="cb24-113"><a href="#cb24-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-114"><a href="#cb24-114" aria-hidden="true" tabindex="-1"></a>As usual, let's first make a plot to visualize the data.</span>
+<span id="cb24-115"><a href="#cb24-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-116"><a href="#cb24-116" aria-hidden="true" tabindex="-1"></a>In this tutorial, we are interested in modeling the relationship between mean rooting depth (<span class="in">`mrd`</span>, response variable) and time (<span class="in">`dafs`</span>). To be able to answer our research question, we also need to test if this relationship changes with plant order of arrival (<span class="in">`Treatment`</span>).</span>
+<span id="cb24-117"><a href="#cb24-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-118"><a href="#cb24-118" aria-hidden="true" tabindex="-1"></a>::: callout-tip</span>
+<span id="cb24-119"><a href="#cb24-119" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 1</span></span>
+<span id="cb24-120"><a href="#cb24-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-121"><a href="#cb24-121" aria-hidden="true" tabindex="-1"></a>Create a scatter plot showing the relationship between mean rooting depth (<span class="in">`mrd`</span>, y-axis) and time (<span class="in">`dafs`</span>, x-axis) separately for each order of arrival scenario (<span class="in">`Treatment`</span>). Because repeated measurements were collected for each rhizobox (<span class="in">`Rz`</span>), we can specify this information in the aesthetics (<span class="in">`aes()`</span>) using <span class="in">`group=Rz`</span>. This will allow us to easily add a line connecting the different observations from the same rhizobox using <span class="in">`geom_line()`</span>.</span>
+<span id="cb24-122"><a href="#cb24-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-125"><a href="#cb24-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-126"><a href="#cb24-126" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-127"><a href="#cb24-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-128"><a href="#cb24-128" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-129"><a href="#cb24-129" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false  </span></span>
+<span id="cb24-130"><a href="#cb24-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-131"><a href="#cb24-131" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
+<span id="cb24-132"><a href="#cb24-132" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mrd,</span>
+<span id="cb24-133"><a href="#cb24-133" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> Rz))<span class="sc">+</span></span>
+<span id="cb24-134"><a href="#cb24-134" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb24-135"><a href="#cb24-135" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">21</span>,</span>
+<span id="cb24-136"><a href="#cb24-136" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">"#FFCD00"</span>,</span>
+<span id="cb24-137"><a href="#cb24-137" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>)<span class="sc">+</span></span>
+<span id="cb24-138"><a href="#cb24-138" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Treatment)<span class="sc">+</span></span>
+<span id="cb24-139"><a href="#cb24-139" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Days after sowing"</span>)<span class="sc">+</span></span>
+<span id="cb24-140"><a href="#cb24-140" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Mean rooting depth (cm)"</span>)<span class="sc">+</span></span>
+<span id="cb24-141"><a href="#cb24-141" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span>
+<span id="cb24-142"><a href="#cb24-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-143"><a href="#cb24-143" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb24-144"><a href="#cb24-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-145"><a href="#cb24-145" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fitting a simple linear regression model</span></span>
+<span id="cb24-146"><a href="#cb24-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-147"><a href="#cb24-147" aria-hidden="true" tabindex="-1"></a>Let's start with what we already know: fitting a simple linear regression model. The idea here is to compare the results of this model with those of the linear mixed-effects models that we will fit later in this tutorial and see how they differ from each other. Since the measurements included in our dataset are not independent (because we measured the average rooting depth in the same rhizoboxes multiple times), we know from the outset that a simple linear regression model is <span class="co">[</span><span class="ot">**not a good choice**</span><span class="co">]</span>{.underline} in this case. But let's do it anyway.</span>
+<span id="cb24-148"><a href="#cb24-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-149"><a href="#cb24-149" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb24-150"><a href="#cb24-150" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 2</span></span>
+<span id="cb24-151"><a href="#cb24-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-152"><a href="#cb24-152" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Make sure that the <span class="in">`Treatment`</span> variable is considered as a factor (use <span class="in">`as.factor()`</span>).</span>
+<span id="cb24-153"><a href="#cb24-153" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Use <span class="in">`lm()`</span> to fit a simple linear regression model using mean rooting depth (<span class="in">`mrd`</span>) as the response variable, and time (<span class="in">`dafs`</span>) and plant order of arrival (<span class="in">`Treatment`</span>) as predictor variables. Make sure to include the two-way interaction between the explanatory variables in your model. Store the results in an object called <span class="in">`model1`</span>.</span>
+<span id="cb24-154"><a href="#cb24-154" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Run <span class="in">`summary()`</span> on the <span class="in">`model1`</span> object.</span>
+<span id="cb24-155"><a href="#cb24-155" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Run <span class="in">`anova()`</span> on the <span class="in">`model1`</span> object.</span>
+<span id="cb24-156"><a href="#cb24-156" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>What can you conclude from these R outputs?</span>
+<span id="cb24-157"><a href="#cb24-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-158"><a href="#cb24-158" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb24-159"><a href="#cb24-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb24-160"><a href="#cb24-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-163"><a href="#cb24-163" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-164"><a href="#cb24-164" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-165"><a href="#cb24-165" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-166"><a href="#cb24-166" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-167"><a href="#cb24-167" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-168"><a href="#cb24-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-169"><a href="#cb24-169" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Treatment <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>Treatment)</span>
+<span id="cb24-170"><a href="#cb24-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-171"><a href="#cb24-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-172"><a href="#cb24-172" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb24-173"><a href="#cb24-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-176"><a href="#cb24-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-177"><a href="#cb24-177" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-178"><a href="#cb24-178" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-179"><a href="#cb24-179" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-180"><a href="#cb24-180" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-181"><a href="#cb24-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-182"><a href="#cb24-182" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mrd <span class="sc">~</span> dafs<span class="sc">*</span>Treatment,</span>
+<span id="cb24-183"><a href="#cb24-183" aria-hidden="true" tabindex="-1"></a>             data)</span>
+<span id="cb24-184"><a href="#cb24-184" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-185"><a href="#cb24-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-186"><a href="#cb24-186" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb24-187"><a href="#cb24-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-190"><a href="#cb24-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-191"><a href="#cb24-191" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-192"><a href="#cb24-192" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-193"><a href="#cb24-193" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-194"><a href="#cb24-194" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-195"><a href="#cb24-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-196"><a href="#cb24-196" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span>
+<span id="cb24-197"><a href="#cb24-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-198"><a href="#cb24-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-199"><a href="#cb24-199" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 4</span></span>
+<span id="cb24-200"><a href="#cb24-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-203"><a href="#cb24-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-204"><a href="#cb24-204" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-205"><a href="#cb24-205" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-206"><a href="#cb24-206" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-207"><a href="#cb24-207" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-208"><a href="#cb24-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-209"><a href="#cb24-209" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model1)</span>
+<span id="cb24-210"><a href="#cb24-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-211"><a href="#cb24-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-212"><a href="#cb24-212" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 5</span></span>
+<span id="cb24-213"><a href="#cb24-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-214"><a href="#cb24-214" aria-hidden="true" tabindex="-1"></a>The fitted linear model is highly significant (p <span class="sc">\&lt;</span> 0.001) and explains 85.2% of the variation in mean rooting depth. We found a highly significant interaction between time (<span class="in">`dafs`</span>) and plant order of arrival (<span class="in">`Treatment`</span>), which suggests that the slope of the linear relationship between mean rooting depth and time depends on the plant order of arrival scenario. From the summary output, we can indeed see that the slope of the relationship between mean rooting depth and time becomes less steep when grasses were sown first (G-first).</span>
+<span id="cb24-215"><a href="#cb24-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-216"><a href="#cb24-216" aria-hidden="true" tabindex="-1"></a>The main issue with this model is that it incorrectly assumes that all observations are independent. Because repeated measurements from the same rhizobox are correlated, this assumption inflates the number of degrees of freedom available for the analysis.</span>
+<span id="cb24-217"><a href="#cb24-217" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb24-218"><a href="#cb24-218" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb24-219"><a href="#cb24-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-220"><a href="#cb24-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fitting a linear mixed-effect model</span></span>
+<span id="cb24-221"><a href="#cb24-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-222"><a href="#cb24-222" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model with random intercepts only</span></span>
+<span id="cb24-223"><a href="#cb24-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-224"><a href="#cb24-224" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Fitting the model</span></span>
+<span id="cb24-225"><a href="#cb24-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-226"><a href="#cb24-226" aria-hidden="true" tabindex="-1"></a>To take into account the fact that mean rooting depth values coming from the same rhizobox are correlated and not independent from each other, we should consider fitting a linear mixed-effect model to the data. Such a model contains one or more fixed effects (in our case: <span class="in">`dafs`</span>, <span class="in">`Treatment`</span>, and their interaction), but also include one or more random effects (in this case: <span class="in">`Rz`</span>).</span>
+<span id="cb24-227"><a href="#cb24-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-228"><a href="#cb24-228" aria-hidden="true" tabindex="-1"></a>In R, you can fit linear mixed-effect models with the <span class="in">`lmer()`</span> function in the *lmerTest* R package. A random intercept model can be fitted using the following syntax:</span>
+<span id="cb24-229"><a href="#cb24-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-230"><a href="#cb24-230" aria-hidden="true" tabindex="-1"></a><span class="in">`lmer(mrd ~ dafs*Treatment + (1|Rz), data)`</span></span>
+<span id="cb24-231"><a href="#cb24-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-232"><a href="#cb24-232" aria-hidden="true" tabindex="-1"></a>In this model, mean rooting depth (<span class="in">`mrd`</span>) is modeled as a function of time since first sowing (<span class="in">`dafs`</span>), <span class="in">`Treatment`</span>, and their interaction, while accounting for the repeated measurements within rhizoboxes (<span class="in">`Rz`</span>).</span>
+<span id="cb24-233"><a href="#cb24-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-234"><a href="#cb24-234" aria-hidden="true" tabindex="-1"></a>The fixed-effects part of the model is given by <span class="in">`dafs * Treatment`</span>. These fixed effects describe the average relationship between rooting depth and time across all rhizoboxes. The intercept represents the expected mean rooting depth at day zero for the reference treatment. The reference treatment is usually the one coming first alphabetically (in our case: F-first). The coefficient for <span class="in">`dafs`</span> represents the average change in rooting depth per day in the reference treatment. The treatment coefficients describe how baseline rooting depth differs among arrival scenarios, and the interaction terms indicate whether the rate of change in rooting depth over time differs between plant order of arrival scenarios.</span>
+<span id="cb24-235"><a href="#cb24-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-236"><a href="#cb24-236" aria-hidden="true" tabindex="-1"></a>The random-effects term <span class="in">`(1 | Rz)`</span> specifies a random intercept for each rhizobox. This means that each rhizobox is allowed to have its own baseline level of rooting depth, deviating from the overall intercept. These deviations are assumed to be normally distributed with mean zero and an estimated variance.</span>
+<span id="cb24-237"><a href="#cb24-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-238"><a href="#cb24-238" aria-hidden="true" tabindex="-1"></a>This random intercept model therefore assumes that rhizoboxes may differ in their overall rooting depth but that they share the same time trend and the same treatment effects. In other words, all rhizoboxes are assumed to follow parallel growth trajectories over time, with differences only in their starting points.</span>
+<span id="cb24-239"><a href="#cb24-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-240"><a href="#cb24-240" aria-hidden="true" tabindex="-1"></a>Conceptually, the fixed effects describe how rooting depth changes over time and whether this change differs among plant order of arrival scenarios, while the random effect captures unexplained heterogeneity among rhizoboxes.</span>
+<span id="cb24-241"><a href="#cb24-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-242"><a href="#cb24-242" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb24-243"><a href="#cb24-243" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 3</span></span>
+<span id="cb24-244"><a href="#cb24-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-245"><a href="#cb24-245" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Make sure that the <span class="in">`Rz`</span> variable is considered as a factor (use <span class="in">`as.factor()`</span>).</span>
+<span id="cb24-246"><a href="#cb24-246" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Use <span class="in">`lmerTest::lmer()`</span> to fit a mixed-effects model (random intercepts) using mean rooting depth (<span class="in">`mrd`</span>) as the response variable, and time (<span class="in">`dafs`</span>), plant order of arrival (<span class="in">`Treatment`</span>), and their interaction as fixed effects. Use the rhizobox ID number (<span class="in">`Rz`</span>) as a random effect. Store the results in an object called <span class="in">`model2`</span>.</span>
+<span id="cb24-247"><a href="#cb24-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-248"><a href="#cb24-248" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb24-249"><a href="#cb24-249" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb24-250"><a href="#cb24-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-253"><a href="#cb24-253" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-254"><a href="#cb24-254" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-255"><a href="#cb24-255" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-256"><a href="#cb24-256" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-257"><a href="#cb24-257" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-258"><a href="#cb24-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-259"><a href="#cb24-259" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Rz <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>Rz)</span>
+<span id="cb24-260"><a href="#cb24-260" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-261"><a href="#cb24-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-262"><a href="#cb24-262" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb24-263"><a href="#cb24-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-266"><a href="#cb24-266" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-267"><a href="#cb24-267" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-268"><a href="#cb24-268" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-269"><a href="#cb24-269" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-270"><a href="#cb24-270" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-271"><a href="#cb24-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-272"><a href="#cb24-272" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(mrd <span class="sc">~</span> dafs<span class="sc">*</span>Treatment <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Rz),</span>
+<span id="cb24-273"><a href="#cb24-273" aria-hidden="true" tabindex="-1"></a>                         data)</span>
+<span id="cb24-274"><a href="#cb24-274" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-275"><a href="#cb24-275" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb24-276"><a href="#cb24-276" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb24-277"><a href="#cb24-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-278"><a href="#cb24-278" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Understanding model outputs</span></span>
+<span id="cb24-279"><a href="#cb24-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-280"><a href="#cb24-280" aria-hidden="true" tabindex="-1"></a>After fitting a linear mixed-effects model, several functions can be used to explore and interpret the results. The most commonly used are <span class="in">`summary()`</span>, <span class="in">`anova()`</span>, and <span class="in">`coef()`</span>.</span>
+<span id="cb24-281"><a href="#cb24-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-282"><a href="#cb24-282" aria-hidden="true" tabindex="-1"></a>The <span class="in">`summary()`</span> function provides a comprehensive overview of the fitted model. For the fixed effects, it reports the estimated model parameters, their standard errors, and associated test statistics. In our example, it shows how mean rooting depth changes over time, how treatments differ from the reference level, and whether the effect of time varies among treatments when interactions are included. In addition to the fixed effects, the summary output includes the estimated variances and standard deviations of the random effects. These values describe how much variation exists among groups, such as differences in baseline rooting depth among rhizoboxes. The output also reports the residual variance, representing unexplained variation within groups. The function also provides a correlation matrix of fixed effects, but this is not something you need to worry about today.</span>
+<span id="cb24-283"><a href="#cb24-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-284"><a href="#cb24-284" aria-hidden="true" tabindex="-1"></a>The <span class="in">`anova()`</span> function is used to evaluate the statistical significance of predictors in the model. It produces an ANOVA table that summarizes how much variation in the response variable is explained by each fixed effect. For each term in the model, the output typically includes a test statistic and a corresponding p-value.</span>
+<span id="cb24-285"><a href="#cb24-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-286"><a href="#cb24-286" aria-hidden="true" tabindex="-1"></a>The <span class="in">`coef()`</span> function provides the estimated coefficients for each grouping level in the random-effects structure. While the fixed-effects table in the summary describes the average relationship across all groups, <span class="in">`coef()`</span> combines the fixed effects with the estimated random effects to produce group-specific coefficients. For example, it can show the estimated intercept for each rhizobox after accounting for its random deviation from the overall mean. This output is useful for examining how individual groups differ from the overall trend and for understanding the variability captured by the random-effects component of the model.</span>
+<span id="cb24-287"><a href="#cb24-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-288"><a href="#cb24-288" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb24-289"><a href="#cb24-289" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 4</span></span>
+<span id="cb24-290"><a href="#cb24-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-291"><a href="#cb24-291" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Run <span class="in">`summary()`</span> on the fitted linear mixed-effects model (<span class="in">`model2`</span>).</span>
+<span id="cb24-292"><a href="#cb24-292" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Run <span class="in">`anova()`</span> on the fitted linear mixed-effects model (<span class="in">`model2`</span>).</span>
+<span id="cb24-293"><a href="#cb24-293" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Run <span class="in">`coef()`</span> on the fitted linear mixed-effects model (<span class="in">`model2`</span>).</span>
+<span id="cb24-294"><a href="#cb24-294" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>Look carefully at the R outputs. What can you learn about the effect of plant order of arrival on the relationship between mean rooting depth and time? Within each plant order of arrival scenario, how different are model coefficients for each rhizobox?</span>
+<span id="cb24-295"><a href="#cb24-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-296"><a href="#cb24-296" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb24-297"><a href="#cb24-297" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb24-298"><a href="#cb24-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-301"><a href="#cb24-301" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-302"><a href="#cb24-302" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-303"><a href="#cb24-303" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-304"><a href="#cb24-304" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-305"><a href="#cb24-305" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-306"><a href="#cb24-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-307"><a href="#cb24-307" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span>
+<span id="cb24-308"><a href="#cb24-308" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-309"><a href="#cb24-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-310"><a href="#cb24-310" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb24-311"><a href="#cb24-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-314"><a href="#cb24-314" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-315"><a href="#cb24-315" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-316"><a href="#cb24-316" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-317"><a href="#cb24-317" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-318"><a href="#cb24-318" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-319"><a href="#cb24-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-320"><a href="#cb24-320" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model2)</span>
+<span id="cb24-321"><a href="#cb24-321" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-322"><a href="#cb24-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-323"><a href="#cb24-323" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb24-324"><a href="#cb24-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-327"><a href="#cb24-327" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-328"><a href="#cb24-328" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-329"><a href="#cb24-329" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-330"><a href="#cb24-330" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-331"><a href="#cb24-331" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-332"><a href="#cb24-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-333"><a href="#cb24-333" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model2)</span>
+<span id="cb24-334"><a href="#cb24-334" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-335"><a href="#cb24-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-336"><a href="#cb24-336" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 4</span></span>
+<span id="cb24-337"><a href="#cb24-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-338"><a href="#cb24-338" aria-hidden="true" tabindex="-1"></a>The ANOVA table shows a highly significant interaction between time (<span class="in">`dafs`</span>) and plant order of arrival (<span class="in">`Treatment`</span>). This indicates that the slope of the relationship between mean rooting depth (<span class="in">`mrd`</span>) and time depends on the plant order of arrival scenario.</span>
+<span id="cb24-339"><a href="#cb24-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-340"><a href="#cb24-340" aria-hidden="true" tabindex="-1"></a>This pattern is reflected in the coefficients shown in the summary table. In the reference treatment (F-first, which is used as the reference level because it comes first alphabetically), the slope of the relationship between mean rooting depth and time is negative (−0.259). This means that, in this treatment, the mean rooting depth decreases over time at a rate of 0.259 cm per day. In the scenario where grasses were sown first (G-first), the slope increases by 0.05 relative to the F-first treatment. As a result, the slope in the G-first treatment becomes −0.259 + 0.05 = −0.209. In other words, the decline in mean rooting depth over time is less pronounced when grasses are sown first. The summary table also indicates that, on average, plant communities in which legumes were sown first tend to have deeper roots than communities in which forbs were sown first.</span>
+<span id="cb24-341"><a href="#cb24-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-342"><a href="#cb24-342" aria-hidden="true" tabindex="-1"></a>The random-effects section of the summary output shows that the variance in mean rooting depth attributable to differences among rhizoboxes is 0.613.</span>
+<span id="cb24-343"><a href="#cb24-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-344"><a href="#cb24-344" aria-hidden="true" tabindex="-1"></a>Finally, when examining the model coefficients for individual rhizoboxes, we see that all rhizoboxes share the same fixed-effect coefficients. The only difference among rhizoboxes is the value of their intercepts, which vary due to the random intercept included in the model. This reflects the model assumption that rhizoboxes may differ in their baseline rooting depth but follow the same overall relationship between rooting depth, time, and plant order of arrival.</span>
+<span id="cb24-345"><a href="#cb24-345" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb24-346"><a href="#cb24-346" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb24-347"><a href="#cb24-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-348"><a href="#cb24-348" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Plotting model results</span></span>
+<span id="cb24-349"><a href="#cb24-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-350"><a href="#cb24-350" aria-hidden="true" tabindex="-1"></a>After fitting a linear mixed-effects model, there are two main ways to visualize the model results. The first approach is to display predictions separately for each rhizobox. Because the model includes rhizobox identity as a random intercept, each rhizobox is represented by its own regression line. These lines all share the same slope but differ in their intercepts, reflecting differences in baseline rooting depth among rhizoboxes.</span>
+<span id="cb24-351"><a href="#cb24-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-352"><a href="#cb24-352" aria-hidden="true" tabindex="-1"></a>The second approach is to visualize only the fixed effects of the model. In this case, the plot shows the average predicted relationships between the predictors (<span class="in">`dafs`</span> and <span class="in">`Treatment`</span>) and the response variable (<span class="in">`mrd`</span>). This results in a smaller number of lines that represent the mean trajectories for each treatment. This type of visualization is simpler and is typically preferred when presenting results in a scientific paper, because it focuses on the overall patterns rather than the variability among individual experimental units.</span>
+<span id="cb24-353"><a href="#cb24-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-354"><a href="#cb24-354" aria-hidden="true" tabindex="-1"></a>In the following steps, we will use both approaches to see how they represent different aspects of the fitted model.</span>
+<span id="cb24-355"><a href="#cb24-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-356"><a href="#cb24-356" aria-hidden="true" tabindex="-1"></a>Let’s start with the first approach, where we visualize the model predictions for each rhizobox separately. The first step is to obtain predicted values from the fitted model for specific values of the predictor variables. As in previous tutorials, this can be done using the <span class="in">`predict()`</span> function. The predicted values represent the expected mean rooting depth based on the fitted model. Once the predictions have been obtained, they can be plotted using *ggplot2*. Because we want to display one regression line per rhizobox, the plot will include separate lines for each rhizobox in the dataset. For the sake of clarity, we will not include confidence intervals in this plot, as showing them for all rhizoboxes would make the figure difficult to read. Instead, the goal is simply to illustrate how the model represents each rhizobox with its own regression line.</span>
+<span id="cb24-357"><a href="#cb24-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-358"><a href="#cb24-358" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb24-359"><a href="#cb24-359" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 5</span></span>
+<span id="cb24-360"><a href="#cb24-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-361"><a href="#cb24-361" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use <span class="in">`predict()`</span> to calculate mean rooting depth values predicted by the model (<span class="in">`model2`</span>) and store these values in a new column (<span class="in">`pred`</span>) in the <span class="in">`data`</span> object.</span>
+<span id="cb24-362"><a href="#cb24-362" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Create a scatter plot showing model results separately for each rhizobox. Keep the raw data (individual data points) in the background. Create a separate panel (or facet) for each plant order of arrival scenario.</span>
+<span id="cb24-363"><a href="#cb24-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-364"><a href="#cb24-364" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb24-365"><a href="#cb24-365" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb24-366"><a href="#cb24-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-369"><a href="#cb24-369" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-370"><a href="#cb24-370" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-371"><a href="#cb24-371" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-372"><a href="#cb24-372" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-373"><a href="#cb24-373" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-374"><a href="#cb24-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-375"><a href="#cb24-375" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(model2)</span>
+<span id="cb24-376"><a href="#cb24-376" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-377"><a href="#cb24-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-378"><a href="#cb24-378" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb24-379"><a href="#cb24-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-382"><a href="#cb24-382" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-383"><a href="#cb24-383" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-384"><a href="#cb24-384" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-385"><a href="#cb24-385" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-386"><a href="#cb24-386" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-387"><a href="#cb24-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-388"><a href="#cb24-388" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
+<span id="cb24-389"><a href="#cb24-389" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mrd,</span>
+<span id="cb24-390"><a href="#cb24-390" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> Rz))<span class="sc">+</span> <span class="co">#Group data per rhizobox</span></span>
+<span id="cb24-391"><a href="#cb24-391" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">16</span>,</span>
+<span id="cb24-392"><a href="#cb24-392" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"#FFCD00"</span>,</span>
+<span id="cb24-393"><a href="#cb24-393" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span> <span class="co">#Make points more transparent</span></span>
+<span id="cb24-394"><a href="#cb24-394" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> pred))<span class="sc">+</span> <span class="co">#Use pred column to plot predictions</span></span>
+<span id="cb24-395"><a href="#cb24-395" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Treatment)<span class="sc">+</span></span>
+<span id="cb24-396"><a href="#cb24-396" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Days after sowing"</span>)<span class="sc">+</span></span>
+<span id="cb24-397"><a href="#cb24-397" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Mean rooting depth (cm)"</span>)<span class="sc">+</span></span>
+<span id="cb24-398"><a href="#cb24-398" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span>
+<span id="cb24-399"><a href="#cb24-399" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-400"><a href="#cb24-400" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb24-401"><a href="#cb24-401" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb24-402"><a href="#cb24-402" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-403"><a href="#cb24-403" aria-hidden="true" tabindex="-1"></a>Let us now use the second approach and visualize only the fixed effects of the model. In this case, we will obtain model predictions using the <span class="in">`ggpredict()`</span> function from the *ggeffects* package. This function is convenient because it directly generates predicted values that can easily be plotted with *ggplot2*.</span>
+<span id="cb24-404"><a href="#cb24-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-405"><a href="#cb24-405" aria-hidden="true" tabindex="-1"></a>When using <span class="in">`ggpredict()`</span>, two main arguments are required:</span>
+<span id="cb24-406"><a href="#cb24-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-407"><a href="#cb24-407" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`model`</span>: specifies the fitted model object (in our case, <span class="in">`model2`</span>)</span>
+<span id="cb24-408"><a href="#cb24-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-409"><a href="#cb24-409" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`terms`</span>: indicates the predictor variables for which predictions should be calculated.</span>
+<span id="cb24-410"><a href="#cb24-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-411"><a href="#cb24-411" aria-hidden="true" tabindex="-1"></a>To obtain model predictions, we can use the following syntax:</span>
+<span id="cb24-412"><a href="#cb24-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-413"><a href="#cb24-413" aria-hidden="true" tabindex="-1"></a><span class="in">`ggpredict(model2, terms = c("dafs [1:44]", "Treatment"))`</span></span>
+<span id="cb24-414"><a href="#cb24-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-415"><a href="#cb24-415" aria-hidden="true" tabindex="-1"></a>In this code, <span class="in">`"dafs [1:44]"`</span> tells the function to calculate predictions across a sequence of values for <span class="in">`dafs`</span>, ranging from 1 to 44 days after the first sowing event. Predictions are calculated for each value in this range and for each level of <span class="in">`Treatment`</span>.</span>
+<span id="cb24-416"><a href="#cb24-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-417"><a href="#cb24-417" aria-hidden="true" tabindex="-1"></a><span class="in">`ggpredict()`</span> will return a data frame with the following columns:</span>
+<span id="cb24-418"><a href="#cb24-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-419"><a href="#cb24-419" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`x`</span>: the values of the first term in terms (<span class="in">`dafs`</span>)</span>
+<span id="cb24-420"><a href="#cb24-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-421"><a href="#cb24-421" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`predicted`</span>: the predicted values of the response (<span class="in">`mrd`</span>)</span>
+<span id="cb24-422"><a href="#cb24-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-423"><a href="#cb24-423" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`std.error`</span>: the standard error of the predictions</span>
+<span id="cb24-424"><a href="#cb24-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-425"><a href="#cb24-425" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`conf.low`</span>: the lower bound of the 95% confidence interval for the predicted values</span>
+<span id="cb24-426"><a href="#cb24-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-427"><a href="#cb24-427" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`conf.high`</span>: the upper bound of the 95% confidence interval for the predicted values</span>
+<span id="cb24-428"><a href="#cb24-428" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-429"><a href="#cb24-429" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`group`</span>: the grouping level from the second term in <span class="in">`terms`</span> (<span class="in">`Treatment`</span>)</span>
+<span id="cb24-430"><a href="#cb24-430" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-431"><a href="#cb24-431" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`facet`</span>: the grouping level from the third term in <span class="in">`terms`</span> (not applicable in our case)</span>
+<span id="cb24-432"><a href="#cb24-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-433"><a href="#cb24-433" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb24-434"><a href="#cb24-434" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 6</span></span>
+<span id="cb24-435"><a href="#cb24-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-436"><a href="#cb24-436" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use <span class="in">`ggpredict()`</span> to calculate mean rooting depth values predicted by the model (<span class="in">`model2`</span>) and store these values in a new object (<span class="in">`pred_fixed`</span>).</span>
+<span id="cb24-437"><a href="#cb24-437" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Rename columns in <span class="in">`pred_fixed`</span> to keep the same variable names as in <span class="in">`data`</span>. We can use the <span class="in">`rename()`</span> function in the *dplyr* package to do this. The syntax is <span class="in">`rename(new_name = old_name)`</span>.</span>
+<span id="cb24-438"><a href="#cb24-438" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Create a scatter plot showing the model predictions. This time, we will not display the raw data points in the background in order to keep the figure easier to read. Plot all regression lines in the same graph and assign a different colour to each of them (one colour per plant order of arrival scenario). A convenient and colour-blind-friendly option is to use the viridis colour palette from the *viridis* package. This can be done by adding the layers <span class="in">`scale_colour_viridis(discrete = TRUE)`</span> and <span class="in">`scale_fill_viridis(discrete = TRUE)`</span> to the ggplot. The first function assigns a different colour to each regression line, while the second assigns matching colours to the shaded areas representing the 95% confidence intervals. The argument <span class="in">`discrete = TRUE`</span> is used because the <span class="in">`Treatment`</span> variable is categorical rather than continuous. Finally, do not forget to add the 95% confidence intervals around each regression line using <span class="in">`geom_ribbon()`</span>.</span>
+<span id="cb24-439"><a href="#cb24-439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-440"><a href="#cb24-440" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb24-441"><a href="#cb24-441" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 1</span></span>
+<span id="cb24-442"><a href="#cb24-442" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-445"><a href="#cb24-445" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-446"><a href="#cb24-446" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-447"><a href="#cb24-447" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-448"><a href="#cb24-448" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-449"><a href="#cb24-449" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-450"><a href="#cb24-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-451"><a href="#cb24-451" aria-hidden="true" tabindex="-1"></a>pred_fixed <span class="ot">&lt;-</span> <span class="fu">ggpredict</span>(model2, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"dafs [1:44]"</span>, <span class="st">"Treatment"</span>))</span>
+<span id="cb24-452"><a href="#cb24-452" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-453"><a href="#cb24-453" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-454"><a href="#cb24-454" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
+<span id="cb24-455"><a href="#cb24-455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-458"><a href="#cb24-458" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-459"><a href="#cb24-459" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-460"><a href="#cb24-460" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-461"><a href="#cb24-461" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-462"><a href="#cb24-462" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-463"><a href="#cb24-463" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-464"><a href="#cb24-464" aria-hidden="true" tabindex="-1"></a>pred_fixed <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">rename</span>(pred_fixed,</span>
+<span id="cb24-465"><a href="#cb24-465" aria-hidden="true" tabindex="-1"></a>                            <span class="at">dafs =</span> x,</span>
+<span id="cb24-466"><a href="#cb24-466" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mrd =</span> predicted,</span>
+<span id="cb24-467"><a href="#cb24-467" aria-hidden="true" tabindex="-1"></a>                            <span class="at">Treatment =</span> group)</span>
+<span id="cb24-468"><a href="#cb24-468" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-469"><a href="#cb24-469" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-470"><a href="#cb24-470" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
+<span id="cb24-471"><a href="#cb24-471" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-474"><a href="#cb24-474" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-475"><a href="#cb24-475" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true </span></span>
+<span id="cb24-476"><a href="#cb24-476" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true </span></span>
+<span id="cb24-477"><a href="#cb24-477" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
+<span id="cb24-478"><a href="#cb24-478" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-479"><a href="#cb24-479" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb24-480"><a href="#cb24-480" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 5.5</span></span>
+<span id="cb24-481"><a href="#cb24-481" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-482"><a href="#cb24-482" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, </span>
+<span id="cb24-483"><a href="#cb24-483" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
+<span id="cb24-484"><a href="#cb24-484" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> mrd,</span>
+<span id="cb24-485"><a href="#cb24-485" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> Treatment, <span class="co">#Ask for one colour per treatment (for the regression line)</span></span>
+<span id="cb24-486"><a href="#cb24-486" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> Treatment))<span class="sc">+</span> <span class="co">#Ask for one filling colour per treatment (for the confidence interval)</span></span>
+<span id="cb24-487"><a href="#cb24-487" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">data =</span> pred_fixed, <span class="co">#Add shaded area for the 95% confidence interval</span></span>
+<span id="cb24-488"><a href="#cb24-488" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">ymin =</span> conf.low, </span>
+<span id="cb24-489"><a href="#cb24-489" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> conf.high),</span>
+<span id="cb24-490"><a href="#cb24-490" aria-hidden="true" tabindex="-1"></a>                <span class="at">alpha=</span><span class="fl">0.2</span>, <span class="co">#alpha is an argument used to adjust the transparency level of a colour. Lower values means more transparent. It has nothing to do with the significance level of a test.</span></span>
+<span id="cb24-491"><a href="#cb24-491" aria-hidden="true" tabindex="-1"></a>                <span class="at">colour =</span> <span class="cn">NA</span>)<span class="sc">+</span> <span class="co">#Do not show borders of shaded areas</span></span>
+<span id="cb24-492"><a href="#cb24-492" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> pred_fixed,</span>
+<span id="cb24-493"><a href="#cb24-493" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
+<span id="cb24-494"><a href="#cb24-494" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> mrd))<span class="sc">+</span></span>
+<span id="cb24-495"><a href="#cb24-495" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_viridis</span>(<span class="at">discrete =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb24-496"><a href="#cb24-496" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis</span>(<span class="at">discrete =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb24-497"><a href="#cb24-497" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Days after sowing"</span>)<span class="sc">+</span></span>
+<span id="cb24-498"><a href="#cb24-498" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Mean rooting depth (cm)"</span>)<span class="sc">+</span></span>
+<span id="cb24-499"><a href="#cb24-499" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span>
+<span id="cb24-500"><a href="#cb24-500" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-501"><a href="#cb24-501" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb24-502"><a href="#cb24-502" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb24-503"><a href="#cb24-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-504"><a href="#cb24-504" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model with random slopes and intercepts</span></span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
