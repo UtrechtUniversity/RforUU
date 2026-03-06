@@ -15,7 +15,7 @@ image: /Images/Rlogo.png
 
 ## About this tutorial
 
-This tutorial will provide you with a hands-on introduction to linear mixed-effects models using real ecological data from a controlled experiment. You will learn how to fit a linear mixed-effects model with a random intercept using R. You will also learn how to extend the model to include a random slope and understand when this is appropriate. In addition, you will learn how to interpret fixed effects, random effects, variance components, and model summaries. We will also build on previous tutorials by comparing different models and checking model assumptions.
+This tutorial will provide you with a hands-on introduction to linear mixed-effects models using real ecological data from a controlled experiment. You will learn how to fit a linear mixed-effects model with a random intercept using R. You will also learn how to extend the model to include a random slope and understand when this is appropriate. In addition, you will learn how to interpret fixed effects, random effects, variance components, and model summaries. We will also build on previous tutorials by comparing different models.
 
 Let's get started!
 
