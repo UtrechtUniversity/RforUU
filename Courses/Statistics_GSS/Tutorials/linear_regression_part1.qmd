@@ -704,10 +704,10 @@ colnames(pred)[2] <- "CMB"
 
 ggplot(data = data, mapping = aes(x = litter_thickness,
                                   y = CMB)) +
-  geom_ribbon(data=pred,
+  geom_ribbon(data=pred, #Add shaded area for the 95% prediction interval
               aes(ymin = lwr, 
                   ymax = upr),
-              alpha=0.2)+ #Add shaded area for the 95% prediction interval
+              alpha=0.2)+ #alpha is an argument used to adjust the transparency level of a colour. Lower values means more transparent. It has nothing to do with the significance level of a test.
   geom_line(data = pred,
             colour="black")+ #Add the fitted linear model
   geom_point(shape=21,

@@ -1399,10 +1399,10 @@ Figure&nbsp;2: Relationship between litter thickness and soil microbial biomass.
 <span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> litter_thickness,</span>
 <span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">y =</span> CMB)) <span class="sc">+</span></span>
-<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data=</span>pred,</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data=</span>pred, <span class="co">#Add shaded area for the 95% prediction interval</span></span>
 <span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">ymin =</span> lwr, </span>
 <span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ymax =</span> upr),</span>
-<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha=</span><span class="fl">0.2</span>)<span class="sc">+</span> <span class="co">#Add shaded area for the 95% prediction interval</span></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha=</span><span class="fl">0.2</span>)<span class="sc">+</span> <span class="co">#alpha is an argument used to adjust the transparency level of a colour. Lower values means more transparent. It has nothing to do with the significance level of a test.</span></span>
 <span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> pred,</span>
 <span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>            <span class="at">colour=</span><span class="st">"black"</span>)<span class="sc">+</span> <span class="co">#Add the fitted linear model</span></span>
 <span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">21</span>,</span>
@@ -2619,10 +2619,10 @@ Figure&nbsp;3: Relationship between litter thickness and soil microbial biomass.
 <span id="cb32-754"><a href="#cb32-754" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-755"><a href="#cb32-755" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> litter_thickness,</span>
 <span id="cb32-756"><a href="#cb32-756" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">y =</span> CMB)) <span class="sc">+</span></span>
-<span id="cb32-757"><a href="#cb32-757" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data=</span>pred,</span>
+<span id="cb32-757"><a href="#cb32-757" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data=</span>pred, <span class="co">#Add shaded area for the 95% prediction interval</span></span>
 <span id="cb32-758"><a href="#cb32-758" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">ymin =</span> lwr, </span>
 <span id="cb32-759"><a href="#cb32-759" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ymax =</span> upr),</span>
-<span id="cb32-760"><a href="#cb32-760" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha=</span><span class="fl">0.2</span>)<span class="sc">+</span> <span class="co">#Add shaded area for the 95% prediction interval</span></span>
+<span id="cb32-760"><a href="#cb32-760" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha=</span><span class="fl">0.2</span>)<span class="sc">+</span> <span class="co">#alpha is an argument used to adjust the transparency level of a colour. Lower values means more transparent. It has nothing to do with the significance level of a test.</span></span>
 <span id="cb32-761"><a href="#cb32-761" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> pred,</span>
 <span id="cb32-762"><a href="#cb32-762" aria-hidden="true" tabindex="-1"></a>            <span class="at">colour=</span><span class="st">"black"</span>)<span class="sc">+</span> <span class="co">#Add the fitted linear model</span></span>
 <span id="cb32-763"><a href="#cb32-763" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">21</span>,</span>

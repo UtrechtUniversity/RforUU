@@ -76,7 +76,7 @@ install.packages("viridis")
 
 ## Load R packages
 
-To work on this tutorial, you will need to load the *tidyverse*, *lmerTest*, and *ggeffects* packages.
+To work on this tutorial, you will need to load the *tidyverse*, *lmerTest*, *ggeffects*, and *viridis* packages.
 
 ```{r}
 #| eval: true 
@@ -118,7 +118,8 @@ Create a scatter plot showing the relationship between mean rooting depth (`mrd`
 #| eval: true 
 #| echo: true 
 #| message: false 
-#| warning: false  
+#| warning: false
+#| fig-align: center
 
 ggplot(data, aes(x = dafs,
                  y = mrd,
@@ -227,7 +228,8 @@ Conceptually, the fixed effects describe how rooting depth changes over time and
 ## Exercise 3
 
 1.  Make sure that the `Rz` variable is considered as a factor (use `as.factor()`).
-2.  Use `lmerTest::lmer()` to fit a mixed-effects model (random intercepts) using mean rooting depth (`mrd`) as the response variable, and time (`dafs`), plant order of arrival (`Treatment`), and their interaction as fixed effects. Use the rhizobox ID number (`Rz`) as a random effect. Store the results in an object called `model2`.
+2.  Reorder the levels of the `Treatment` variable as follows: Sync1, F-first, G-first, L-first, Sync2. By placing Sync1 first, R will use it as the reference level in the model instead of F-first, which would otherwise be chosen automatically because it comes first alphabetically. This can be done using the `factor()` function and specifying the desired order of the levels with the `levels` argument.
+3.  Use `lmerTest::lmer()` to fit a mixed-effects model (random intercepts) using mean rooting depth (`mrd`) as the response variable, and time (`dafs`), plant order of arrival (`Treatment`), and their interaction as fixed effects. Use the rhizobox ID number (`Rz`) as a random effect. Store the results in an object called `model2`.
 
 ::: panel-tabset
 ## Solution 1
@@ -242,6 +244,18 @@ data$Rz <- as.factor(data$Rz)
 ```
 
 ## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+data$Treatment<-factor(data$Treatment, 
+                       levels=c("Sync1", "F-first", "G-first", "L-first", "Sync2"))
+```
+
+## Solution 3
 
 ```{r}
 #| eval: true 
@@ -311,7 +325,7 @@ coef(model2)
 
 The ANOVA table shows a highly significant interaction between time (`dafs`) and plant order of arrival (`Treatment`). This indicates that the slope of the relationship between mean rooting depth (`mrd`) and time depends on the plant order of arrival scenario.
 
-This pattern is reflected in the coefficients shown in the summary table. In the reference treatment (F-first, which is used as the reference level because it comes first alphabetically), the slope of the relationship between mean rooting depth and time is negative (−0.259). This means that, in this treatment, the mean rooting depth decreases over time at a rate of 0.259 cm per day. In the scenario where grasses were sown first (G-first), the slope increases by 0.05 relative to the F-first treatment. As a result, the slope in the G-first treatment becomes −0.259 + 0.05 = −0.209. In other words, the decline in mean rooting depth over time is less pronounced when grasses are sown first. The summary table also indicates that, on average, plant communities in which legumes were sown first tend to have deeper roots than communities in which forbs were sown first.
+This pattern is reflected in the coefficients shown in the summary table. In the reference treatment (Sync1), the slope of the relationship between mean rooting depth and time is negative (−0.273). This means that, in this treatment, the mean rooting depth decreases over time at a rate of 0.273 cm per day. In the scenario where grasses were sown first (G-first), the slope increases by 0.064 relative to the Sync1 treatment. As a result, the slope in the G-first treatment becomes −0.273 + 0.064 = −0.209. In other words, the decline in mean rooting depth over time is less pronounced when grasses are sown first. The summary table also indicates that, on average, plant communities in which grasses were sown first tend to have shallower roots than communities in which all plant functional groups were sown simultaneously.
 
 The random-effects section of the summary output shows that the variance in mean rooting depth attributable to differences among rhizoboxes is 0.613.
 
@@ -354,6 +368,7 @@ data$pred <- predict(model2)
 #| echo: true 
 #| message: false 
 #| warning: false
+#| fig-align: center
 
 ggplot(data, aes(x = dafs,
                  y = mrd,
@@ -442,6 +457,7 @@ pred_fixed <- dplyr::rename(pred_fixed,
 #| warning: false
 #| fig-height: 4
 #| fig-width: 5.5
+#| fig-align: center
 
 ggplot(data, 
        aes(x = dafs,
@@ -466,3 +482,225 @@ ggplot(data,
 ::::
 
 ### Model with random slopes and intercepts
+
+#### Fitting and interpreting the model
+
+A random slope and intercept model can be fitted using the following syntax:
+
+`lmer(mrd ~ dafs*Treatment + (dafs|Rz), data)`
+
+The fixed-effect part is identical to that of the previous model (`model2`) fitted in this tutorial.
+
+The random-effects structure is specified by `(dafs | Rz)`. This notation indicates that both the intercept and the slope of `dafs` are allowed to vary among rhizoboxes. This means that each rhizobox is allowed to have its own baseline rooting depth (a random intercept) and its own rate of change in rooting depth over time (a random slope).
+
+:::: callout-tip
+## Exercise 7
+
+1.  Use `lmerTest::lmer()` to fit a mixed-effects model (random slopes and intercepts) using mean rooting depth (`mrd`) as the response variable, and time (`dafs`), plant order of arrival (`Treatment`), and their interaction as fixed effects. To avoid convergence issues, add the following argument to the `lmer()` function: `control = lmerControl(optimizer ="Nelder_Mead")`. Store the results in an object called `model3`.
+2.  Run `summary()` on the fitted linear mixed-effects model (`model3`).
+3.  Run `anova()` on the fitted linear mixed-effects model (`model3`).
+4.  Run `coef()` on the fitted linear mixed-effects model (`model3`).
+5.  Look carefully at the R outputs. What can you learn about the effect of plant order of arrival on the relationship between mean rooting depth and time? Within each plant order of arrival scenario, how different are model coefficients for each rhizobox?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+model3 <- lmerTest::lmer(mrd ~ dafs*Treatment + (dafs|Rz),
+                         data,
+                         control = lmerControl(optimizer ="Nelder_Mead"))
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+summary(model3)
+```
+
+## Solution 3
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+anova(model3)
+```
+
+## Solution 4
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+coef(model3)
+```
+
+## Solution 5
+
+In the ANOVA table, the interaction between time (`dafs`) and plant order of arrival (`Treatment`) is not significant anymore, which seems to indicate that the slope of the relationship between mean rooting depth (`mrd`) and time does not seem to depend on the plant order of arrival scenario.
+
+This pattern is only partly reflected in the coefficients shown in the summary table. In the reference treatment (Sync1), the slope of the relationship between mean rooting depth and time is negative (−0.273). This means that, in this treatment, the mean rooting depth decreases over time at a rate of 0.273 cm per day. In the scenario where grasses were sown first (G-first), the slope increases by 0.064 relative to the Sync1 treatment. As a result, the slope in the G-first treatment becomes −0.273 + 0.064 = −0.209. In other words, the decline in mean rooting depth over time is less pronounced when grasses are sown first. The summary table also indicates that, on average, plant communities in which grasses or forbs were sown first tend to have shallower roots than communities in which all plant functional groups were sown simultaneously.
+
+The random-effects section of the summary output shows that the variance in mean rooting depth attributable to differences among rhizoboxes is 0.138. This value is smaller than the variance obtained with the previous model (`model2`, 0.613). In addition, the model estimates a small amount of variance in the slopes of the relationship between mean rooting depth (`mrd`) and time (`dafs`) among rhizoboxes (0.002). This indicates that, although most rhizoboxes follow a similar temporal trend, there is some variation in how strongly mean rooting depth changes over time across rhizoboxes.
+
+When examining the model coefficients for individual rhizoboxes, we can see that rhizoboxes now differ not only in their intercepts but also in their slopes (the `dafs` column). These differences arise from the inclusion of both a random intercept and a random slope in the model. This reflects the model assumption that rhizoboxes may vary in their baseline rooting depth and that the strength of the relationship between mean rooting depth (`mrd`) and time (`dafs`) may also differ among rhizoboxes.
+:::
+::::
+
+#### Plotting model results
+
+We will first create a plot showing a regression line for each rhizobox.
+
+:::: callout-tip
+## Exercise 8
+
+1.  Use `predict()` to calculate mean rooting depth values predicted by the model (`model3`) and store these values in a new column (`pred2`) in the `data` object.
+2.  Create a scatter plot showing model results separately for each rhizobox. Keep the raw data (individual data points) in the background. Create a separate panel (or facet) for each plant order of arrival scenario.
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+data$pred2 <- predict(model3)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+#| fig-align: center
+
+ggplot(data, aes(x = dafs,
+                 y = mrd,
+                 group = Rz))+ #Group data per rhizobox
+    geom_point(shape=16,
+               colour = "#FFCD00",
+               alpha = 0.5)+ #Make points more transparent
+    geom_line(aes(y = pred2))+ #Use pred column to plot predictions
+    facet_wrap(~Treatment)+
+    xlab("Days after sowing")+
+    ylab("Mean rooting depth (cm)")+
+    theme_bw()
+```
+:::
+::::
+
+Now let's create a plot focusing on fixed effects. In this case, the plot should show the average predicted relationships between the predictors (`dafs` and `Treatment`) and the response variable (`mrd`).
+
+:::: callout-tip
+## Exercise 10
+
+1.  Use `ggpredict()` to calculate mean rooting depth values predicted by the model (`model3`) and store these values in a new object (`pred_fixed_2`).
+2.  Rename columns in `pred_fixed_2` to keep the same variable names as in `data`. We can use the `rename()` function in the *dplyr* package to do this. The syntax is `rename(new_name = old_name)`.
+3.  Create a scatter plot showing the model predictions. This time, we will not display the raw data points in the background in order to keep the figure easier to read. Plot all regression lines in the same graph and assign a different colour to each of them (one colour per plant order of arrival scenario). A convenient and colour-blind-friendly option is to use the viridis colour palette from the *viridis* package. This can be done by adding the layers `scale_colour_viridis(discrete = TRUE)` and `scale_fill_viridis(discrete = TRUE)` to the ggplot. The first function assigns a different colour to each regression line, while the second assigns matching colours to the shaded areas representing the 95% confidence intervals. The argument `discrete = TRUE` is used because the `Treatment` variable is categorical rather than continuous. Finally, do not forget to add the 95% confidence intervals around each regression line using `geom_ribbon()`.
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+pred_fixed_2 <- ggpredict(model3, terms = c("dafs [1:44]", "Treatment"))
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+pred_fixed_2 <- dplyr::rename(pred_fixed_2,
+                              dafs = x,
+                              mrd = predicted,
+                              Treatment = group)
+```
+
+## Solution 3
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+#| fig-height: 4
+#| fig-width: 5.5
+#| fig-align: center
+
+ggplot(data, 
+       aes(x = dafs,
+           y = mrd,
+           colour = Treatment, #Ask for one colour per treatment (for the regression line)
+           fill = Treatment))+ #Ask for one filling colour per treatment (for the confidence interval)
+    geom_ribbon(data = pred_fixed_2, #Add shaded area for the 95% confidence interval
+                aes(ymin = conf.low, 
+                    ymax = conf.high),
+                alpha=0.2, #alpha is an argument used to adjust the transparency level of a colour. Lower values means more transparent. It has nothing to do with the significance level of a test.
+                colour = NA)+ #Do not show borders of shaded areas
+    geom_line(data = pred_fixed_2,
+              aes(x = dafs,
+                  y = mrd))+
+    scale_colour_viridis(discrete = TRUE)+
+    scale_fill_viridis(discrete = TRUE)+
+    xlab("Days after sowing")+
+    ylab("Mean rooting depth (cm)")+
+    theme_bw()
+```
+:::
+::::
+
+## Comparing models
+
+As in previous tutorials, we can compare models using Akaike Information Criterion (AIC). The model with the lowest AIC is usually preferred.
+
+:::: callout-tip
+## Exercise 11
+
+1.  Calculate the AIC value of each model fitted in this tutorial (`model1`, `model2`, `model3`).
+2.  Which model seems best to answer the main research question addressed in this tutorial?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+AIC(model1,
+    model2,
+    model3)
+```
+
+## Solution 2
+
+Model 3 (linear mixed-effect model with random slopes and intercepts) seems best because it has the smallest AIC value.
+:::
+::::
