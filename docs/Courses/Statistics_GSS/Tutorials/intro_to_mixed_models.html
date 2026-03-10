@@ -639,7 +639,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data_tutorial10.csv"</span>)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data10 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data_tutorial10.csv"</span>)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -661,7 +661,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data10, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mrd,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> Rz))<span class="sc">+</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()<span class="sc">+</span></span>
@@ -711,7 +711,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Treatment <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>Treatment)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data10<span class="sc">$</span>Treatment <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data10<span class="sc">$</span>Treatment)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -720,7 +720,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <details class="code-fold">
 <summary>Show me the code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mrd <span class="sc">~</span> dafs<span class="sc">*</span>Treatment,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>             data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>             data10)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -733,7 +733,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = mrd ~ dafs * Treatment, data = data)
+lm(formula = mrd ~ dafs * Treatment, data = data10)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
@@ -797,7 +797,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h4 class="anchored" data-anchor-id="fitting-the-model">Fitting the model</h4>
 <p>To take into account the fact that mean rooting depth values coming from the same rhizobox are correlated and not independent from each other, we should consider fitting a linear mixed-effect model to the data. Such a model contains one or more fixed effects (in our case: <code>dafs</code>, <code>Treatment</code>, and their interaction), but also include one or more random effects (in this case: <code>Rz</code>).</p>
 <p>In R, you can fit linear mixed-effect models with the <code>lmer()</code> function in the <em>lmerTest</em> R package. A random intercept model can be fitted using the following syntax:</p>
-<p><code>lmer(mrd ~ dafs*Treatment + (1|Rz), data)</code></p>
+<p><code>lmer(mrd ~ dafs*Treatment + (1|Rz), data10)</code></p>
 <p>In this model, mean rooting depth (<code>mrd</code>) is modeled as a function of time since first sowing (<code>dafs</code>), <code>Treatment</code>, and their interaction, while accounting for the repeated measurements within rhizoboxes (<code>Rz</code>).</p>
 <p>The fixed-effects part of the model is given by <code>dafs * Treatment</code>. These fixed effects describe the average relationship between rooting depth and time across all rhizoboxes. The intercept represents the expected mean rooting depth at day zero for the reference treatment. The reference treatment is usually the one coming first alphabetically (in our case: F-first). The coefficient for <code>dafs</code> represents the average change in rooting depth per day in the reference treatment. The treatment coefficients describe how baseline rooting depth differs among arrival scenarios, and the interaction terms indicate whether the rate of change in rooting depth over time differs between plant order of arrival scenarios.</p>
 <p>The random-effects term <code>(1 | Rz)</code> specifies a random intercept for each rhizobox. This means that each rhizobox is allowed to have its own baseline level of rooting depth, deviating from the overall intercept. These deviations are assumed to be normally distributed with mean zero and an estimated variance.</p>
@@ -825,7 +825,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Rz <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>Rz)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data10<span class="sc">$</span>Rz <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data10<span class="sc">$</span>Rz)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -833,8 +833,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Treatment<span class="ot">&lt;-</span><span class="fu">factor</span>(data<span class="sc">$</span>Treatment, </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"Sync1"</span>, <span class="st">"F-first"</span>, <span class="st">"G-first"</span>, <span class="st">"L-first"</span>, <span class="st">"Sync2"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>data10<span class="sc">$</span>Treatment<span class="ot">&lt;-</span><span class="fu">factor</span>(data10<span class="sc">$</span>Treatment, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"Sync1"</span>, <span class="st">"F-first"</span>, <span class="st">"G-first"</span>, <span class="st">"L-first"</span>, <span class="st">"Sync2"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -843,7 +843,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <details class="code-fold">
 <summary>Show me the code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(mrd <span class="sc">~</span> dafs<span class="sc">*</span>Treatment <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Rz),</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                         data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                         data10)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -887,7 +887,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
 lmerModLmerTest]
 Formula: mrd ~ dafs * Treatment + (1 | Rz)
-   Data: data
+   Data: data10
 
 REML criterion at convergence: 1868.7
 
@@ -1082,7 +1082,7 @@ attr(,"class")
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li>Use <code>predict()</code> to calculate mean rooting depth values predicted by the model (<code>model2</code>) and store these values in a new column (<code>pred</code>) in the <code>data</code> object.</li>
+<li>Use <code>predict()</code> to calculate mean rooting depth values predicted by the model (<code>model2</code>) and store these values in a new column (<code>pred</code>) in the <code>data10</code> object.</li>
 <li>Create a scatter plot showing model results separately for each rhizobox. Keep the raw data (individual data points) in the background. Create a separate panel (or facet) for each plant order of arrival scenario.</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
@@ -1092,7 +1092,7 @@ attr(,"class")
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>data10<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1100,9 +1100,9 @@ attr(,"class")
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mrd,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> Rz))<span class="sc">+</span> <span class="co">#Group data per rhizobox</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data10, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> mrd,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">group =</span> Rz))<span class="sc">+</span> <span class="co">#Group data per rhizobox</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">16</span>,</span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"#FFCD00"</span>,</span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span> <span class="co">#Make points more transparent</span></span>
@@ -1156,7 +1156,7 @@ attr(,"class")
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>Use <code>ggpredict()</code> to calculate mean rooting depth values predicted by the model (<code>model2</code>) and store these values in a new object (<code>pred_fixed</code>).</li>
-<li>Rename columns in <code>pred_fixed</code> to keep the same variable names as in <code>data</code>. We can use the <code>rename()</code> function in the <em>dplyr</em> package to do this. The syntax is <code>rename(new_name = old_name)</code>.</li>
+<li>Rename columns in <code>pred_fixed</code> to keep the same variable names as in <code>data10</code>. We can use the <code>rename()</code> function in the <em>dplyr</em> package to do this. The syntax is <code>rename(new_name = old_name)</code>.</li>
 <li>Create a scatter plot showing the model predictions. This time, we will not display the raw data points in the background in order to keep the figure easier to read. Plot all regression lines in the same graph and assign a different colour to each of them (one colour per plant order of arrival scenario). A convenient and colour-blind-friendly option is to use the viridis colour palette from the <em>viridis</em> package. This can be done by adding the layers <code>scale_colour_viridis(discrete = TRUE)</code> and <code>scale_fill_viridis(discrete = TRUE)</code> to the ggplot. The first function assigns a different colour to each regression line, while the second assigns matching colours to the shaded areas representing the 95% confidence intervals. The argument <code>discrete = TRUE</code> is used because the <code>Treatment</code> variable is categorical rather than continuous. Finally, do not forget to add the 95% confidence intervals around each regression line using <code>geom_ribbon()</code>.</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
@@ -1185,7 +1185,7 @@ attr(,"class")
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data10, </span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> mrd,</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> Treatment, <span class="co">#Ask for one colour per treatment (for the regression line)</span></span>
@@ -1224,7 +1224,7 @@ attr(,"class")
 <section id="fitting-and-interpreting-the-model" class="level4">
 <h4 class="anchored" data-anchor-id="fitting-and-interpreting-the-model">Fitting and interpreting the model</h4>
 <p>A random slope and intercept model can be fitted using the following syntax:</p>
-<p><code>lmer(mrd ~ dafs*Treatment + (dafs|Rz), data)</code></p>
+<p><code>lmer(mrd ~ dafs*Treatment + (dafs|Rz), data10)</code></p>
 <p>The fixed-effect part is identical to that of the previous model (<code>model2</code>) fitted in this tutorial.</p>
 <p>The random-effects structure is specified by <code>(dafs | Rz)</code>. This notation indicates that both the intercept and the slope of <code>dafs</code> are allowed to vary among rhizoboxes. This means that each rhizobox is allowed to have its own baseline rooting depth (a random intercept) and its own rate of change in rooting depth over time (a random slope).</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1252,7 +1252,7 @@ attr(,"class")
 <details class="code-fold">
 <summary>Show me the code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(mrd <span class="sc">~</span> dafs<span class="sc">*</span>Treatment <span class="sc">+</span> (dafs<span class="sc">|</span>Rz),</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                         data,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                         data10,</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">control =</span> <span class="fu">lmerControl</span>(<span class="at">optimizer =</span><span class="st">"Nelder_Mead"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
@@ -1267,7 +1267,7 @@ attr(,"class")
 <pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
 lmerModLmerTest]
 Formula: mrd ~ dafs * Treatment + (dafs | Rz)
-   Data: data
+   Data: data10
 Control: lmerControl(optimizer = "Nelder_Mead")
 
 REML criterion at convergence: 1762.2
@@ -1461,7 +1461,7 @@ attr(,"class")
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li>Use <code>predict()</code> to calculate mean rooting depth values predicted by the model (<code>model3</code>) and store these values in a new column (<code>pred2</code>) in the <code>data</code> object.</li>
+<li>Use <code>predict()</code> to calculate mean rooting depth values predicted by the model (<code>model3</code>) and store these values in a new column (<code>pred2</code>) in the <code>data10</code> object.</li>
 <li>Create a scatter plot showing model results separately for each rhizobox. Keep the raw data (individual data points) in the background. Create a separate panel (or facet) for each plant order of arrival scenario.</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
@@ -1471,7 +1471,7 @@ attr(,"class")
 <div class="cell">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>data10<span class="sc">$</span>pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -1479,7 +1479,7 @@ attr(,"class")
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data10, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mrd,</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> Rz))<span class="sc">+</span> <span class="co">#Group data per rhizobox</span></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">16</span>,</span>
@@ -1517,7 +1517,7 @@ attr(,"class")
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>Use <code>ggpredict()</code> to calculate mean rooting depth values predicted by the model (<code>model3</code>) and store these values in a new object (<code>pred_fixed_2</code>).</li>
-<li>Rename columns in <code>pred_fixed_2</code> to keep the same variable names as in <code>data</code>. We can use the <code>rename()</code> function in the <em>dplyr</em> package to do this. The syntax is <code>rename(new_name = old_name)</code>.</li>
+<li>Rename columns in <code>pred_fixed_2</code> to keep the same variable names as in <code>data10</code>. We can use the <code>rename()</code> function in the <em>dplyr</em> package to do this. The syntax is <code>rename(new_name = old_name)</code>.</li>
 <li>Create a scatter plot showing the model predictions. This time, we will not display the raw data points in the background in order to keep the figure easier to read. Plot all regression lines in the same graph and assign a different colour to each of them (one colour per plant order of arrival scenario). A convenient and colour-blind-friendly option is to use the viridis colour palette from the <em>viridis</em> package. This can be done by adding the layers <code>scale_colour_viridis(discrete = TRUE)</code> and <code>scale_fill_viridis(discrete = TRUE)</code> to the ggplot. The first function assigns a different colour to each regression line, while the second assigns matching colours to the shaded areas representing the 95% confidence intervals. The argument <code>discrete = TRUE</code> is used because the <code>Treatment</code> variable is categorical rather than continuous. Finally, do not forget to add the 95% confidence intervals around each regression line using <code>geom_ribbon()</code>.</li>
 </ol>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
@@ -1546,7 +1546,7 @@ attr(,"class")
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show me the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data10, </span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> mrd,</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> Treatment, <span class="co">#Ask for one colour per treatment (for the regression line)</span></span>
@@ -2209,7 +2209,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-106"><a href="#cb39-106" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
 <span id="cb39-107"><a href="#cb39-107" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false  </span></span>
 <span id="cb39-108"><a href="#cb39-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-109"><a href="#cb39-109" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data_tutorial10.csv"</span>)  </span>
+<span id="cb39-109"><a href="#cb39-109" aria-hidden="true" tabindex="-1"></a>data10 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data_tutorial10.csv"</span>)  </span>
 <span id="cb39-110"><a href="#cb39-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-111"><a href="#cb39-111" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-112"><a href="#cb39-112" aria-hidden="true" tabindex="-1"></a><span class="fu">## Visualizing data</span></span>
@@ -2230,7 +2230,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-129"><a href="#cb39-129" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb39-130"><a href="#cb39-130" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
 <span id="cb39-131"><a href="#cb39-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-132"><a href="#cb39-132" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
+<span id="cb39-132"><a href="#cb39-132" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data10, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
 <span id="cb39-133"><a href="#cb39-133" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mrd,</span>
 <span id="cb39-134"><a href="#cb39-134" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> Rz))<span class="sc">+</span></span>
 <span id="cb39-135"><a href="#cb39-135" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()<span class="sc">+</span></span>
@@ -2266,7 +2266,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-167"><a href="#cb39-167" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
 <span id="cb39-168"><a href="#cb39-168" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb39-169"><a href="#cb39-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-170"><a href="#cb39-170" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Treatment <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>Treatment)</span>
+<span id="cb39-170"><a href="#cb39-170" aria-hidden="true" tabindex="-1"></a>data10<span class="sc">$</span>Treatment <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data10<span class="sc">$</span>Treatment)</span>
 <span id="cb39-171"><a href="#cb39-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-172"><a href="#cb39-172" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-173"><a href="#cb39-173" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
@@ -2278,7 +2278,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-181"><a href="#cb39-181" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb39-182"><a href="#cb39-182" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-183"><a href="#cb39-183" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mrd <span class="sc">~</span> dafs<span class="sc">*</span>Treatment,</span>
-<span id="cb39-184"><a href="#cb39-184" aria-hidden="true" tabindex="-1"></a>             data)</span>
+<span id="cb39-184"><a href="#cb39-184" aria-hidden="true" tabindex="-1"></a>             data10)</span>
 <span id="cb39-185"><a href="#cb39-185" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-186"><a href="#cb39-186" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-187"><a href="#cb39-187" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
@@ -2321,7 +2321,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-228"><a href="#cb39-228" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-229"><a href="#cb39-229" aria-hidden="true" tabindex="-1"></a>In R, you can fit linear mixed-effect models with the <span class="in">`lmer()`</span> function in the *lmerTest* R package. A random intercept model can be fitted using the following syntax:</span>
 <span id="cb39-230"><a href="#cb39-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-231"><a href="#cb39-231" aria-hidden="true" tabindex="-1"></a><span class="in">`lmer(mrd ~ dafs*Treatment + (1|Rz), data)`</span></span>
+<span id="cb39-231"><a href="#cb39-231" aria-hidden="true" tabindex="-1"></a><span class="in">`lmer(mrd ~ dafs*Treatment + (1|Rz), data10)`</span></span>
 <span id="cb39-232"><a href="#cb39-232" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-233"><a href="#cb39-233" aria-hidden="true" tabindex="-1"></a>In this model, mean rooting depth (<span class="in">`mrd`</span>) is modeled as a function of time since first sowing (<span class="in">`dafs`</span>), <span class="in">`Treatment`</span>, and their interaction, while accounting for the repeated measurements within rhizoboxes (<span class="in">`Rz`</span>).</span>
 <span id="cb39-234"><a href="#cb39-234" aria-hidden="true" tabindex="-1"></a></span>
@@ -2349,7 +2349,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-258"><a href="#cb39-258" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
 <span id="cb39-259"><a href="#cb39-259" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb39-260"><a href="#cb39-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-261"><a href="#cb39-261" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Rz <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>Rz)</span>
+<span id="cb39-261"><a href="#cb39-261" aria-hidden="true" tabindex="-1"></a>data10<span class="sc">$</span>Rz <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(data10<span class="sc">$</span>Rz)</span>
 <span id="cb39-262"><a href="#cb39-262" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-263"><a href="#cb39-263" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-264"><a href="#cb39-264" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
@@ -2360,8 +2360,8 @@ model3 14 1790.187</code></pre>
 <span id="cb39-271"><a href="#cb39-271" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
 <span id="cb39-272"><a href="#cb39-272" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb39-273"><a href="#cb39-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-274"><a href="#cb39-274" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Treatment<span class="ot">&lt;-</span><span class="fu">factor</span>(data<span class="sc">$</span>Treatment, </span>
-<span id="cb39-275"><a href="#cb39-275" aria-hidden="true" tabindex="-1"></a>                       <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"Sync1"</span>, <span class="st">"F-first"</span>, <span class="st">"G-first"</span>, <span class="st">"L-first"</span>, <span class="st">"Sync2"</span>))</span>
+<span id="cb39-274"><a href="#cb39-274" aria-hidden="true" tabindex="-1"></a>data10<span class="sc">$</span>Treatment<span class="ot">&lt;-</span><span class="fu">factor</span>(data10<span class="sc">$</span>Treatment, </span>
+<span id="cb39-275"><a href="#cb39-275" aria-hidden="true" tabindex="-1"></a>                         <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"Sync1"</span>, <span class="st">"F-first"</span>, <span class="st">"G-first"</span>, <span class="st">"L-first"</span>, <span class="st">"Sync2"</span>))</span>
 <span id="cb39-276"><a href="#cb39-276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-277"><a href="#cb39-277" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-278"><a href="#cb39-278" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 3</span></span>
@@ -2373,7 +2373,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-286"><a href="#cb39-286" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb39-287"><a href="#cb39-287" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-288"><a href="#cb39-288" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(mrd <span class="sc">~</span> dafs<span class="sc">*</span>Treatment <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Rz),</span>
-<span id="cb39-289"><a href="#cb39-289" aria-hidden="true" tabindex="-1"></a>                         data)</span>
+<span id="cb39-289"><a href="#cb39-289" aria-hidden="true" tabindex="-1"></a>                         data10)</span>
 <span id="cb39-290"><a href="#cb39-290" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-291"><a href="#cb39-291" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb39-292"><a href="#cb39-292" aria-hidden="true" tabindex="-1"></a>::::</span>
@@ -2455,7 +2455,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-374"><a href="#cb39-374" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
 <span id="cb39-375"><a href="#cb39-375" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 5</span></span>
 <span id="cb39-376"><a href="#cb39-376" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-377"><a href="#cb39-377" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use <span class="in">`predict()`</span> to calculate mean rooting depth values predicted by the model (<span class="in">`model2`</span>) and store these values in a new column (<span class="in">`pred`</span>) in the <span class="in">`data`</span> object.</span>
+<span id="cb39-377"><a href="#cb39-377" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use <span class="in">`predict()`</span> to calculate mean rooting depth values predicted by the model (<span class="in">`model2`</span>) and store these values in a new column (<span class="in">`pred`</span>) in the <span class="in">`data10`</span> object.</span>
 <span id="cb39-378"><a href="#cb39-378" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Create a scatter plot showing model results separately for each rhizobox. Keep the raw data (individual data points) in the background. Create a separate panel (or facet) for each plant order of arrival scenario.</span>
 <span id="cb39-379"><a href="#cb39-379" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-380"><a href="#cb39-380" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
@@ -2467,7 +2467,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-388"><a href="#cb39-388" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
 <span id="cb39-389"><a href="#cb39-389" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb39-390"><a href="#cb39-390" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-391"><a href="#cb39-391" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(model2)</span>
+<span id="cb39-391"><a href="#cb39-391" aria-hidden="true" tabindex="-1"></a>data10<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(model2)</span>
 <span id="cb39-392"><a href="#cb39-392" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-393"><a href="#cb39-393" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-394"><a href="#cb39-394" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
@@ -2479,9 +2479,9 @@ model3 14 1790.187</code></pre>
 <span id="cb39-402"><a href="#cb39-402" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb39-403"><a href="#cb39-403" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
 <span id="cb39-404"><a href="#cb39-404" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-405"><a href="#cb39-405" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
-<span id="cb39-406"><a href="#cb39-406" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mrd,</span>
-<span id="cb39-407"><a href="#cb39-407" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> Rz))<span class="sc">+</span> <span class="co">#Group data per rhizobox</span></span>
+<span id="cb39-405"><a href="#cb39-405" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data10, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
+<span id="cb39-406"><a href="#cb39-406" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> mrd,</span>
+<span id="cb39-407"><a href="#cb39-407" aria-hidden="true" tabindex="-1"></a>                   <span class="at">group =</span> Rz))<span class="sc">+</span> <span class="co">#Group data per rhizobox</span></span>
 <span id="cb39-408"><a href="#cb39-408" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">16</span>,</span>
 <span id="cb39-409"><a href="#cb39-409" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"#FFCD00"</span>,</span>
 <span id="cb39-410"><a href="#cb39-410" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span> <span class="co">#Make points more transparent</span></span>
@@ -2528,7 +2528,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-451"><a href="#cb39-451" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 6</span></span>
 <span id="cb39-452"><a href="#cb39-452" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-453"><a href="#cb39-453" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use <span class="in">`ggpredict()`</span> to calculate mean rooting depth values predicted by the model (<span class="in">`model2`</span>) and store these values in a new object (<span class="in">`pred_fixed`</span>).</span>
-<span id="cb39-454"><a href="#cb39-454" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Rename columns in <span class="in">`pred_fixed`</span> to keep the same variable names as in <span class="in">`data`</span>. We can use the <span class="in">`rename()`</span> function in the *dplyr* package to do this. The syntax is <span class="in">`rename(new_name = old_name)`</span>.</span>
+<span id="cb39-454"><a href="#cb39-454" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Rename columns in <span class="in">`pred_fixed`</span> to keep the same variable names as in <span class="in">`data10`</span>. We can use the <span class="in">`rename()`</span> function in the *dplyr* package to do this. The syntax is <span class="in">`rename(new_name = old_name)`</span>.</span>
 <span id="cb39-455"><a href="#cb39-455" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Create a scatter plot showing the model predictions. This time, we will not display the raw data points in the background in order to keep the figure easier to read. Plot all regression lines in the same graph and assign a different colour to each of them (one colour per plant order of arrival scenario). A convenient and colour-blind-friendly option is to use the viridis colour palette from the *viridis* package. This can be done by adding the layers <span class="in">`scale_colour_viridis(discrete = TRUE)`</span> and <span class="in">`scale_fill_viridis(discrete = TRUE)`</span> to the ggplot. The first function assigns a different colour to each regression line, while the second assigns matching colours to the shaded areas representing the 95% confidence intervals. The argument <span class="in">`discrete = TRUE`</span> is used because the <span class="in">`Treatment`</span> variable is categorical rather than continuous. Finally, do not forget to add the 95% confidence intervals around each regression line using <span class="in">`geom_ribbon()`</span>.</span>
 <span id="cb39-456"><a href="#cb39-456" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-457"><a href="#cb39-457" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
@@ -2568,7 +2568,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-497"><a href="#cb39-497" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 5.5</span></span>
 <span id="cb39-498"><a href="#cb39-498" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
 <span id="cb39-499"><a href="#cb39-499" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-500"><a href="#cb39-500" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, </span>
+<span id="cb39-500"><a href="#cb39-500" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data10, </span>
 <span id="cb39-501"><a href="#cb39-501" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
 <span id="cb39-502"><a href="#cb39-502" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> mrd,</span>
 <span id="cb39-503"><a href="#cb39-503" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> Treatment, <span class="co">#Ask for one colour per treatment (for the regression line)</span></span>
@@ -2596,7 +2596,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-525"><a href="#cb39-525" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-526"><a href="#cb39-526" aria-hidden="true" tabindex="-1"></a>A random slope and intercept model can be fitted using the following syntax:</span>
 <span id="cb39-527"><a href="#cb39-527" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-528"><a href="#cb39-528" aria-hidden="true" tabindex="-1"></a><span class="in">`lmer(mrd ~ dafs*Treatment + (dafs|Rz), data)`</span></span>
+<span id="cb39-528"><a href="#cb39-528" aria-hidden="true" tabindex="-1"></a><span class="in">`lmer(mrd ~ dafs*Treatment + (dafs|Rz), data10)`</span></span>
 <span id="cb39-529"><a href="#cb39-529" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-530"><a href="#cb39-530" aria-hidden="true" tabindex="-1"></a>The fixed-effect part is identical to that of the previous model (<span class="in">`model2`</span>) fitted in this tutorial.</span>
 <span id="cb39-531"><a href="#cb39-531" aria-hidden="true" tabindex="-1"></a></span>
@@ -2621,7 +2621,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-552"><a href="#cb39-552" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb39-553"><a href="#cb39-553" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-554"><a href="#cb39-554" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> lmerTest<span class="sc">::</span><span class="fu">lmer</span>(mrd <span class="sc">~</span> dafs<span class="sc">*</span>Treatment <span class="sc">+</span> (dafs<span class="sc">|</span>Rz),</span>
-<span id="cb39-555"><a href="#cb39-555" aria-hidden="true" tabindex="-1"></a>                         data,</span>
+<span id="cb39-555"><a href="#cb39-555" aria-hidden="true" tabindex="-1"></a>                         data10,</span>
 <span id="cb39-556"><a href="#cb39-556" aria-hidden="true" tabindex="-1"></a>                         <span class="at">control =</span> <span class="fu">lmerControl</span>(<span class="at">optimizer =</span><span class="st">"Nelder_Mead"</span>))</span>
 <span id="cb39-557"><a href="#cb39-557" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-558"><a href="#cb39-558" aria-hidden="true" tabindex="-1"></a></span>
@@ -2677,7 +2677,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-614"><a href="#cb39-614" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
 <span id="cb39-615"><a href="#cb39-615" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 8</span></span>
 <span id="cb39-616"><a href="#cb39-616" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-617"><a href="#cb39-617" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use <span class="in">`predict()`</span> to calculate mean rooting depth values predicted by the model (<span class="in">`model3`</span>) and store these values in a new column (<span class="in">`pred2`</span>) in the <span class="in">`data`</span> object.</span>
+<span id="cb39-617"><a href="#cb39-617" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use <span class="in">`predict()`</span> to calculate mean rooting depth values predicted by the model (<span class="in">`model3`</span>) and store these values in a new column (<span class="in">`pred2`</span>) in the <span class="in">`data10`</span> object.</span>
 <span id="cb39-618"><a href="#cb39-618" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Create a scatter plot showing model results separately for each rhizobox. Keep the raw data (individual data points) in the background. Create a separate panel (or facet) for each plant order of arrival scenario.</span>
 <span id="cb39-619"><a href="#cb39-619" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-620"><a href="#cb39-620" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
@@ -2689,7 +2689,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-628"><a href="#cb39-628" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false </span></span>
 <span id="cb39-629"><a href="#cb39-629" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb39-630"><a href="#cb39-630" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-631"><a href="#cb39-631" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model3)</span>
+<span id="cb39-631"><a href="#cb39-631" aria-hidden="true" tabindex="-1"></a>data10<span class="sc">$</span>pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model3)</span>
 <span id="cb39-632"><a href="#cb39-632" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-633"><a href="#cb39-633" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-634"><a href="#cb39-634" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution 2</span></span>
@@ -2701,7 +2701,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-642"><a href="#cb39-642" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb39-643"><a href="#cb39-643" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
 <span id="cb39-644"><a href="#cb39-644" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-645"><a href="#cb39-645" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
+<span id="cb39-645"><a href="#cb39-645" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data10, <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
 <span id="cb39-646"><a href="#cb39-646" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mrd,</span>
 <span id="cb39-647"><a href="#cb39-647" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> Rz))<span class="sc">+</span> <span class="co">#Group data per rhizobox</span></span>
 <span id="cb39-648"><a href="#cb39-648" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">16</span>,</span>
@@ -2722,7 +2722,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-663"><a href="#cb39-663" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 10</span></span>
 <span id="cb39-664"><a href="#cb39-664" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-665"><a href="#cb39-665" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Use <span class="in">`ggpredict()`</span> to calculate mean rooting depth values predicted by the model (<span class="in">`model3`</span>) and store these values in a new object (<span class="in">`pred_fixed_2`</span>).</span>
-<span id="cb39-666"><a href="#cb39-666" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Rename columns in <span class="in">`pred_fixed_2`</span> to keep the same variable names as in <span class="in">`data`</span>. We can use the <span class="in">`rename()`</span> function in the *dplyr* package to do this. The syntax is <span class="in">`rename(new_name = old_name)`</span>.</span>
+<span id="cb39-666"><a href="#cb39-666" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Rename columns in <span class="in">`pred_fixed_2`</span> to keep the same variable names as in <span class="in">`data10`</span>. We can use the <span class="in">`rename()`</span> function in the *dplyr* package to do this. The syntax is <span class="in">`rename(new_name = old_name)`</span>.</span>
 <span id="cb39-667"><a href="#cb39-667" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Create a scatter plot showing the model predictions. This time, we will not display the raw data points in the background in order to keep the figure easier to read. Plot all regression lines in the same graph and assign a different colour to each of them (one colour per plant order of arrival scenario). A convenient and colour-blind-friendly option is to use the viridis colour palette from the *viridis* package. This can be done by adding the layers <span class="in">`scale_colour_viridis(discrete = TRUE)`</span> and <span class="in">`scale_fill_viridis(discrete = TRUE)`</span> to the ggplot. The first function assigns a different colour to each regression line, while the second assigns matching colours to the shaded areas representing the 95% confidence intervals. The argument <span class="in">`discrete = TRUE`</span> is used because the <span class="in">`Treatment`</span> variable is categorical rather than continuous. Finally, do not forget to add the 95% confidence intervals around each regression line using <span class="in">`geom_ribbon()`</span>.</span>
 <span id="cb39-668"><a href="#cb39-668" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-669"><a href="#cb39-669" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
@@ -2762,7 +2762,7 @@ model3 14 1790.187</code></pre>
 <span id="cb39-709"><a href="#cb39-709" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 5.5</span></span>
 <span id="cb39-710"><a href="#cb39-710" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
 <span id="cb39-711"><a href="#cb39-711" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-712"><a href="#cb39-712" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, </span>
+<span id="cb39-712"><a href="#cb39-712" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data10, </span>
 <span id="cb39-713"><a href="#cb39-713" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> dafs,</span>
 <span id="cb39-714"><a href="#cb39-714" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> mrd,</span>
 <span id="cb39-715"><a href="#cb39-715" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> Treatment, <span class="co">#Ask for one colour per treatment (for the regression line)</span></span>

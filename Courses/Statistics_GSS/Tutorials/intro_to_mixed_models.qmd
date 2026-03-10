@@ -100,7 +100,7 @@ Start by importing the data used in this course (see previous tutorials). You wi
 #| message: false 
 #| warning: false  
 
-data <- read_csv("data_tutorial10.csv")  
+data10 <- read_csv("data_tutorial10.csv")  
 ```
 
 ## Visualizing data
@@ -121,7 +121,7 @@ Create a scatter plot showing the relationship between mean rooting depth (`mrd`
 #| warning: false
 #| fig-align: center
 
-ggplot(data, aes(x = dafs,
+ggplot(data10, aes(x = dafs,
                  y = mrd,
                  group = Rz))+
     geom_line()+
@@ -157,7 +157,7 @@ Let's start with what we already know: fitting a simple linear regression model.
 #| message: false 
 #| warning: false
 
-data$Treatment <- as.factor(data$Treatment)
+data10$Treatment <- as.factor(data10$Treatment)
 ```
 
 ## Solution 2
@@ -169,7 +169,7 @@ data$Treatment <- as.factor(data$Treatment)
 #| warning: false
 
 model1 <- lm(mrd ~ dafs*Treatment,
-             data)
+             data10)
 ```
 
 ## Solution 3
@@ -212,7 +212,7 @@ To take into account the fact that mean rooting depth values coming from the sam
 
 In R, you can fit linear mixed-effect models with the `lmer()` function in the *lmerTest* R package. A random intercept model can be fitted using the following syntax:
 
-`lmer(mrd ~ dafs*Treatment + (1|Rz), data)`
+`lmer(mrd ~ dafs*Treatment + (1|Rz), data10)`
 
 In this model, mean rooting depth (`mrd`) is modeled as a function of time since first sowing (`dafs`), `Treatment`, and their interaction, while accounting for the repeated measurements within rhizoboxes (`Rz`).
 
@@ -240,7 +240,7 @@ Conceptually, the fixed effects describe how rooting depth changes over time and
 #| message: false 
 #| warning: false
 
-data$Rz <- as.factor(data$Rz)
+data10$Rz <- as.factor(data10$Rz)
 ```
 
 ## Solution 2
@@ -251,8 +251,8 @@ data$Rz <- as.factor(data$Rz)
 #| message: false 
 #| warning: false
 
-data$Treatment<-factor(data$Treatment, 
-                       levels=c("Sync1", "F-first", "G-first", "L-first", "Sync2"))
+data10$Treatment<-factor(data10$Treatment, 
+                         levels=c("Sync1", "F-first", "G-first", "L-first", "Sync2"))
 ```
 
 ## Solution 3
@@ -264,7 +264,7 @@ data$Treatment<-factor(data$Treatment,
 #| warning: false
 
 model2 <- lmerTest::lmer(mrd ~ dafs*Treatment + (1|Rz),
-                         data)
+                         data10)
 ```
 :::
 ::::
@@ -346,7 +346,7 @@ Let’s start with the first approach, where we visualize the model predictions 
 :::: callout-tip
 ## Exercise 5
 
-1.  Use `predict()` to calculate mean rooting depth values predicted by the model (`model2`) and store these values in a new column (`pred`) in the `data` object.
+1.  Use `predict()` to calculate mean rooting depth values predicted by the model (`model2`) and store these values in a new column (`pred`) in the `data10` object.
 2.  Create a scatter plot showing model results separately for each rhizobox. Keep the raw data (individual data points) in the background. Create a separate panel (or facet) for each plant order of arrival scenario.
 
 ::: panel-tabset
@@ -358,7 +358,7 @@ Let’s start with the first approach, where we visualize the model predictions 
 #| message: false 
 #| warning: false
 
-data$pred <- predict(model2)
+data10$pred <- predict(model2)
 ```
 
 ## Solution 2
@@ -370,9 +370,9 @@ data$pred <- predict(model2)
 #| warning: false
 #| fig-align: center
 
-ggplot(data, aes(x = dafs,
-                 y = mrd,
-                 group = Rz))+ #Group data per rhizobox
+ggplot(data10, aes(x = dafs,
+                   y = mrd,
+                   group = Rz))+ #Group data per rhizobox
     geom_point(shape=16,
                colour = "#FFCD00",
                alpha = 0.5)+ #Make points more transparent
@@ -419,7 +419,7 @@ In this code, `"dafs [1:44]"` tells the function to calculate predictions across
 ## Exercise 6
 
 1.  Use `ggpredict()` to calculate mean rooting depth values predicted by the model (`model2`) and store these values in a new object (`pred_fixed`).
-2.  Rename columns in `pred_fixed` to keep the same variable names as in `data`. We can use the `rename()` function in the *dplyr* package to do this. The syntax is `rename(new_name = old_name)`.
+2.  Rename columns in `pred_fixed` to keep the same variable names as in `data10`. We can use the `rename()` function in the *dplyr* package to do this. The syntax is `rename(new_name = old_name)`.
 3.  Create a scatter plot showing the model predictions. This time, we will not display the raw data points in the background in order to keep the figure easier to read. Plot all regression lines in the same graph and assign a different colour to each of them (one colour per plant order of arrival scenario). A convenient and colour-blind-friendly option is to use the viridis colour palette from the *viridis* package. This can be done by adding the layers `scale_colour_viridis(discrete = TRUE)` and `scale_fill_viridis(discrete = TRUE)` to the ggplot. The first function assigns a different colour to each regression line, while the second assigns matching colours to the shaded areas representing the 95% confidence intervals. The argument `discrete = TRUE` is used because the `Treatment` variable is categorical rather than continuous. Finally, do not forget to add the 95% confidence intervals around each regression line using `geom_ribbon()`.
 
 ::: panel-tabset
@@ -459,7 +459,7 @@ pred_fixed <- dplyr::rename(pred_fixed,
 #| fig-width: 5.5
 #| fig-align: center
 
-ggplot(data, 
+ggplot(data10, 
        aes(x = dafs,
            y = mrd,
            colour = Treatment, #Ask for one colour per treatment (for the regression line)
@@ -487,7 +487,7 @@ ggplot(data,
 
 A random slope and intercept model can be fitted using the following syntax:
 
-`lmer(mrd ~ dafs*Treatment + (dafs|Rz), data)`
+`lmer(mrd ~ dafs*Treatment + (dafs|Rz), data10)`
 
 The fixed-effect part is identical to that of the previous model (`model2`) fitted in this tutorial.
 
@@ -512,7 +512,7 @@ The random-effects structure is specified by `(dafs | Rz)`. This notation indica
 #| warning: false
 
 model3 <- lmerTest::lmer(mrd ~ dafs*Treatment + (dafs|Rz),
-                         data,
+                         data10,
                          control = lmerControl(optimizer ="Nelder_Mead"))
 ```
 
@@ -568,7 +568,7 @@ We will first create a plot showing a regression line for each rhizobox.
 :::: callout-tip
 ## Exercise 8
 
-1.  Use `predict()` to calculate mean rooting depth values predicted by the model (`model3`) and store these values in a new column (`pred2`) in the `data` object.
+1.  Use `predict()` to calculate mean rooting depth values predicted by the model (`model3`) and store these values in a new column (`pred2`) in the `data10` object.
 2.  Create a scatter plot showing model results separately for each rhizobox. Keep the raw data (individual data points) in the background. Create a separate panel (or facet) for each plant order of arrival scenario.
 
 ::: panel-tabset
@@ -580,7 +580,7 @@ We will first create a plot showing a regression line for each rhizobox.
 #| message: false 
 #| warning: false
 
-data$pred2 <- predict(model3)
+data10$pred2 <- predict(model3)
 ```
 
 ## Solution 2
@@ -592,7 +592,7 @@ data$pred2 <- predict(model3)
 #| warning: false
 #| fig-align: center
 
-ggplot(data, aes(x = dafs,
+ggplot(data10, aes(x = dafs,
                  y = mrd,
                  group = Rz))+ #Group data per rhizobox
     geom_point(shape=16,
@@ -613,7 +613,7 @@ Now let's create a plot focusing on fixed effects. In this case, the plot should
 ## Exercise 10
 
 1.  Use `ggpredict()` to calculate mean rooting depth values predicted by the model (`model3`) and store these values in a new object (`pred_fixed_2`).
-2.  Rename columns in `pred_fixed_2` to keep the same variable names as in `data`. We can use the `rename()` function in the *dplyr* package to do this. The syntax is `rename(new_name = old_name)`.
+2.  Rename columns in `pred_fixed_2` to keep the same variable names as in `data10`. We can use the `rename()` function in the *dplyr* package to do this. The syntax is `rename(new_name = old_name)`.
 3.  Create a scatter plot showing the model predictions. This time, we will not display the raw data points in the background in order to keep the figure easier to read. Plot all regression lines in the same graph and assign a different colour to each of them (one colour per plant order of arrival scenario). A convenient and colour-blind-friendly option is to use the viridis colour palette from the *viridis* package. This can be done by adding the layers `scale_colour_viridis(discrete = TRUE)` and `scale_fill_viridis(discrete = TRUE)` to the ggplot. The first function assigns a different colour to each regression line, while the second assigns matching colours to the shaded areas representing the 95% confidence intervals. The argument `discrete = TRUE` is used because the `Treatment` variable is categorical rather than continuous. Finally, do not forget to add the 95% confidence intervals around each regression line using `geom_ribbon()`.
 
 ::: panel-tabset
@@ -653,7 +653,7 @@ pred_fixed_2 <- dplyr::rename(pred_fixed_2,
 #| fig-width: 5.5
 #| fig-align: center
 
-ggplot(data, 
+ggplot(data10, 
        aes(x = dafs,
            y = mrd,
            colour = Treatment, #Ask for one colour per treatment (for the regression line)
