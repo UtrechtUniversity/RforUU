@@ -29,9 +29,22 @@ In this tutorial, you will learn how to fit a logistic regression model in R, in
 
 Let's get started!
 
+## Install R packages
+
+In this tutorial, we will need to use functions in the *fmsb* package. Make sure to install this package before starting the tutorial.
+
+```{r}
+#| eval: false 
+#| echo: true
+#| message: false
+#| warning: false
+
+install.packages("fmsb")
+```
+
 ## Load R packages
 
-To work on this tutorial, you will need to load the *readxl* and *tidyverse* packages.
+To work on this tutorial, you will need to load the *readxl*, *tidyverse*, and *fmsb* packages.
 
 ```{r}
 #| eval: true 
@@ -41,6 +54,7 @@ To work on this tutorial, you will need to load the *readxl* and *tidyverse* pac
 
 library(readxl) 
 library(tidyverse)
+library(fmsb)
 ```
 
 ## Importing data
@@ -125,7 +139,7 @@ Create a scatter plot of the relationship between the number of agroecological p
 #| fig-height: 4
 #| fig-align: center
 #| fig-cap: "Relationship between the number of agroecological practices and pesticide use."
-#| label: fig-litterCMB
+#| label: fig-logistic1
 
 ggplot(data = data, 
        mapping = aes(x = n_practices,
@@ -200,3 +214,153 @@ $$
 From the equations above, we can figure out that for the odds of using pesticides get multiplied by $e^{-0.68}=0.51$ every time that one agroecological practice is added.
 :::
 ::::
+
+## Calculating confidence intervals
+
+After fitting a model (for example with `glm()`), the confidence intervals of model coefficients can be obtained by applying `confint()` to the fitted `model` object. By default, this function calculates 95% confidence intervals for each model coefficient.
+
+For logistic regression, the coefficients are expressed in log-odds. If we take the exponential of the confidence intervals using `exp()`, we obtain confidence intervals for the odds ratios.
+
+:::: callout-tip
+## Exercise 4
+
+1.  Use `confint()` to calculate the lower and upper bounds of the 95% confidence interval for model coefficients.
+2.  Calculate the confidence intervals for the odds ratio.
+3.  Is the confidence interval indicating that the effect of number of agroecological practices on pesticide use is positive or negative? Is the effect significant according to the confidence interval?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false 
+
+confint(model)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false 
+
+exp(confint(model))
+```
+
+## Solution 3
+
+The odds ratio is equal to $e^{-0.68}=0.51$ (see exercise 3). The 95% confidence interval around this odds ratio is \[0.27, 0.73\]. Because the confidence interval of the odds ratio lies entirely below 1, increasing the number of agroecological practices decreases the odds of using pesticides. In other words, the relationship between the number of practices and pesticide use is negative: farms with more agroecological practices are less likely to use pesticides. Since the confidence interval does not include 1, this indicates that the effect is statistically significant.
+:::
+::::
+
+## Assessing model fit
+
+The goodness of fit of a logistic regression model can be assessed using Nagelkerke’s R^2^, a commonly used pseudo-R^2^ measure for models with a binary response variable. Unlike the R^2^ used in linear regression, logistic regression does not have a direct measure of the proportion of variance explained. Nagelkerke’s R^2^ provides a comparable measure that ranges between 0 and 1, where higher values indicate a better model fit.
+
+In R, Nagelkerke’s R^2^ can be calculated using the `NagelkerkeR2()` function from the *fmsb* package. You just need to specify the `model` object as an input.
+
+Nagelkerke’s R^2^ compares the fitted model with a null model (a model without predictors). A larger value indicates that the explanatory variables improve the model’s ability to predict the response variable.
+
+::: callout-tip
+## Exercise 5
+
+Calculate Nagelkerke’s R^2^ for the fitted logistic regression model (`model` object).
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false 
+
+NagelkerkeR2(model)
+```
+:::
+
+## Calculating probabilities from the model
+
+:::: callout-tip
+## Exercise 6
+
+::: panel-tabset
+## Question
+
+What is the probability ($p$) that a farm uses pesticides if it uses a total of 17 agroecological practices? Calculate this probability by hand as well as in R.
+
+## Answer (hand calculations)
+
+The equation of the model is as follows:
+
+$$
+logit(p)=log(\frac{p}{1-p})=11.93-0.68 \times x_1
+$$
+
+The same equation could be rewritten as:
+
+$$
+p=\frac{1}{1+e^{-(11.9311-0.6768 \times x_1)}}
+$$
+
+Therefore, the requested probability ($p$) can be calculated as:
+
+$$
+p=\frac{1}{1+e^{-(11.9311-0.6768 \times 17)}}=0.60
+$$
+
+If a farm uses 17 agroecological practices, there is a 60% chance that it uses pesticides.
+
+## Answer (R calculations)
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false 
+
+p <- 1/(1+exp(-(11.9311-0.6768*17)))
+```
+
+If a farm uses 17 agroecological practices, there is a `{r} round(p, 2)*100`% chance that it uses pesticides.
+:::
+::::
+
+## Visualizing model output
+
+An easy way to visualize the results of a logistic regression model is to use `geom_smooth()` in *ggplot2*. This function can automatically fit a model and display the predicted relationship between the response variable and a predictor.
+
+For a binary response variable, you can specify a logistic regression model by using `method = "glm"` and `method.args = list(family = "binomial")`.
+
+::: callout-tip
+## Exercise 7
+
+Improve the scatter plot from exercise 2 by adding a line showing the fitted logistic model. In `geom_smooth()`, set `se=TRUE` to display the 95% confidence interval. Now that you have more experience with *ggplot2*, try to write the code yourself and do not look at the answer right away.
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+#| fig-cap: "Relationship between the number of agroecological practices and pesticide use."
+#| label: fig-logistic2
+
+ggplot(data = data, 
+       mapping = aes(x = n_practices,
+                     y = pesticide2)) +
+  geom_smooth(method = "glm",
+              method.args = list(family = "binomial"),
+              se = TRUE,
+              colour = "black")+
+  geom_point(shape=21,
+             fill = "#FFCD00", #Fill colour for shape
+             colour = "black")+ #Border colour for shape
+  xlab("Number of agroecological practices")+ #Change name of x axis
+  ylab("Pesticide use")+ #Change name of y axis
+  theme_bw() #This creates a black/white plot
+```
+:::

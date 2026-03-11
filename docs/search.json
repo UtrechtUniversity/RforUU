@@ -1765,7 +1765,7 @@
     "href": "Courses/Statistics_GSS/Tutorials/logistic_regression.html#load-r-packages",
     "title": "Tutorial 11: Logistic regression",
     "section": "Load R packages",
-    "text": "Load R packages\nTo work on this tutorial, you will need to load the readxl and tidyverse packages.\n\n\nShow me the code\nlibrary(readxl) \nlibrary(tidyverse)",
+    "text": "Load R packages\nTo work on this tutorial, you will need to load the readxl, tidyverse, and fmsb packages.\n\n\nShow me the code\nlibrary(readxl) \nlibrary(tidyverse)\nlibrary(fmsb)",
     "crumbs": [
       "Statistics GSS",
       "Tutorials",
@@ -2395,6 +2395,66 @@
     "text": "Course objectives",
     "crumbs": [
       "Natural processes"
+    ]
+  },
+  {
+    "objectID": "Courses/Statistics_GSS/Tutorials/logistic_regression.html#install-r-packages",
+    "href": "Courses/Statistics_GSS/Tutorials/logistic_regression.html#install-r-packages",
+    "title": "Tutorial 11: Logistic regression",
+    "section": "Install R packages",
+    "text": "Install R packages\nIn this tutorial, we will need to use functions in the fmsb package. Make sure to install this package before starting the tutorial.\n\n\nShow me the code\ninstall.packages(\"fmsb\")",
+    "crumbs": [
+      "Statistics GSS",
+      "Tutorials",
+      "11. Logistic regression"
+    ]
+  },
+  {
+    "objectID": "Courses/Statistics_GSS/Tutorials/logistic_regression.html#calculating-confidence-intervals",
+    "href": "Courses/Statistics_GSS/Tutorials/logistic_regression.html#calculating-confidence-intervals",
+    "title": "Tutorial 11: Logistic regression",
+    "section": "Calculating confidence intervals",
+    "text": "Calculating confidence intervals\nAfter fitting a model (for example with glm()), the confidence intervals of model coefficients can be obtained by applying confint() to the fitted model object. By default, this function calculates 95% confidence intervals for each model coefficient.\nFor logistic regression, the coefficients are expressed in log-odds. If we take the exponential of the confidence intervals using exp(), we obtain confidence intervals for the odds ratios.\n\n\n\n\n\n\nTipExercise 4\n\n\n\n\nUse confint() to calculate the lower and upper bounds of the 95% confidence interval for model coefficients.\nCalculate the confidence intervals for the odds ratio.\nIs the confidence interval indicating that the effect of number of agroecological practices on pesticide use is positive or negative? Is the effect significant according to the confidence interval?\n\n\nSolution 1Solution 2Solution 3\n\n\n\n\nShow me the code\nconfint(model)\n\n\n                2.5 %    97.5 %\n(Intercept)  5.687697 23.068457\nn_practices -1.307524 -0.318642\n\n\n\n\n\n\nShow me the code\nexp(confint(model))\n\n\n                  2.5 %       97.5 %\n(Intercept) 295.2128188 1.043526e+10\nn_practices   0.2704889 7.271358e-01\n\n\n\n\nThe odds ratio is equal to \\(e^{-0.68}=0.51\\) (see exercise 3). The 95% confidence interval around this odds ratio is [0.27, 0.73]. Because the confidence interval of the odds ratio lies entirely below 1, increasing the number of agroecological practices decreases the odds of using pesticides. In other words, the relationship between the number of practices and pesticide use is negative: farms with more agroecological practices are less likely to use pesticides. Since the confidence interval does not include 1, this indicates that the effect is statistically significant.",
+    "crumbs": [
+      "Statistics GSS",
+      "Tutorials",
+      "11. Logistic regression"
+    ]
+  },
+  {
+    "objectID": "Courses/Statistics_GSS/Tutorials/logistic_regression.html#assessing-model-fit",
+    "href": "Courses/Statistics_GSS/Tutorials/logistic_regression.html#assessing-model-fit",
+    "title": "Tutorial 11: Logistic regression",
+    "section": "Assessing model fit",
+    "text": "Assessing model fit\nThe goodness of fit of a logistic regression model can be assessed using Nagelkerke’s R2, a commonly used pseudo-R2 measure for models with a binary response variable. Unlike the R2 used in linear regression, logistic regression does not have a direct measure of the proportion of variance explained. Nagelkerke’s R2 provides a comparable measure that ranges between 0 and 1, where higher values indicate a better model fit.\nIn R, Nagelkerke’s R2 can be calculated using the NagelkerkeR2() function from the fmsb package. You just need to specify the model object as an input.\nNagelkerke’s R2 compares the fitted model with a null model (a model without predictors). A larger value indicates that the explanatory variables improve the model’s ability to predict the response variable.\n\n\n\n\n\n\nTipExercise 5\n\n\n\nCalculate Nagelkerke’s R2 for the fitted logistic regression model (model object).\n\n\nShow me the code\nNagelkerkeR2(model)\n\n\n$N\n[1] 36\n\n$R2\n[1] 0.719826",
+    "crumbs": [
+      "Statistics GSS",
+      "Tutorials",
+      "11. Logistic regression"
+    ]
+  },
+  {
+    "objectID": "Courses/Statistics_GSS/Tutorials/logistic_regression.html#calculating-probabilities-from-the-model",
+    "href": "Courses/Statistics_GSS/Tutorials/logistic_regression.html#calculating-probabilities-from-the-model",
+    "title": "Tutorial 11: Logistic regression",
+    "section": "Calculating probabilities from the model",
+    "text": "Calculating probabilities from the model\n\n\n\n\n\n\nTipExercise 6\n\n\n\n\nQuestionAnswer (hand calculations)Answer (R calculations)\n\n\nWhat is the probability (\\(p\\)) that a farm uses pesticides if it uses a total of 17 agroecological practices? Calculate this probability by hand as well as in R.\n\n\nThe equation of the model is as follows:\n\\[\nlogit(p)=log(\\frac{p}{1-p})=11.93-0.68 \\times x_1\n\\]\nThe same equation could be rewritten as:\n\\[\np=\\frac{1}{1+e^{-(11.9311-0.6768 \\times x_1)}}\n\\]\nTherefore, the requested probability (\\(p\\)) can be calculated as:\n\\[\np=\\frac{1}{1+e^{-(11.9311-0.6768 \\times 17)}}=0.60\n\\]\nIf a farm uses 17 agroecological practices, there is a 60% chance that it uses pesticides.\n\n\n\n\nShow me the code\np &lt;- 1/(1+exp(-(11.9311-0.6768*17)))\n\n\nIf a farm uses 17 agroecological practices, there is a 60% chance that it uses pesticides.",
+    "crumbs": [
+      "Statistics GSS",
+      "Tutorials",
+      "11. Logistic regression"
+    ]
+  },
+  {
+    "objectID": "Courses/Statistics_GSS/Tutorials/logistic_regression.html#visualizing-model-output",
+    "href": "Courses/Statistics_GSS/Tutorials/logistic_regression.html#visualizing-model-output",
+    "title": "Tutorial 11: Logistic regression",
+    "section": "Visualizing model output",
+    "text": "Visualizing model output\nAn easy way to visualize the results of a logistic regression model is to use geom_smooth() in ggplot2. This function can automatically fit a model and display the predicted relationship between the response variable and a predictor.\nFor a binary response variable, you can specify a logistic regression model by using method = \"glm\" and method.args = list(family = \"binomial\").\n\n\n\n\n\n\nTipExercise 7\n\n\n\nImprove the scatter plot from exercise 2 by adding a line showing the fitted logistic model. In geom_smooth(), set se=TRUE to display the 95% confidence interval. Now that you have more experience with ggplot2, try to write the code yourself and do not look at the answer right away.\n\n\nShow me the code\nggplot(data = data, \n       mapping = aes(x = n_practices,\n                     y = pesticide2)) +\n  geom_smooth(method = \"glm\",\n              method.args = list(family = \"binomial\"),\n              se = TRUE,\n              colour = \"black\")+\n  geom_point(shape=21,\n             fill = \"#FFCD00\", #Fill colour for shape\n             colour = \"black\")+ #Border colour for shape\n  xlab(\"Number of agroecological practices\")+ #Change name of x axis\n  ylab(\"Pesticide use\")+ #Change name of y axis\n  theme_bw() #This creates a black/white plot\n\n\n\n\n\n\n\n\nFigure 2: Relationship between the number of agroecological practices and pesticide use.",
+    "crumbs": [
+      "Statistics GSS",
+      "Tutorials",
+      "11. Logistic regression"
     ]
   }
 ]
