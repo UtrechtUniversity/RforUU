@@ -610,7 +610,7 @@ ggplot(data10, aes(x = dafs,
 Now let's create a plot focusing on fixed effects. In this case, the plot should show the average predicted relationships between the predictors (`dafs` and `Treatment`) and the response variable (`mrd`).
 
 :::: callout-tip
-## Exercise 10
+## Exercise 9
 
 1.  Use `ggpredict()` to calculate mean rooting depth values predicted by the model (`model3`) and store these values in a new object (`pred_fixed_2`).
 2.  Rename columns in `pred_fixed_2` to keep the same variable names as in `data10`. We can use the `rename()` function in the *dplyr* package to do this. The syntax is `rename(new_name = old_name)`.
@@ -680,7 +680,7 @@ ggplot(data10,
 As in previous tutorials, we can compare models using Akaike Information Criterion (AIC). The model with the lowest AIC is usually preferred.
 
 :::: callout-tip
-## Exercise 11
+## Exercise 10
 
 1.  Calculate the AIC value of each model fitted in this tutorial (`model1`, `model2`, `model3`).
 2.  Which model seems best to answer the main research question addressed in this tutorial?
