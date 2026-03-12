@@ -29,7 +29,9 @@ Our main research question was:
 
 From an ecological restoration perspective, this question is particularly relevant because manipulating the order of arrival of plant species or functional groups during restoration may influence how plant communities develop belowground. If certain arrival sequences promote deeper rooting, these communities may gain access to water and nutrients from deeper soil layers. This could enhance their resistance to drought and other extreme weather events, ultimately increasing long-term resilience.
 
-To address this question, we conducted a greenhouse experiment in which the order of arrival of forbs, grasses, and legumes was manipulated in rhizoboxes. Rhizoboxes are specialized pots filled with soil and equipped with a transparent front window, allowing researchers to observe and monitor root growth over time.
+To address this question, we conducted a greenhouse experiment in which the order of arrival of forbs, grasses, and legumes was manipulated in rhizoboxes (@fig-experiment). Rhizoboxes are specialized pots filled with soil and equipped with a transparent front window, allowing researchers to observe and monitor root growth over time.
+
+![Experimental set up used to test the effect of plant functional group order of arrival on the vertical distribution of roots in the soil.](images/20170922_140036.JPG){#fig-experiment fig-align="center" width="250"}
 
 We tested five arrival scenarios (referred to as `Treatment` in the dataset):
 

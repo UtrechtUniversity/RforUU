@@ -54,8 +54,8 @@
 <line x1='221.59' y1='177.36' x2='221.59' y2='256.01' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polygon points='201.28,100.44 201.28,177.36 241.90,177.36 241.90,100.44 201.28,100.44 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFCD00;' />
 <line x1='201.28' y1='136.71' x2='241.90' y2='136.71' style='stroke-width: 2.13; stroke: #333333; stroke-linecap: butt; stroke-linejoin: miter;' />
-<line x1='160.66' y1='187.41' x2='160.66' y2='153.32' style='stroke-width: 1.07; stroke-linecap: butt;' />
-<line x1='262.21' y1='162.67' x2='262.21' y2='119.87' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<line x1='160.66' y1='188.50' x2='160.66' y2='153.07' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<line x1='262.21' y1='160.38' x2='262.21' y2='117.97' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <circle cx='160.66' cy='171.01' r='2.84' style='stroke-width: 1.42; fill: #000000;' />
 <circle cx='262.21' cy='140.30' r='2.84' style='stroke-width: 1.42; fill: #000000;' />
 <rect x='59.11' y='5.48' width='223.41' height='262.46' style='stroke-width: 1.07; stroke: #333333;' />
