@@ -140,7 +140,7 @@ $$
 \chi^2=\sum_{i=1}^n{\frac{(f_i-e_i)^2}{e_i}}
 $$ {#eq-chisq}
 
-The number of degrees of freedom ($df$) for a contingency table depends on its dimensions and is calculated using @eq-df.
+The number of degrees of freedom ($df$) for a contingency table depends on its dimensions and is calculated using @eq-df. A 2⨉2 contingency table has only 1 degree of freedom.
 
 $$
 df = (\text{number of rows} - 1) \times (\text{number of columns} - 1)
@@ -252,6 +252,12 @@ To address this limitation, **Cramer’s V** provides a standardized measure of 
 $$
 V=\sqrt{\frac{\phi^2}{k-1}}=\sqrt{\frac{\chi^2}{n(k-1)}}
 $$ {#eq-cramer}
+
+For a 2⨉2 contingency table, Cramer's V is computed as the square root of phi-squared (@eq-cramerV2).
+
+$$
+V_{2\times2}=\sqrt{\phi^2}
+$$ {#eq-cramerV2}
 
 :::: callout-tip
 ## Exercise 5
