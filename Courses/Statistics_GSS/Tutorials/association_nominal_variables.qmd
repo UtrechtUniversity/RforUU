@@ -301,7 +301,7 @@ In this last part of the tutorial, let’s work with a different example. In a g
 The following 2x2 contingency table was obtained:
 
 |  |  |  |  |
-|---:|:--:|:--:|----|
+|---:|:--:|:--:|:--:|
 |  | **Are projects completed?** |  |  |
 | **Are there external funders?** | Yes | No | **Total** |
 | Yes | 21 | 8 | **29** |
@@ -350,7 +350,7 @@ This means that the proportion of projects being completed is 1.12 times higher 
 ::: panel-tabset
 ## Question
 
-Calculate the odds ratio of completing a project considering the presence of external funders.
+Calculate the odds ratio of completing a project considering the presence of external funders. Do these calculations manually.
 
 ## Answer
 
