@@ -88,7 +88,7 @@ In this equation, $\beta_0$ is the **intercept** and $\beta_{1,2,...,n}$ are the
 
 The **intercept** ($\beta_0$) represents the predicted value of $y$ when all the predictor variables are equal to zero.
 
-Each **slope** ($\beta_{1,2,...,n}$​) represents the expected change in $y$ when that a predictor increases by one-unit while holding all the other predictors constant.
+Each **slope** ($\beta_{1,2,...,n}$​) represents the expected change in $y$ when that predictor increases by one-unit while holding all the other predictors constant.
 
 ## Research question
 

@@ -23,4 +23,349 @@ editor_options:
 image: /Images/Rlogo.png
 ---
 
-Add text
+## About this tutorial
+
+In this tutorial, you will explore how to analyze the association between two nominal (categorical) variables. You will learn how to summarize categorical data in a contingency table, test whether an association between variables is statistically significant, measure the strength of that association, and apply specific measures tailored to 2×2 tables. By the end of this tutorial, you should be able to interpret whether and how two nominal variables are related.
+
+## Load R packages
+
+To work on this tutorial, you will need to load the *readxl* and *tidyverse* packages.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false  
+
+library(readxl)
+library(tidyverse)
+```
+
+## Importing data
+
+Start by importing the data used in this course (see previous tutorials).
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false  
+
+#Option 1 (csv file) 
+data <- read_csv("gss_statistics_master_data_set2.csv")  
+
+#Option 2 (Excel file) 
+data <- read_excel("gss_statistics_master_data_set2.xlsx")
+```
+
+## Calculating observed and expected frequencies
+
+In this first part of the tutorial, we will test if farm type (`farm_type` variable) is associated with access to public policies (`policy_access` variable).
+
+In R, the `table()` function is used to create a contingency table, which summarizes the frequency (counts) of observations across categories of one or more variables.
+
+To examine the relationship between `farm_type` and `policy_access`, you can use:
+
+`table(data$farm_type, data$policy_access)`
+
+This command counts how many observations fall into each combination of farm type and policy access category. The result is a two-dimensional table where:
+
+-   Rows represent the categories of `farm_type`
+
+-   Columns represent the categories of `policy_access`
+
+-   Each cell shows the number of farms in that specific combination
+
+:::: callout-tip
+## Exercise 1
+
+1.  Use `table()` to create a contingency table showing how many observations fall into each combination of farm type (`farm_type`) and policy access (`policy_access`) category.
+2.  Calculate the total number of observations for each column and each row of the contingency table. You can do these calculations manually.
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false 
+
+table(data$farm_type, data$policy_access)
+```
+
+## Solution 2
+
+| Farm type / Policy access | High  | Low   | Moderate | None  | Total  |
+|---------------------------|-------|-------|----------|-------|--------|
+| **Con**                   | 2     | 2     | 5        | 3     | **12** |
+| **Eco**                   | 2     | 3     | 7        | 0     | **12** |
+| **Large**                 | 2     | 4     | 3        | 3     | **12** |
+| **Total**                 | **6** | **9** | **15**   | **6** | **36** |
+:::
+::::
+
+Once a contingency table has been created, expected frequencies can be calculated to represent the counts we would expect in each cell if the two variables were independent (i.e., not associated).
+
+For each cell of the contingency table, the expected frequency is calculated as the product of the corresponding row total and column total, divided by the overall total number of observations. This means that the expected count reflects how the data would be distributed if the two variables were unrelated.
+
+:::: callout-tip
+## Exercise 2
+
+::: panel-tabset
+## Question
+
+Use the contingency table created in exercise 1 to calculate the expected frequencies of each category. Do these calculations manually.
+
+## Answer
+
+| Farm type / Policy access | High | Low | Moderate | None | Total |
+|------------|------------|------------|------------|------------|------------|
+| **Con** | $\frac{12 \times 6}{36}=2$ | $\frac{12 \times 9}{36}=3$ | $\frac{12 \times 15}{36}=5$ | $\frac{12 \times 6}{36}=2$ | **12** |
+| **Eco** | $\frac{12 \times 6}{36}=2$ | $\frac{12 \times 9}{36}=3$ | $\frac{12 \times 15}{36}=5$ | $\frac{12 \times 6}{36}=2$ | **12** |
+| **Large** | $\frac{12 \times 6}{36}=2$ | $\frac{12 \times 9}{36}=3$ | $\frac{12 \times 15}{36}=5$ | $\frac{12 \times 6}{36}=2$ | **12** |
+| **Total** | **6** | **9** | **15** | **6** | **36** |
+:::
+::::
+
+## Doing a chi-squared test
+
+### Step-by-step calculations
+
+To test for an association between two nominal variables, we use the chi-squared ($\chi^2$) statistic, which compares the observed frequencies in each cell of the contingency table to the expected frequencies under the assumption of independence.
+
+The chi-squared ($\chi^2$) statistic is calculated by summing, over all cells $i$, the squared difference between observed ($f_i$) and expected ($e_i$) frequencies, divided by the expected frequency ($e_i$) (@eq-chisq). In other words, large differences between observed and expected counts will lead to a larger $\chi^2$ value, indicating a stronger deviation from independence.
+
+$$
+\chi^2=\sum_{i=1}^n{\frac{(f_i-e_i)^2}{e_i}}
+$$ {#eq-chisq}
+
+The number of degrees of freedom ($df$) for a contingency table depends on its dimensions and is calculated using @eq-df.
+
+$$
+df = (\text{number of rows} - 1) \times (\text{number of columns} - 1)
+$$ {#eq-df}
+
+Once the $\chi^2$ statistic and degrees of freedom are known, the p-value can be calculated using the chi-squared distribution. In R, this can be done with the `pchisq()` function. This function takes three main arguments:
+
+-   `q`: a quantile value (in this case: the value of the $\chi^2$ statistic)
+
+-   `df`: the number of degrees of freedom
+
+-   `lower.tail`: a logical argument (can be either `TRUE` or `FALSE`). If set to `TRUE`, probabilities are $P(X \le x)$. If set to `FALSE`, probabilities are $P(X > x)$. Because we are interested in the probability of observing a value as large or larger than the test statistic, we use `lower.tail=FALSE`.
+
+:::: callout-tip
+## Exercise 3
+
+1.  Use @eq-chisq to calculate the value of the $\chi^2$ statistic. Do these calculations manually and in R.
+2.  Use @eq-df to calculate the number of degrees of the $\chi^2$ test.
+3.  Use `pchisq()` to calculate the p-value of the $\chi^2$ test.
+4.  What can you conclude from this test?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false 
+
+chisq <- (3-2)^2/2 + (0-2)^2/2 + (3-2)^2/2 + (2-3)^2/3 + (3-3)^2/3 + (4-3)^2/3 + (5-5)^2/5 + (7-5)^2/5 + (3-5)^2/5 + (2-2)^2/2 + (2-2)^2/2 + (2-2)^2/2
+```
+
+The value of the $\chi^2$ statistic is `{r} round(chisq, 2)`.
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false 
+
+df <- (3-1)*(4-1)
+```
+
+The number of degrees of freedom is `{r} df`.
+
+## Solution 3
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false 
+
+p <- pchisq(q = chisq,
+            df = df,
+            lower.tail = FALSE)
+```
+
+The p-value of the $\chi^2$ test is `{r} round(p, 4)`.
+
+## Solution 4
+
+The p-value of the test is larger than the significance threshold (0.05). Therefore, we fail to reject the null hypothesis that there is no association between farm type and policy access. We conclude that there is no association between farm type and policy access.
+:::
+::::
+
+### Doing a chi-squared test in R
+
+In practice, all of these steps can be performed in one command using the `chisq.test()` function in R. As an input, this function requires a contingency table, such as one created with the `table()` function.
+
+:::: callout-tip
+## Exercise 4
+
+::: panel-tabset
+## Question
+
+Use `chisq.test()` to calculate the value of the test statistic, number of degrees of freedom, and p-value of the $\chi^2$ test.
+
+## Answer
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false 
+
+chisq.test(table(data$farm_type, data$policy_access))
+```
+:::
+::::
+
+## Measuring the strength of association between two nominal variables
+
+While the $\chi^2$ test tells us whether an association between two nominal variables is statistically significant, it does not indicate how strong that association is. To quantify the strength of the association, we can use measures such as phi-squared ($\phi^2$) and Cramer’s V.
+
+**Phi-squared** ($\phi^2$) is calculated as the $\chi^2$ statistic divided by the total sample size ($n$) (@eq-phisq).
+
+$$
+\phi^2=\frac{\chi^2}{n}=\frac{1}{n}\sum_{i=1}^n{\frac{(f_i-e_i)^2}{e_i}}
+$$ {#eq-phisq}
+
+One limitation of $\phi^2$ is that its maximum value increases with table size. This makes $\phi^2$ difficult to interpret and unsuitable for comparing the strength of association across tables of different dimensions.
+
+To address this limitation, **Cramer’s V** provides a standardized measure of association that ranges between 0 and 1, regardless of table size. It is calculated using @eq-cramer, where $k$ is the smaller number of rows or columns in the contingency table. Values close to 0 indicate a weak or no association. Values closer to 1 indicate a strong association.
+
+$$
+V=\sqrt{\frac{\phi^2}{k-1}}=\sqrt{\frac{\chi^2}{n(k-1)}}
+$$ {#eq-cramer}
+
+:::: callout-tip
+## Exercise 5
+
+1.  Use @eq-phisq to calculate $\phi^2$
+2.  Use @eq-cramer to calculate Cramer's V.
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false 
+
+phisq <- chisq/nrow(data)
+```
+
+The value of $\phi^2$ is `{r} round(phisq, 2)`.
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false 
+
+V <- sqrt(phisq/(3-1))
+```
+
+The value of Cramer's V is `{r} round(V, 2)`.
+:::
+::::
+
+## Special measures for 2⨉2 contingency tables
+
+In this last part of the tutorial, let’s work with a different example. In a governance project, researchers want to analyze if the completion of projects is associated with the presence of external funders. 
+
+The following 2x2 contingency table was obtained:
+
+|  |  |  |  |
+|---:|:--:|:--:|----|
+|  | **Are projects completed?** |  |  |
+| **Are there external funders?** | Yes | No | **Total** |
+| Yes | 21 | 8 | **29** |
+| No | 42 | 23 | **65** |
+| **Total** | **63** | **31** | **94** |
+
+### Calculating risk difference and relative risk
+
+The risk difference (RD) measures the difference in the probability of an outcome between two groups. It is calculated as the risk (proportion) of the outcome in one group minus the risk in the other group.
+
+The relative risk (RR) compares the probability of an outcome between two groups as a ratio rather than a difference. It is calculated by dividing the risk in one group by the risk in the other.
+
+:::: callout-tip
+## Exercise 6
+
+::: panel-tabset
+## Question
+
+Calculate the risk difference (RD) and relative risk (RR) of project completion when external funders are present compared to projects when external funders are not present. Do these calculations manually. What can you conclude from these measures?
+
+## Answer
+
+When external funders are present, 21 projects out of 29 were completed. When external funders were not present, however, 42 projects out of 65 were completed. Therefore, the risk difference (RD) is:
+
+$$
+RD=\frac{21}{29}-\frac{42}{65}=0.078
+$$
+
+This means that, if external funders are present, there is an extra 7.8% of projects being completed.
+
+The risk ratio (RR) can be calculated as:
+
+$$
+RR=\frac{\frac{21}{29}}{\frac{42}{65}}=1.12
+$$
+
+This means that the proportion of projects being completed is 1.12 times higher when external funders are present compared to when they are not.
+:::
+::::
+
+### Calculating odds ratio
+
+:::: callout-tip
+## Exercise 7
+
+::: panel-tabset
+## Question
+
+Calculate the odds ratio of completing a project considering the presence of external funders.
+
+## Answer
+
+When external funders are present, 21 projects were completed and 8 projects were not. The odds of completing a project when external funders are present are equal to:
+
+$$
+Odds_{present} = \frac{\frac{21}{29}}{\frac{8}{29}}=2.625
+$$
+
+When external funders are not present, 42 projects were completed and 23 projects were not. The odds of completing a project when external funders are absent are equal to:
+
+$$
+Odds_{notpresent} = \frac{\frac{42}{65}}{\frac{23}{65}}=1.826
+$$
+
+The odds ratio (OR) of completing a project considering the presence of external funders is therefore equal to:
+
+$$
+OR=\frac{Odds_{present}}{Odds_{notpresent}}=\frac{2.625}{1.826}=1.44
+$$
+
+**Conclusion**: The odds of completing a project are 1.44 times higher when external funders are present.
+:::
+::::
