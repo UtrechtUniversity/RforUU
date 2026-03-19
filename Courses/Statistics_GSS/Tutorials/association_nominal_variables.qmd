@@ -344,6 +344,8 @@ This means that the proportion of projects being completed is 1.12 times higher 
 
 ### Calculating odds ratio
 
+In a 2×2 contingency table, the odds ratio (OR) is a commonly used measure to describe the association between two variables. It compares the odds of an outcome occurring in one group to the odds of it occurring in another group (e.g., odds of completing a project when external funders are present divided by odds of completing a project when external funders are absent). In the previous tutorial, you learned that odds are calculated as a ratio between the probability of an event occurring ($p$) relative to it not occurring ($1-p$). An odds ratio is calculated as a ratio between two odds. An odds ratio of 1 indicates no association, meaning the odds of the outcome are the same in both groups.
+
 :::: callout-tip
 ## Exercise 7
 

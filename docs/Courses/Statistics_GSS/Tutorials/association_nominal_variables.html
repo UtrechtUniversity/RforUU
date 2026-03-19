@@ -1077,6 +1077,7 @@ RR=\frac{\frac{21}{29}}{\frac{42}{65}}=1.12
 </section>
 <section id="calculating-odds-ratio" class="level3">
 <h3 class="anchored" data-anchor-id="calculating-odds-ratio">Calculating odds ratio</h3>
+<p>In a 2×2 contingency table, the odds ratio (OR) is a commonly used measure to describe the association between two variables. It compares the odds of an outcome occurring in one group to the odds of it occurring in another group (e.g., odds of completing a project when external funders are present divided by odds of completing a project when external funders are absent). In the previous tutorial, you learned that odds are calculated as a ratio between the probability of an event occurring (<span class="math inline">\(p\)</span>) relative to it not occurring (<span class="math inline">\(1-p\)</span>). An odds ratio is calculated as a ratio between two odds. An odds ratio of 1 indicates no association, meaning the odds of the outcome are the same in both groups.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1942,37 +1943,39 @@ OR=\frac{Odds_{present}}{Odds_{notpresent}}=\frac{2.625}{1.826}=1.44
 <span id="cb12-362"><a href="#cb12-362" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-363"><a href="#cb12-363" aria-hidden="true" tabindex="-1"></a><span class="fu">### Calculating odds ratio</span></span>
 <span id="cb12-364"><a href="#cb12-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-365"><a href="#cb12-365" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
-<span id="cb12-366"><a href="#cb12-366" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 7</span></span>
-<span id="cb12-367"><a href="#cb12-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-368"><a href="#cb12-368" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb12-369"><a href="#cb12-369" aria-hidden="true" tabindex="-1"></a><span class="fu">## Question</span></span>
-<span id="cb12-370"><a href="#cb12-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-371"><a href="#cb12-371" aria-hidden="true" tabindex="-1"></a>Calculate the odds ratio of completing a project considering the presence of external funders. Do these calculations manually.</span>
+<span id="cb12-365"><a href="#cb12-365" aria-hidden="true" tabindex="-1"></a>In a 2×2 contingency table, the odds ratio (OR) is a commonly used measure to describe the association between two variables. It compares the odds of an outcome occurring in one group to the odds of it occurring in another group (e.g., odds of completing a project when external funders are present divided by odds of completing a project when external funders are absent). In the previous tutorial, you learned that odds are calculated as a ratio between the probability of an event occurring ($p$) relative to it not occurring ($1-p$). An odds ratio is calculated as a ratio between two odds. An odds ratio of 1 indicates no association, meaning the odds of the outcome are the same in both groups.</span>
+<span id="cb12-366"><a href="#cb12-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-367"><a href="#cb12-367" aria-hidden="true" tabindex="-1"></a>:::: callout-tip</span>
+<span id="cb12-368"><a href="#cb12-368" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercise 7</span></span>
+<span id="cb12-369"><a href="#cb12-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-370"><a href="#cb12-370" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb12-371"><a href="#cb12-371" aria-hidden="true" tabindex="-1"></a><span class="fu">## Question</span></span>
 <span id="cb12-372"><a href="#cb12-372" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-373"><a href="#cb12-373" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
+<span id="cb12-373"><a href="#cb12-373" aria-hidden="true" tabindex="-1"></a>Calculate the odds ratio of completing a project considering the presence of external funders. Do these calculations manually.</span>
 <span id="cb12-374"><a href="#cb12-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-375"><a href="#cb12-375" aria-hidden="true" tabindex="-1"></a>When external funders are present, 21 projects were completed and 8 projects were not. The odds of completing a project when external funders are present are equal to:</span>
+<span id="cb12-375"><a href="#cb12-375" aria-hidden="true" tabindex="-1"></a><span class="fu">## Answer</span></span>
 <span id="cb12-376"><a href="#cb12-376" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-377"><a href="#cb12-377" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb12-378"><a href="#cb12-378" aria-hidden="true" tabindex="-1"></a>Odds_{present} = \frac{\frac{21}{29}}{\frac{8}{29}}=2.625</span>
+<span id="cb12-377"><a href="#cb12-377" aria-hidden="true" tabindex="-1"></a>When external funders are present, 21 projects were completed and 8 projects were not. The odds of completing a project when external funders are present are equal to:</span>
+<span id="cb12-378"><a href="#cb12-378" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-379"><a href="#cb12-379" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb12-380"><a href="#cb12-380" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-381"><a href="#cb12-381" aria-hidden="true" tabindex="-1"></a>When external funders are not present, 42 projects were completed and 23 projects were not. The odds of completing a project when external funders are absent are equal to:</span>
+<span id="cb12-380"><a href="#cb12-380" aria-hidden="true" tabindex="-1"></a>Odds_{present} = \frac{\frac{21}{29}}{\frac{8}{29}}=2.625</span>
+<span id="cb12-381"><a href="#cb12-381" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb12-382"><a href="#cb12-382" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-383"><a href="#cb12-383" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb12-384"><a href="#cb12-384" aria-hidden="true" tabindex="-1"></a>Odds_{notpresent} = \frac{\frac{42}{65}}{\frac{23}{65}}=1.826</span>
+<span id="cb12-383"><a href="#cb12-383" aria-hidden="true" tabindex="-1"></a>When external funders are not present, 42 projects were completed and 23 projects were not. The odds of completing a project when external funders are absent are equal to:</span>
+<span id="cb12-384"><a href="#cb12-384" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-385"><a href="#cb12-385" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb12-386"><a href="#cb12-386" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-387"><a href="#cb12-387" aria-hidden="true" tabindex="-1"></a>The odds ratio (OR) of completing a project considering the presence of external funders is therefore equal to:</span>
+<span id="cb12-386"><a href="#cb12-386" aria-hidden="true" tabindex="-1"></a>Odds_{notpresent} = \frac{\frac{42}{65}}{\frac{23}{65}}=1.826</span>
+<span id="cb12-387"><a href="#cb12-387" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb12-388"><a href="#cb12-388" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-389"><a href="#cb12-389" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb12-390"><a href="#cb12-390" aria-hidden="true" tabindex="-1"></a>OR=\frac{Odds_{present}}{Odds_{notpresent}}=\frac{2.625}{1.826}=1.44</span>
+<span id="cb12-389"><a href="#cb12-389" aria-hidden="true" tabindex="-1"></a>The odds ratio (OR) of completing a project considering the presence of external funders is therefore equal to:</span>
+<span id="cb12-390"><a href="#cb12-390" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-391"><a href="#cb12-391" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb12-392"><a href="#cb12-392" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-393"><a href="#cb12-393" aria-hidden="true" tabindex="-1"></a>**Conclusion**: The odds of completing a project are 1.44 times higher when external funders are present.</span>
-<span id="cb12-394"><a href="#cb12-394" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-395"><a href="#cb12-395" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb12-392"><a href="#cb12-392" aria-hidden="true" tabindex="-1"></a>OR=\frac{Odds_{present}}{Odds_{notpresent}}=\frac{2.625}{1.826}=1.44</span>
+<span id="cb12-393"><a href="#cb12-393" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb12-394"><a href="#cb12-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-395"><a href="#cb12-395" aria-hidden="true" tabindex="-1"></a>**Conclusion**: The odds of completing a project are 1.44 times higher when external funders are present.</span>
+<span id="cb12-396"><a href="#cb12-396" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-397"><a href="#cb12-397" aria-hidden="true" tabindex="-1"></a>::::</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
