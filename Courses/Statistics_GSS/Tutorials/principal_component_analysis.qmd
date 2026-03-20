@@ -23,4 +23,508 @@ editor_options:
 image: /Images/Rlogo.png
 ---
 
-Add text
+## About this tutorial
+
+This tutorial will introduce you to the principles and practical application of principal component analysis (PCA) using R. The main aim of this tutorial is to help you understand how PCA can be used to reduce the dimensionality of multivariate datasets while retaining the most important patterns of variation. You will learn how to run PCA in R, and interpret key outputs such as eigenvalues, eigenvectors, loadings, scores, and explained variance.
+
+Let's get started!
+
+## Install packages
+
+In this tutorial, we will need to use functions in the *psych* and *ggbiplot* packages. Make sure to install these packages before starting the tutorial.
+
+```{r}
+#| eval: false 
+#| echo: true
+#| message: false
+#| warning: false
+
+install.packages("psych")
+install.packages("ggbiplot")
+```
+
+## Load R packages
+
+To work on this tutorial, you will need to load the *readxl*, *tidyverse*, *GGally*, *psych, ggbiplot*, and *viridis* packages.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false  
+
+library(readxl) 
+library(tidyverse)
+library(GGally)
+library(psych)
+library(ggbiplot)
+library(viridis)
+```
+
+## Importing data
+
+Start by importing the data used in this course (see previous tutorials).
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false  
+
+#Option 1 (csv file) 
+data <- read_csv("gss_statistics_master_data_set2.csv")  
+
+#Option 2 (Excel file) 
+data <- read_excel("gss_statistics_master_data_set2.xlsx")
+```
+
+## Research question
+
+In this tutorial, we will apply principal component analysis (PCA) to a simplified dataset containing seven variables: farm size (`farm_size`), soil microbial biomass (`CMB`), soil organic matter content (`SOM`), litter thickness (`litter_thickness`), mowing intensity (`mowing`), plant diversity (`shannon_PIM`), and the number of agroecological practices (`n_practices`). These variables capture different aspects of farm management, soil properties, and biodiversity, and are likely to be interrelated. Instead of examining each pair of variables separately (e.g., using a correlation plot), PCA summarizes the correlation structure among all seven variables into a smaller number of principal components. By applying PCA to this dataset in R, we can visualize how farms differ from one another based on these combined characteristics and identify which variables contribute most strongly to differences among farms.
+
+::: callout-tip
+## Exercise 1
+
+Create a new dataset object (`data_pca`) that only contains the following variables: farm size (`farm_size`) soil microbial biomass (`CMB`), soil organic matter content (`SOM`), litter thickness (`litter_thickness`), mowing intensity (`mowing`), plant diversity (`shannon_PIM`), and the number of agroecological practices (`n_practices`).
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+data_pca <- dplyr::select(data,
+                          farm_size,
+                          CMB,
+                          SOM,
+                          litter_thickness,
+                          mowing,
+                          shannon_PIM,
+                          n_practices)
+```
+:::
+
+## What is principal component analysis?
+
+Principal component analysis (PCA) is a statistical technique used to summarize patterns in multivariate data by transforming a set of possibly correlated variables into a smaller number of new variables called **principal components**. Each principal component is a linear combination of the original variables and is constructed in such a way that it captures as much variation in the data as possible. The first principal component represents the direction of greatest variation in the dataset, the second captures the next highest amount of variation while being orthogonal (independent) to the first, and so on.
+
+PCA is particularly useful when variables are correlated. When several variables are strongly correlated, they often measure similar underlying processes, and PCA combines this shared information into principal components. This is why PCA is closely related to the concept of correlation: it is effectively based on the covariance or correlation matrix of the data, identifying directions in which variables co-vary. When variables are standardized, PCA is based on the correlation matrix, ensuring that all variables contribute equally regardless of their original scale.
+
+To run a PCA in R, the data should consist of continuous numerical variables measured across a set of observations, such as samples, sites, or individuals. The method assumes linear relationships among variables and works best when variables show some degree of correlation. Before performing PCA, it is usually necessary to handle missing values and to standardize variables, especially when they are measured on different scales.
+
+## Pairwise correlations among variables
+
+We will first start by creating multiple scatter plots to visualize the strength of association between the seven variables included in our dataset. It is always a good idea to visualize and explore the data before conducting any analysis.
+
+:::: callout-tip
+## Exercise 2
+
+1.  Use `ggpairs()` to visualize pairwise relationships and the strength of association between farm size (`farm_size`), soil microbial biomass (`CMB`), soil organic matter content (`SOM`), litter thickness (`litter_thickness`), mowing intensity (`mowing`), plant diversity (`shannon_PIM`), and the number of agroecological practices (`n_practices`).
+2.  What can you conclude from this graph?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+ggpairs(data_pca)
+```
+
+## Solution 2
+
+Some variables show a strong correlation with one another. For example, there is a strong positive relationship between litter thickness and soil organic matter content. There is also a strong negative relationship between farm size and the number of agroecological practices implemented on the farm.
+
+Some variables, on the other hand, appear to be very weakly correlated with one another. For example, farm size and soil organic matter content appear to be independent of one another.
+:::
+::::
+
+## Additional checks
+
+Before running a PCA, it is good practice to check whether your data are suitable for this type of analysis. Two commonly used tests for this purpose are the **Kaiser-Meyer-Olkin (KMO)** measure of sampling adequacy and **Bartlett’s test of sphericity**.
+
+The KMO value assesses whether the variables share enough common variance to justify a dimensionality reduction technique like PCA. It compares the strength of observed correlations to the strength of partial correlations. If variables are strongly correlated with each other but not explained well by other variables (low partial correlations), PCA is likely to work well. KMO values range from 0 to 1, where values above 0.6 are generally considered acceptable, above 0.7/0.8 good, and above 0.9 very good. Low KMO values suggest that PCA may not be appropriate.
+
+In R, you can calculate a KMO value using the `KMO()` function in the *psych* package. The only input needed for this function is a data table (such as `data_pca`) or a correlation matrix. It outputs an overall measure of sampling adequacy (MSA).
+
+Bartlett’s test of sphericity evaluates whether the correlation matrix differs significantly from an identity matrix (a matrix with zeros off the diagonal and ones on the diagonal). In an identity matrix, variables are uncorrelated, which would make PCA uninformative. A significant result (typically p-value \< 0.05) indicates that there are sufficient correlations among variables to proceed with PCA.
+
+In R, you can perform Bartlett’s test of sphericity using `cortest.bartlett()` in the *psych* package. The only input needed is a correlation matrix or dataset.
+
+:::: callout-tip
+## Exercise 3
+
+1.  Use `KMO()` to calculate the KMO value of our PCA dataset (`data_pca`)
+2.  Use `cortest.bartlett()` to perform a Bartlett's test of sphericity
+3.  What can you conclude from these tests?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+KMO(data_pca)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+cortest.bartlett(data_pca)
+```
+
+## Solution 3
+
+The KMO value is 0.65, which is considered acceptable. In addition, the Bartlett's test of sphericity is highly significant (p-value \< 0.001), which means that we reject the null hypothesis that the correlation matrix calculated from the data is not different from the identity matrix. Therefore, our data seem to be suitable for a dimensionality reduction techniques such as PCA.
+:::
+::::
+
+## Doing a PCA in R
+
+In R, you can do a principal component analysis using the `prcomp()` function in the *stats* package. We will use three main arguments in this function:
+
+-   `x`: a data frame that only contains the variables to be included in the PCA (in our case: `data_pca`)
+
+-   `center`: a logical value indicating if variables should be zero centered (by subtracting the variable mean) before the PCA. `TRUE` is yes (default), `FALSE` is no.
+
+-   `scale.`: a logical value indicating if variables should be scaled to have unit variance before the PCA. `TRUE` is yes, `FALSE` is no (default).
+
+Before performing a PCA, it is usually important to center and scale the variables so that they are comparable. Centering means subtracting the mean from each variable, so that all variables have a mean of zero. Without centering, variables with larger means could disproportionately affect the orientation of the principal components. Scaling goes one step further by dividing each variable by its standard deviation, so that all variables have a variance of one. This is particularly important when variables are measured on different scales or in different units, as is often the case in sustainability research. If the data are not scaled, variables with larger numerical ranges or higher variance will dominate the PCA.
+
+The `prcomp()` function will output a list with the following elements:
+
+-   `sdev`: the standard deviations of the principal components (i.e., the square root of the eigenvalues)
+
+-   `rotation`: a matrix of variable loadings (i.e., a matrix whose columns contain the eigenvectors)
+
+-   `x`: the rotated data (i.e., (scaled) original data multiplied by the `rotation` matrix)
+
+-   `center`: the centering used
+
+-   `scale`: the scaling used
+
+::: callout-tip
+## Exercise 4
+
+Use `prcomp()` to do a principal component analysis on our simplified dataset (`data_pca`). Store the results in an object called `pca`. Make sure to center and scale the variables for the analysis.
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+pca <- prcomp(x = data_pca,
+              center = TRUE,
+              scale. = TRUE)
+```
+:::
+
+## Explore PCA outputs
+
+### Eigenvalues
+
+**Eigenvalues** quantify how much variation in the dataset is explained by each principal component. Each principal component represents a new axis in the data, and its eigenvalue indicates the amount of variance captured along that axis. Components with larger eigenvalues explain more of the total variation.
+
+Principal components are ordered according to the amount of variation they explain in the data. The first principal component captures the greatest possible variance, the second captures the largest share of the remaining variance while being independent of the first, and each subsequent component explains progressively less.
+
+Because the variables were scaled prior to the PCA, each variable has a variance of 1. With seven variables in the dataset, this means that the total variance is equal to 7. Consequently, the sum of all eigenvalues is also 7. This is useful because it allows us to directly calculate the proportion of total variance explained by each principal component, by expressing each eigenvalue as a fraction of this total.
+
+In R, when using the `prcomp()` function, eigenvalues are not stored explicitly but can be easily obtained from the output. The list returned by `prcomp()` contains a component called `sdev`, which represents the standard deviation of each principal component. The eigenvalues are simply the squared values of these standard deviations. These values can then be used to determine how much variance each principal component explains and to decide how many components to retain for interpretation.
+
+When PCA is performed on standardized data (centered and scaled data), each original variable has a variance of 1. The **Kaiser criterion** suggests retaining only those principal components with eigenvalues greater than 1. Components with eigenvalues below 1 explain less variance than a single original variable and are typically considered uninformative.
+
+:::: callout-tip
+## Exercise 5
+
+1.  Calculate eigenvalues using the `pca` object created in exercise 4. Do these calculations manually and in R.
+2.  Calculate the proportion of variance explained by each principal component. Do these calculations manually and in R. How much variation is explained by the first and second principal components?
+3.  According to the Kaiser criterion, how many principal components should we retain in the analysis?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+(eigenvalues <- pca$sdev^2)
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+#Calculate total variance (should obtain 7)
+total_var <- sum(eigenvalues)
+
+#Calculate the proportion (%) of variance explained by each principal component
+prop_var <- 100*eigenvalues/total_var
+```
+
+The first and second principal components explain `{r} round(prop_var[1], 1)`% and `{r} round(prop_var[2], 1)`% in the data, respectively.
+
+## Solution 3
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+n_pc <- length(eigenvalues[eigenvalues>1])
+```
+
+Only `{r} n_pc` principal components have an eigenvalue greater than 1. According to the Kaiser criterion, we should retain the first and second principal components for interpretation.
+:::
+::::
+
+### Loadings and eigenvectors
+
+**Eigenvectors** define the directions of the principal components in the multidimensional space of the original variables. Each eigenvector is a set of coefficients that determines how the original variables are combined to form a principal component. In other words, they specify the [orientation]{.underline} of the new axes onto which the data are projected.
+
+An eigenvector consists of as many elements as variables in the data used to perform the PCA. In this tutorial, we work with a simplified dataset containing 7 variables. Consequently, each eigenvector (one per principal component) contains 7 values (one for each variable). Another important mathematical property of eigenvectors is that their length in the multidimensional space of the original variables is equal to 1 (i.e., an eigenvector has unit length).
+
+Consider an eigenvector of $n$ elements $(l_1,l_2,...,l_n)$, then the length of this vector satisfies $\sqrt{\sum_{i=1}^nl_i^2}=1$.
+
+**Loadings** are closely related to eigenvectors and represent the [contribution]{.underline} of each variable to a given principal component. The loading matrix (`rotation` in `pca`) contains the coefficients that define each principal component as a linear combination of the original variables. These coefficients are not always easy to interpret in terms of variable importance, because their magnitude is constrained (each eigenvector has length 1).
+
+When the loading matrix is normed by the square root of the eigenvalues, each column (eigenvector) is multiplied by the square root of the corresponding eigenvalue. When variables are standardized, they can be interpreted as the correlation between the original variables and the principal components.
+
+:::: callout-tip
+## Exercise 6
+
+1.  Display the loading matrix in your R console (`rotation` element in `pca`)
+2.  Check that the eigenvector of the first principal component has unit length (this should also be true for all the other principal components). Do these calculations manually and in R.
+3.  Display a matrix showing the correlation between the original variables and the principal components by multiplying each eigenvector by the square root of the corresponding eigenvalue. Do these calculations manually and in R. To do these calculations in R, one way to do this is to (1) transpose the rotation matrix using `t()`, (2) multiply this transposed matrix by the square root of `eigenvalues`, and (3) transpose the resulting matrix using `t()`.
+4.  What can you conclude about the relationship between the original variables and the two first principal components (PC1 and PC2)?
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+pca$rotation
+```
+
+## Solution 2
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+length_eigenvector <- sqrt(sum(pca$rotation[,1]^2))
+```
+
+The length of the eigenvector for the first principal component is `{r} length_eigenvector`.
+
+## Solution 3
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+t(t(pca$rotation) * sqrt(eigenvalues))
+```
+
+## Solution 4
+
+**For PC1**: this principal component has a strong negative relationship with all variables in the dataset, expect for farm size. The strongest negative relationship is with litter thickness. This means that, on average, farms with high positive values on the first principal component are associated with a low soil litter thickness, but also a low soil organic matter content, a low plant diversity, and a low number of agroecological practices.
+
+**For PC2**: this principal component has a strong positive relationship with farm size, meaning that farms with high values on the second principal component are on average larger. There is also a negative relationship between the second principal component and the number of agroecological practices, meaning that farms with high values on PC2 use on average a low number of agroecological practices.
+:::
+::::
+
+### Scores
+
+**Scores** are the [coordinates]{.underline} of each observation (e.g., site, sample, or individual) in the new space defined by the principal components. They tell you where each observation lies along each principal component and are therefore used to visualize patterns, groupings, or gradients in the data.
+
+Scores are obtained by projecting the original data onto the principal component axes. Mathematically, this is done by multiplying the (centered and scaled) data matrix (`scale(data_pca)`) by the loading matrix (`pca$rotation`). Each score is thus a weighted sum of the original variables, where the weights are given by the loadings for a particular principal component.
+
+Consider a principal component with eigenvector $(l_1,l_2,...,l_n)$, then the score for an observation $i$ (in this tutorial, an observation is a farm) is calculated using @eq-scores, where $(x_1,x_2,...,x_n)$ are the scaled values of each variable for that observation.
+
+$$
+score_i=l_1x_1+l_2x_2+...+l_nx_n
+$$ {#eq-scores}
+
+When doing a PCA using `prcomp()`, the scores are stored in the `x` element of the `pca` object.
+
+:::: callout-tip
+## Exercise 7
+
+1.  Display the matrix with scores in your R console (`x` element in `pca`)
+2.  Using the loadings stored in the loading matrix (`pca$rotation`), write down the equation needed to calculate the score of each farm on the first and second principal components.
+3.  Use these equations to calculate the score values on PC1 and PC2 for the first observation (or farm in the dataset). Do these calculations manually and in R.
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+pca$x
+```
+
+## Solution 2
+
+For the **first principal component** (PC1):
+
+$$
+\begin{split}
+score_{PC1}&=0.22x_{farmsize}-0.36x_{CMB}-0.40x_{SOM}-0.46x_{litterthickness}\\
+&-0.34x_{mowing}-0.41x_{shannon}-0.40x_{npractices}
+\end{split}
+$$ {#eq-PC1}
+
+For the **second principal component** (PC2):
+
+$$
+\begin{split}
+score_{PC2}&=0.76x_{farmsize}+0.21x_{CMB}+0.32x_{SOM}+0.23x_{litterthickness} \\
+&+0.02x_{mowing}+0.10x_{shannon}-0.46x_{npractices}
+\end{split}
+$$ {#eq-PC2}
+
+## Solution 3
+
+For the first observation (or farm) in the dataset, the scaled value of each variable is:
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+round(scale(data_pca)[1,], 2)
+```
+
+We can now use @eq-PC1 and @eq-PC2 to calculate the score of that farm on each principal component.
+
+On the **first principal component**:
+
+$$
+\begin{split}
+score_{PC1}&=0.22\times(-0.06)-0.36\times(-0.25)-0.40\times(-1.49)-0.46\times(-1.09)\\
+&-0.34\times(-0.42)-0.41\times(-0.26)-0.40\times(-1.11)
+\end{split}
+$$
+
+$$
+score_{PC1}=1.87
+$$
+
+On the **second principal component**:
+
+$$
+\begin{split}
+score_{PC2}&=0.76\times(-0.06)+0.21\times(-0.25)+0.32\times(-1.49)+0.23\times(-1.09) \\
+&+0.02\times(-0.42)+0.10\times(-0.26)-0.46\times(-1.11)
+\end{split}
+$$
+
+$$
+score_{PC2}=-0.35
+$$
+
+If we do these calculations in R:
+
+```{r}
+#| eval: true 
+#| echo: true 
+#| message: false 
+#| warning: false
+
+#For the first principal component
+score_pc1 <- sum(pca$rotation[,1]*scale(data_pca)[1,])
+
+#For the second principal component
+score_pc2 <- sum(pca$rotation[,2]*scale(data_pca)[1,])
+```
+
+The score value of the first observation on PC1 is `{r} round(score_pc1, 2)`.
+
+The score value of the first observation on PC2 is `{r} round(score_pc2, 2)`.
+
+**Note**: differences in decimal values are only due to rounding in manual calculations.
+:::
+::::
+
+## Visualising PCA results
+
+To visualize the results of a PCA performed with `prcomp()` in R, a convenient option is to use the *ggbiplot* package. A biplot displays both the scores of the observations (as points) and the loadings of the variables (as arrows) in the space of the first two principal components (PC1 on the x-axis and PC2 on the y-axis).
+
+A PCA biplot can be created using `ggbiplot()`. This function takes a number of arguments (see associated help page for complete information). We will focus on the following arguments for now:
+
+-   `pcobj`: an object returned by `prcomp()` (in our case: `pca`)
+
+-   `choices`: a vector of two integers stating which principal components to plot. Default to `1:2`.
+
+-   `groups`: an optional factor variable indicating the groups that the observations belong to (e.g., farm type).
+
+-   `ellipse`: a logical variable. If `TRUE`, the function will add an ellipse around each group.
+
+-   `ellipse.fill`: a logical variable. If `FALSE`, ellipses are not filled with a colour.
+
+:::: callout-tip
+## Exercise 8
+
+1.  Create a biplot to display the results of the PCA. Make sure to show the results using a separate colour for each farm type (remember that the information about farm type is stored in `data`, not `data_pca`). The groups argument of `ggbiplot()` will be useful here.
+2.  Write a short text summarizing the main results of the PCA.
+
+::: panel-tabset
+## Solution 1
+
+```{r}
+#| eval: true
+#| echo: true
+#| warning: false
+#| message: false
+#| fig-align: center
+
+ggbiplot(pca,
+         choices = 1:2,
+         groups = data$farm_type,
+         ellipse = TRUE,
+         ellipse.fill = FALSE)+
+ theme_bw()+
+ scale_colour_viridis(discrete = TRUE)+ #Use viridis colour palette
+ xlab("PC1 (53.8%)")+
+ ylab("PC2 (17.8%)")+
+ coord_cartesian() #To improve visual (do not force x and y axes to have the same scale)
+```
+
+## Solution 2
+
+Along the first principal component (PC1), there is a clear separation between ecological farms and the other farm types. Ecological farms are associated with higher values of litter thickness, soil organic matter, soil microbial biomass, plant diversity, and the number of agroecological practices, indicating a gradient that reflects overall ecological management intensity.
+
+The second principal component (PC2) primarily differentiates between conventional and large-scale farms, with farm size contributing strongly to this axis. In addition, conventional farms tend to have a higher number of agroecological practices compared to large-scale farms, suggesting a secondary gradient related to management intensity within non-ecological systems.
+:::
+::::
