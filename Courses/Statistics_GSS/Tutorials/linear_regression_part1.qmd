@@ -204,7 +204,7 @@ When the `anova()` function is applied to an `lm()` object in R, it produces an 
 1.  Use `lm()` to model the relationship between litter thickness (`litter_thickness`, x-axis) and soil microbial biomass (`CMB`, y-axis). Store the model into an R object called `model`.
 2.  Run `summary()` on the `model` object and inspect the summary table. Make sure you understand the information contained in this output.
 3.  Run `anova()` on the `model` object and inspect the ANOVA table. Make sure you understand the information contained in this output.
-4.  What can you conclude about the relationship between litter thickness and soil microbial biomass?
+4.  What can you conclude about the relationship between litter thickness and soil microbial biomass? Write a short text summarizing the results.
 
 ::: panel-tabset
 ## Solution 1
