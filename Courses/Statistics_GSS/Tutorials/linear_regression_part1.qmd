@@ -25,7 +25,7 @@ image: /Images/Rlogo.png
 
 ## About this tutorial
 
-The goal of this tutorial is to understand and apply linear regression models to examine the relationship between [two numerical variables]{.underline}: a dependent variable (*y*) and an independent variable (*x*). We will learn how to represent this relationship using a mathematical equation to predict *y* from *x*, estimate the model coefficients, and test the statistical significance of the model. In addition, we will evaluate how much variation in *y* is explained by the model using R² (coefficient of determination). Finally, we will check whether the assumptions underlying linear regression are satisfied.
+The goal of this tutorial is to understand and apply linear regression models to examine the relationship between [two numerical variables]{.underline}: a dependent variable (Y) and an independent variable (X). We will learn how to represent this relationship using a mathematical equation to predict *y* from *x*, estimate the model coefficients, and test the statistical significance of the model. In addition, we will evaluate how much variation in *y* is explained by the model using R² (coefficient of determination). Finally, we will check whether the assumptions underlying linear regression are satisfied.
 
 Let's get started!
 
