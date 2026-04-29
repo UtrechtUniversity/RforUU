@@ -340,7 +340,7 @@ data_subset <- data_wide |>
 
 Transforming variables is certainly one of the most common operations that data scientists do when preparing data for analysis. If you want to calculate new variables from the ones that are already present in your dataset, this is precisely what `mutate()` does.
 
-In our vegetation data, the cover of each species in a plot is expressed in percent (a number between 0 and 1). In some situations, it may be useful to express these data on a scale between 0 and 1. Let's use `mutate()` to add a new column (Std_cover) in our dataset (`data`). We can simply do this by dividing the original cover values by 100. In `mutate()`, the arguments `.before` and `.after` allow you to control where you want your new variables to be inserted in your dataset.
+In our vegetation data, the cover of each species in a plot is expressed in percent (a number between 0 and 100). In some situations, it may be useful to express these data on a scale between 0 and 1. Let's use `mutate()` to add a new column (Std_cover) in our dataset (`data`). We can simply do this by dividing the original cover values by 100. In `mutate()`, the arguments `.before` and `.after` allow you to control where you want your new variables to be inserted in your dataset.
 
 ```{r}
 #| eval: true
