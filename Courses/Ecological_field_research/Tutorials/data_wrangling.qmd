@@ -73,13 +73,13 @@ View(data)
 
 You can see that the dataset consists of a number of observations (rows) of 7 variables (columns). These variables are:
 
--   **Date**: the sampling date (YYYY-MM-DD)
--   **Student**: the student ID number
--   **Site**: the site name (4 levels: A_grassland, B_forest, C_heathland, D_peatland)
--   **Location**: the location within a site (2 levels: 1 or 2)
--   **Plot**: the plot ID number (in each site, plots were labelled from 1 to 20)
--   **Species**: the plant species name (or species group name)
--   **Cover**: the percent cover (numeric value between 0 and 100)
+- **Date**: the sampling date (YYYY-MM-DD)
+- **Student**: the student ID number
+- **Site**: the site name (4 levels: A_grassland, B_forest, C_heathland, D_peatland)
+- **Location**: the location within a site (2 levels: 1 or 2)
+- **Plot**: the plot ID number (in each site, plots were labelled from 1 to 20)
+- **Species**: the plant species name (or species group name)
+- **Cover**: the percent cover (numeric value between 0 and 100)
 
 ## Tidying data
 
@@ -380,15 +380,15 @@ Check your summary table using `View()`.
 
 Write a piece of R code to do the following (make sure you use the pipe!):
 
--   **Step 1**: Using the `data` object created at the beginning of this tutorial, select only the rows of data recorded on 2024-5-27 at location 1 of the grassland site and location 2 of the peatland site. [**Tip**]{.underline}: use parentheses to separate conditional statements.
+- **Step 1**: Using the `data` object created at the beginning of this tutorial, select only the rows of data recorded on 2024-5-27 at location 1 of the grassland site and location 2 of the peatland site. [**Tip**]{.underline}: use parentheses to separate conditional statements.
 
--   **Step 2**: For this subset of data, transform the percent cover data so that all cover values are between 0 and 1.
+- **Step 2**: For this subset of data, transform the percent cover data so that all cover values are between 0 and 1.
 
--   **Step 3**: Using this transformed percent cover data, calculate the mean and standard error for the cover value of each species (calculate these summary statistics for all plots and student observations). Remember that the standard error is the standard deviation divided by the square root of the number of observations.
+- **Step 3**: Using this transformed percent cover data, calculate the mean and standard error for the cover value of each species (calculate these summary statistics for all plots and student observations). Remember that the standard error is the standard deviation divided by the square root of the number of observations.
 
--   **Step 4**: Keep only the rows with at least n=5 (i.e., one one observation is available for a particular species).
+- **Step 4**: Keep only the rows with at least n=5 (i.e., one one observation is available for a particular species).
 
--   **Step 5**: Within each habitat type, rank the species from greatest to least cover.
+- **Step 5**: Within each habitat type, rank the species from greatest to least cover.
 
 ```{r}
 #| eval: true
