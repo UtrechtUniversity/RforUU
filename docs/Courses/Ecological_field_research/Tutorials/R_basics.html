@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,6 +10,9 @@
 
 <title>R basics</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -70,19 +73,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../Courses/Ecological_field_research/Tutorials/prerequisites.html" rel="prev">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-d3d30c608f49e8720cdcd7c82e968a24.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../../site_libs/bootstrap/bootstrap-dark-065e9eb37320e2ccb05392e97200b60c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../../site_libs/bootstrap/bootstrap-d3d30c608f49e8720cdcd7c82e968a24.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-d887b6d2ff89000dcc040799923f9849.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-34aa104e9f6cb6d53ca14a10c0e3b603.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-d887b6d2ff89000dcc040799923f9849.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -653,12 +655,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#View matrix</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>x2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           [,1]      [,2]       [,3]       [,4]      [,5]
-[1,] 0.08103317 0.7257779 0.05027268 0.45908121 0.6259262
-[2,] 0.13028568 0.0913296 0.13223854 0.08511409 0.8084662
-[3,] 0.83846891 0.8273178 0.35687781 0.82015459 0.4694985
-[4,] 0.67541226 0.1652842 0.49046262 0.16221158 0.1029271
-[5,] 0.75182255 0.3037488 0.41470208 0.90237552 0.3895773</code></pre>
+<pre><code>           [,1]      [,2]      [,3]      [,4]        [,5]
+[1,] 0.24599652 0.4385379 0.9009009 0.1056446 0.003743764
+[2,] 0.04344491 0.2112588 0.3918698 0.3635942 0.101963572
+[3,] 0.18803374 0.5626723 0.4451204 0.7506799 0.541088776
+[4,] 0.52450521 0.7173979 0.5602658 0.8157590 0.651980569
+[5,] 0.70890772 0.7261408 0.6246088 0.6423587 0.259169174</code></pre>
 </div>
 </div>
 <p>You can check the size of a matrix using the <code>dim()</code> function. The first element of the output is the number of rows. The second element of the output is the number of columns.</p>
@@ -717,12 +719,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [1] 1 2 3 4 5
 
 [[2]]
-           [,1]      [,2]       [,3]       [,4]      [,5]
-[1,] 0.08103317 0.7257779 0.05027268 0.45908121 0.6259262
-[2,] 0.13028568 0.0913296 0.13223854 0.08511409 0.8084662
-[3,] 0.83846891 0.8273178 0.35687781 0.82015459 0.4694985
-[4,] 0.67541226 0.1652842 0.49046262 0.16221158 0.1029271
-[5,] 0.75182255 0.3037488 0.41470208 0.90237552 0.3895773
+           [,1]      [,2]      [,3]      [,4]        [,5]
+[1,] 0.24599652 0.4385379 0.9009009 0.1056446 0.003743764
+[2,] 0.04344491 0.2112588 0.3918698 0.3635942 0.101963572
+[3,] 0.18803374 0.5626723 0.4451204 0.7506799 0.541088776
+[4,] 0.52450521 0.7173979 0.5602658 0.8157590 0.651980569
+[5,] 0.70890772 0.7261408 0.6246088 0.6423587 0.259169174
 
 [[3]]
   Var1 Var2  Var3
@@ -768,7 +770,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>x2[<span class="dv">2</span>,<span class="dv">3</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1322385</code></pre>
+<pre><code>[1] 0.3918698</code></pre>
 </div>
 </div>
 <p>With a data frame, there are a couple of other options to extract data from specific columns. One option is to use the dollar symbol (<code>$</code>) followed by the column name.</p>
@@ -814,12 +816,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>x4[[<span class="dv">2</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           [,1]      [,2]       [,3]       [,4]      [,5]
-[1,] 0.08103317 0.7257779 0.05027268 0.45908121 0.6259262
-[2,] 0.13028568 0.0913296 0.13223854 0.08511409 0.8084662
-[3,] 0.83846891 0.8273178 0.35687781 0.82015459 0.4694985
-[4,] 0.67541226 0.1652842 0.49046262 0.16221158 0.1029271
-[5,] 0.75182255 0.3037488 0.41470208 0.90237552 0.3895773</code></pre>
+<pre><code>           [,1]      [,2]      [,3]      [,4]        [,5]
+[1,] 0.24599652 0.4385379 0.9009009 0.1056446 0.003743764
+[2,] 0.04344491 0.2112588 0.3918698 0.3635942 0.101963572
+[3,] 0.18803374 0.5626723 0.4451204 0.7506799 0.541088776
+[4,] 0.52450521 0.7173979 0.5602658 0.8157590 0.651980569
+[5,] 0.70890772 0.7261408 0.6246088 0.6423587 0.259169174</code></pre>
 </div>
 </div>
 
